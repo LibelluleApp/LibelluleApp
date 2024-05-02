@@ -11,7 +11,7 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AppStack from "./stacks/AppStack";
 import AuthStack from "./stacks/AuthStack";
-
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const Stack = createNativeStackNavigator();
@@ -37,6 +37,7 @@ function AuthStackSwitcher() {
 }
 
 function App() {
+const insets = useSafeAreaInsets();
   const [fontsLoaded] = useFonts({
     Ubuntu_700Bold,
     Ubuntu_500Medium,
@@ -51,12 +52,19 @@ function App() {
     );
   }
   return (
-    <NavigationContainer>
+  <SafeAreaProvider >
+    <NavigationContainer style={{
+      paddingTop: insets.top,
+      paddingBottom: insets.bottom,
+      paddingLeft: insets.left,
+      paddingRight: insets.right,
+    }}>
       <AuthProvider>
         <AuthStackSwitcher />
         <FlashMessage position="top" />
       </AuthProvider>
     </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
 

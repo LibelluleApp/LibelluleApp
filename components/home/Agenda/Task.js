@@ -6,6 +6,8 @@ import {
   TimetableSmall,
   LeftArrow,
 } from "../../../assets/icons/Icons";
+import * as Haptics from 'expo-haptics';
+
 function TaskHome() {
   return (
     <TouchableOpacity style={styles.evalTask}>
@@ -14,7 +16,10 @@ function TaskHome() {
           fillColor="#0760FB"
           unfillColor="#FFFFFF"
           iconStyle={{ borderColor: "#7A797C" }}
-          onPress={(isChecked) => {}}
+          onPress={ () =>
+            Haptics.notificationAsync(
+              Haptics.NotificationFeedbackType.Success
+            )}
         />
         <View style={styles.taskTopContent}>
           <Text style={styles.taskTitle}>Audiovisuel</Text>

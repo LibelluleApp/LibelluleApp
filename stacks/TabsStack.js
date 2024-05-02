@@ -67,6 +67,7 @@ const baseHeaderOptions = {
     shadowColor: "transparent",
     elevation: 0,
   },
+
   headerLeftContainerStyle: {
     paddingLeft: 17,
   },

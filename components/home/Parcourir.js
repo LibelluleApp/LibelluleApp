@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
   container: {
     fontFamily: "Ubuntu_400Regular",
     alignSelf: "center",
-    width: "90%",
+    width: "100%",
+    paddingLeft: "5%",
     marginTop: 22,
     marginBottom: 15,
   },

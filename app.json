@@ -11,6 +11,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "androidStatusBar": {
+      "translucent": true
+    },
+    "owner": "libellule",
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,

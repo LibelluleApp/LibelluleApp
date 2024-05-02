@@ -63,7 +63,7 @@ function Home() {
             <Text style={{ fontFamily: "Ubuntu_400Regular", fontSize: 17 }}>
               Bonjour{" "}
               <Text style={{ fontFamily: "Ubuntu_500Medium" }}>
-                {user.rows[0].prenom}
+                Arnaud
               </Text>
             </Text>
             <Text style={{ fontFamily: "Ubuntu_400Regular", fontSize: 15 }}>
@@ -74,7 +74,7 @@ function Home() {
             </Text>
           </View>
         </View>
-        <NextCourse style={styles.nextCourse} />
+        <NextCourse />
         <AgendaHome />
         <ParcourirHome />
         <Button title="Se déconnecter" onPress={signOut} />

@@ -3,6 +3,7 @@ import { View, Platform, TouchableOpacity } from "react-native";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Feather } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import LogoTitle from "../components/logo";
 
@@ -63,10 +64,15 @@ const AppStack = ({ navigation }) => {
         title: "Notifications",
       },
     },
-  ];
 
+
+  ];
+const insets = useSafeAreaInsets();
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1,     paddingTop: insets.top,
+      paddingBottom: insets.bottom,
+      paddingLeft: insets.left,
+      paddingRight: insets.right, }}>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
