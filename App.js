@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
 import { useFonts } from "expo-font";
@@ -37,7 +37,7 @@ function AuthStackSwitcher() {
 }
 
 function App() {
-const insets = useSafeAreaInsets();
+
   const [fontsLoaded] = useFonts({
     Ubuntu_700Bold,
     Ubuntu_500Medium,
@@ -52,19 +52,15 @@ const insets = useSafeAreaInsets();
     );
   }
   return (
-  <SafeAreaProvider >
-    <NavigationContainer style={{
-      paddingTop: insets.top,
-      paddingBottom: insets.bottom,
-      paddingLeft: insets.left,
-      paddingRight: insets.right,
-    }}>
+
+    <NavigationContainer>
       <AuthProvider>
         <AuthStackSwitcher />
-        <FlashMessage position="top" />
+        <FlashMessage position="top" hideStatusBar={false}
+  statusBarHeight={StatusBar.currentHeight}/>
       </AuthProvider>
     </NavigationContainer>
-    </SafeAreaProvider>
+
   );
 }
 

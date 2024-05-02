@@ -7,6 +7,7 @@ import { Feather } from "@expo/vector-icons";
 import LogoTitle from "../components/logo";
 import { useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Notifications from "../views/NotificationsViews";
 import {
   Home,
@@ -57,10 +58,14 @@ const getIcon = (Icon, IconFill, color, size, focused, force) => {
     />
   );
 };
+const insets = useSafeAreaInsets();
 
 const baseHeaderOptions = {
   tabBarShowLabel: false,
   headerShown: true,
+  tabBarLabelStyle: {
+    marginTop: (insets.bottom > 30) ? -3 : 0,
+  },
   tabBarStyle: { height: 90 },
   headerStyle: {
     backgroundColor: "#F4F5F9",
