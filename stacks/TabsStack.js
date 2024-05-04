@@ -7,7 +7,7 @@ import { Feather } from "@expo/vector-icons";
 import LogoTitle from "../components/logo";
 import { useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Notifications from "../views/NotificationsViews";
 import {
   Home,
@@ -64,7 +64,7 @@ const baseHeaderOptions = {
   tabBarShowLabel: false,
   headerShown: true,
   tabBarLabelStyle: {
-    marginTop: (insets.bottom > 30) ? -3 : 0,
+    marginTop: insets.bottom > 30 ? -3 : 0,
   },
   tabBarStyle: { height: 90 },
   headerStyle: {
@@ -105,7 +105,7 @@ const views = [
   },
   {
     name: "Agenda",
-    component: require("../views/Home").default,
+    component: require("../views/Agenda").default,
     options: {
       tabBarIcon: ({ color, size, focused }) =>
         getIcon(Agenda, AgendaFocused, color, size, focused),

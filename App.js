@@ -11,8 +11,16 @@ import {
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AppStack from "./stacks/AppStack";
 import AuthStack from "./stacks/AuthStack";
-import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import moment from "moment";
+import "moment/locale/fr"; // Importer la locale française
+
+// Définir la locale sur "fr" pour traduire les dates en français
+moment.locale("fr");
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +45,6 @@ function AuthStackSwitcher() {
 }
 
 function App() {
-
   const [fontsLoaded] = useFonts({
     Ubuntu_700Bold,
     Ubuntu_500Medium,
@@ -52,15 +59,16 @@ function App() {
     );
   }
   return (
-
     <NavigationContainer>
       <AuthProvider>
         <AuthStackSwitcher />
-        <FlashMessage position="top" hideStatusBar={false}
-  statusBarHeight={StatusBar.currentHeight}/>
+        <FlashMessage
+          position="top"
+          hideStatusBar={false}
+          statusBarHeight={StatusBar.currentHeight}
+        />
       </AuthProvider>
     </NavigationContainer>
-
   );
 }
 
