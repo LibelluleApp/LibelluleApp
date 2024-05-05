@@ -1,4 +1,10 @@
-import React, { useRef, useState, useCallback, useMemo } from "react";
+import React, {
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+} from "react";
 import { View, Pressable, Text, StyleSheet, Dimensions } from "react-native";
 import Animated, {
   Extrapolation,
@@ -132,41 +138,26 @@ const getNextWeekday = (date) => {
   }
   return date;
 };
-const HeaderCarousel = () => {
+const HeaderCarousel = ({ currentIndex, setIndex, initialIndex }) => {
   const carouselRef = useRef(null);
-  const dates = useMemo(() => generateDates(), []); // Générer les dates entre le 1er septembre et le 10 juillet
-  const currentDate = getNextWeekday(moment()); // Date actuelle
-  const [currentIndex, setCurrentIndex] = useState(
-    dates.findIndex((d) => d.fullDate.isSame(currentDate, "day"))
-  );
-  const [currentMonth, setCurrentMonth] = useState(
-    dates[currentIndex].fullDate.format("MMMM") // Mois actuel
-  );
 
-  const itemWidth = screenWidth / 5 - 10; // Définir la largeur de chaque élément pour en afficher cinq
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollTo({
+        index: currentIndex,
+        animated: true, // Animer le défilement
+        duration: 100, // Durée de l'animation
+      });
+    }
+  }, [currentIndex]); // Déplacer le carrousel lorsqu'un nouvel index est défini
 
-  // Mettre à jour le mois lorsque le carousel change
-  const onSnapToItem = (index) => {
-    setCurrentIndex(index);
-    setCurrentMonth(dates[index].fullDate.format("MMMM")); // Mettre à jour le mois
+  const handleSnapToItem = (index) => {
+    if (index !== currentIndex) {
+      setIndex(index); // Mettre à jour l'état lorsque l'utilisateur fait défiler
+    }
   };
-
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
-      {/* Afficher le mois actuel */}
-      <Text
-        style={{
-          fontFamily: "Ubuntu_400Regular",
-          fontSize: 15,
-          color: "#252525",
-          marginBottom: 10,
-          textTransform: "capitalize",
-        }}
-      >
-        {currentMonth}
-      </Text>
-
-      {/* Carousel */}
       <Carousel
         ref={carouselRef}
         loop={false}
@@ -178,21 +169,16 @@ const HeaderCarousel = () => {
           alignSelf: "center",
         }}
         width={70}
-        data={dates}
-        defaultIndex={currentIndex}
-        onSnapToItem={onSnapToItem}
+        data={generateDates()}
+        defaultIndex={initialIndex}
+        onSnapToItem={handleSnapToItem}
         windowSize={5}
+        scrollAnimationDuration={100}
         renderItem={({ item, animationValue }) => (
           <Item
             animationValue={animationValue}
             labelDate={item.date}
             labelDay={item.dayOfWeek}
-            onPress={() =>
-              carouselRef.current?.scrollTo({
-                index: currentIndex,
-                animated: true,
-              })
-            }
           />
         )}
       />
