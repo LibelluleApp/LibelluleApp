@@ -116,7 +116,7 @@ const views = [
   },
   {
     name: "Mails",
-    component: require("../views/Home").default,
+    component: require("../views/Mails").default,
     options: {
       tabBarIcon: ({ color, size, focused }) =>
         getIcon(Mail, MailFocused, color, size, focused),
@@ -126,7 +126,7 @@ const views = [
   },
   {
     name: "Profil",
-    component: require("../views/Home").default,
+    component: require("../views/Profile").default,
     options: {
       tabBarIcon: ({ color, size, focused }) =>
         getIcon(Profile, ProfileFocused, color, size, focused),
@@ -150,6 +150,7 @@ const TabsStack = () => {
             borderTopWidth: 1,
           },
           headerShown: false,
+          lazy: false,
         }}
       >
         {views.map((view) => (

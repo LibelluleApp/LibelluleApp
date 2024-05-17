@@ -46,6 +46,7 @@ const AppStack = ({ navigation }) => {
       options: {
         title: "Scolarité",
         headerBackTitle: "Retour",
+        headerShadowVisible: false,
         headerBackTitleStyle: {
           fontFamily: "Ubuntu_400Regular",
           fontSize: 16,
@@ -62,12 +63,19 @@ const AppStack = ({ navigation }) => {
       component: require("../views/NotificationsViews").default,
       options: {
         title: "Notifications",
+        headerShadowVisible: false,
       },
     },
-
-
+    {
+      name: "MailDetail",
+      component: require("../components/mails/MailDetail").default,
+      options: {
+        title: "Détails du mail",
+        headerShadowVisible: false,
+      },
+    },
   ];
-const insets = useSafeAreaInsets();
+  const insets = useSafeAreaInsets();
   return (
     <View style={{ flex: 1 }}>
       <Stack.Navigator

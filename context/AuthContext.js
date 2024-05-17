@@ -5,7 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 import login from "../api/User/login";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-
 const TOKEN_KEY = "secure_user_token";
 const AuthContext = createContext();
 
@@ -73,7 +72,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider 
+    <AuthContext.Provider
       value={{ isAuthenticated, signIn, signOut, userToken }}
     >
       {children}

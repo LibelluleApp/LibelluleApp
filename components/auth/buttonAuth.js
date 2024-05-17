@@ -1,13 +1,28 @@
 import React from "react";
-import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-function ButtonAuth({ title, onPress }) {
+function ButtonAuth({ title, onPress, loading }) {
   const navigation = useNavigation();
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onPress}
+      disabled={loading}
+    >
       <View style={styles.button}>
-        <Text style={styles.buttonText}>{title}</Text>
+        {loading ? (
+          <ActivityIndicator size="small" color="#FFF" />
+        ) : (
+          <Text style={styles.buttonText}>{title}</Text>
+        )}
       </View>
     </TouchableOpacity>
   );

@@ -3,11 +3,10 @@ import {
   Text,
   View,
   StyleSheet,
-  TextInput,
-  Platform,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Platform,
 } from "react-native";
 import ButtonAuth from "../../components/auth/buttonAuth";
 import Input from "../../components/auth/input";
@@ -17,6 +16,7 @@ import { showMessage } from "react-native-flash-message";
 function Login({ navigation }) {
   const [edu_mail, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { signIn } = useAuth();
 
   const handleLogin = async () => {
@@ -28,6 +28,8 @@ function Login({ navigation }) {
       return;
     }
 
+    setLoading(true);
+
     try {
       const result = await signIn(edu_mail, password);
       if (result.status === "error") {
@@ -35,12 +37,16 @@ function Login({ navigation }) {
           message: result.message,
           type: "danger",
         });
+      } else {
+        // Gérer la redirection après une connexion réussie
       }
     } catch (error) {
       showMessage({
         message: "An error occurred during login. Please try again.",
         type: "danger",
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,7 +85,11 @@ function Login({ navigation }) {
             <Text style={styles.forgotpass}>J'ai oublié mon mot de passe</Text>
           </View>
 
-          <ButtonAuth title="Se connecter" onPress={handleLogin} />
+          <ButtonAuth
+            title="Se connecter"
+            onPress={handleLogin}
+            loading={loading}
+          />
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

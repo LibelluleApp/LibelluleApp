@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { Location, People, Clock } from "../../assets/icons/Icons";
+import { Location, PeopleFill, Clock } from "../../assets/icons/Icons";
 
 function NextCourse() {
   return (
@@ -18,7 +18,7 @@ function NextCourse() {
             <Text style={styles.textTeacher}>MMI311</Text>
           </View>
           <View style={styles.content}>
-            <People />
+            <PeopleFill />
             <Text style={styles.textTeacher}>C.Mercier</Text>
           </View>
         </View>

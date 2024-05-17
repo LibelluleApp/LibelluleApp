@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Libellule",
-    "slug": "Libellule",
+    "slug": "libellule",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/ios/logo@3x.png",
@@ -15,12 +15,15 @@
       "translucent": true
     },
     "owner": "libellule",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "config": {
         "usesNonExemptEncryption": false
-      }
+      },
+      "bundleIdentifier": "com.libellule.libellule"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,10 +34,13 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-font", "expo-secure-store"],
+    "plugins": [
+      "expo-font",
+      "expo-secure-store"
+    ],
     "extra": {
       "eas": {
-        "projectId": "d898503d-fdac-42c7-b3a7-33256ef05e9a"
+        "projectId": "142931be-af91-443d-9e7d-57ecd13da335"
       }
     }
   }
