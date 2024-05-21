@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "Ubuntu_500Medium",
-    fontSize: 17,
+    fontSize: 15,
     color: "#7A797C",
     marginBottom: 14,
   },
@@ -71,7 +71,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   tileText: {
-    fontFamily: "Ubuntu_400Regular",
+    fontFamily: "Ubuntu_500Medium",
+    fontSize: 13,
     color: "#252525",
   },
 });

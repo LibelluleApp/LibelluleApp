@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   textHour: {
     fontFamily: "Ubuntu_500Medium",
-    fontSize: 18,
+    fontSize: 17,
     color: "#fff",
   },
   stick: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   textSubject: {
     fontFamily: "Ubuntu_500Medium",
-    fontSize: 18,
+    fontSize: 17,
     color: "#fff",
   },
   teacher: {
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   textTeacher: {
     fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
+    fontSize: 14,
     color: "#fff",
     gap: 10,
   },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   hourClock: {
     fontFamily: "Ubuntu_500Medium",
-    fontSize: 15,
+    fontSize: 14,
     color: "#fff",
   },
   content: {
