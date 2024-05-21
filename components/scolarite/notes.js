@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF",
     borderRadius: 10,
     padding: 15,
-    width: "48.575%",
+    width: "48%",
   },
   gridTitle: {
     fontFamily: "Ubuntu_500Medium",
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 15,
-    width: "48.575%",
+    width: "48%",
   },
 });
 

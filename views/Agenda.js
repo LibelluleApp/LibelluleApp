@@ -1,9 +1,9 @@
-import React, { useState, useMemo, Suspense, useEffect } from "react";
+import React, { useState, useMemo, Suspense, useEffect, useRef } from "react";
 import { View, StyleSheet, Dimensions, ActivityIndicator } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import Animated, { useSharedValue } from "react-native-reanimated";
 import moment from "moment";
-import HeaderCarousel from "../components/agenda/HeaderCarrousel"; // Assurez-vous d'importer le composant HeaderCarousel
+import HeaderCarousel from "../components/agenda/HeaderCarrousel";
 
 const EvalHome = React.lazy(() => import("../components/home/Agenda/Eval"));
 const TaskHome = React.lazy(() => import("../components/home/Agenda/Task"));
@@ -36,11 +36,22 @@ const preloadComponent = (component) => {
 
 const Agenda = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const scrollX = useSharedValue(0);
+
   const dates = useMemo(() => generateDates(), []);
+  console.log(dates);
+  const carouselRef = useRef(null);
+  const headerRef = useRef(null);
+
+  const changeSlideHeader = (slide) => {
+    if (carouselRef.current) {
+      carouselRef.current?.scrollTo({
+        index: slide,
+        animated: true,
+      });
+    }
+  };
 
   useEffect(() => {
-    // Précharger les composants EvalHome et TaskHome
     preloadComponent(() => import("../components/home/Agenda/Eval"));
     preloadComponent(() => import("../components/home/Agenda/Task"));
   }, []);
@@ -60,21 +71,19 @@ const Agenda = () => {
     <View style={styles.container}>
       <View style={{ height: 10 }} />
 
-      <HeaderCarousel
-        currentIndex={currentIndex}
-        setIndex={setCurrentIndex}
-        initialIndex={0}
-        scrollX={scrollX}
-        data={dates}
-      />
+      <HeaderCarousel ref={carouselRef} data={dates} />
       <Carousel
-        width={Dimensions.get("screen").width}
-        height={Dimensions.get("screen").height - 150} // Ajuster la hauteur pour le contenu principal
+        ref={headerRef}
+        width={Dimensions.get("window").width}
+        height={Dimensions.get("screen").height - 150}
         data={dates}
         loop={false}
         windowSize={3}
         overscrollEnabled={false}
         renderItem={renderItem}
+        onProgressChange={(_, slideProgress) => {
+          changeSlideHeader(slideProgress);
+        }}
       />
     </View>
   );

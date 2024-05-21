@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, forwardRef } from "react";
 import { View, StyleSheet, Dimensions, Text, Pressable } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import Animated, {
@@ -22,10 +22,17 @@ const Item = ({ animationValue, labelDate, labelDay, onPress }) => {
     );
     const borderWidth = interpolate(
       animationValue.value,
-      [-1, -0.5, 0, 0.5, 1],
-      [0, 0.2, 1, 0.2, 0],
+      [
+        -1, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0, 0.1, 0.2,
+        0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
+      ],
+      [
+        0, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1, 0.8, 0.7, 0.6, 0.5,
+        0.4, 0.3, 0.2, 0.1, 0.05, 0,
+      ],
       Extrapolation.CLAMP
     );
+
     return {
       opacity,
       borderWidth,
@@ -84,20 +91,14 @@ const Item = ({ animationValue, labelDate, labelDay, onPress }) => {
   );
 };
 
-const HeaderCarousel = ({
-  currentIndex,
-  setIndex,
-  initialIndex,
-  scrollX,
-  data,
-}) => {
-  const carouselRef = useRef(null);
+const HeaderCarousel = forwardRef(({ defaultIndex, data }, ref) => {
   const screenWidth = Dimensions.get("window").width;
 
   return (
     <View style={{ flex: 0.2 }}>
       <Carousel
-        ref={carouselRef}
+        ref={ref}
+        defaultIndex={defaultIndex}
         style={{
           width: screenWidth,
           height: 70,
@@ -106,10 +107,9 @@ const HeaderCarousel = ({
         width={70}
         data={data}
         loop={false}
-        defaultIndex={initialIndex}
-        onSnapToItem={setIndex}
+        enabled={false}
         windowSize={5}
-        scrollAnimationDuration={100}
+        scrollAnimationDuration={300}
         renderItem={({ item, animationValue }) => (
           <Item
             animationValue={animationValue}
@@ -120,7 +120,7 @@ const HeaderCarousel = ({
       />
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   item: {
