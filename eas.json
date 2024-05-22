@@ -11,7 +11,11 @@
       "distribution": "internal",
       "ios": {
         "enterpriseProvisioning": "adhoc"
-      }
+      },
+      "extends": "base",
+      "android": {
+        "buildType": "apk"
+      },
     },
     "production": {}
   },

@@ -1,7 +1,7 @@
 // File for tabs navigation
 
 import React from "react";
-import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, Image, TouchableOpacity, Platform } from "react-native";
 
 import { Feather } from "@expo/vector-icons";
 import LogoTitle from "../components/logo";
@@ -66,7 +66,20 @@ const baseHeaderOptions = {
   tabBarLabelStyle: {
     marginTop: insets.bottom > 30 ? -3 : 0,
   },
-  tabBarStyle: { height: 90 },
+  tabBarStyle: [
+    Platform.OS === "ios"
+      ? {
+          paddingHorizontal: 8,
+        }
+      : {
+          paddingHorizontal: 8,
+        },
+    insets.bottom > 30
+      ? {
+          height: 90,
+        }
+      : null,
+  ],
   headerStyle: {
     backgroundColor: "#F4F5F9",
     shadowColor: "transparent",

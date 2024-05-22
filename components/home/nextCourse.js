@@ -36,7 +36,7 @@ function NextCourse() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#5088F3",
-    fontFamily: "Ubuntu_400Regular",
+    fontFamily: "SFProDisplay_400Regular",
     borderRadius: 10,
     width: "90%",
     paddingHorizontal: 17,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textHour: {
-    fontFamily: "Ubuntu_500Medium",
+    fontFamily: "SFProDisplay_500Medium",
     fontSize: 17,
     color: "#fff",
   },
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 14,
   },
   textSubject: {
-    fontFamily: "Ubuntu_500Medium",
+    fontFamily: "SFProDisplay_500Medium",
     fontSize: 17,
     color: "#fff",
   },
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   textTeacher: {
-    fontFamily: "Ubuntu_400Regular",
+    fontFamily: "SFProDisplay_400Regular",
     fontSize: 14,
     color: "#fff",
     gap: 10,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   hourClock: {
-    fontFamily: "Ubuntu_500Medium",
+    fontFamily: "SFProDisplay_500Medium",
     fontSize: 14,
     color: "#fff",
   },

@@ -6,7 +6,7 @@ import {
   TimetableSmall,
   LeftArrow,
 } from "../../../assets/icons/Icons";
-import * as Haptics from 'expo-haptics';
+import * as Haptics from "expo-haptics";
 
 function TaskHome() {
   return (
@@ -16,10 +16,9 @@ function TaskHome() {
           fillColor="#0760FB"
           unfillColor="#FFFFFF"
           iconStyle={{ borderColor: "#7A797C" }}
-          onPress={ () =>
-            Haptics.notificationAsync(
-              Haptics.NotificationFeedbackType.Success
-            )}
+          onPress={() =>
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+          }
         />
         <View style={styles.taskTopContent}>
           <Text style={styles.taskTitle}>Audiovisuel</Text>
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   taskTitle: {
-    fontFamily: "Ubuntu_500Medium",
+    fontFamily: "SFProDisplay_500Medium",
     fontSize: 16,
     color: "#252525",
   },
@@ -76,11 +75,11 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   taskContent: {
-    fontFamily: "Ubuntu_400Regular",
+    fontFamily: "SFProDisplay_400Regular",
     color: "#252525",
   },
   taskDescription: {
-    fontFamily: "Ubuntu_400Regular",
+    fontFamily: "SFProDisplay_400Regular",
     color: "#252525",
   },
 });

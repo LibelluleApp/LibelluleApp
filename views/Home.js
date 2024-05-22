@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   Button,
+  Platform,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { format, getDay } from "date-fns";
@@ -60,16 +61,26 @@ function Home() {
             style={styles.image}
           />
           <View>
-            <Text style={{ fontFamily: "Ubuntu_400Regular", fontSize: 17 }}>
+            <Text
+              style={{
+                fontFamily: "SFProDisplay_400Regular",
+                fontSize: 17,
+              }}
+            >
               Bonjour{" "}
-              <Text style={{ fontFamily: "Ubuntu_500Medium" }}>
+              <Text style={{ fontFamily: "SFProDisplay_500Medium" }}>
                 Arnaud
               </Text>
             </Text>
-            <Text style={{ fontFamily: "Ubuntu_400Regular", fontSize: 15 }}>
+            <Text
+              style={{
+                fontFamily: "SFProDisplay_400Regular",
+                fontSize: 15,
+              }}
+            >
               Nous sommes le{" "}
               <Text
-                style={{ fontFamily: "Ubuntu_500Medium" }}
+                style={{ fontFamily: "SFProDisplay_500Medium" }}
               >{`${daysOfWeek[dayIndex]} ${formattedDate}`}</Text>
             </Text>
           </View>
@@ -86,7 +97,7 @@ function Home() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F4F5F9",
-    fontFamily: "Ubuntu_400Regular",
+    fontFamily: "SFProDisplay_400Regular",
   },
   image: {
     width: 50,

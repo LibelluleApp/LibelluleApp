@@ -91,36 +91,40 @@ const Item = ({ animationValue, labelDate, labelDay, onPress }) => {
   );
 };
 
-const HeaderCarousel = forwardRef(({ defaultIndex, data }, ref) => {
-  const screenWidth = Dimensions.get("window").width;
+const HeaderCarousel = forwardRef(
+  ({ defaultIndex, data, onProgressChange }, ref) => {
+    const screenWidth = Dimensions.get("window").width;
 
-  return (
-    <View style={{ flex: 0.2 }}>
-      <Carousel
-        ref={ref}
-        defaultIndex={defaultIndex}
-        style={{
-          width: screenWidth,
-          height: 70,
-          justifyContent: "center",
-        }}
-        width={70}
-        data={data}
-        loop={false}
-        enabled={false}
-        windowSize={5}
-        scrollAnimationDuration={300}
-        renderItem={({ item, animationValue }) => (
-          <Item
-            animationValue={animationValue}
-            labelDate={item.date}
-            labelDay={item.dayOfWeek}
-          />
-        )}
-      />
-    </View>
-  );
-});
+    return (
+      <View style={{ flex: 0.2 }}>
+        <Carousel
+          ref={ref}
+          defaultIndex={defaultIndex}
+          style={{
+            width: screenWidth,
+            height: 70,
+            justifyContent: "center",
+          }}
+          width={70}
+          data={data}
+          loop={false}
+          enabled={true}
+          windowSize={5}
+          scrollAnimationDuration={300}
+          onProgressChange={onProgressChange}
+          renderItem={({ item, animationValue, onPress }) => (
+            <Item
+              animationValue={animationValue}
+              labelDate={item.date}
+              labelDay={item.dayOfWeek}
+              onPress={onPress}
+            />
+          )}
+        />
+      </View>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   item: {

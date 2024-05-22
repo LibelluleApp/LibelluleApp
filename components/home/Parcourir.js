@@ -46,7 +46,7 @@ function ParcourirHome() {
 
 const styles = StyleSheet.create({
   container: {
-    fontFamily: "Ubuntu_400Regular",
+    fontFamily: "SFProDisplay_400Regular",
     alignSelf: "center",
     width: "100%",
     paddingLeft: "5%",
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   title: {
-    fontFamily: "Ubuntu_500Medium",
+    fontFamily: "SFProDisplay_500Medium",
     fontSize: 15,
     color: "#7A797C",
     marginBottom: 14,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   tileText: {
-    fontFamily: "Ubuntu_500Medium",
+    fontFamily: "SFProDisplay_500Medium",
     fontSize: 13,
     color: "#252525",
   },

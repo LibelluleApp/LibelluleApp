@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   evalTitle: {
-    fontFamily: "Ubuntu_500Medium",
+    fontFamily: "SFProDisplay_500Medium",
     fontSize: 16,
     color: "#fff",
   },
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   evalContent: {
-    fontFamily: "Ubuntu_400Regular",
+    fontFamily: "SFProDisplay_400Regular",
     color: "#fff",
   },
 });

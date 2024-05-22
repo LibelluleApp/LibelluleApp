@@ -1,13 +1,8 @@
-import React from "react";
-import { Text, View, StatusBar } from "react-native";
+import React, { useEffect } from "react";
+import { Text, View, StatusBar, TextInput } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
-import { useFonts } from "expo-font";
-import {
-  Ubuntu_700Bold,
-  Ubuntu_500Medium,
-  Ubuntu_400Regular,
-} from "@expo-google-fonts/ubuntu";
+import { loadFonts } from "./utils/fonts/Font";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AppStack from "./stacks/AppStack";
 import AuthStack from "./stacks/AuthStack";
@@ -17,6 +12,7 @@ import {
 } from "react-native-safe-area-context";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import moment from "moment";
+import { useFonts } from "expo-font";
 import "moment/locale/fr"; // Importer la locale française
 
 // Définir la locale sur "fr" pour traduire les dates en français
@@ -45,10 +41,29 @@ function AuthStackSwitcher() {
 }
 
 function App() {
+  useEffect(() => {
+    Text.defaultProps = Text.defaultProps || {};
+    Text.defaultProps.allowFontScaling = false;
+    TextInput.defaultProps = TextInput.defaultProps || {};
+    TextInput.defaultProps.allowFontScaling = false;
+    View.defaultProps = View.defaultProps || {};
+    View.defaultProps.allowFontScaling = false;
+  }, []);
   const [fontsLoaded] = useFonts({
-    Ubuntu_700Bold,
-    Ubuntu_500Medium,
-    Ubuntu_400Regular,
+    Ubuntu_300Light: require("./assets/fonts/Ubuntu-Light.ttf"),
+    Ubuntu_300Light_Italic: require("./assets/fonts/Ubuntu-LightItalic.ttf"),
+    Ubuntu_400Regular: require("./assets/fonts/Ubuntu-Regular.ttf"),
+    Ubuntu_400Regular_Italic: require("./assets/fonts/Ubuntu-Italic.ttf"),
+    Ubuntu_500Medium: require("./assets/fonts/Ubuntu-Medium.ttf"),
+    Ubuntu_500Medium_Italic: require("./assets/fonts/Ubuntu-MediumItalic.ttf"),
+    Ubuntu_700Bold: require("./assets/fonts/Ubuntu-Bold.ttf"),
+    Ubuntu_700Bold_Italic: require("./assets/fonts/Ubuntu-BoldItalic.ttf"),
+    HindSiliguri_400Regular: require("./assets/fonts/HindSiliguri-Regular.ttf"),
+    HindSiliguri_500Medium: require("./assets/fonts/HindSiliguri-Medium.ttf"),
+    HindSiliguri_700Bold: require("./assets/fonts/HindSiliguri-Bold.ttf"),
+    SFProDisplay_400Regular: require("./assets/fonts/SFProDisplay-Regular.ttf"),
+    SFProDisplay_500Medium: require("./assets/fonts/SFProDisplay-Medium.ttf"),
+    SFProDisplay_700Bold: require("./assets/fonts/SFProDisplay-Bold.ttf"),
   });
 
   if (!fontsLoaded) {
@@ -58,6 +73,7 @@ function App() {
       </View>
     );
   }
+
   return (
     <NavigationContainer>
       <AuthProvider>

@@ -43,8 +43,8 @@ const Agenda = () => {
   const headerRef = useRef(null);
 
   const changeSlideHeader = (slide) => {
-    if (carouselRef.current) {
-      carouselRef.current?.scrollTo({
+    if (headerRef.current) {
+      headerRef.current?.scrollTo({
         index: slide,
         animated: true,
       });
@@ -71,7 +71,13 @@ const Agenda = () => {
     <View style={styles.container}>
       <View style={{ height: 10 }} />
 
-      <HeaderCarousel ref={carouselRef} data={dates} />
+      <HeaderCarousel
+        ref={carouselRef}
+        data={dates}
+        onProgressChange={(_, slideProgress) => {
+          changeSlideHeader(slideProgress);
+        }}
+      />
       <Carousel
         ref={headerRef}
         width={Dimensions.get("window").width}
@@ -81,9 +87,7 @@ const Agenda = () => {
         windowSize={3}
         overscrollEnabled={false}
         renderItem={renderItem}
-        onProgressChange={(_, slideProgress) => {
-          changeSlideHeader(slideProgress);
-        }}
+        enabled={false}
       />
     </View>
   );
