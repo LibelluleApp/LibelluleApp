@@ -10,12 +10,14 @@
     "preview": {
       "distribution": "internal",
       "ios": {
-        "enterpriseProvisioning": "adhoc"
+        "enterpriseProvisioning": "adhoc",
+        "image": "latest"
       },
       "extends": "base",
       "android": {
-        "buildType": "apk"
-      },
+        "buildType": "apk",
+        "image": "latest"
+      }
     },
     "production": {}
   },
