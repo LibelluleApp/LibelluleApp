@@ -14,7 +14,6 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import moment from "moment";
 import { useFonts } from "expo-font";
 import "moment/locale/fr"; // Importer la locale française
-import { setCustomText, setCustomTextInput } from "react-native-global-props";
 
 // Définir la locale sur "fr" pour traduire les dates en français
 moment.locale("fr");
@@ -42,13 +41,6 @@ function AuthStackSwitcher() {
 }
 
 function App() {
-  const customTextProps = {
-    style: {
-      includeFontPadding: false,
-      color: "#000000",
-    },
-  };
-  setCustomText(customTextProps);
   useEffect(() => {
     Text.defaultProps = Text.defaultProps || {};
     Text.defaultProps.allowFontScaling = false;
@@ -56,8 +48,6 @@ function App() {
     TextInput.defaultProps.allowFontScaling = false;
     View.defaultProps = View.defaultProps || {};
     View.defaultProps.allowFontScaling = false;
-    // includeFontPadding
-    Text.defaultProps.includeFontPadding = false;
   }, []);
   const [fontsLoaded] = useFonts({
     Ubuntu_Light: require("./assets/fonts/Ubuntu/Ubuntu-Light.otf"),
