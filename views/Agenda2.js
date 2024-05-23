@@ -93,6 +93,7 @@ const Agenda2 = () => {
         renderItem={({ item }) => <Item item={item} />}
         onChangeIndex={handleChangeIndex}
         windowSize={3}
+        bounces={false}
       />
     </View>
   );

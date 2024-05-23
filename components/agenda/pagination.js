@@ -6,18 +6,18 @@ const PaginationHeader = ({ currentDay, onPrev, onNext, index }) => {
   return (
     <View style={styles.container}>
       {index > 0 && (
-        <TouchableOpacity onPress={onPrev}>
+        <TouchableOpacity onPress={onPrev} style={styles.around}>
           <LeftArrowAgenda fill="#252525" />
         </TouchableOpacity>
       )}
       {index === 0 && (
-        <TouchableOpacity disabled={true}>
+        <TouchableOpacity disabled={true} style={styles.around}>
           <LeftArrowAgenda fill="#7A7C7C" />
         </TouchableOpacity>
       )}
 
       <Text style={styles.day}>{currentDay}</Text>
-      <TouchableOpacity onPress={onNext}>
+      <TouchableOpacity onPress={onNext} style={styles.around}>
         <RightArrowAgenda fill="#252525" />
       </TouchableOpacity>
     </View>
@@ -36,6 +36,9 @@ const styles = StyleSheet.create({
   day: {
     fontSize: 15,
     fontFamily: "Ubuntu_500Medium",
+  },
+  around: {
+    padding: 10,
   },
 });
 
