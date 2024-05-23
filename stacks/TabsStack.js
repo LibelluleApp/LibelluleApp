@@ -78,14 +78,22 @@ const baseHeaderOptions = {
       ? {
           height: 90,
         }
-      : null,
+      : {
+          height: 70,
+        },
   ],
   headerStyle: {
     backgroundColor: "#F4F5F9",
     shadowColor: "transparent",
     elevation: 0,
   },
-
+  headerTitleStyle: {
+    fontFamily: "Ubuntu_500Medium",
+    fontSize: 18,
+    color: "#252525",
+    allowFontScaling: false,
+  },
+  headerTitleAlign: "center",
   headerLeftContainerStyle: {
     paddingLeft: 17,
   },

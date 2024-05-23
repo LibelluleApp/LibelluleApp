@@ -19,10 +19,6 @@ import "moment/locale/fr"; // Importer la locale française
 // Définir la locale sur "fr" pour traduire les dates en français
 moment.locale("fr");
 
-if (Platform.OS === "android") {
-  NavigationBar.setVisibilityAsync("hidden");
-}
-
 const Stack = createNativeStackNavigator();
 
 function AuthStackSwitcher() {
@@ -46,6 +42,9 @@ function AuthStackSwitcher() {
 }
 
 function App() {
+  if (Platform.OS === "android") {
+    NavigationBar.setVisibilityAsync("hidden");
+  }
   useEffect(() => {
     Text.defaultProps = Text.defaultProps || {};
     Text.defaultProps.allowFontScaling = false;
@@ -54,16 +53,30 @@ function App() {
     View.defaultProps = View.defaultProps || {};
     View.defaultProps.allowFontScaling = false;
   }, []);
-  const [fontsLoaded] = useFonts({
-    Ubuntu_Light: require("./assets/fonts/Ubuntu/Ubuntu-Light.otf"),
-    Ubuntu_Light_Italic: require("./assets/fonts/Ubuntu/Ubuntu-LightItalic.otf"),
-    Ubuntu_400Regular: require("./assets/fonts/Ubuntu-Regular.ttf"),
-    Ubuntu_Regular_Italic: require("./assets/fonts/Ubuntu/Ubuntu-Italic.otf"),
-    Ubuntu_500Medium: require("./assets/fonts/Ubuntu-Medium.ttf"),
-    Ubuntu_Medium_Italic: require("./assets/fonts/Ubuntu/Ubuntu-MediumItalic.otf"),
+
+  const fontConfig = {
+    Ubuntu_300Light: require("./assets/fonts/Ubuntu/Ubuntu-Light.otf"),
+    Ubuntu_300Light_Italic: require("./assets/fonts/Ubuntu/Ubuntu-LightItalic.otf"),
+    Ubuntu_400Regular: require("./assets/fonts/Ubuntu/Ubuntu-Regular.otf"),
+    Ubuntu_400Regular_Italic: require("./assets/fonts/Ubuntu/Ubuntu-Italic.otf"),
+    Ubuntu_500Medium: require("./assets/fonts/Ubuntu/Ubuntu-Medium.otf"),
+    Ubuntu_500Medium_Italic: require("./assets/fonts/Ubuntu/Ubuntu-MediumItalic.otf"),
     Ubuntu_700Bold: require("./assets/fonts/Ubuntu/Ubuntu-Bold.otf"),
-    Ubuntu_Bold_Italic: require("./assets/fonts/Ubuntu/Ubuntu-BoldItalic.otf"),
-  });
+    Ubuntu_700Bold_Italic: require("./assets/fonts/Ubuntu/Ubuntu-BoldItalic.otf"),
+  };
+
+  if (Platform.OS === "android") {
+    fontConfig.Ubuntu_400Regular = require("./assets/fonts/Ubuntu/Ubuntu-Regular-Fix.ttf");
+    fontConfig.Ubuntu_500Medium = require("./assets/fonts/Ubuntu/Ubuntu-Medium-Fix.ttf");
+    fontConfig.Ubuntu_700Bold = require("./assets/fonts/Ubuntu/Ubuntu-Bold-Fix.ttf");
+    fontConfig.Ubuntu_300Light = require("./assets/fonts/Ubuntu/Ubuntu-Light-Fix.ttf");
+    fontConfig.Ubuntu_400Regular_Italic = require("./assets/fonts/Ubuntu/Ubuntu-Italic-Fix.ttf");
+    fontConfig.Ubuntu_500Medium_Italic = require("./assets/fonts/Ubuntu/Ubuntu-MediumItalic-Fix.ttf");
+    fontConfig.Ubuntu_700Bold_Italic = require("./assets/fonts/Ubuntu/Ubuntu-BoldItalic-Fix.ttf");
+    fontConfig.Ubuntu_300Light_Italic = require("./assets/fonts/Ubuntu/Ubuntu-LightItalic-Fix.ttf");
+  }
+
+  const [fontsLoaded] = useFonts(fontConfig);
 
   if (!fontsLoaded) {
     return null;
