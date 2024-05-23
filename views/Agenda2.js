@@ -1,17 +1,19 @@
-import React, { useState, useRef, useEffect, Suspense } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  ActivityIndicator,
-} from "react-native";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  PureComponent,
+  Suspense,
+} from "react";
+import { View, StyleSheet, Dimensions, ActivityIndicator } from "react-native";
 import SwiperFlatList from "react-native-swiper-flatlist";
 import PaginationHeader from "../components/agenda/pagination";
-const EvalHome = React.lazy(() => import("../components/home/Agenda/Eval"));
-const TaskHome = React.lazy(() => import("../components/home/Agenda/Task"));
 import moment from "moment";
 import "moment/locale/fr";
+
+// Import explicite des composants à pré-charger
+import EvalHome from "../components/home/Agenda/Eval";
+import TaskHome from "../components/home/Agenda/Task";
 
 const preloadComponent = (component) => {
   return new Promise((resolve) => {
@@ -19,28 +21,30 @@ const preloadComponent = (component) => {
   });
 };
 
+class Item extends PureComponent {
+  render() {
+    return (
+      <View style={styles.itemContainer}>
+        <Suspense fallback={<ActivityIndicator size="large" color="#0000ff" />}>
+          <EvalHome />
+          <TaskHome />
+        </Suspense>
+      </View>
+    );
+  }
+}
+
 const Agenda2 = () => {
   const swiperRef = useRef(null); // Référence au SwiperFlatList
   const [currentIndex, setCurrentIndex] = useState(0);
   const [daysOfWeek, setDaysOfWeek] = useState([]);
 
-  // Fonction pour obtenir les jours de la semaine entre deux dates
-  const getWeekDays = (startDate, endDate) => {
-    const days = [];
-    let currentDate = moment(startDate);
-    while (currentDate <= endDate) {
-      if (currentDate.day() !== 0 && currentDate.day() !== 6) {
-        days.push(moment(currentDate));
-      }
-      currentDate.add(1, "day");
-    }
-    return days;
-  };
-
   useEffect(() => {
+    // Pré-chargement des composants
     preloadComponent(() => import("../components/home/Agenda/Eval"));
     preloadComponent(() => import("../components/home/Agenda/Task"));
 
+    // Calcul des jours de la semaine
     const startDate = moment("2023-09-01");
     const endDate = moment("2024-07-10");
 
@@ -55,17 +59,6 @@ const Agenda2 = () => {
 
     setDaysOfWeek(weekdays);
   }, []);
-
-  const renderItem = ({ index }) => {
-    return (
-      <View style={styles.itemContainer}>
-        <Suspense fallback={<ActivityIndicator size="large" color="#0000ff" />}>
-          <EvalHome />
-          <TaskHome />
-        </Suspense>
-      </View>
-    );
-  };
 
   const handleChangeIndex = ({ index }) => {
     setCurrentIndex(index);
@@ -97,8 +90,9 @@ const Agenda2 = () => {
         ref={swiperRef}
         index={currentIndex}
         data={daysOfWeek}
-        renderItem={renderItem}
+        renderItem={({ item }) => <Item item={item} />}
         onChangeIndex={handleChangeIndex}
+        windowSize={3}
       />
     </View>
   );
@@ -110,11 +104,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F4F5F9",
     gap: 23,
   },
-
-  text: {
-    fontSize: 24,
-    color: "white",
-  },
   itemContainer: {
     flex: 1,
     width: Dimensions.get("window").width,
@@ -122,4 +111,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: "5%",
   },
 });
+
 export default Agenda2;
