@@ -26,18 +26,18 @@ const PaginationHeader = ({
       </View>
       <View style={styles.content}>
         {index > 0 && (
-          <TouchableOpacity onPress={onPrev} style={styles.around}>
+          <TouchableOpacity onPress={onPrev} style={styles.around} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
             <LeftArrowAgenda fill="#252525" />
           </TouchableOpacity>
         )}
         {index === 0 && (
-          <TouchableOpacity disabled={true} style={styles.around}>
+          <TouchableOpacity disabled={true} style={styles.around} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
             <LeftArrowAgenda fill="#7A7C7C" />
           </TouchableOpacity>
         )}
 
         <Text style={styles.day}>{currentDay}</Text>
-        <TouchableOpacity onPress={onNext} style={styles.around}>
+        <TouchableOpacity onPress={onNext} style={styles.around} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
           <RightArrowAgenda fill="#252525" />
         </TouchableOpacity>
       </View>
