@@ -47,7 +47,9 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "15.2.0",
     "react-native-swiper-flatlist": "^3.2.4",
-    "react-native-vector-icons": "^10.0.3"
+    "react-native-vector-icons": "^10.0.3",
+    "expo-system-ui": "~3.0.4",
+    "expo-navigation-bar": "~3.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

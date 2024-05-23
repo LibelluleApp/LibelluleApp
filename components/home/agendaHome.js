@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   counts: {
     flexDirection: "row",
     justifyContent: "space-between",
+    gap: 5,
   },
   evalCount: {
     borderColor: "#BB0000",

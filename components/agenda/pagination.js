@@ -9,10 +9,21 @@ const PaginationHeader = ({
   index,
   returnToday,
   defaultIndex,
+  currentWeekNumber,
 }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.recap}></View>
+      <View style={styles.recap}>
+        <Text style={styles.week}>Semaine {currentWeekNumber}</Text>
+        <View style={styles.counts}>
+          <View style={styles.evalCount}>
+            <Text style={styles.evalText}>1 évaluation prévue</Text>
+          </View>
+          <View style={styles.taskCount}>
+            <Text style={styles.taskText}>1 tâche restante</Text>
+          </View>
+        </View>
+      </View>
       <View style={styles.content}>
         {index > 0 && (
           <TouchableOpacity onPress={onPrev} style={styles.around}>
@@ -65,6 +76,44 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     marginVertical: 10,
     textDecorationLine: "underline",
+  },
+  week: {
+    fontSize: 17,
+    fontFamily: "Ubuntu_500Medium",
+    color: "#252525",
+    paddingHorizontal: 24,
+  },
+  counts: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 5,
+    marginTop: 10,
+    marginBottom: 20,
+    paddingHorizontal: 24,
+  },
+  evalCount: {
+    borderColor: "#BB0000",
+    borderWidth: 1,
+    paddingHorizontal: 13,
+    paddingVertical: 7,
+    borderRadius: 10,
+  },
+  taskCount: {
+    borderColor: "#0760FB",
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 13,
+    paddingVertical: 7,
+  },
+  evalText: {
+    fontFamily: "Ubuntu_400Regular",
+    fontSize: 15,
+    color: "#BB0000",
+  },
+  taskText: {
+    fontFamily: "Ubuntu_400Regular",
+    fontSize: 15,
+    color: "#0760FB",
   },
 });
 

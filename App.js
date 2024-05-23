@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Text, View, StatusBar, TextInput } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
+import * as NavigationBar from "expo-navigation-bar";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AppStack from "./stacks/AppStack";
@@ -17,7 +18,7 @@ import "moment/locale/fr"; // Importer la locale française
 
 // Définir la locale sur "fr" pour traduire les dates en français
 moment.locale("fr");
-
+NavigationBar.setVisibilityAsync("hidden");
 const Stack = createNativeStackNavigator();
 
 function AuthStackSwitcher() {

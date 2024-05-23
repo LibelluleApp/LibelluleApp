@@ -14,9 +14,6 @@
     "androidStatusBar": {
       "translucent": true
     },
-    "androidNavigationBar": {
-      "visible": "immersive"
-    },
     "owner": "libellule",
     "assetBundlePatterns": ["**/*"],
     "ios": {
