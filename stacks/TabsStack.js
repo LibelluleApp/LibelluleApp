@@ -118,7 +118,7 @@ const views = [
   },
   {
     name: "Agenda",
-    component: require("../views/Agenda2").default,
+    component: require("../views/Agenda").default,
     options: {
       tabBarIcon: ({ color, size, focused }) =>
         getIcon(Agenda, AgendaFocused, color, size, focused),
