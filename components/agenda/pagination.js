@@ -42,7 +42,7 @@ const PaginationHeader = ({
         </TouchableOpacity>
       </View>
       {index !== defaultIndex && (
-        <TouchableOpacity onPress={returnToday}>
+        <TouchableOpacity onPress={returnToday} style={styles.btntoday}>
           <Text style={styles.return}>Revenir à aujourd'hui</Text>
         </TouchableOpacity>
       )}
@@ -65,6 +65,9 @@ const styles = StyleSheet.create({
   day: {
     fontSize: 15,
     fontFamily: "Ubuntu_500Medium",
+  },
+  btntoday: {
+    alignSelf: "flex-start",
   },
   around: {
     padding: 10,
