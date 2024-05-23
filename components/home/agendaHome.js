@@ -26,13 +26,13 @@ function AgendaHome() {
 
 const styles = StyleSheet.create({
   container: {
-    fontFamily: "SFProDisplay_400Regular",
+    fontFamily: "Ubuntu_400Regular",
     marginTop: 22,
     width: "90%",
     alignSelf: "center",
   },
   title: {
-    fontFamily: "SFProDisplay_500Medium",
+    fontFamily: "Ubuntu_500Medium",
     fontSize: 15,
     color: "#7A797C",
     marginBottom: 14,
@@ -56,12 +56,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   evalText: {
-    fontFamily: "SFProDisplay_400Regular",
+    fontFamily: "Ubuntu_400Regular",
     fontSize: 15,
     color: "#BB0000",
   },
   taskText: {
-    fontFamily: "SFProDisplay_400Regular",
+    fontFamily: "Ubuntu_400Regular",
     fontSize: 15,
     color: "#5088F3",
   },

@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     gap: 3,
   },
   taskTitle: {
-    fontFamily: "SFProDisplay_500Medium",
+    fontFamily: "Ubuntu_500Medium",
     fontSize: 16,
     color: "#252525",
   },
@@ -75,11 +75,11 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   taskContent: {
-    fontFamily: "SFProDisplay_400Regular",
+    fontFamily: "Ubuntu_400Regular",
     color: "#252525",
   },
   taskDescription: {
-    fontFamily: "SFProDisplay_400Regular",
+    fontFamily: "Ubuntu_400Regular",
     color: "#252525",
   },
 });

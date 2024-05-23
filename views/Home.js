@@ -63,24 +63,22 @@ function Home() {
           <View>
             <Text
               style={{
-                fontFamily: "SFProDisplay_400Regular",
+                fontFamily: "Ubuntu_400Regular",
                 fontSize: 17,
               }}
             >
               Bonjour{" "}
-              <Text style={{ fontFamily: "SFProDisplay_500Medium" }}>
-                Arnaud
-              </Text>
+              <Text style={{ fontFamily: "Ubuntu_500Medium" }}>Arnaud</Text>
             </Text>
             <Text
               style={{
-                fontFamily: "SFProDisplay_400Regular",
+                fontFamily: "Ubuntu_400Regular",
                 fontSize: 15,
               }}
             >
               Nous sommes le{" "}
               <Text
-                style={{ fontFamily: "SFProDisplay_500Medium" }}
+                style={{ fontFamily: "Ubuntu_500Medium" }}
               >{`${daysOfWeek[dayIndex]} ${formattedDate}`}</Text>
             </Text>
           </View>
@@ -97,7 +95,7 @@ function Home() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F4F5F9",
-    fontFamily: "SFProDisplay_400Regular",
+    fontFamily: "Ubuntu_400Regular",
   },
   image: {
     width: 50,

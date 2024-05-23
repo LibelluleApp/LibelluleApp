@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Text, View, StatusBar, TextInput } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
-import { loadFonts } from "./utils/fonts/Font";
+
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AppStack from "./stacks/AppStack";
 import AuthStack from "./stacks/AuthStack";
@@ -14,6 +14,7 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import moment from "moment";
 import { useFonts } from "expo-font";
 import "moment/locale/fr"; // Importer la locale française
+import { setCustomText, setCustomTextInput } from "react-native-global-props";
 
 // Définir la locale sur "fr" pour traduire les dates en français
 moment.locale("fr");
@@ -41,6 +42,13 @@ function AuthStackSwitcher() {
 }
 
 function App() {
+  const customTextProps = {
+    style: {
+      includeFontPadding: false,
+      color: "#000000",
+    },
+  };
+  setCustomText(customTextProps);
   useEffect(() => {
     Text.defaultProps = Text.defaultProps || {};
     Text.defaultProps.allowFontScaling = false;
@@ -48,22 +56,37 @@ function App() {
     TextInput.defaultProps.allowFontScaling = false;
     View.defaultProps = View.defaultProps || {};
     View.defaultProps.allowFontScaling = false;
+    // includeFontPadding
+    Text.defaultProps.includeFontPadding = false;
   }, []);
   const [fontsLoaded] = useFonts({
-    Ubuntu_300Light: require("./assets/fonts/Ubuntu-Light.ttf"),
-    Ubuntu_300Light_Italic: require("./assets/fonts/Ubuntu-LightItalic.ttf"),
-    Ubuntu_400Regular: require("./assets/fonts/Ubuntu-Regular.ttf"),
-    Ubuntu_400Regular_Italic: require("./assets/fonts/Ubuntu-Italic.ttf"),
-    Ubuntu_500Medium: require("./assets/fonts/Ubuntu-Medium.ttf"),
-    Ubuntu_500Medium_Italic: require("./assets/fonts/Ubuntu-MediumItalic.ttf"),
-    Ubuntu_700Bold: require("./assets/fonts/Ubuntu-Bold.ttf"),
-    Ubuntu_700Bold_Italic: require("./assets/fonts/Ubuntu-BoldItalic.ttf"),
+    Ubuntu_Light: require("./assets/fonts/Ubuntu/Ubuntu-Light.otf"),
+    Ubuntu_Light_Italic: require("./assets/fonts/Ubuntu/Ubuntu-LightItalic.otf"),
+    Ubuntu_400Regular: require("./assets/fonts/Ubuntu/Ubuntu-Regular.otf"),
+    Ubuntu_Regular_Italic: require("./assets/fonts/Ubuntu/Ubuntu-Italic.otf"),
+    Ubuntu_500Medium: require("./assets/fonts/Ubuntu/Ubuntu-Medium.otf"),
+    Ubuntu_Medium_Italic: require("./assets/fonts/Ubuntu/Ubuntu-MediumItalic.otf"),
+    Ubuntu_700Bold: require("./assets/fonts/Ubuntu/Ubuntu-Bold.otf"),
+    Ubuntu_Bold_Italic: require("./assets/fonts/Ubuntu/Ubuntu-BoldItalic.otf"),
     HindSiliguri_400Regular: require("./assets/fonts/HindSiliguri-Regular.ttf"),
     HindSiliguri_500Medium: require("./assets/fonts/HindSiliguri-Medium.ttf"),
     HindSiliguri_700Bold: require("./assets/fonts/HindSiliguri-Bold.ttf"),
-    SFProDisplay_400Regular: require("./assets/fonts/SFProDisplay-Regular.ttf"),
-    SFProDisplay_500Medium: require("./assets/fonts/SFProDisplay-Medium.ttf"),
-    SFProDisplay_700Bold: require("./assets/fonts/SFProDisplay-Bold.ttf"),
+    SFProTextBlack: require("./assets/fonts/SFProText/SF-Pro-Text-Black.otf"),
+    SFProTextBold: require("./assets/fonts/SFProText/SF-Pro-Text-Bold.otf"),
+    SFProTextHeavy: require("./assets/fonts/SFProText/SF-Pro-Text-Heavy.otf"),
+    SFProTextLight: require("./assets/fonts/SFProText/SF-Pro-Text-Light.otf"),
+    SFProTextMedium: require("./assets/fonts/SFProText/SF-Pro-Text-Medium.otf"),
+    SFProTextRegular: require("./assets/fonts/SFProText/SF-Pro-Text-Regular.otf"),
+    SFProTextSemibold: require("./assets/fonts/SFProText/SF-Pro-Text-Semibold.otf"),
+    SFProTextThin: require("./assets/fonts/SFProText/SF-Pro-Text-Thin.otf"),
+    SFProTextBlackItalic: require("./assets/fonts/SFProText/SF-Pro-Text-BlackItalic.otf"),
+    SFProTextBoldItalic: require("./assets/fonts/SFProText/SF-Pro-Text-BoldItalic.otf"),
+    SFProTextHeavyItalic: require("./assets/fonts/SFProText/SF-Pro-Text-HeavyItalic.otf"),
+    SFProTextLightItalic: require("./assets/fonts/SFProText/SF-Pro-Text-LightItalic.otf"),
+    SFProTextMediumItalic: require("./assets/fonts/SFProText/SF-Pro-Text-MediumItalic.otf"),
+    SFProTextRegularItalic: require("./assets/fonts/SFProText/SF-Pro-Text-RegularItalic.otf"),
+    SFProTextSemiboldItalic: require("./assets/fonts/SFProText/SF-Pro-Text-SemiboldItalic.otf"),
+    SFProTextThinItalic: require("./assets/fonts/SFProText/SF-Pro-Text-ThinItalic.otf"),
   });
 
   if (!fontsLoaded) {
