@@ -13,7 +13,6 @@
         "enterpriseProvisioning": "adhoc",
         "image": "latest"
       },
-      "extends": "base",
       "android": {
         "buildType": "apk",
         "image": "latest"

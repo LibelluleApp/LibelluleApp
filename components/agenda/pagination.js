@@ -12,6 +12,7 @@ const PaginationHeader = ({
 }) => {
   return (
     <View style={styles.container}>
+      <View style={styles.recap}></View>
       <View style={styles.content}>
         {index > 0 && (
           <TouchableOpacity onPress={onPrev} style={styles.around}>
