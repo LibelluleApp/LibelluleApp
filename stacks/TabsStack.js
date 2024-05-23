@@ -116,7 +116,7 @@ const views = [
   },
   {
     name: "Emploi du temps",
-    component: require("../views/Home").default,
+    component: require("../views/Timetable").default,
     options: {
       tabBarIcon: ({ color, size, focused }) =>
         getIcon(Timetable, TimetableFocused, color, size, focused),
