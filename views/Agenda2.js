@@ -38,24 +38,44 @@ const Agenda2 = () => {
   const swiperRef = useRef(null); // Référence au SwiperFlatList
   const [currentIndex, setCurrentIndex] = useState(0);
   const [daysOfWeek, setDaysOfWeek] = useState([]);
+  const [defaultIndex, setDefaultIndex] = useState(0);
 
   useEffect(() => {
     // Pré-chargement des composants
     preloadComponent(() => import("../components/home/Agenda/Eval"));
     preloadComponent(() => import("../components/home/Agenda/Task"));
 
-    // Calcul des jours de la semaine
+    // Calcul de la date d'aujourd'hui
+    const today = moment();
+
+    // Calcul de la date de début et de fin de la période
     const startDate = moment("2023-09-01");
     const endDate = moment("2024-07-10");
 
-    let currentDate = startDate;
+    // Si c'est le week-end, passer au lundi suivant
+    if (today.day() === 0 || today.day() === 6) {
+      today.day(1); // Passer au lundi suivant
+    }
+
+    // Si la date d'aujourd'hui est après la fin de la période, revenir à la date de début
+    if (today.isAfter(endDate)) {
+      today = startDate;
+    }
+
+    // Générer les jours de la semaine
     const weekdays = [];
+    let currentDate = today.clone();
     while (currentDate <= endDate) {
       if (currentDate.day() !== 0 && currentDate.day() !== 6) {
-        weekdays.push(moment(currentDate));
+        weekdays.push(currentDate.clone());
       }
       currentDate.add(1, "day");
     }
+
+    // Déterminer l'index de la date d'aujourd'hui ou du lundi suivant
+    const defaultIndex = weekdays.findIndex((day) => day.isSame(today, "day"));
+    setCurrentIndex(defaultIndex !== -1 ? defaultIndex : 0);
+    setDefaultIndex(defaultIndex !== -1 ? defaultIndex : 0);
 
     setDaysOfWeek(weekdays);
   }, []);
@@ -77,7 +97,11 @@ const Agenda2 = () => {
     setCurrentIndex(newIndex);
     swiperRef.current.scrollToIndex({ index: newIndex });
   };
-
+  const handleToday = () => {
+    const newIndex = currentIndex === defaultIndex ? 0 : defaultIndex;
+    setCurrentIndex(newIndex);
+    swiperRef.current.scrollToIndex({ index: newIndex });
+  };
   return (
     <View style={styles.container}>
       <PaginationHeader
@@ -85,6 +109,8 @@ const Agenda2 = () => {
         onPrev={handlePrevDay}
         onNext={handleNextDay}
         index={currentIndex}
+        defaultIndex={defaultIndex}
+        returnToday={handleToday}
       />
       <SwiperFlatList
         ref={swiperRef}
