@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   evalTask: {
     backgroundColor: "#BB0000",
     borderRadius: 10,
-    marginTop: 15,
+    marginBottom: 15,
     paddingHorizontal: 17,
     paddingVertical: 12,
   },

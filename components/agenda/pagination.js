@@ -26,23 +26,44 @@ const PaginationHeader = ({
       </View>
       <View style={styles.content}>
         {index > 0 && (
-          <TouchableOpacity onPress={onPrev} style={styles.around} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+          <TouchableOpacity
+            onPress={onPrev}
+            style={styles.around}
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          >
             <LeftArrowAgenda fill="#252525" />
           </TouchableOpacity>
         )}
         {index === 0 && (
-          <TouchableOpacity disabled={true} style={styles.around} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+          <TouchableOpacity
+            disabled={true}
+            style={styles.around}
+            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+          >
             <LeftArrowAgenda fill="#7A7C7C" />
           </TouchableOpacity>
         )}
 
         <Text style={styles.day}>{currentDay}</Text>
-        <TouchableOpacity onPress={onNext} style={styles.around} hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}>
+        <TouchableOpacity
+          onPress={onNext}
+          style={styles.around}
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        >
           <RightArrowAgenda fill="#252525" />
         </TouchableOpacity>
       </View>
       {index !== defaultIndex && (
         <TouchableOpacity onPress={returnToday} style={styles.btntoday}>
+          <Text style={styles.return}>Revenir à aujourd'hui</Text>
+        </TouchableOpacity>
+      )}
+      {index === defaultIndex && (
+        <TouchableOpacity
+          onPress={returnToday}
+          style={{ opacity: 0 }}
+          disabled={true}
+        >
           <Text style={styles.return}>Revenir à aujourd'hui</Text>
         </TouchableOpacity>
       )}
@@ -67,7 +88,7 @@ const styles = StyleSheet.create({
     fontFamily: "Ubuntu_500Medium",
   },
   btntoday: {
-    alignSelf: "flex-start",
+    alignSelf: "center",
   },
   around: {
     padding: 10,
@@ -77,7 +98,6 @@ const styles = StyleSheet.create({
     fontFamily: "Ubuntu_500Medium",
     color: "#7A797C",
     paddingHorizontal: 24,
-    marginVertical: 10,
     textDecorationLine: "underline",
   },
   week: {
