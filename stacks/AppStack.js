@@ -74,6 +74,14 @@ const AppStack = ({ navigation }) => {
         headerShadowVisible: false,
       },
     },
+    {
+      name: "addAgenda",
+      component: require("../components/agenda/modal/add").default,
+      options: {
+        title: "Ajouter une tâche",
+        headerShadowVisible: false,
+      },
+    },
   ];
   const insets = useSafeAreaInsets();
   return (

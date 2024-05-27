@@ -9,6 +9,8 @@ import { View, StyleSheet, Dimensions, ActivityIndicator } from "react-native";
 import SwiperFlatList from "react-native-swiper-flatlist";
 import PaginationHeader from "../components/agenda/pagination";
 import moment from "moment";
+import Button from "../components/scolarite/button";
+import { useNavigation } from "@react-navigation/native";
 import "moment/locale/fr";
 
 // Import explicite des composants à pré-charger
@@ -35,6 +37,7 @@ class Item extends PureComponent {
 }
 
 const Agenda = () => {
+  const navigation = useNavigation();
   const swiperRef = useRef(null); // Référence au SwiperFlatList
   const [currentIndex, setCurrentIndex] = useState(0);
   const [daysOfWeek, setDaysOfWeek] = useState([]);
@@ -128,6 +131,14 @@ const Agenda = () => {
         onChangeIndex={handleChangeIndex}
         windowSize={3}
         bounces={false}
+      />
+      <Button
+        title="Ajouter une tâche"
+        onPress={() =>
+          navigation.navigate("addAgenda", {
+            date: daysOfWeek[currentIndex]?.format("yyyy-MM-DD"),
+          })
+        }
       />
     </View>
   );

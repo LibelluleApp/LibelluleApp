@@ -47,6 +47,7 @@ function Absence() {
                 "https://mmi-angouleme-dashboard.alwaysdata.net/login"
               );
             }}
+            icon
           />
         </View>
       </View>

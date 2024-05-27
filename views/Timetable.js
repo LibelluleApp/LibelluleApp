@@ -19,6 +19,7 @@ function Timetable() {
               height: 0,
             },
           },
+          swipeEnabled: false,
 
           tabBarActiveTintColor: "#252525",
           tabBarInactiveTintColor: "#7A797C",
