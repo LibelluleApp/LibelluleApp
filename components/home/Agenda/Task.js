@@ -33,7 +33,7 @@ function Eval() {
         </View>
         <Progress.Bar
           progress={0.3}
-          width=""
+          width={null}
           height={4}
           animated={false}
           unfilledColor="#345496"
