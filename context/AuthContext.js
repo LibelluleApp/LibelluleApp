@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
-import { Text } from "react-native";
+import { Text, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import login from "../api/User/login";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ApiManager, { setupInterceptor } from "../api/ApiManager";
 
 const TOKEN_KEY = "secure_user_token";
 const AuthContext = createContext();
@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
-  // Charge le token initial
+
   useEffect(() => {
     const loadToken = async () => {
       try {
@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
           setIsAuthenticated(true);
         }
       } catch (error) {
-        throw new Error("Erreur lors du chargement du token.");
+        console.error("Erreur lors du chargement du token.", error);
       }
       setIsLoading(false);
     };
@@ -31,13 +31,17 @@ export const AuthProvider = ({ children }) => {
     loadToken();
   }, []);
 
-  // Fonction de connexion
-  const signIn = async (edu_mail, password) => {
+  useEffect(() => {
+    setupInterceptor(() => userToken);
+  }, [userToken]);
+
+  const signIn = async (email_edu, mot_de_passe) => {
     try {
-      const result = await login(edu_mail, password);
+      const result = await login(email_edu, mot_de_passe);
 
       if (result.status === "success") {
-        setUserToken(await SecureStore.getItemAsync(TOKEN_KEY));
+        const token = await SecureStore.getItemAsync(TOKEN_KEY);
+        setUserToken(token);
         setIsAuthenticated(true);
         navigation.reset({
           index: 0,
@@ -48,11 +52,11 @@ export const AuthProvider = ({ children }) => {
         return result;
       }
     } catch (error) {
+      console.error("Connexion échouée. Veuillez réessayer.", error);
       throw new Error("Connexion échouée. Veuillez réessayer.");
     }
   };
 
-  // Fonction de déconnexion
   const signOut = async () => {
     try {
       await SecureStore.deleteItemAsync(TOKEN_KEY);
@@ -63,12 +67,16 @@ export const AuthProvider = ({ children }) => {
         routes: [{ name: "AuthStack" }],
       });
     } catch (error) {
+      console.error(
+        "Erreur lors de la déconnexion. Veuillez réessayer.",
+        error
+      );
       throw new Error("Erreur lors de la déconnexion. Veuillez réessayer.");
     }
   };
 
   if (isLoading) {
-    return <Text>Loading....</Text>; // Afficher un indicateur de chargement
+    return <ActivityIndicator size="large" />;
   }
 
   return (

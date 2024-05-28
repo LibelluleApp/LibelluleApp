@@ -1,14 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
-import {
-  Warning,
-  TimetableSmall,
-  LeftArrow,
-} from "../../../assets/icons/Icons";
+import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { TimetableSmall, LeftArrow } from "../../../assets/icons/Icons";
 import * as Haptics from "expo-haptics";
+import { checkAgenda, uncheckAgenda } from "../../../api/Agenda/check";
+import moment from "moment";
 
-function TaskHome() {
+function TaskHome({
+  date,
+  titre,
+  id,
+  matiere,
+  checked,
+  onTaskCheck,
+  onTaskUncheck,
+}) {
+  const [isChecked, setIsChecked] = useState(checked);
+  const dates = moment(date).format("ddd D MMMM");
+  const handleCheckboxPress = () => {
+    setIsChecked(!isChecked);
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    if (isChecked) {
+      uncheckAgenda(id);
+      if (typeof onTaskUncheck === "function") {
+        onTaskUncheck(id, isChecked);
+      }
+    } else {
+      checkAgenda(id);
+      if (typeof onTaskCheck === "function") {
+        onTaskCheck(id, isChecked);
+      }
+    }
+  };
+
   return (
     <TouchableOpacity style={styles.evalTask}>
       <View style={styles.taskTop}>
@@ -16,19 +40,24 @@ function TaskHome() {
           fillColor="#0760FB"
           unfillColor="#FFFFFF"
           iconStyle={{ borderColor: "#7A797C" }}
-          onPress={() =>
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
-          }
+          isChecked={isChecked}
+          onPress={handleCheckboxPress}
         />
         <View style={styles.taskTopContent}>
-          <Text style={styles.taskTitle}>Audiovisuel</Text>
-          <Text style={styles.taskDescription}>Rendu de projet</Text>
+          <Text style={[styles.taskTitle, isChecked && styles.strikethrough]}>
+            {matiere || "Matière indisponible"}
+          </Text>
+          <Text
+            style={[styles.taskDescription, isChecked && styles.strikethrough]}
+          >
+            {titre || "Titre indisponible"}
+          </Text>
         </View>
       </View>
       <View style={styles.taskBottom}>
         <View style={styles.taskBottomLeft}>
           <TimetableSmall fill="#252525" />
-          <Text style={styles.taskContent}>mar. 2 avril</Text>
+          <Text style={styles.taskContent}>{dates || "Date indisponible"}</Text>
         </View>
         <View style={styles.taskBottomRight}>
           <Text style={styles.taskContent}>Voir plus</Text>
@@ -38,6 +67,7 @@ function TaskHome() {
     </TouchableOpacity>
   );
 }
+
 const styles = StyleSheet.create({
   evalTask: {
     backgroundColor: "#FFFFFF",
@@ -82,5 +112,10 @@ const styles = StyleSheet.create({
     fontFamily: "Ubuntu_400Regular",
     color: "#252525",
   },
+  strikethrough: {
+    textDecorationLine: "line-through",
+    color: "#7A797C", // Optional: change color when striked through
+  },
 });
+
 export default TaskHome;

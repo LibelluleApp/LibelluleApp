@@ -10,6 +10,8 @@ const PaginationHeader = ({
   returnToday,
   defaultIndex,
   currentWeekNumber,
+  evalCount,
+  taskCount,
 }) => {
   return (
     <View style={styles.container}>
@@ -17,10 +19,10 @@ const PaginationHeader = ({
         <Text style={styles.week}>Semaine {currentWeekNumber}</Text>
         <View style={styles.counts}>
           <View style={styles.evalCount}>
-            <Text style={styles.evalText}>1 évaluation prévue</Text>
+            <Text style={styles.evalText}>{evalCount} évaluation prévue</Text>
           </View>
           <View style={styles.taskCount}>
-            <Text style={styles.taskText}>1 tâche restante</Text>
+            <Text style={styles.taskText}>{taskCount} tâche restante</Text>
           </View>
         </View>
       </View>

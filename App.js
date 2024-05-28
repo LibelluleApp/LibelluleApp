@@ -4,47 +4,23 @@ import { NavigationContainer } from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
 import * as NavigationBar from "expo-navigation-bar";
 
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AppStack from "./stacks/AppStack";
-import AuthStack from "./stacks/AuthStack";
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
+import AuthStackSwitcher from "./context/AuthStackSwitcher"; // Import the AuthStackSwitcher
 import moment from "moment";
 import { useFonts } from "expo-font";
-import "moment/locale/fr"; // Importer la locale française
+import "moment/locale/fr"; // Import the French locale
 
-// Définir la locale sur "fr" pour traduire les dates en français
-moment.locale("fr");
-
-const Stack = createNativeStackNavigator();
-
-function AuthStackSwitcher() {
-  const { isAuthenticated } = useAuth(); // utilisation de useAuth pour déterminer quelle stack afficher
-
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        animation: "fade",
-        animationDuration: 150,
-      }}
-    >
-      {isAuthenticated ? (
-        <Stack.Screen name="AppStack" component={AppStack} />
-      ) : (
-        <Stack.Screen name="AuthStack" component={AuthStack} />
-      )}
-    </Stack.Navigator>
-  );
-}
+moment.locale("fr"); // Set the locale to French
 
 function App() {
   if (Platform.OS === "android") {
     NavigationBar.setVisibilityAsync("hidden");
   }
+
   useEffect(() => {
     Text.defaultProps = Text.defaultProps || {};
     Text.defaultProps.allowFontScaling = false;

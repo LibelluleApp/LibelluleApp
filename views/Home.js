@@ -27,6 +27,7 @@ const daysOfWeek = [
   "vendredi",
   "samedi",
 ];
+
 const getData = async () => {
   try {
     const value = await AsyncStorage.getItem("user_data");
@@ -36,8 +37,9 @@ const getData = async () => {
     return null;
   }
 };
+
 function Home() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const today = new Date();
   const dayIndex = getDay(today);
   const formattedDate = format(today, "d MMMM", { locale: fr });
@@ -68,7 +70,9 @@ function Home() {
               }}
             >
               Bonjour{" "}
-              <Text style={{ fontFamily: "Ubuntu_500Medium" }}>Arnaud</Text>
+              <Text style={{ fontFamily: "Ubuntu_500Medium" }}>
+                {user.prenom}
+              </Text>
             </Text>
             <Text
               style={{

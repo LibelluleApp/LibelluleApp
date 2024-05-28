@@ -14,13 +14,63 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DropdownComponent from "./dropdown";
 import SelectComponent from "./select";
 import ButtonAuth from "../../auth/buttonAuth";
-import moment from "moment";
+import saveAgenda from "../../../api/Agenda/save";
+import { showMessage } from "react-native-flash-message";
+import { useNavigation } from "@react-navigation/native";
+import moment from "moment-timezone";
 
 const Add = ({ route }) => {
+  const navigation = useNavigation();
   const { date } = route.params;
-  const [dates, setDates] = useState(moment(date));
+  const [dates, setDates] = useState(moment.tz(date, "Europe/Paris"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [matiere, setMatiere] = useState(0);
+  const [type, setType] = useState("");
+  const [titre, setTitre] = useState("");
+  const [description, setDescription] = useState("");
+
+  const [error, setError] = useState(null);
+
+  const handleSaveTask = async () => {
+    if (!dates || !matiere || !type || !titre) {
+      showMessage({
+        message: "Veuillez remplir tous les champs obligatoires.",
+        type: "danger",
+      });
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await saveAgenda(
+        titre,
+        description,
+        dates.format("yyyy-MM-DD"),
+        matiere,
+        type,
+        1,
+        "Y2UI-TP3"
+      );
+      if (result.status === "success") {
+        showMessage({
+          message: "Tâche ajoutée avec succès.",
+          type: "success",
+        });
+        navigation.navigate("Agenda");
+      }
+    } catch (error) {
+      setError(error.message);
+      showMessage({
+        message: error.message,
+        type: "danger",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -31,17 +81,28 @@ const Add = ({ route }) => {
   };
 
   const handleConfirm = (date) => {
-    setDates(moment(date));
+    setDates(moment.tz(date, "Europe/Paris"));
     hideDatePicker();
   };
 
-  const handleSaveTask = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  };
+  const data = [
+    { label: "Anglais", value: "1" },
+    { label: "Item 2", value: "2" },
+    { label: "Item 3", value: "3" },
+    { label: "Item 4", value: "4" },
+    { label: "Item 5", value: "5" },
+    { label: "Item 6", value: "6" },
+    { label: "Item 7", value: "7" },
+    { label: "Item 8", value: "8" },
+  ];
 
+  const data2 = [
+    { label: "Tâche à faire", value: "devoir" },
+    { label: "Évaluation", value: "eval" },
+  ];
+
+  const [value, setValue] = useState(null);
+  const [value2, setValue2] = useState(null);
   return (
     <KeyboardAwareScrollView
       style={styles.background}
@@ -64,21 +125,35 @@ const Add = ({ route }) => {
             <DateTimePickerModal
               isVisible={isDatePickerVisible}
               mode="date"
-              date={new Date(dates)}
+              date={moment.tz(dates, "Europe/Paris").toDate()}
               minimumDate={new Date()}
               locale="fr-FR"
-              value={new Date(dates)}
+              value={moment.tz(dates, "Europe/Paris").toDate()}
               onConfirm={handleConfirm}
               onCancel={hideDatePicker}
             />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>Matière*</Text>
-            <DropdownComponent />
+            <DropdownComponent
+              onChange={(item) => {
+                setValue(item.value);
+                setMatiere(item.value);
+              }}
+              data={data}
+              value={value}
+            />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>Type de tâche*</Text>
-            <SelectComponent />
+            <SelectComponent
+              onChange={(item) => {
+                setValue2(item.value);
+                setType(item.value);
+              }}
+              data={data2}
+              value={value2}
+            />
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>Titre*</Text>
@@ -86,6 +161,7 @@ const Add = ({ route }) => {
               style={styles.input}
               placeholderTextColor="#A3A3A3"
               placeholder="Titre de la tâche"
+              onChangeText={(text) => setTitre(text)}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -95,6 +171,8 @@ const Add = ({ route }) => {
               placeholderTextColor="#A3A3A3"
               placeholder="Description de la tâche"
               multiline={true}
+              onChangeText={(text) => setDescription(text)}
+              value={description}
             />
           </View>
 

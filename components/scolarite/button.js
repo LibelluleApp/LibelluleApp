@@ -2,10 +2,10 @@ import React from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { RedirectTo } from "../../assets/icons/Icons";
 
-function Button({ title, onPress, icon }) {
+function Button({ title, onPress, icon, style }) {
   return (
     <TouchableOpacity
-      style={[styles.button, !icon && { justifyContent: "center" }]}
+      style={[styles.button, !icon && { justifyContent: "center" }, style]}
       onPress={onPress}
     >
       <Text style={styles.buttonText}>{title}</Text>

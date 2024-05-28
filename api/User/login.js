@@ -30,8 +30,8 @@ async function storeUserData(data) {
   }
 }
 
-async function login(edu_mail, password) {
-  if (!edu_mail || !password) {
+async function login(email_edu, mot_de_passe) {
+  if (!email_edu || !mot_de_passe) {
     return {
       status: "error",
       message: "Données manquantes. Veuillez remplir tous les champs.",
@@ -40,10 +40,9 @@ async function login(edu_mail, password) {
 
   try {
     const response = await ApiManager.post("/user/login", {
-      edu_mail,
-      password,
+      email_edu,
+      mot_de_passe,
     });
-
     if (response.data.status === "success") {
       const token = response.data.token;
       await saveToken(token);
@@ -51,8 +50,9 @@ async function login(edu_mail, password) {
       const userData = { ...response.data };
       delete userData.token;
       delete userData.status;
+      delete userData.user.mot_de_passe;
 
-      await storeUserData(userData);
+      await storeUserData(userData.user);
 
       return { status: "success", message: "Connexion réussite" };
     } else {

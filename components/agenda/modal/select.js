@@ -3,14 +3,7 @@ import { StyleSheet } from "react-native";
 import { Dropdown } from "react-native-searchable-dropdown-kj";
 import { BottomArrow } from "./../../../assets/icons/Icons";
 
-const data = [
-  { label: "Tâche à faire", value: "task" },
-  { label: "Évaluation", value: "eval" },
-];
-
-const SelectComponent = () => {
-  const [value, setValue] = useState(null);
-
+const SelectComponent = ({ onChange, data, value }) => {
   return (
     <Dropdown
       style={styles.dropdown}
@@ -25,9 +18,7 @@ const SelectComponent = () => {
       valueField="value"
       placeholder="Choisir le type de tâche"
       value={value}
-      onChange={(item) => {
-        setValue(item.value);
-      }}
+      onChange={onChange}
       renderRightIcon={() => <BottomArrow />}
     />
   );

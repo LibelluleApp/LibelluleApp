@@ -3,24 +3,24 @@ import {
   Text,
   View,
   StyleSheet,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
 } from "react-native";
 import ButtonAuth from "../../components/auth/buttonAuth";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Input from "../../components/auth/input";
 import { useAuth } from "../../context/AuthContext";
 import { showMessage } from "react-native-flash-message";
 
 function Login({ navigation }) {
-  const [edu_mail, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email_edu, setEmail] = useState("");
+  const [mot_de_passe, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { signIn } = useAuth();
 
   const handleLogin = async () => {
-    if (!edu_mail || !password) {
+    if (!email_edu || !mot_de_passe) {
       showMessage({
         message: "Merci d'entrer votre adresse mail et votre mot de passe.",
         type: "danger",
@@ -31,7 +31,7 @@ function Login({ navigation }) {
     setLoading(true);
 
     try {
-      const result = await signIn(edu_mail, password);
+      const result = await signIn(email_edu, mot_de_passe);
       if (result.status === "error") {
         showMessage({
           message: result.message,
@@ -51,12 +51,13 @@ function Login({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={styles.container}
+    <KeyboardAwareScrollView
+      extraScrollHeight={40}
+      keyboardOpeningTime={10}
+      contentContainerStyle={styles.inner} // Déplacer les styles ici
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.inner}>
+        <View>
           <View style={styles.info}>
             <Text style={styles.title}>Connectez-vous</Text>
             <Text style={styles.underTitle}>
@@ -92,17 +93,18 @@ function Login({ navigation }) {
           />
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    justifyContent: "center",
   },
   inner: {
-    flex: 1,
     justifyContent: "center",
+    flex: 1,
+    backgroundColor: "#F4F5F9",
   },
   info: {
     alignItems: "center",

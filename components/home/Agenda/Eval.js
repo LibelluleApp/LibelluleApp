@@ -1,21 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import {
   Warning,
   TimetableSmall,
   LeftArrow,
 } from "../../../assets/icons/Icons";
-function EvalHome() {
+import moment from "moment";
+
+function EvalHome({ titre, id, date }) {
+  const [dates, setDates] = useState(moment(date).format("ddd D MMMM"));
   return (
     <TouchableOpacity style={styles.evalTask}>
       <View style={styles.evalTop}>
         <Warning />
-        <Text style={styles.evalTitle}>[Evaluation] Ergonomie</Text>
+        <Text style={styles.evalTitle}>
+          [Evaluation] {titre || "Titre non disponible"}
+        </Text>
       </View>
       <View style={styles.evalBottom}>
         <View style={styles.evalBottomLeft}>
           <TimetableSmall />
-          <Text style={styles.evalContent}>mar. 2 avril</Text>
+          <Text style={styles.evalContent}>
+            {dates || "Date non disponible"}
+          </Text>
         </View>
         <View style={styles.evalBottomRight}>
           <Text style={styles.evalContent}>Voir plus</Text>
