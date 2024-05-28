@@ -1,121 +1,100 @@
-import React, { useState } from "react";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import { TimetableSmall, LeftArrow } from "../../../assets/icons/Icons";
-import * as Haptics from "expo-haptics";
-import { checkAgenda, uncheckAgenda } from "../../../api/Agenda/check";
-import moment from "moment";
+import React from "react";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { LeftArrow } from "../../../assets/icons/Icons";
+import * as Progress from "react-native-progress";
 
-function TaskHome({
-  date,
-  titre,
-  id,
-  matiere,
-  checked,
-  onTaskCheck,
-  onTaskUncheck,
-}) {
-  const [isChecked, setIsChecked] = useState(checked);
-  const dates = moment(date).format("ddd D MMMM");
-  const handleCheckboxPress = () => {
-    setIsChecked(!isChecked);
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    if (isChecked) {
-      uncheckAgenda(id);
-      if (typeof onTaskUncheck === "function") {
-        onTaskUncheck(id, isChecked);
-      }
-    } else {
-      checkAgenda(id);
-      if (typeof onTaskCheck === "function") {
-        onTaskCheck(id, isChecked);
-      }
-    }
-  };
-
+function Eval() {
   return (
-    <TouchableOpacity style={styles.evalTask}>
-      <View style={styles.taskTop}>
-        <BouncyCheckbox
-          fillColor="#0760FB"
-          unfillColor="#FFFFFF"
-          iconStyle={{ borderColor: "#7A797C" }}
-          isChecked={isChecked}
-          onPress={handleCheckboxPress}
+    <View style={styles.container}>
+      <View style={styles.topContainer}>
+        <TouchableOpacity>
+          <View style={styles.item}>
+            <View style={styles.leftContainer}>
+              <Text style={styles.taskTitle}>Anglais</Text>
+              <Text style={styles.taskDesc}>Finir de lire le livre</Text>
+            </View>
+            <LeftArrow fill="#fff" />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <View style={styles.item}>
+            <View style={styles.leftContainer}>
+              <Text style={styles.taskTitle}>Anglais</Text>
+              <Text style={styles.taskDesc}>Finir de lire le livre</Text>
+            </View>
+            <LeftArrow fill="#fff" />
+          </View>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.bottomContainer}>
+        <View style={styles.progression}>
+          <Text style={styles.progressText}>1/3 tâches</Text>
+          <Text style={styles.progressText}>33%</Text>
+        </View>
+        <Progress.Bar
+          progress={0.3}
+          width=""
+          height={4}
+          animated={false}
+          unfilledColor="#345496"
+          borderWidth={0}
+          color="#fff"
         />
-        <View style={styles.taskTopContent}>
-          <Text style={[styles.taskTitle, isChecked && styles.strikethrough]}>
-            {matiere || "Matière indisponible"}
-          </Text>
-          <Text
-            style={[styles.taskDescription, isChecked && styles.strikethrough]}
-          >
-            {titre || "Titre indisponible"}
-          </Text>
-        </View>
       </View>
-      <View style={styles.taskBottom}>
-        <View style={styles.taskBottomLeft}>
-          <TimetableSmall fill="#252525" />
-          <Text style={styles.taskContent}>{dates || "Date indisponible"}</Text>
-        </View>
-        <View style={styles.taskBottomRight}>
-          <Text style={styles.taskContent}>Voir plus</Text>
-          <LeftArrow fill="#252525" />
-        </View>
-      </View>
-    </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  evalTask: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 10,
-    marginBottom: 15,
-    paddingHorizontal: 17,
-    paddingVertical: 12,
-  },
-  taskTop: {
-    flexDirection: "row",
+  container: {
+    marginTop: 20,
     alignItems: "center",
-    marginBottom: 5,
+    flexDirection: "column",
   },
-  taskTopContent: {
-    gap: 3,
+  topContainer: {
+    width: "100%",
+    paddingVertical: 18,
+    paddingHorizontal: 18,
+    flexDirection: "column",
+    gap: 11,
+    backgroundColor: "#0760FB",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  bottomContainer: {
+    width: "100%",
+    paddingVertical: 11,
+    paddingHorizontal: 20,
+    backgroundColor: "#0F4199",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    gap: 5,
+  },
+  progressText: {
+    color: "#fff",
+    fontFamily: "Ubuntu_500Medium",
+    fontSize: 11,
+  },
+  progression: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  item: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   taskTitle: {
     fontFamily: "Ubuntu_500Medium",
-    fontSize: 16,
-    color: "#252525",
+    fontSize: 15,
+    color: "#fff",
   },
-  taskBottom: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 10,
-  },
-  taskBottomLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  taskBottomRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  taskContent: {
+  taskDesc: {
     fontFamily: "Ubuntu_400Regular",
-    color: "#252525",
-  },
-  taskDescription: {
-    fontFamily: "Ubuntu_400Regular",
-    color: "#252525",
-  },
-  strikethrough: {
-    textDecorationLine: "line-through",
-    color: "#7A797C", // Optional: change color when striked through
+    fontSize: 13,
+    color: "#fff",
   },
 });
 
-export default TaskHome;
+export default Eval;

@@ -24,8 +24,8 @@ import "moment/locale/fr";
 import fetchAgenda from "../api/Agenda/fetch";
 
 // Import explicite des composants à pré-charger
-import EvalHome from "../components/home/Agenda/Eval";
-import TaskHome from "../components/home/Agenda/Task";
+import EvalHome from "../components/agenda/items/Eval";
+import TaskHome from "../components/agenda/items/Task";
 
 // Import des fonctions pour le stockage et la récupération des données du cache
 const storeData = async (key, value) => {
@@ -139,8 +139,8 @@ const Agenda = () => {
   useEffect(() => {
     fetchData();
 
-    preloadComponent(() => import("../components/home/Agenda/Eval"));
-    preloadComponent(() => import("../components/home/Agenda/Task"));
+    preloadComponent(() => import("../components/agenda/items/Eval"));
+    preloadComponent(() => import("../components/agenda/items/Task"));
   }, []);
 
   const initializeAgenda = async (data) => {

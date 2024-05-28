@@ -12,11 +12,12 @@ import {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { format, getDay } from "date-fns";
 import { fr } from "date-fns/locale";
-import NextCourse from "../components/home/nextCourse";
-import AgendaHome from "../components/home/agendaHome";
+import NextCourse from "../components/home/nextCourse/nextCourse";
+import AgendaHome from "../components/home/Agenda/agendaHome";
 import ParcourirHome from "../components/home/Parcourir";
 import { useAuth } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from "moment";
 
 const daysOfWeek = [
   "dimanche",
@@ -40,9 +41,9 @@ const getData = async () => {
 
 function Home() {
   const [user, setUser] = useState({});
-  const today = new Date();
-  const dayIndex = getDay(today);
-  const formattedDate = format(today, "d MMMM", { locale: fr });
+  const today = moment();
+  const dayIndex = today.format("ddd");
+  const formattedDate = today.format("ddd D MMMM");
   const { signOut } = useAuth();
 
   useEffect(() => {
@@ -62,29 +63,28 @@ function Home() {
             source={require("../assets/images/logo.png")}
             style={styles.image}
           />
-          <View>
-            <Text
-              style={{
-                fontFamily: "Ubuntu_400Regular",
-                fontSize: 17,
-              }}
-            >
-              Bonjour{" "}
-              <Text style={{ fontFamily: "Ubuntu_500Medium" }}>
+          <View style={styles.headerInfo}>
+            <View style={styles.topContent}>
+              <Text
+                style={{
+                  fontFamily: "Ubuntu_400Regular",
+                  fontSize: 13,
+                }}
+              >
+                Bonne journée,
+              </Text>
+              <Text style={{ fontFamily: "Ubuntu_500Medium", fontSize: 17 }}>
                 {user.prenom}
               </Text>
-            </Text>
+            </View>
+
             <Text
               style={{
-                fontFamily: "Ubuntu_400Regular",
+                fontFamily: "Ubuntu_500Medium",
+                color: "#0760FB",
                 fontSize: 15,
               }}
-            >
-              Nous sommes le{" "}
-              <Text
-                style={{ fontFamily: "Ubuntu_500Medium" }}
-              >{`${daysOfWeek[dayIndex]} ${formattedDate}`}</Text>
-            </Text>
+            >{`${formattedDate}`}</Text>
           </View>
         </View>
         <NextCourse />
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F4F5F9",
     fontFamily: "Ubuntu_400Regular",
+    flex: 1,
   },
   image: {
     width: 50,
@@ -110,8 +111,16 @@ const styles = StyleSheet.create({
     width: "90%",
     paddingVertical: 25,
     gap: 11,
-    alignItems: "center",
     alignSelf: "center",
+  },
+  topContent: {
+    flexDirection: "column",
+  },
+  headerInfo: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "80%",
+    alignItems: "center",
   },
 });
 

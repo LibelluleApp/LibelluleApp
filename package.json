@@ -12,6 +12,7 @@
     "@expo-google-fonts/ubuntu": "^0.2.3",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.0.1",
+    "@react-native-community/netinfo": "11.3.1",
     "@react-native-picker/picker": "2.7.5",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/material-top-tabs": "^6.6.13",
@@ -44,6 +45,7 @@
     "react-native-keyboard-controller": "^1.11.7",
     "react-native-modal-datetime-picker": "^17.1.0",
     "react-native-pager-view": "6.3.0",
+    "react-native-progress": "^5.0.1",
     "react-native-pure-jwt": "^3.0.2",
     "react-native-reanimated": "~3.10.1",
     "react-native-reanimated-carousel": "^3.5.1",
@@ -53,8 +55,7 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "15.2.0",
     "react-native-swiper-flatlist": "^3.2.4",
-    "react-native-vector-icons": "^10.0.3",
-    "@react-native-community/netinfo": "11.3.1"
+    "react-native-vector-icons": "^10.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
