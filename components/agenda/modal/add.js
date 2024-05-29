@@ -22,6 +22,7 @@ import moment from "moment-timezone";
 const Add = ({ route }) => {
   const navigation = useNavigation();
   const { date } = route.params;
+
   const [dates, setDates] = useState(moment.tz(date, "Europe/Paris"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -131,6 +132,7 @@ const Add = ({ route }) => {
               }}
               data={data}
               value={value}
+              save={true}
             />
           </View>
           <View style={styles.inputContainer}>

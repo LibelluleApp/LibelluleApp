@@ -18,8 +18,8 @@ function CalendarList({ onDateSelect }) {
 
   const handleDayPress = (index) => {
     setSelectedDay(index);
-    const selectedDate = weekDays[index].toDate(); // Convertir la date Moment.js en objet JavaScript Date
-    onDateSelect(selectedDate); // Appeler la fonction de rappel avec la date sélectionnée
+    const selectedDate = weekDays[index].toDate();
+    onDateSelect(selectedDate);
   };
   return (
     <View style={styles.container}>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "#0760FB",
     paddingVertical: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 13,
     borderRadius: 10,
   },
   selected: {

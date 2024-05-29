@@ -4,7 +4,7 @@ import CalendarList from "./calendarList";
 import EventDay from "./eventDay";
 
 function AgendaHome() {
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
@@ -12,7 +12,7 @@ function AgendaHome() {
   return (
     <View>
       <CalendarList onDateSelect={handleDateSelect} />
-      <EventDay />
+      <EventDay date={selectedDate} />
     </View>
   );
 }

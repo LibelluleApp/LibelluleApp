@@ -3,46 +3,81 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { LeftArrow } from "../../../assets/icons/Icons";
 import * as Progress from "react-native-progress";
 
-function Eval() {
-  return (
-    <View style={styles.container}>
-      <View style={styles.topContainer}>
-        <TouchableOpacity>
-          <View style={styles.item}>
-            <View style={styles.leftContainer}>
-              <Text style={styles.taskTitle}>Anglais</Text>
-              <Text style={styles.taskDesc}>Finir de lire le livre</Text>
+function Task({ data }) {
+  const checkedTask = data.filter((item) => item.estFait === 1);
+
+  const progression = checkedTask.length / data.length;
+  const percentProgression = Math.round(progression * 100);
+
+  if (!data || (Array.isArray(data) && data.length === 0)) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.topContainer}>
+          <TouchableOpacity>
+            <View style={styles.item}>
+              <View style={styles.leftContainer}>
+                <Text style={styles.taskTitle}>
+                  Aucune tâche de prévu pour le moment
+                </Text>
+              </View>
             </View>
-            <LeftArrow fill="#fff" />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.item}>
-            <View style={styles.leftContainer}>
-              <Text style={styles.taskTitle}>Anglais</Text>
-              <Text style={styles.taskDesc}>Finir de lire le livre</Text>
-            </View>
-            <LeftArrow fill="#fff" />
-          </View>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.bottomContainer}>
-        <View style={styles.progression}>
-          <Text style={styles.progressText}>1/3 tâches</Text>
-          <Text style={styles.progressText}>33%</Text>
+          </TouchableOpacity>
         </View>
-        <Progress.Bar
-          progress={0.3}
-          width={null}
-          height={4}
-          animated={false}
-          unfilledColor="#345496"
-          borderWidth={0}
-          color="#fff"
-        />
+        <View style={styles.bottomContainer}>
+          <View style={styles.progression}>
+            <Text style={styles.progressText}>0/0 tâche</Text>
+            <Text style={styles.progressText}>100%</Text>
+          </View>
+          <Progress.Bar
+            progress={1}
+            width={null}
+            height={4}
+            animated={false}
+            unfilledColor="#345496"
+            borderWidth={0}
+            color="#fff"
+          />
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return (
+      <View style={styles.container}>
+        <View style={styles.topContainer}>
+          {data.map((item) => (
+            <TouchableOpacity key={item.agenda_id}>
+              <View style={styles.item}>
+                <View style={styles.leftContainer}>
+                  <Text style={styles.taskTitle}>
+                    {item.Ressource.nom_ressource}
+                  </Text>
+                  <Text style={styles.taskDesc}>{item.titre}</Text>
+                </View>
+                <LeftArrow fill="#fff" />
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <View style={styles.bottomContainer}>
+          <View style={styles.progression}>
+            <Text style={styles.progressText}>
+              {checkedTask.length}/{data.length} tâches
+            </Text>
+            <Text style={styles.progressText}>{percentProgression}%</Text>
+          </View>
+          <Progress.Bar
+            progress={progression}
+            width={null}
+            height={4}
+            animated={false}
+            unfilledColor="#345496"
+            borderWidth={0}
+            color="#fff"
+          />
+        </View>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -97,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Eval;
+export default Task;

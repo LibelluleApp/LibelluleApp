@@ -23,12 +23,12 @@ function TaskHome({
     if (isChecked) {
       uncheckAgenda(id);
       if (typeof onTaskUncheck === "function") {
-        onTaskUncheck(id, isChecked);
+        onTaskUncheck(id);
       }
     } else {
       checkAgenda(id);
       if (typeof onTaskCheck === "function") {
-        onTaskCheck(id, isChecked);
+        onTaskCheck(id);
       }
     }
   };

@@ -8,82 +8,102 @@ import {
   Dimensions,
 } from "react-native";
 import { Location, PeopleFill, Clock } from "../../../assets/icons/Icons";
-import { SwiperFlatList } from "react-native-swiper-flatlist";
+import Carousel, {
+  ICarouselInstance,
+  Pagination,
+} from "react-native-reanimated-carousel";
+import { useSharedValue } from "react-native-reanimated";
 import { CustomPagination } from "./Pagination";
+import { el } from "date-fns/locale";
 
 const { width } = Dimensions.get("window");
 const slideWidth = width * 0.9; // Largeur de la diapositive
 const slideHeight = 90; // Hauteur de la diapositive
+const data = [...new Array(2).keys()];
+const onPressPagination = (index) => {
+  ref.current?.scrollTo({
+    /**
+     * Calculate the difference between the current index and the target index
+     * to ensure that the carousel scrolls to the nearest index
+     */
+    count: index - progress.value,
+    animated: true,
+  });
+};
+
+function ItemCourse({ hour, subject, teacher }) {
+  return (
+    <TouchableOpacity style={[styles.slide]}>
+      <View style={styles.container}>
+        <View style={styles.hour}>
+          <Text style={styles.textHour}>16:30</Text>
+          <Text style={styles.textHour}>18:00</Text>
+        </View>
+        <View style={styles.stick}></View>
+        <View style={styles.contentLeft}>
+          <Text style={styles.textSubject}>Anglais</Text>
+          <View style={styles.teacher}>
+            <View style={styles.content}>
+              <Location />
+              <Text style={styles.textTeacher}>MMI311</Text>
+            </View>
+            <View style={styles.content}>
+              <PeopleFill />
+              <Text style={styles.textTeacher}>C.Mercier</Text>
+            </View>
+          </View>
+          <View style={styles.content}>
+            <Clock />
+            <Text style={styles.textTeacher}>
+              Dans <Text style={styles.hourClock}>44 minutes</Text>
+            </Text>
+          </View>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+function ItemInfo() {
+  return (
+    <View style={[infos.slide]}>
+      <Text style={infos.title}>Informations</Text>
+      <View style={infos.content}>
+        <Text style={infos.textContent}>•</Text>
+        <Text style={infos.textContent}>
+          01/04 au 05/04 : Vous êtes le propriétaire du cahier.
+        </Text>
+      </View>
+    </View>
+  );
+}
 
 function NextCourse() {
+  const ref = React.useRef(null);
+  const progress = useSharedValue(0);
+
   return (
     <View style={styles.swiper}>
-      <SwiperFlatList
-        showPagination
-        style={{ overHorizontal: "never" }}
+      <Carousel
+        ref={ref}
+        width={slideWidth}
+        height={slideHeight}
+        data={data}
         loop={false}
-        PaginationComponent={CustomPagination}
-      >
-        {/* Première diapositive */}
-        <TouchableOpacity style={[styles.slide, { width: slideWidth }]}>
-          <View style={styles.container}>
-            <View style={styles.hour}>
-              <Text style={styles.textHour}>16:30</Text>
-              <Text style={styles.textHour}>18:00</Text>
-            </View>
-            <View style={styles.stick}></View>
-            <View style={styles.contentLeft}>
-              <Text style={styles.textSubject}>Anglais</Text>
-              <View style={styles.teacher}>
-                <View style={styles.content}>
-                  <Location />
-                  <Text style={styles.textTeacher}>MMI311</Text>
-                </View>
-                <View style={styles.content}>
-                  <PeopleFill />
-                  <Text style={styles.textTeacher}>C.Mercier</Text>
-                </View>
-              </View>
-              <View style={styles.content}>
-                <Clock />
-                <Text style={styles.textTeacher}>
-                  Dans <Text style={styles.hourClock}>44 minutes</Text>
-                </Text>
-              </View>
-            </View>
-          </View>
-        </TouchableOpacity>
+        onProgressChange={progress}
+        renderItem={({ index }) =>
+          index === 0 ? <ItemCourse /> : <ItemInfo />
+        }
+      />
 
-        {/* Deuxième diapositive avec des informations supplémentaires */}
-        <TouchableOpacity style={[styles.slide, { width: slideWidth }]}>
-          <View style={styles.container}>
-            <View style={styles.hour}>
-              <Text style={styles.textHour}>18:00</Text>
-            </View>
-            <View style={styles.stick}></View>
-            <View style={styles.contentLeft}>
-              <Text style={styles.textSubject}>Mathématiques</Text>
-              <View style={styles.teacher}>
-                <View style={styles.content}>
-                  <Location />
-                  <Text style={styles.textTeacher}>Salle 203</Text>
-                </View>
-                <View style={styles.content}>
-                  <PeopleFill />
-                  <Text style={styles.textTeacher}>Professeur X</Text>
-                </View>
-              </View>
-              <View style={styles.content}>
-                <Clock />
-                <Text style={styles.textTeacher}>
-                  Dans{" "}
-                  <Text style={styles.hourClock}>1 heure et 15 minutes</Text>
-                </Text>
-              </View>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </SwiperFlatList>
+      <Pagination.Basic
+        progress={progress}
+        data={data}
+        dotStyle={{ backgroundColor: "#619AFE", borderRadius: 50, height: 8 }}
+        activeDotStyle={{ backgroundColor: "#0760FB", borderRadius: 50 }}
+        containerStyle={{ gap: 5, marginTop: 10 }}
+        onPress={onPressPagination}
+      />
     </View>
   );
 }
@@ -158,6 +178,30 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 6,
     alignItems: "center",
+  },
+});
+
+const infos = StyleSheet.create({
+  slide: {
+    height: slideHeight,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 15,
+  },
+  title: {
+    fontFamily: "Ubuntu_500Medium",
+    fontSize: 13,
+    color: "#252525",
+  },
+  content: {
+    marginTop: 10,
+    flexDirection: "row",
+    gap: 5,
+  },
+  textContent: {
+    fontFamily: "Ubuntu_400Regular",
+    fontSize: 13,
+    color: "#535353",
   },
 });
 

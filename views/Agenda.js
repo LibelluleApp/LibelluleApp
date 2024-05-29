@@ -11,10 +11,9 @@ import {
   Dimensions,
   ActivityIndicator,
   Text,
-  RefreshControl,
   ScrollView,
-  AsyncStorage,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import SwiperFlatList from "react-native-swiper-flatlist";
 import PaginationHeader from "../components/agenda/pagination";
 import moment from "moment-timezone";
@@ -57,7 +56,7 @@ const preloadComponent = (component) => {
 
 class Item extends PureComponent {
   render() {
-    const { item, currentDay } = this.props;
+    const { item, currentDay, onTaskCheck, onTaskUncheck } = this.props;
 
     let ComponentToRender = null;
 
@@ -85,6 +84,8 @@ class Item extends PureComponent {
             date={item.date_fin}
             matiere={item.Ressource?.nom_ressource}
             checked={item.estFait}
+            onTaskCheck={onTaskCheck} // Passer le callback ici
+            onTaskUncheck={onTaskUncheck} // Passer le callback ici
           />
         </Suspense>
       </View>
@@ -99,14 +100,8 @@ class Item extends PureComponent {
 }
 
 const Agenda = () => {
+  const [user_data, setUser_data] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    fetchData();
-    setRefreshing(false);
-  }, []);
-
   const navigation = useNavigation();
   const isFocused = useIsFocused(); // Utilisation de useIsFocused pour détecter si la page est en focus
   const swiperRef = useRef(null);
@@ -122,6 +117,11 @@ const Agenda = () => {
     try {
       const data = await fetchAgenda();
       initializeAgenda(data);
+      const userDataJSON = await AsyncStorage.getItem("user_data");
+      if (userDataJSON !== null) {
+        const userData = JSON.parse(userDataJSON);
+        setUser_data(userData);
+      }
       setIsLoading(false);
     } catch (error) {
       console.error("Erreur lors du chargement de l'agenda.", error);
@@ -131,10 +131,9 @@ const Agenda = () => {
 
   useEffect(() => {
     if (isFocused) {
-      // Vérifie si la page est en focus
       fetchData();
     }
-  }, [isFocused]); // Déclenche la mise à jour lorsque isFocused change
+  }, [isFocused]);
 
   useEffect(() => {
     fetchData();
@@ -212,7 +211,40 @@ const Agenda = () => {
     calculateCounts(daysOfWeek[defaultIndex].data); // Appel de la fonction de calcul des compteurs pour le nouveau jour
   };
 
-  // Fonction pour calculer les compteurs d'évaluations et de tâches restantes pour le jour donné
+  const handleTaskCheck = (taskId) => {
+    const updatedDaysOfWeek = daysOfWeek.map((day) => {
+      const updatedData = day.data.map((item) => {
+        if (item.agenda_id === taskId) {
+          return { ...item, estFait: true };
+        }
+        return item;
+      });
+      return { ...day, data: updatedData };
+    });
+
+    setDaysOfWeek(updatedDaysOfWeek);
+
+    let newTaskCount = taskCount - 1;
+    setTaskCount(newTaskCount);
+  };
+
+  const handleTaskUncheck = (taskId) => {
+    const updatedDaysOfWeek = daysOfWeek.map((day) => {
+      const updatedData = day.data.map((item) => {
+        if (item.agenda_id === taskId) {
+          return { ...item, estFait: false };
+        }
+        return item;
+      });
+      return { ...day, data: updatedData };
+    });
+
+    setDaysOfWeek(updatedDaysOfWeek);
+
+    let newTaskCount = taskCount + 1;
+    setTaskCount(newTaskCount);
+  };
+
   const calculateCounts = (dayData) => {
     let evalCounter = 0;
     let taskCounter = 0;
@@ -264,6 +296,8 @@ const Agenda = () => {
                       key={agendaItem.agenda_id}
                       item={agendaItem}
                       currentDay={item.date}
+                      onTaskCheck={handleTaskCheck}
+                      onTaskUncheck={handleTaskUncheck}
                     />
                   ))}
                 </ScrollView>
@@ -276,6 +310,8 @@ const Agenda = () => {
                       key={agendaItem.agenda_id}
                       item={agendaItem}
                       currentDay={item.date}
+                      onTaskCheck={handleTaskCheck}
+                      onTaskUncheck={handleTaskUncheck}
                     />
                   ))}
                 </View>
@@ -287,15 +323,17 @@ const Agenda = () => {
           bounces={false}
         />
       </View>
-      <Button
-        title="Ajouter une tâche"
-        onPress={() =>
-          navigation.navigate("addAgenda", {
-            date: daysOfWeek[currentIndex]?.date.format("yyyy-MM-DD"),
-          })
-        }
-        style={styles.addButton}
-      />
+      {user_data?.role.includes("Chef") && (
+        <Button
+          title="Ajouter une tâche"
+          onPress={() =>
+            navigation.navigate("addAgenda", {
+              date: daysOfWeek[currentIndex]?.date.format("yyyy-MM-DD"),
+            })
+          }
+          style={styles.addButton}
+        />
+      )}
     </View>
   );
 };

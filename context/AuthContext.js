@@ -4,6 +4,7 @@ import { Text, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import login from "../api/User/login";
 import ApiManager, { setupInterceptor } from "../api/ApiManager";
+import fetchToken from "../api/User/fetchtoken";
 
 const TOKEN_KEY = "secure_user_token";
 const AuthContext = createContext();
@@ -13,6 +14,27 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
+  const checkTokenValidity = async () => {
+    try {
+      if (userToken) {
+        // Vérifiez ici si le token est toujours valide en appelant une API
+        const response = await fetchToken(userToken);
+
+        if (response.status === "success") {
+          // Le token est valide, pas besoin de faire quoi que ce soit
+        } else {
+          // Le token n'est plus valide, déconnectez l'utilisateur
+          await signOut();
+        }
+      }
+    } catch (error) {
+      console.error("Erreur lors de la vérification du token.", error);
+    }
+  };
+
+  useEffect(() => {
+    checkTokenValidity();
+  }, [userToken]);
 
   useEffect(() => {
     const loadToken = async () => {
