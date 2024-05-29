@@ -4,37 +4,42 @@ import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { TimetableSmall, LeftArrow } from "../../../assets/icons/Icons";
 import * as Haptics from "expo-haptics";
 import { checkAgenda, uncheckAgenda } from "../../../api/Agenda/check";
+import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 
 function TaskHome({
   date,
   titre,
-  id,
+  agenda_id,
   matiere,
   checked,
   onTaskCheck,
   onTaskUncheck,
 }) {
+  const navigation = useNavigation();
   const [isChecked, setIsChecked] = useState(checked);
   const dates = moment(date).format("ddd D MMMM");
   const handleCheckboxPress = () => {
     setIsChecked(!isChecked);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     if (isChecked) {
-      uncheckAgenda(id);
+      uncheckAgenda(agenda_id);
       if (typeof onTaskUncheck === "function") {
-        onTaskUncheck(id);
+        onTaskUncheck(agenda_id);
       }
     } else {
-      checkAgenda(id);
+      checkAgenda(agenda_id);
       if (typeof onTaskCheck === "function") {
-        onTaskCheck(id);
+        onTaskCheck(agenda_id);
       }
     }
   };
 
   return (
-    <TouchableOpacity style={styles.evalTask}>
+    <TouchableOpacity
+      style={styles.evalTask}
+      onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
+    >
       <View style={styles.taskTop}>
         <BouncyCheckbox
           fillColor="#0760FB"

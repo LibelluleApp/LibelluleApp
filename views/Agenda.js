@@ -80,7 +80,7 @@ class Item extends PureComponent {
           <ComponentToRender
             item={item}
             titre={item.titre}
-            id={item.agenda_id}
+            agenda_id={item.agenda_id}
             date={item.date_fin}
             matiere={item.Ressource?.nom_ressource}
             checked={item.estFait}

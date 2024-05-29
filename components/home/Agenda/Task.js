@@ -1,11 +1,12 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { LeftArrow } from "../../../assets/icons/Icons";
+import { useNavigation } from "@react-navigation/native";
 import * as Progress from "react-native-progress";
 
 function Task({ data }) {
   const checkedTask = data.filter((item) => item.estFait === 1);
-
+  const navigation = useNavigation();
   const progression = checkedTask.length / data.length;
   const percentProgression = Math.round(progression * 100);
 
@@ -40,12 +41,46 @@ function Task({ data }) {
         </View>
       </View>
     );
+  } else if (progression === 1) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.topContainer}>
+          <View style={styles.item}>
+            <View style={styles.leftContainer}>
+              <Text style={styles.taskTitle}>
+                Bravo, vous avez terminé toutes vos tâches
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.bottomContainer}>
+          <View style={styles.progression}>
+            <Text style={styles.progressText}>
+              {checkedTask.length}/{data.length} tâches
+            </Text>
+            <Text style={styles.progressText}>{percentProgression}%</Text>
+          </View>
+          <Progress.Bar
+            progress={progression}
+            width={null}
+            height={4}
+            animated={false}
+            unfilledColor="#345496"
+            borderWidth={0}
+            color="#fff"
+          />
+        </View>
+      </View>
+    );
   } else {
     return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
           {data.map((item) => (
-            <TouchableOpacity key={item.agenda_id}>
+            <TouchableOpacity
+              key={item.agenda_id}
+              onPress={() => navigation.navigate("viewAgenda", item)}
+            >
               <View style={styles.item}>
                 <View style={styles.leftContainer}>
                   <Text style={styles.taskTitle}>

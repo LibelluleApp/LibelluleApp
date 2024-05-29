@@ -82,6 +82,15 @@ const AppStack = ({ navigation }) => {
         headerShadowVisible: false,
       },
     },
+    {
+      name: "viewAgenda",
+      component: require("../components/agenda/modal/view").default,
+      options: {
+        title: "Détails d'une tâche",
+        headerShadowVisible: false,
+        presentation: "modal",
+      },
+    },
   ];
   const insets = useSafeAreaInsets();
   return (
