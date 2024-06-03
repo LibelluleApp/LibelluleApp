@@ -24,19 +24,21 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "bundleIdentifier": "com.libellule.libellule"
+      "bundleIdentifier": "com.libellule.libellule",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.libellule.libellule"
+      "package": "com.libellule.libellule",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-font", "expo-secure-store"],
+    "plugins": ["expo-font", "expo-secure-store", "@react-native-firebase/app"],
     "extra": {
       "eas": {
         "projectId": "142931be-af91-443d-9e7d-57ecd13da335"

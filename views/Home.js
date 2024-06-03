@@ -10,8 +10,6 @@ import {
   Platform,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { format, getDay } from "date-fns";
-import { fr } from "date-fns/locale";
 import NextCourse from "../components/home/nextCourse/nextCourse";
 import AgendaHome from "../components/home/Agenda/agendaHome";
 import ParcourirHome from "../components/home/Parcourir";

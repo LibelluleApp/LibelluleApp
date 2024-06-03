@@ -1,6 +1,7 @@
 import ApiManager from "../ApiManager";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import associateRessourceColor from "../../utils/ressources/colorsRessources";
 
 const TOKEN_KEY = "secure_user_token";
 const USER_DATA_KEY = "user_data";
@@ -25,6 +26,8 @@ async function storeUserData(data) {
   try {
     const jsonValue = JSON.stringify(data);
     await AsyncStorage.setItem(USER_DATA_KEY, jsonValue);
+    await associateRessourceColor(data.groupe_id);
+    console.log(AsyncStorage.getItem("savedColors"));
   } catch (error) {
     throw new Error("Could not save user data");
   }

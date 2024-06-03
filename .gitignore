@@ -36,3 +36,6 @@ yarn-error.*
 *.tsbuildinfo
 
 %ProgramData%
+
+GoogleService-Info.plist
+google-services.json

@@ -286,6 +286,7 @@ const Agenda = () => {
           ref={swiperRef}
           index={currentIndex}
           data={daysOfWeek}
+          initialNumToRender={5}
           renderItem={({ item }) => {
             const numEvents = item.data.length;
             if (numEvents >= 5) {
@@ -319,7 +320,7 @@ const Agenda = () => {
             }
           }}
           onChangeIndex={handleChangeIndex}
-          windowSize={3}
+          windowSize={5}
           bounces={false}
         />
       </View>

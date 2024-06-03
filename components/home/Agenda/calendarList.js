@@ -3,17 +3,37 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import moment from "moment";
 
 function CalendarList({ onDateSelect }) {
-  const currentDate = moment();
-  const currentDayIndex = currentDate.day() - 1;
+  function getNextWeekday(date) {
+    const day = date.day();
+    if (day === 0) {
+      // Dimanche
+      date.add(1, "days"); // Passe au lundi
+    } else if (day === 6) {
+      // Samedi
+      date.add(2, "days"); // Passe au lundi
+    }
+    return date;
+  }
 
-  const startOfWeek = currentDate.clone().startOf("week");
+  const currentDate = moment();
+  const adjustedStartDate = getNextWeekday(currentDate.clone());
 
   const weekDays = [];
 
-  for (let i = 0; i < 5; i++) {
-    const day = startOfWeek.clone().add(i, "days");
-    weekDays.push(day);
+  let date = adjustedStartDate.clone();
+  while (weekDays.length < 5) {
+    weekDays.push(date.clone());
+    date.add(1, "days");
+    if (date.day() === 6) {
+      date.add(2, "days"); // Saute les weekends
+    }
   }
+
+  // Calculer l'index du jour actuel ajusté
+  const currentDayIndex = weekDays.findIndex((day) =>
+    day.isSame(adjustedStartDate, "day")
+  );
+
   const [selectedDay, setSelectedDay] = useState(currentDayIndex);
 
   const handleDayPress = (index) => {
@@ -21,6 +41,7 @@ function CalendarList({ onDateSelect }) {
     const selectedDate = weekDays[index].toDate();
     onDateSelect(selectedDate);
   };
+
   return (
     <View style={styles.container}>
       {weekDays.map((day, index) => (

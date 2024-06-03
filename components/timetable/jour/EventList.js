@@ -23,7 +23,7 @@ const EventList = ({
         <View style={styles.teacher}>
           <View style={styles.detail}>
             <Location />
-            <Text style={styles.textTeacher}>{salle}</Text>
+            <Text style={styles.textTeacher}>{salle.slice(0, 14)}...</Text>
           </View>
           <View style={styles.detail}>
             <PeopleFill />
