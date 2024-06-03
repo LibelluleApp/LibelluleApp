@@ -14,7 +14,7 @@ import {
   HomeFocused,
   Agenda,
   AgendaFocused,
-  Timetable,
+  TimetableNoProps as Timetable,
   TimetableFocused,
   Mail,
   MailFocused,
