@@ -5,6 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import login from "../api/User/login";
 import ApiManager, { setupInterceptor } from "../api/ApiManager";
 import fetchToken from "../api/User/fetchtoken";
+import NetInfo from "@react-native-community/netinfo";
+import { showMessage } from "react-native-flash-message";
 
 const TOKEN_KEY = "secure_user_token";
 const AuthContext = createContext();
@@ -17,18 +19,33 @@ export const AuthProvider = ({ children }) => {
   const checkTokenValidity = async () => {
     try {
       if (userToken) {
-        // Vérifiez ici si le token est toujours valide en appelant une API
-        const response = await fetchToken(userToken);
-
-        if (response.status === "success") {
-          // Le token est valide, pas besoin de faire quoi que ce soit
+        const state = await NetInfo.fetch();
+        if (!state.isConnected) {
+          showMessage({
+            message:
+              "Vous êtes actuellement en mode hors-ligne. Certaines fonctionnalités peuvent ne pas être disponibles.",
+            type: "warning",
+          });
+          return;
         } else {
-          // Le token n'est plus valide, déconnectez l'utilisateur
-          await signOut();
+          const response = await fetchToken(userToken);
+
+          if (response.status === "success") {
+            // Le token est valide, pas besoin de faire quoi que ce soit
+          } else {
+            showMessage({
+              message: "Votre session a expiré. Veuillez vous reconnecter.",
+              type: "warning",
+            });
+            await signOut();
+          }
         }
       }
     } catch (error) {
-      console.error("Erreur lors de la vérification du token.", error);
+      showMessage({
+        message: "Erreur lors de la vérification de votre session.",
+        type: "danger",
+      });
     }
   };
 
@@ -98,7 +115,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   if (isLoading) {
-    return <ActivityIndicator size="large" />;
+    return <ActivityIndicator size="large" style={{ alignSelf: "center" }} />;
   }
 
   return (

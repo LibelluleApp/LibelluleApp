@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
+import { is } from "date-fns/locale";
+import { isLoading } from "expo-font";
+import { set } from "date-fns";
+
+const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 function CalendarList({ onDateSelect }) {
   function getNextWeekday(date) {
@@ -34,6 +41,7 @@ function CalendarList({ onDateSelect }) {
     day.isSame(adjustedStartDate, "day")
   );
 
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedDay, setSelectedDay] = useState(currentDayIndex);
 
   const handleDayPress = (index) => {
@@ -42,45 +50,60 @@ function CalendarList({ onDateSelect }) {
     onDateSelect(selectedDate);
   };
 
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 1000);
+
   return (
-    <View style={styles.container}>
-      {weekDays.map((day, index) => (
-        <TouchableOpacity
-          key={index}
-          style={[
-            styles.dateContainer,
-            index === selectedDay && styles.selected,
-            index < weekDays.length - 1 && { marginRight: 10 },
-          ]}
-          onPress={() => handleDayPress(index)}
-        >
-          <Text
+    <ShimmerPlaceHolder
+      shimmerStyle={{
+        borderRadius: 15,
+        width: "90%",
+        alignSelf: "center",
+        marginTop: 20,
+      }}
+      height={70}
+      visible={isLoading ? false : true}
+    >
+      <View style={styles.container}>
+        {weekDays.map((day, index) => (
+          <TouchableOpacity
+            key={index}
             style={[
-              styles.dateText,
-              index === selectedDay && styles.selectedText,
+              styles.dateContainer,
+              index === selectedDay && styles.selected,
+              index < weekDays.length - 1 && { marginRight: 10 },
             ]}
+            onPress={() => handleDayPress(index)}
           >
-            {day.format("ddd").replace(".", "")}
-          </Text>
-          <Text
-            style={[
-              styles.dateText,
-              index === selectedDay && styles.selectedText,
-            ]}
-          >
-            {day.format("DD")}
-          </Text>
-          <Text
-            style={[
-              styles.dateText,
-              index === selectedDay && styles.selectedText,
-            ]}
-          >
-            {day.format("MMM")}
-          </Text>
-        </TouchableOpacity>
-      ))}
-    </View>
+            <Text
+              style={[
+                styles.dateText,
+                index === selectedDay && styles.selectedText,
+              ]}
+            >
+              {day.format("ddd").replace(".", "")}
+            </Text>
+            <Text
+              style={[
+                styles.dateText,
+                index === selectedDay && styles.selectedText,
+              ]}
+            >
+              {day.format("DD")}
+            </Text>
+            <Text
+              style={[
+                styles.dateText,
+                index === selectedDay && styles.selectedText,
+              ]}
+            >
+              {day.format("MMM")}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+    </ShimmerPlaceHolder>
   );
 }
 

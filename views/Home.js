@@ -15,17 +15,11 @@ import AgendaHome from "../components/home/Agenda/agendaHome";
 import ParcourirHome from "../components/home/Parcourir";
 import { useAuth } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
 
-const daysOfWeek = [
-  "dimanche",
-  "lundi",
-  "mardi",
-  "mercredi",
-  "jeudi",
-  "vendredi",
-  "samedi",
-];
+const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 const getData = async () => {
   try {
@@ -43,11 +37,13 @@ function Home() {
   const dayIndex = today.format("ddd");
   const formattedDate = today.format("ddd D MMMM");
   const { signOut } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getData();
       setUser(data);
+      setIsLoading(false);
     };
 
     fetchData();
@@ -57,32 +53,52 @@ function Home() {
     <GestureHandlerRootView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.topContainer}>
-          <Image
-            source={require("../assets/images/logo.png")}
-            style={styles.image}
-          />
+          <ShimmerPlaceHolder
+            width={50}
+            height={50}
+            shimmerStyle={{ borderRadius: 100 }}
+            visible={isLoading ? false : true}
+          >
+            <Image
+              source={require("../assets/images/logo.png")}
+              style={styles.image}
+            />
+          </ShimmerPlaceHolder>
+
           <View style={styles.headerInfo}>
             <View style={styles.topContent}>
+              <ShimmerPlaceHolder
+                width={100}
+                visible={isLoading ? false : true}
+              >
+                <Text
+                  style={{
+                    fontFamily: "Ubuntu_400Regular",
+                    fontSize: 13,
+                  }}
+                >
+                  Bonne journée,
+                </Text>
+              </ShimmerPlaceHolder>
+              <ShimmerPlaceHolder
+                width={150}
+                height={20}
+                visible={isLoading ? false : true}
+              >
+                <Text style={{ fontFamily: "Ubuntu_500Medium", fontSize: 17 }}>
+                  {user.prenom}
+                </Text>
+              </ShimmerPlaceHolder>
+            </View>
+            <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
               <Text
                 style={{
-                  fontFamily: "Ubuntu_400Regular",
-                  fontSize: 13,
+                  fontFamily: "Ubuntu_500Medium",
+                  color: "#0760FB",
+                  fontSize: 15,
                 }}
-              >
-                Bonne journée,
-              </Text>
-              <Text style={{ fontFamily: "Ubuntu_500Medium", fontSize: 17 }}>
-                {user.prenom}
-              </Text>
-            </View>
-
-            <Text
-              style={{
-                fontFamily: "Ubuntu_500Medium",
-                color: "#0760FB",
-                fontSize: 15,
-              }}
-            >{`${formattedDate}`}</Text>
+              >{`${formattedDate}`}</Text>
+            </ShimmerPlaceHolder>
           </View>
         </View>
         <NextCourse />

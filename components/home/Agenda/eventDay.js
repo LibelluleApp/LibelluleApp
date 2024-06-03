@@ -8,6 +8,11 @@ import Eval from "./Eval";
 import Task from "./Task";
 import moment from "moment";
 import fetchWeekAgenda from "../../../api/Agenda/fetchweek";
+import { showMessage } from "react-native-flash-message";
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
+
+const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 function EventDay({ date }) {
   const navigation = useNavigation();
@@ -23,6 +28,11 @@ function EventDay({ date }) {
       setAgenda(response);
     } catch (error) {
       setError(error);
+      showMessage({
+        message: "Erreur de chargement",
+        description: "Impossible de charger l'agenda",
+        type: "danger",
+      });
     } finally {
       setLoading(false);
     }
@@ -38,24 +48,6 @@ function EventDay({ date }) {
     }
   }, [isFocused]);
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>
-          Failed to load agenda: {error.message}
-        </Text>
-      </View>
-    );
-  }
-
   const dayAgendaEval = (agenda[currentDate] || []).filter(
     (item) => item.type === "eval"
   );
@@ -64,23 +56,34 @@ function EventDay({ date }) {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.topContainer}>
-        <View style={styles.hourContainer}>
-          <CalendarFill />
-          <Text style={styles.hourContent}>7h30 de cours</Text>
+    <ShimmerPlaceholder
+      visible={loading ? false : true}
+      shimmerStyle={{
+        width: "90%",
+        alignSelf: "center",
+        borderRadius: 15,
+        marginTop: 20,
+        height: 300,
+      }}
+    >
+      <View style={styles.container}>
+        <View style={styles.topContainer}>
+          <View style={styles.hourContainer}>
+            <CalendarFill />
+            <Text style={styles.hourContent}>7h30 de cours</Text>
+          </View>
+          <View style={styles.weatherContainer}>
+            <Text style={styles.weatherContent}>8°C</Text>
+            <Image
+              source={require("../../../assets/icons/weather/storm.png")}
+              style={styles.weatherIcon}
+            />
+          </View>
         </View>
-        <View style={styles.weatherContainer}>
-          <Text style={styles.weatherContent}>8°C</Text>
-          <Image
-            source={require("../../../assets/icons/weather/storm.png")}
-            style={styles.weatherIcon}
-          />
-        </View>
+        <Eval data={dayAgendaEval} />
+        <Task data={dayAgendaTask} />
       </View>
-      <Eval data={dayAgendaEval} />
-      <Task data={dayAgendaTask} />
-    </View>
+    </ShimmerPlaceholder>
   );
 }
 

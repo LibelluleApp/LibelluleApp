@@ -12,7 +12,10 @@ import { useSharedValue } from "react-native-reanimated";
 import fetchNextCourse from "../../../api/Timetable/nextcourse";
 import { getRessourceColor } from "../../../utils/ressources/colorsRessources";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
-import { el } from "date-fns/locale";
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
+
+const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 const { width } = Dimensions.get("window");
 const slideWidth = width * 0.9; // Largeur de la diapositive
@@ -136,12 +139,14 @@ function NextCourse() {
   const [color, setColor] = useState("#5088F3");
   const navigation = useNavigation();
   const isFocused = useIsFocused();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchCourse().then((response) => {
       setNextCourse(response);
       fetchColor(response).then((color) => {
         setColor(color);
+        setIsLoading(false);
       });
     });
   }, []);
@@ -152,6 +157,7 @@ function NextCourse() {
         setNextCourse(response);
         fetchColor(response).then((color) => {
           setColor(color);
+          setIsLoading(false);
         });
       });
     }
@@ -159,29 +165,36 @@ function NextCourse() {
 
   return (
     <View style={styles.swiper}>
-      <Carousel
-        ref={ref}
+      <ShimmerPlaceholder
+        shimmerStyle={{ borderRadius: 10 }}
         width={slideWidth}
         height={slideHeight}
-        data={data}
-        loop={false}
-        onProgressChange={progress}
-        renderItem={({ index }) =>
-          index === 0 ? (
-            <ItemCourse data={nextCourse} color={color} />
-          ) : (
-            <ItemInfo />
-          )
-        }
-      />
+        visible={isLoading ? false : true}
+      >
+        <Carousel
+          ref={ref}
+          width={slideWidth}
+          height={slideHeight}
+          data={data}
+          loop={false}
+          onProgressChange={progress}
+          renderItem={({ index }) =>
+            index === 0 ? (
+              <ItemCourse data={nextCourse} color={color} />
+            ) : (
+              <ItemInfo />
+            )
+          }
+        />
 
-      <Pagination.Basic
-        progress={progress}
-        data={data}
-        dotStyle={{ backgroundColor: "#619AFE", borderRadius: 50, height: 8 }}
-        activeDotStyle={{ backgroundColor: "#0760FB", borderRadius: 50 }}
-        containerStyle={{ gap: 5, marginTop: 10 }}
-      />
+        <Pagination.Basic
+          progress={progress}
+          data={data}
+          dotStyle={{ backgroundColor: "#619AFE", borderRadius: 50, height: 8 }}
+          activeDotStyle={{ backgroundColor: "#0760FB", borderRadius: 50 }}
+          containerStyle={{ gap: 5, marginTop: 10 }}
+        />
+      </ShimmerPlaceholder>
     </View>
   );
 }

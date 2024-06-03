@@ -8,7 +8,6 @@ async function fetchNextCourse() {
     if (!user_data.groupe_id) {
       throw new Error("Le groupe_id n'est pas défini dans AsyncStorage.");
     }
-    console.log(user_data);
     const response = await ApiManager.post("/timetable/nextcours", {
       groupe_id: user_data.groupe_id,
     });
