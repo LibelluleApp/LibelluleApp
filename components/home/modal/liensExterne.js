@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -8,52 +8,91 @@ import {
   Linking,
 } from "react-native";
 import { RedirectTo } from "../../../assets/icons/Icons";
+import fetchLinks from "../../../api/Links/fetchLinks";
+import { showMessage } from "react-native-flash-message";
+import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
+import { LinearGradient } from "expo-linear-gradient";
+import { he, is } from "date-fns/locale";
+
+const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
+
+const getLinks = async () => {
+  try {
+    const response = await fetchLinks();
+    return response;
+  } catch (error) {
+    showMessage({
+      message: "Erreur de chargement",
+      description: "Impossible de charger les liens",
+      type: "danger",
+    });
+  }
+};
 
 function LiensExterne() {
+  const [links, setLinks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getLinks().then((data) => {
+      setLinks(data);
+      setIsLoading(false);
+    });
+  }, []);
+
   return (
     <View style={styles.modalBackground}>
       <View style={styles.container}>
         <View style={styles.liens}>
-          <TouchableOpacity
-            style={styles.lien}
-            onPress={() => {
-              Linking.openURL("https://www.google.com/");
-            }}
-          >
-            <View style={styles.content}>
-              <Text style={styles.titleText}>Lien 1</Text>
-              <Text style={styles.descriptionText}>Description du lien 1</Text>
-            </View>
-            <RedirectTo />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.lien}>
-            <View style={styles.content}>
-              <Text style={styles.titleText}>Lien 1</Text>
-              <Text style={styles.descriptionText}>Description du lien 1</Text>
-            </View>
-            <RedirectTo />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.lien}>
-            <View style={styles.content}>
-              <Text style={styles.titleText}>Lien 1</Text>
-              <Text style={styles.descriptionText}>Description du lien 1</Text>
-            </View>
-            <RedirectTo />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.lien}>
-            <View style={styles.content}>
-              <Text style={styles.titleText}>Lien 1</Text>
-              <Text style={styles.descriptionText}>Description du lien 1</Text>
-            </View>
-            <RedirectTo />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.lien}>
-            <View style={styles.content}>
-              <Text style={styles.titleText}>Lien 1</Text>
-              <Text style={styles.descriptionText}>Description du lien 1</Text>
-            </View>
-            <RedirectTo />
-          </TouchableOpacity>
+          {isLoading && (
+            <>
+              <ShimmerPlaceholder
+                visible={isLoading ? false : true}
+                style={{
+                  width: "100%",
+                  height: 70,
+                  borderRadius: 10,
+                  marginBottom: 10,
+                }}
+              />
+              <ShimmerPlaceholder
+                visible={isLoading ? false : true}
+                style={{
+                  width: "90%",
+                  height: 70,
+                  borderRadius: 10,
+                  marginBottom: 10,
+                }}
+              />
+              <ShimmerPlaceholder
+                visible={isLoading ? false : true}
+                style={{
+                  width: "80%",
+                  height: 70,
+                  borderRadius: 10,
+                  marginBottom: 10,
+                }}
+              />
+            </>
+          )}
+
+          {!isLoading &&
+            links.length > 0 &&
+            links.map((link, index) => (
+              <TouchableOpacity
+                style={styles.lien}
+                key={index}
+                onPress={() => {
+                  Linking.openURL(link.lien);
+                }}
+              >
+                <View style={styles.content}>
+                  <Text style={styles.titleText}>{link.titre}</Text>
+                  <Text style={styles.descriptionText}>{link.description}</Text>
+                </View>
+                <RedirectTo />
+              </TouchableOpacity>
+            ))}
         </View>
       </View>
     </View>
