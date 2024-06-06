@@ -18,8 +18,10 @@ import {
   MailFocused,
   Changelog,
   CGU,
+  ColorPal,
 } from "../assets/icons/Icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 async function getProfileData() {
   try {
@@ -35,6 +37,7 @@ function Profile() {
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const navigation = useNavigation();
 
   useEffect(() => {
     getProfileData().then((data) => {
@@ -90,6 +93,16 @@ function Profile() {
           <View style={styles.CTAContent}>
             <ForwardRole />
             <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
+          </View>
+          <LeftArrow />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.profileButton}
+          onPress={() => navigation.navigate("CustomColor")}
+        >
+          <View style={styles.CTAContent}>
+            <ColorPal />
+            <Text style={styles.profileBtnText}>Modifier les couleurs</Text>
           </View>
           <LeftArrow />
         </TouchableOpacity>

@@ -152,18 +152,6 @@ async function getRessourceColor(ressource) {
   if (savedColors[ressource]) {
     return savedColors[ressource];
   } else {
-    let newColor;
-    const colorListLength = Object.keys(savedColors).length;
-    if (colorListLength < colors.length) {
-      newColor = colors[colorListLength];
-    } else {
-      const newColorHex = getClosestRessourceColor(ressource);
-      newColor = getClosestColor(newColorHex);
-    }
-
-    savedColors[ressource] = newColor;
-    await AsyncStorage.setItem("savedColors", JSON.stringify(savedColors));
-
     return newColor;
   }
 }

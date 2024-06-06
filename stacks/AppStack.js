@@ -91,6 +91,15 @@ const AppStack = ({ navigation }) => {
         presentation: "modal",
       },
     },
+    {
+      name: "CustomColor",
+      component: require("../views/Profile/CustomColor").default,
+      options: {
+        title: "Modifiers les couleurs",
+        headerShadowVisible: false,
+        presentation: "modal",
+      },
+    },
   ];
   const insets = useSafeAreaInsets();
   return (
