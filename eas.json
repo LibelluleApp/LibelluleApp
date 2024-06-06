@@ -16,10 +16,6 @@
       "android": {
         "buildType": "apk",
         "image": "latest"
-      },
-      "env": {
-        "GOOGLE_SERVICES_JSON" : "./google-services.json",
-        "GOOGLE_SERVICES_PLIST" : "./GoogleService-Info.plist"
       }
     },
     "production": {}

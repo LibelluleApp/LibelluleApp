@@ -70,6 +70,7 @@ function Login({ navigation }) {
             <Input
               label="Mail"
               placeholder="Adresse mail"
+              placeholderTextColor="#A3A3A3"
               autoComplete="email"
               inputMode="email"
               secureTextEntry={false}
@@ -79,6 +80,7 @@ function Login({ navigation }) {
             <Input
               label="Mot de passe"
               placeholder="Votre mot de passe"
+              placeholderTextColor="#A3A3A3"
               autoComplete="password"
               secureTextEntry={true}
               onChangeText={(text) => setPassword(text)}

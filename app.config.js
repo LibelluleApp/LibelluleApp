@@ -1,9 +1,9 @@
 export default {
-  name: "Libellule",
+  name: "TestBuild",
   slug: "libellule",
   version: "0.0.1",
   orientation: "portrait",
-  icon: "./assets/ios/logo@3x.png",
+  icon: "./assets/adaptive-icon.png",
   userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/splash.png",
@@ -29,7 +29,6 @@ export default {
       usesNonExemptEncryption: false,
     },
     bundleIdentifier: "com.libellule.libellule",
-    googleServicesFile: process.env.GOOGLE_SERVICES_PLIST,
     splash: {
       backgroundColor: "#0760FB",
       image: "./assets/splash.png",
@@ -41,7 +40,6 @@ export default {
       backgroundColor: "#0760FB",
     },
     package: "com.libellule.libellule",
-    googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     splash: {
       backgroundColor: "#0760FB",
       image: "./assets/splash.png",
@@ -50,7 +48,7 @@ export default {
   web: {
     favicon: "./assets/favicon.png",
   },
-  plugins: ["expo-font", "expo-secure-store", "@react-native-firebase/app"],
+  plugins: ["expo-font", "expo-secure-store"],
   extra: {
     eas: {
       projectId: "142931be-af91-443d-9e7d-57ecd13da335",

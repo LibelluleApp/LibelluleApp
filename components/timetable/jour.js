@@ -72,6 +72,13 @@ class Item extends PureComponent {
     this.setState({ eventColors: colors });
   };
 
+  formatProfessorName(professor) {
+    const parts = professor.split(" ");
+    const initial = parts[1][0];
+    const nom = parts[0];
+    return `${initial}. ${nom}`;
+  }
+
   render() {
     const { events } = this.props;
     const { eventColors } = this.state;
@@ -108,8 +115,11 @@ class Item extends PureComponent {
 
     return (
       <>
-        {sortedEvents.length > 5 ? (
-          <ScrollView contentContainerStyle={styles.itemContainer}>
+        {sortedEvents.length >= 4 ? (
+          <ScrollView
+            contentContainerStyle={styles.itemContainer}
+            bounces={false}
+          >
             {sortedEvents.map((event, index) => (
               <View key={index}>
                 <EventList
@@ -117,7 +127,7 @@ class Item extends PureComponent {
                   heureFin={event.endHour}
                   matiere={event.summary}
                   salle={event.location}
-                  professeur={event.professor}
+                  professeur={this.formatProfessorName(event.professor)}
                   couleur={eventColors[index] || "#FFC107"}
                 />
                 {index < dureesEntreEvents.length &&
@@ -155,7 +165,7 @@ class Item extends PureComponent {
                       heureFin={event.endHour}
                       matiere={event.summary}
                       salle={event.location}
-                      professeur={event.professor}
+                      professeur={this.formatProfessorName(event.professor)}
                       couleur={eventColors[index] || "#FFC107"}
                     />
                     {index < dureesEntreEvents.length &&

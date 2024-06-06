@@ -52,6 +52,13 @@ function ItemCourse({ data, color }) {
   }
   const [remainingTime, setRemainingTime] = useState("");
 
+  function formatProfessorName(professor) {
+    const parts = professor.split(" ");
+    const initial = parts[1][0];
+    const nom = parts[0];
+    return `${initial}. ${nom}`;
+  }
+
   useEffect(() => {
     const calculateTimeRemaining = () => {
       const targetTime = new Date(data.dtstart_tz).getTime();
@@ -102,7 +109,8 @@ function ItemCourse({ data, color }) {
             <View style={styles.content}>
               <PeopleFill />
               <Text style={styles.textTeacher}>
-                {data.description || "Professeur indisponible"}
+                {formatProfessorName(data.description) ||
+                  "Professeur indisponible"}
               </Text>
             </View>
           </View>

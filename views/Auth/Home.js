@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
     width: "90%",
-    height: "70%",
+    paddingVertical: 30,
   },
   freepics: {
     alignSelf: "center",

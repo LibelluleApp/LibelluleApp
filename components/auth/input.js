@@ -17,6 +17,7 @@ function Input({
   inputMode,
   secureTextEntry,
   onChangeText,
+  placeholderTextColor,
 }) {
   return (
     <View style={styles.container}>
@@ -29,6 +30,7 @@ function Input({
         style={styles.input}
         placeholder={placeholder}
         onChangeText={onChangeText}
+        placeholderTextColor={placeholderTextColor}
       />
     </View>
   );
