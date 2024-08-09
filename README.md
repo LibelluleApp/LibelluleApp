@@ -81,11 +81,11 @@ Libellule s'engage à garantir la protection des données de ses utilisateurs, a
 
 ## 👀 Auteurs
 
-- [@Raphitpt](https://www.github.com/ArnaudGct)
-- [@ArnaudGct](https://www.github.com/Raphitpt)
+- Développeur : [@Raphitpt](https://www.github.com/ArnaudGct)
+- Designer : [@ArnaudGct](https://www.github.com/Raphitpt)
 
 
-## Feedback
+## 💬 Feedback
 
 Si vous avez rencontré un bug ou des problèmes et/ou si vous souhaitez nous faire part d’améliorations ou autre demande, vous pouvez nous envoyer un mail à [support@libellule.app](mailto:support@libellule.app)
 
