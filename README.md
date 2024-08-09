@@ -1,10 +1,30 @@
+<br />
+<p align="center">
+  <a href="https://github.com/LibelluleApp/LibelluleApp">
+    <img src="https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Logo.png" alt="Logo" width="128" height="128">
+  </a>
+  <h1 align="center">Libellule</h1>
 
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+  <p align="center">
+    Nous avons réuni votre emploi du temps 📅, votre agenda 📓, vos mails 📝, le menu du Crousty 🍔 et bien plus encore<br>dans une <strong>seule application</strong> pour répondre seulement à <strong>vos besoins</strong>.
+    <br/>
+  </p>
 
-
-# Project Title
-
-A brief description of what this project does and who it's for
+  <div class="badges" align="center">
+    <a href="https://libellule.app/" target="_blank">
+      <img alt="Site internet" src="https://img.shields.io/badge/site%20internet-0760fb?style=for-the-badge">
+    </a>
+    <a href="https://instagram.com/libelluleapp" target="_blank">
+      <img alt="Instagram" src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white">
+    </a>
+    <a href="https://www.linkedin.com/in/libellule/" target="_blank">
+      <img alt="LinkedIn" src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white">
+    </a>
+    <a href="https://www.figma.com/design/zZKYcCDHp4bXGOJc6M65o4/Libellule?node-id=0-1&t=v9fxudCar8s8TSYq-1" target="_blank">
+      <img alt="Figma" src="https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=fff&style=for-the-badge">
+    </a>
+  </div>
+</p>
 
 
 ## Features
@@ -15,70 +35,57 @@ A brief description of what this project does and who it's for
 - Cross platform
 
 
-## Badges
+## Exécuter localement
 
-Add badges from somewhere like: [shields.io](https://shields.io/)
-
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
-[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
-
-
-## Run Locally
-
-Clone the project
+Clonez le projet
 
 ```bash
-  git clone https://link-to-project
+git clone https://link-to-project
 ```
 
-Go to the project directory
+Accédez au répertoire du projet
 
 ```bash
-  cd my-project
+cd my-project
 ```
 
-Install dependencies
+Installez les dépendances
 
 ```bash
-  npm install
+npm install
 ```
 
-Start the server
+Lancez l'application avec Expo
 
 ```bash
-  npm run start
+npx expo start
 ```
 
 
-## Captures d'écran
+## 📱 Captures d'écran
 
-![Accueil](https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Accueil.png)
-![Emploi du temps](https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Emploi_du_temps.png)
-![Agenda](https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Agenda.png)
-![Mails](https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Mails.png)
+<p align="center">
+  <img src="https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Accueil.png" alt="Accueil" width="24%" />
+  <img src="https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Emploi_du_temps.png" alt="Emploi du temps" width="24%" />
+  <img src="https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Agenda.png" alt="Agenda" width="24%" />
+  <img src="https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Mails.png" alt="Mails" width="24%" />
+</p>
 
 
 ## 🔒 Vie privée & confidentialité
-Libellule est engagé à protéger les données de tous ses utilisateurs, pour fournir une expérience fiable et de confiance.
 
->L'application est gratuite, sans publicités, ne revend pas vos données, n'utilise pas de serveurs, n'utilise pas d'outils d'analyse, et ne récupère pas de logs de manière automatisée.
+Libellule s'engage à garantir la protection des données de ses utilisateurs, afin de vous offrir une expérience sécurisée et fiable.
+
+> L'application est entièrement gratuite, sans publicités, ne revend pas vos données et ne récupère pas de logs de manière automatisée.
 
 
-## Authors
+## 👀 Auteurs
 
 - [@Raphitpt](https://www.github.com/ArnaudGct)
 - [@ArnaudGct](https://www.github.com/Raphitpt)
 
 
-## 🔗 Links
-[![site internet](https://img.shields.io/badge/site%20internet-0760fb?style=for-the-badge)](https://libellule.app/)
-[![instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/libelluleapp)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/libellule/)
-[![figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=fff&style=for-the-badge)](https://www.figma.com/design/zZKYcCDHp4bXGOJc6M65o4/Libellule?node-id=0-1&t=v9fxudCar8s8TSYq-1)
-
-
 ## Feedback
 
-If you have any feedback, please reach out to us at fake@fake.com
+Si vous avez rencontré un bug ou des problèmes et/ou si vous souhaitez nous faire part d’améliorations ou autre demande, vous pouvez nous envoyer un mail à [support@libellule.app](mailto:support@libellule.app)
 
