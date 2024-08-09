@@ -27,12 +27,82 @@
 </p>
 
 
-## Features
+## Fonctionnalités
 
-- Light/dark mode toggle
-- Live previews
-- Fullscreen mode
-- Cross platform
+### Accueil
+- Affichage du prochain cours
+- Vue semaine (5 jours)
+  - Nombre d'heures de cours
+  - Météo
+  - Présence d'une évaluation
+  - Devoirs à faire avec taux d'accomplissement
+- Navigation
+  - Accès rapide aux autres fonctionnalités
+
+### Emploi du temps
+- Vues
+  - Journée
+  - Semaine (5 jours)
+  - Nombre d'heures de cours affichées
+- Détail des cours
+  - Un clic sur un cours ouvre une interface avec des informations détaillées
+
+### Agenda
+- Tutoriel expliquant le fonctionnement
+- Informations
+  - Numéro de la semaine
+  - Nombre d'évaluations et de tâches
+  - Événements affichés par jour
+- Fonctionnalités
+  - Cochez un événement une fois réalisé
+  - Un clic sur un évènement ouvre une interface avec des informations détaillées
+  - Gestion des événements (pour le responsable de groupe)
+    - Ajout d'événements via un bouton en bas de l'interface
+      - Date, Matière, Type, Nom, Description
+    - Édition/Suppression des événements existants
+
+### Mails
+- Liste des mails de l'étudiant
+  - Lecture uniquement, pas de réponse ni de suppression
+
+### Menu du restaurant universitaire (Le Crousty)
+- Accessible depuis l'accueil
+- Informations pratiques sur le restaurant universitaire
+- Menu par jour
+  - Le menu est récupéré sur le site du Crousty ([lien ici](https://www.crous-poitiers.fr/restaurant/r-u-crousty/))
+  - Peut ne pas être à jour si le site ne l'est pas
+
+### Liens externes
+- Accessibles depuis l'accueil
+  - Messagerie universitaire
+  - ENT
+  - UPDago
+  - Site de l'IUT d'Angoulême
+  - Site du Concours 48h
+
+### Scolarité (MMI uniquement)
+- Notes
+  - Moyenne des 5 compétences pour l'étudiant et la promo
+  - Moyenne totale des 5 compétences pour l'étudiant et la promo
+  - Lien vers MMI Dashboard
+- Absences
+  - Nombre d'absences sur le semestre actuel
+  - Lien vers MMI Dashboard
+
+### Profil
+- Informations personnelles
+  - Affichage/Modification de la photo de profil
+  - Prénom, nom, adresse mail universitaire
+  - Date de naissance, numéro de téléphone, site internet, comptes de réseaux sociaux (Instagram, Discord, etc.)
+- Options
+  - Modification du mot de passe
+  - Transmission du rôle de responsable de l'agenda
+  - Activation/Désactivation du mode sombre et des notifications
+  - Déconnexion
+- Informations Libellule
+  - Réseaux sociaux (Instagram, LinkedIn)
+  - Journal des mises à jour (patchnotes)
+  - Conditions générales d'utilisation
 
 
 ## Exécuter localement
@@ -64,12 +134,12 @@ npx expo start
 
 ## 📱 Captures d'écran
 
-<p align="center">
+<div align="center">
   <img src="https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Accueil.png" alt="Accueil" width="24%" />
   <img src="https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Emploi_du_temps.png" alt="Emploi du temps" width="24%" />
   <img src="https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Agenda.png" alt="Agenda" width="24%" />
   <img src="https://github.com/LibelluleApp/LibelluleApp/blob/main/public/Mails.png" alt="Mails" width="24%" />
-</p>
+</div>
 
 
 ## 🔒 Vie privée & confidentialité
