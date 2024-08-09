@@ -105,7 +105,7 @@
   - Conditions générales d'utilisation
 
 
-## Exécuter localement
+## 💻 Exécuter localement
 
 Clonez le projet
 
