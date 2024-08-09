@@ -10,17 +10,17 @@
     <br/>
   </p>
 
-  <div class="badges" align="center">
-    <a href="https://libellule.app/" target="_blank">
+  <div align="center">
+    <a href="https://libellule.app/">
       <img alt="Site internet" src="https://img.shields.io/badge/site%20internet-0760fb?style=for-the-badge">
     </a>
-    <a href="https://instagram.com/libelluleapp" target="_blank">
+    <a href="https://instagram.com/libelluleapp">
       <img alt="Instagram" src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white">
     </a>
-    <a href="https://www.linkedin.com/in/libellule/" target="_blank">
+    <a href="https://www.linkedin.com/in/libellule/">
       <img alt="LinkedIn" src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white">
     </a>
-    <a href="https://www.figma.com/design/zZKYcCDHp4bXGOJc6M65o4/Libellule?node-id=0-1&t=v9fxudCar8s8TSYq-1" target="_blank">
+    <a href="https://www.figma.com/design/zZKYcCDHp4bXGOJc6M65o4/Libellule?node-id=0-1&t=v9fxudCar8s8TSYq-1">
       <img alt="Figma" src="https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=fff&style=for-the-badge">
     </a>
   </div>
