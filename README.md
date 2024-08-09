@@ -23,15 +23,6 @@ Add badges from somewhere like: [shields.io](https://shields.io/)
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 
-## Color Reference
-
-| Color             | Hex                                                                |
-| ----------------- | ------------------------------------------------------------------ |
-| Example Color | ![#0a192f](https://via.placeholder.com/10/0a192f?text=+) #0a192f |
-| Example Color | ![#f8f8f8](https://via.placeholder.com/10/f8f8f8?text=+) #f8f8f8 |
-| Example Color | ![#00b48a](https://via.placeholder.com/10/00b48a?text=+) #00b48a |
-| Example Color | ![#00d1a0](https://via.placeholder.com/10/00b48a?text=+) #00d1a0 |
-
 
 ## Run Locally
 
@@ -73,6 +64,7 @@ Libellule est engagé à protéger les données de tous ses utilisateurs, pour f
 
 >L'application est gratuite, sans publicités, ne revend pas vos données, n'utilise pas de serveurs, n'utilise pas d'outils d'analyse, et ne récupère pas de logs de manière automatisée.
 
+
 ## Authors
 
 - [@Raphitpt](https://www.github.com/ArnaudGct)
@@ -80,9 +72,10 @@ Libellule est engagé à protéger les données de tous ses utilisateurs, pour f
 
 
 ## 🔗 Links
-[![site internet](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://katherineoelsner.com/)
-[![instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/)
+[![site internet](https://img.shields.io/badge/site%20internet-0760fb?style=for-the-badge)](https://libellule.app/)
+[![instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/libelluleapp)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/libellule/)
+[![figma](https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=fff&style=for-the-badge)](https://www.figma.com/design/zZKYcCDHp4bXGOJc6M65o4/Libellule?node-id=0-1&t=v9fxudCar8s8TSYq-1)
 
 
 ## Feedback
