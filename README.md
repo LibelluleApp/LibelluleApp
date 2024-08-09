@@ -6,7 +6,7 @@
   <h1 align="center">Libellule</h1>
 
   <p align="center">
-    Nous avons réuni votre emploi du temps 📅, votre agenda 📓, vos mails 📝, le menu du Crousty 🍔 et bien plus encore<br>dans une <strong>seule application</strong> pour répondre seulement à <strong>vos besoins</strong>.
+    Nous avons réuni votre emploi du temps 📅, votre agenda 📓, vos mails 📝, le menu du Crousty 🍔 et bien plus encore dans une <strong>seule application</strong> pour répondre seulement à <strong>vos besoins</strong>.
     <br/>
   </p>
 
