@@ -72,16 +72,17 @@ Start the server
 Libellule est engagé à protéger les données de tous ses utilisateurs, pour fournir une expérience fiable et de confiance.
 
 >L'application est gratuite, sans publicités, ne revend pas vos données, n'utilise pas de serveurs, n'utilise pas d'outils d'analyse, et ne récupère pas de logs de manière automatisée.
+
 ## Authors
 
-- [@arnaudgct](https://www.github.com/arnaudgct)
-- [@arnaudgct](https://www.github.com/arnaudgct)
+- [@Raphitpt](https://www.github.com/ArnaudGct)
+- [@ArnaudGct](https://www.github.com/Raphitpt)
 
 
 ## 🔗 Links
-[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://katherineoelsner.com/)
+[![site internet](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://katherineoelsner.com/)
+[![instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/)
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/)
-[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/)
 
 
 ## Feedback
