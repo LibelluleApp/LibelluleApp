@@ -27,7 +27,7 @@
 </p>
 
 
-## Fonctionnalités
+## ✨ Fonctionnalités
 
 ### Accueil
 - Affichage du prochain cours
