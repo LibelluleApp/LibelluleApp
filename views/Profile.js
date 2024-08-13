@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import { } from "react-native-gesture-handler";
 import {
   ChangePP,
   LeftArrow,
@@ -26,6 +25,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../utils/themeContext";
+// import messaging from '@react-native-firebase/messaging';
 
 async function getProfileData() {
   try {
@@ -41,9 +41,25 @@ function Profile() {
   const [isEnabled, setIsEnabled] = useState(false);
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const [isNotification, setIsNotification] = useState(false);
   const { signOut } = useAuth();
   const navigation = useNavigation();
+
+  const toggleNotification = async () => {
+    try {
+      if (isNotification) {
+        await messaging().unregisterDeviceForRemoteMessages();
+        setIsNotification(false);
+      } else {
+        await messaging().registerDeviceForRemoteMessages();
+        const token = await messaging().getToken();
+        console.log(token);
+        setIsNotification(true);
+      }
+    } catch (error) {
+      console.error("Failed to toggle notifications", error);
+    }
+  };
 
   useEffect(() => {
     getProfileData().then((data) => {
@@ -102,16 +118,6 @@ function Profile() {
           </View>
           <LeftArrow />
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          style={styles.profileButton}
-          onPress={() => navigation.navigate("CustomColor")}
-        >
-          <View style={styles.CTAContent}>
-            <ColorPal />
-            <Text style={styles.profileBtnText}>Modifier les couleurs</Text>
-          </View>
-          <LeftArrow />
-        </TouchableOpacity> */}
         <View style={styles.profileSwitcher}>
           <View style={styles.switcherContent}>
             <Text style={styles.profileBtnSwitch}>Mode sombre</Text>
@@ -126,9 +132,9 @@ function Profile() {
             <Text style={styles.profileBtnSwitch}>Notifcations</Text>
             <Switch
               trackColor={{ false: "#7A797C", true: "#0760FB" }}
-              thumbColor={isEnabled ? "#fff" : "#fff"}
-              onValueChange={toggleTheme}
-              value={isDarkMode}
+              thumbColor={isNotification ? "#fff" : "#fff"}
+              onValueChange={toggleNotification}
+              value={isNotification}
             ></Switch>
           </View>
           <View style={styles.separatorStick}></View>

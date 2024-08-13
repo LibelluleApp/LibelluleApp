@@ -98,7 +98,7 @@ function ItemCourse({ data, color }) {
       gap: 10,
     },
     contentLeft: {
-      gap: 5,
+
       justifyContent: "center",
     },
     hourClock: {
@@ -124,7 +124,6 @@ function ItemCourse({ data, color }) {
       height: slideHeight,
       backgroundColor: colors.white_background,
       borderRadius: 10,
-      padding: 15,
     },
     title: {
       fontFamily: "Ubuntu_500Medium",
@@ -168,7 +167,7 @@ function ItemCourse({ data, color }) {
 
   useEffect(() => {
     const calculateTimeRemaining = () => {
-      const targetTime = new Date(data.dtstart_tz).getTime();
+      const targetTime = new Date(data.start).getTime();
       const now = Date.now();
       const remainingTime = targetTime - now;
 

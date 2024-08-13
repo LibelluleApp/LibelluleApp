@@ -28,6 +28,7 @@ export default {
     config: {
       usesNonExemptEncryption: false,
     },
+    googleServicesFile: "./GoogleService-Info.plist",
     bundleIdentifier: "com.libellule.libellule",
     splash: {
       backgroundColor: "#0760FB",
@@ -39,6 +40,7 @@ export default {
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#0760FB",
     },
+    googleServicesFile: "./google-services.json",
     package: "com.libellule.libellule",
     splash: {
       backgroundColor: "#0760FB",
@@ -48,7 +50,14 @@ export default {
   web: {
     favicon: "./assets/favicon.png",
   },
-  plugins: ["expo-font", "expo-secure-store"],
+  plugins: ["expo-font", "expo-secure-store", "@react-native-firebase/app", [
+    "expo-build-properties",
+    {
+      "ios": {
+        "useFrameworks": "static"
+      }
+    }
+  ]],
   extra: {
     eas: {
       projectId: "142931be-af91-443d-9e7d-57ecd13da335",
