@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import {} from "react-native-gesture-handler";
+import { } from "react-native-gesture-handler";
 import {
   ChangePP,
   LeftArrow,
@@ -102,7 +102,7 @@ function Profile() {
           </View>
           <LeftArrow />
         </TouchableOpacity>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.profileButton}
           onPress={() => navigation.navigate("CustomColor")}
         >
@@ -111,7 +111,7 @@ function Profile() {
             <Text style={styles.profileBtnText}>Modifier les couleurs</Text>
           </View>
           <LeftArrow />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.profileSwitcher}>
           <View style={styles.switcherContent}>
             <Text style={styles.profileBtnSwitch}>Mode sombre</Text>
