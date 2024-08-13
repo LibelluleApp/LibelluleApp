@@ -1025,8 +1025,8 @@ function ForwardRole() {
 function InstaIcon(props) {
   return (
     <Svg
-      width={21}
-      height={21}
+      width={18}
+      height={18}
       viewBox="0 0 21 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -1194,6 +1194,28 @@ function ColorPal(props) {
     </Svg>
   );
 }
+function MailProfile(props) {
+  return (
+    <Svg
+      width={21}
+      height={21}
+      viewBox="0 0 21 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <G clipPath="url(#clip0_1172_135475)" fill="#0760FB">
+        <Path d="M16.967 3.926l-5.962 5.963a3.547 3.547 0 01-5.01 0L.033 3.926C.023 4.038 0 4.139 0 4.25v8.5a3.546 3.546 0 003.542 3.542h9.916A3.546 3.546 0 0017 12.75v-8.5c0-.111-.023-.212-.033-.324z" />
+        <Path d="M10.003 8.887l6.47-6.47A3.532 3.532 0 0013.458.707H3.542A3.532 3.532 0 00.527 2.416l6.47 6.47a2.13 2.13 0 003.006 0z" />
+      </G>
+      <Defs>
+        <ClipPath id="clip0_1172_135475">
+          <Path fill="#fff" d="M0 0H17V17H0z" />
+        </ClipPath>
+      </Defs>
+    </Svg>
+  );
+}
 export {
   Home,
   HomeFocused,
@@ -1242,4 +1264,5 @@ export {
   ProfileCard,
   TimetableNoProps,
   ColorPal,
+  MailProfile,
 };

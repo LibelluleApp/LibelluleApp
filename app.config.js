@@ -1,9 +1,9 @@
 export default {
-  name: "TestBuild",
+  name: "Libellule",
   slug: "libellule",
   version: "0.0.1",
   orientation: "portrait",
-  icon: "./assets/adaptive-icon.png",
+  icon: "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/splash.png",

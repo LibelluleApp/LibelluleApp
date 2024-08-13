@@ -104,7 +104,6 @@ function Home() {
         <NextCourse />
         <AgendaHome />
         <ParcourirHome />
-        <Button title="Se déconnecter" onPress={signOut} />
       </ScrollView>
     </GestureHandlerRootView>
   );

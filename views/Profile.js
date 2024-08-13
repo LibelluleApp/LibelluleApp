@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
+  ScrollView,
   Text,
   StyleSheet,
   Switch,
   Image,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import {} from "react-native-gesture-handler";
 import {
@@ -15,12 +17,13 @@ import {
   Locker,
   ForwardRole,
   InstaIcon,
-  MailFocused,
+  MailProfile,
   Changelog,
   CGU,
   ColorPal,
 } from "../assets/icons/Icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 
 async function getProfileData() {
@@ -37,6 +40,7 @@ function Profile() {
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
+  const { signOut } = useAuth();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -55,7 +59,7 @@ function Profile() {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.topProfile}>
         <TouchableOpacity style={styles.changePicture}>
           <Image
@@ -127,9 +131,40 @@ function Profile() {
               value={isEnabled}
             ></Switch>
           </View>
+          <View style={styles.separatorStick}></View>
+          <View style={styles.mediaLinks}>
+            <InstaIcon />
+            <Text style={styles.profileMediaInsta}>@libellule</Text>
+          </View>
+          <View style={styles.mediaLinks}>
+            <MailProfile />
+            <Text style={styles.profileMediaMail}>support@libellule.app</Text>
+          </View>
         </View>
+        <TouchableOpacity style={styles.profileButton}>
+          <View style={styles.CTAContent}>
+            <Changelog />
+            <Text style={styles.profileBtnText}>Journal des mises à jours</Text>
+          </View>
+          <LeftArrow />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.profileButton}>
+          <View style={styles.CTAContent}>
+            <CGU />
+            <View>
+              <Text style={styles.profileBtnText}>CGU</Text>
+              <Text style={styles.profileBtnUnderText}>
+                Conditions générales d'utilisation
+              </Text>
+            </View>
+          </View>
+          <LeftArrow />
+        </TouchableOpacity>
       </View>
-    </View>
+      <View>
+        <Button title="Se déconnecter" onPress={signOut} />
+      </View>
+    </ScrollView>
   );
 }
 
@@ -189,6 +224,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#252525",
   },
+  profileBtnUnderText: {
+    fontFamily: "Ubuntu_400Regular",
+    fontSize: 13,
+    color: "#7A797C",
+  },
   CTAContent: {
     flexDirection: "row",
     alignItems: "center",
@@ -205,10 +245,31 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  mediaLinks: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
   profileBtnSwitch: {
     fontFamily: "Ubuntu_400Regular",
     fontSize: 17,
     color: "#252525",
+  },
+  separatorStick: {
+    marginVertical: 20,
+    height: 1,
+    backgroundColor: "#7A797C",
+  },
+  profileMediaInsta: {
+    fontFamily: "Ubuntu_500Medium",
+    fontSize: 17,
+    color: "#FE068D",
+  },
+  profileMediaMail: {
+    fontFamily: "Ubuntu_500Medium",
+    fontSize: 17,
+    color: "#0760FB",
+    paddingBottom: 5,
   },
 });
 

@@ -9,8 +9,9 @@ import {
 } from "react-native";
 import { Info, ClockEmpty } from "../../assets/icons/Icons";
 import Button from "./button";
+import fetchAbsence from "../../api/Scolarite/fetchAbsence";
 
-function GridTiles({ code, competence, moyenne, promo }) {
+function GridTiles({ code, competence, moyenne, promo, rang }) {
   return (
     <View style={styles.gridTiles}>
       <View>
@@ -18,8 +19,11 @@ function GridTiles({ code, competence, moyenne, promo }) {
         <Text style={styles.gridTitle}>{competence}</Text>
       </View>
       <View>
-        <Text style={styles.gridMoyenne}>Moyenne : {moyenne}/20</Text>
-        <Text style={styles.gridPromo}>Promo : {promo}/20</Text>
+        <Text style={styles.gridMoyenne}>
+          Moyenne : {moyenne.toFixed(3)}/20
+        </Text>
+        <Text style={styles.gridPromo}>Promo : {promo.toFixed(2)}/20</Text>
+        <Text style={styles.gridPromo}>Rang : {rang}</Text>
       </View>
     </View>
   );
@@ -33,42 +37,56 @@ function GridRecap({ number, moyenne }) {
   );
 }
 
+function CalculMoyenne(notes) {
+  let total = 0;
+  notes.forEach((note) => {
+    total += note.moy;
+  });
+  return total / notes.length;
+}
+
 function Notes() {
+  const [notes, setNotes] = React.useState([]);
+  const [moyenne, setMoyenne] = React.useState(0);
+
+  React.useEffect(() => {
+    try {
+      fetchAbsence().then((data) => {
+        const ues = data.notes.ues;
+        const notesArray = Object.values(ues);
+        setNotes(notesArray);
+        setMoyenne(CalculMoyenne(notesArray));
+      });
+    } catch (error) {
+      console.error("Error fetching absence:", error);
+    }
+  }, []);
+
+  if (!notes) {
+    return (
+      <View style={styles.background}>
+        <View style={styles.container}>
+          <Text>Chargement...</Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.background}>
       <View style={styles.container}>
         <View style={styles.gridContainer}>
-          <GridTiles
-            code="UE3.1"
-            competence="Comprendre"
-            moyenne="14.5"
-            promo="3.45"
-          />
-          <GridTiles
-            code="UE3.1"
-            competence="Comprendre"
-            moyenne="14.5"
-            promo="3.45"
-          />
-          <GridTiles
-            code="UE3.1"
-            competence="Comprendre"
-            moyenne="14.5"
-            promo="3.45"
-          />
-          <GridTiles
-            code="UE3.1"
-            competence="Comprendre"
-            moyenne="14.5"
-            promo="3.45"
-          />
-          <GridTiles
-            code="UE3.1"
-            competence="Comprendre"
-            moyenne="14.5"
-            promo="3.45"
-          />
-          <GridRecap number="5" moyenne="12.5" />
+          {notes.map((note, index) => (
+            <GridTiles
+              key={index} // Utiliser l'index comme clé si vous n'avez pas de propriété unique
+              code={note.code}
+              competence="Comprendre"
+              moyenne={note.moy}
+              promo={note.moy_promo}
+              rang={note.rang}
+            />
+          ))}
+          <GridRecap number={notes.length} moyenne={moyenne.toFixed(3)} />
         </View>
         <View style={styles.textContent}>
           <Info />

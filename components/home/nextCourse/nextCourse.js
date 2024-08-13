@@ -45,15 +45,17 @@ const fetchColor = async (data) => {
 function ItemCourse({ data, color }) {
   if (!data) {
     return (
-      <View style={[styles.slide, styles.placeholder]}>
-        <Text style={styles.placeholderText}>Loading...</Text>
-      </View>
+      <TouchableOpacity style={[styles.slide]}>
+        <View style={[styles.container, { backgroundColor: "#7A797C70" }]}>
+          <Text style={styles.textSubject}>Aucun cours à venir</Text>
+        </View>
+      </TouchableOpacity>
     );
   }
   const [remainingTime, setRemainingTime] = useState("");
 
   function formatProfessorName(professor) {
-    const parts = professor.split(" ");
+    const parts = professor.split(" "); 
     const initial = parts[1][0];
     const nom = parts[0];
     return `${initial}. ${nom}`;
@@ -151,22 +153,32 @@ function NextCourse() {
 
   useEffect(() => {
     fetchCourse().then((response) => {
-      setNextCourse(response);
-      fetchColor(response).then((color) => {
-        setColor(color);
+      if (response !== null) {
+        setNextCourse(response);
+        fetchColor(response).then((color) => {
+          setColor(color);
+          setIsLoading(false);
+        });
+      } else {
+        setNextCourse(null);
         setIsLoading(false);
-      });
+      }
     });
   }, []);
 
   useEffect(() => {
     if (isFocused) {
       fetchCourse().then((response) => {
-        setNextCourse(response);
-        fetchColor(response).then((color) => {
-          setColor(color);
+        if (response !== null) {
+          setNextCourse(response);
+          fetchColor(response).then((color) => {
+            setColor(color);
+            setIsLoading(false);
+          });
+        } else {
+          setNextCourse(null);
           setIsLoading(false);
-        });
+        }
       });
     }
   }, [isFocused]);
@@ -186,13 +198,17 @@ function NextCourse() {
           data={data}
           loop={false}
           onProgressChange={progress}
-          renderItem={({ index }) =>
-            index === 0 ? (
+          renderItem={({ index }) => {
+            // if (nextCourse !== null) {
+            return index === 0 ? (
               <ItemCourse data={nextCourse} color={color} />
             ) : (
               <ItemInfo />
-            )
-          }
+            );
+            // } else {
+            //   return <ItemInfo />;
+            // }
+          }}
         />
 
         <Pagination.Basic

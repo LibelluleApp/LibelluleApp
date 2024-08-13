@@ -14,12 +14,14 @@ async function fetchNextCourse() {
 
     if (response.data.status === "success") {
       return response.data.result;
+    } else if (response.data.status === "nothing") {
+      return null;
     } else {
-      throw new Error(response.data.message);
+      throw new Error(response);
     }
   } catch (error) {
     console.error("Error fetching next course:", error);
-    return null; // Return null in case of error
+    return null;
   }
 }
 

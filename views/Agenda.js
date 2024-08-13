@@ -143,8 +143,8 @@ const Agenda = () => {
   }, []);
 
   const initializeAgenda = async (data) => {
-    const startDate = moment("2023-09-01");
-    const endDate = moment("2024-07-10");
+    const startDate = moment("2024-07-10");
+    const endDate = moment("2024-12-31");
 
     const weekdays = [];
     let currentDate = startDate.clone();

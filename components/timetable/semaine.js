@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  PureComponent,
-  Suspense,
-} from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -12,111 +6,114 @@ import {
   ActivityIndicator,
   Text,
 } from "react-native";
-import SwiperFlatList from "react-native-swiper-flatlist";
-import moment from "moment";
-import "moment/locale/fr";
 
-import PaginationHeader from "./jour/pagination";
-import EventList from "./jour/EventList";
+import CalendarKit from "react-native-calendar-kit";
 
-const preloadComponent = (component) => {
-  return new Promise((resolve) => {
-    component().then(resolve);
-  });
+import fetchTimetable from "../../api/Timetable/timetable";
+
+const getTimetable = async () => {
+  try {
+    const response = await fetchTimetable();
+    if (response) {
+      return response;
+    }
+  } catch (error) {
+    console.error("Error fetching timetable:", error);
+    return null;
+  }
 };
 
-class Item extends PureComponent {
-  render() {
+const Jour = () => {
+  const [timetable, setTimetable] = React.useState(null);
+
+  React.useEffect(() => {
+    getTimetable().then((response) => {
+      setTimetable(response);
+      console.log(response);
+    });
+  }, []);
+
+  const events = [
+    {
+      start: "2024-06-14T15:00:00.000Z",
+      end: "2024-06-14T16:00:00.000Z",
+      id: "1",
+      title: "test",
+      isAllDay: true,
+      color: "#FF0000",
+    },
+    {
+      start: "2024-06-27T00:00:00.000Z",
+      end: "2024-06-28T00:00:00.000Z",
+      id: "2",
+      title: "test",
+      isAllDay: true,
+      color: "#FF0000",
+    },
+  ];
+
+  const initialLocales = {
+    en: { weekDayShort: "Dim_Lun_Mar_Mer_Jeu_Ven_Sam".split("_") },
+  };
+  if (!timetable) {
     return (
-      <View style={styles.itemContainer}>
-        <Suspense fallback={<ActivityIndicator size="large" color="#0000ff" />}>
-          <Text>Coucou</Text>
-        </Suspense>
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#0760FB" />
       </View>
     );
   }
-}
-
-const Jour = () => {
-  const swiperRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [daysOfWeek, setDaysOfWeek] = useState([]);
-  const [defaultIndex, setDefaultIndex] = useState(0);
-  // const [currentWeekNumber, setCurrentWeekNumber] = useState(null);
-
-  useEffect(() => {
-    // preloadComponent(() => import("../components/home/Agenda/Eval"));
-    // preloadComponent(() => import("../components/home/Agenda/Task"));
-
-    let today = moment();
-
-    const startDate = moment("2023-09-01");
-    const endDate = moment("2024-07-10");
-
-    if (today.day() === 0 || today.day() === 6) {
-      today = today.day(1);
-    }
-    if (today.isAfter(endDate)) {
-      today = startDate;
-    }
-
-    const weekdays = [];
-    let currentDate = startDate.clone();
-    while (currentDate <= endDate) {
-      if (currentDate.day() !== 0 && currentDate.day() !== 6) {
-        weekdays.push(currentDate.clone());
-      }
-      currentDate.add(1, "day");
-    }
-
-    const todayIndex = weekdays.findIndex((day) => day.isSame(today, "day"));
-    setCurrentIndex(todayIndex !== -1 ? todayIndex : 0);
-    setDefaultIndex(todayIndex !== -1 ? todayIndex : 0);
-
-    setDaysOfWeek(weekdays);
-  }, []);
-
-  const handleChangeIndex = ({ index }) => {
-    setCurrentIndex(index);
-  };
-
-  const handlePrevDay = () => {
-    const newIndex =
-      currentIndex === 0 ? daysOfWeek.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-    swiperRef.current.scrollToIndex({ index: newIndex });
-  };
-
-  const handleNextDay = () => {
-    const newIndex =
-      currentIndex === daysOfWeek.length - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-    swiperRef.current.scrollToIndex({ index: newIndex });
-  };
-
-  const handleToday = () => {
-    setCurrentIndex(defaultIndex);
-    swiperRef.current.scrollToIndex({ index: defaultIndex });
-  };
-
   return (
     <View style={styles.container}>
-      <PaginationHeader
-        currentDay={daysOfWeek[currentIndex]?.format("dddd DD MMMM")}
-        onPrev={handlePrevDay}
-        onNext={handleNextDay}
-        index={currentIndex}
-        defaultIndex={defaultIndex}
-        returnToday={handleToday}
-      />
-      <SwiperFlatList
-        ref={swiperRef}
-        index={currentIndex}
-        data={daysOfWeek}
-        renderItem={({ item }) => <Item item={item} />}
-        onChangeIndex={handleChangeIndex}
-        windowSize={3}
-        bounces={false}
+      <CalendarKit
+        viewMode="workWeek"
+        initialLocales={initialLocales}
+        locale="en"
+        timeZone="Europe/Paris"
+        minDate={"2023-09-01"}
+        showWeekNumber={true}
+        start={8 * 60}
+        end={18 * 60}
+        firstDay={1}
+        showNowIndicator={true}
+        theme={{
+          colors: {
+            background: "#F4F5F9",
+            border: "#7A797C50",
+            text: "#252525",
+          },
+          textStyle: {
+            fontFamily: "Ubuntu_500Medium",
+          },
+          todayNumberContainer: {
+            backgroundColor: "#0760FB",
+          },
+          todayNumber: {
+            color: "#FFF",
+          },
+          todayName: {
+            color: "#0760FB",
+          },
+          dayName: {
+            color: "#7A797C",
+          },
+          dayNumber: {
+            color: "#7A797C",
+          },
+        }}
+        events={timetable}
+        renderEvent={(event) => {
+          return (
+            <View
+              style={{
+                backgroundColor: "#FF0000",
+                padding: 10,
+                borderRadius: 5,
+              }}
+            >
+              <Text>{event.title}</Text>
+            </View>
+          );
+        }}
       />
     </View>
   );
@@ -127,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F4F5F9",
     gap: 10,
-    paddingVertical: 25,
+    paddingTop: 10,
   },
   itemContainer: {
     flex: 1,

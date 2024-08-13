@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
-
 import Mail from "../components/mails/Mail";
 
 function Mails() {
+  const [emails, setEmails] = useState([]);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -31,6 +32,7 @@ function Mails() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -55,4 +57,5 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 });
+
 export default Mails;

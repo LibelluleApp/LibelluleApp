@@ -9,17 +9,55 @@ import {
 } from "react-native";
 import { Info, ClockEmpty } from "../../assets/icons/Icons";
 import Button from "./button";
+import fetchAbsence from "../../api/Scolarite/fetchAbsence";
 
 function Absence() {
+  const [absence, setAbsence] = React.useState(null);
+
+  React.useEffect(() => {
+    try {
+      fetchAbsence().then((data) => {
+        setAbsence(data.absences);
+        console.log(absence);
+      });
+    } catch (error) {
+      console.error("Error fetching absence:", error);
+    }
+  }, []);
+
+  if (!absence) {
+    return (
+      <View style={styles.background}>
+        <View style={styles.container}>
+          <Text>Chargement...</Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.background}>
       <View style={styles.container}>
         <View style={styles.absTop}>
           <Text style={styles.absTitle}>Semestre 4</Text>
-          <Text style={styles.absContent}>{`\u2022`} 2 absences justifées</Text>
-          <Text style={styles.absContent}>
-            {`\u2022`} 4 absences injustifiées
-          </Text>
+          {absence.total_abs && absence.total_abs > 1 ? (
+            <Text style={styles.absContent}>
+              {`\u2022`} {absence.total_abs} absences justifées
+            </Text>
+          ) : (
+            <Text style={styles.absContent}>
+              {`\u2022`} {absence.total_abs} absence justifée
+            </Text>
+          )}
+          {absence.total_absI && absence.total_absI > 1 ? (
+            <Text style={styles.absContent}>
+              {`\u2022`} {absence.total_absI} absences injustifiées
+            </Text>
+          ) : (
+            <Text style={styles.absContent}>
+              {`\u2022`} {absence.total_absI} absence injustifiée
+            </Text>
+          )}
         </View>
         <View style={styles.textContent}>
           <ClockEmpty />
