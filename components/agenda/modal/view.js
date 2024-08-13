@@ -28,7 +28,6 @@ const ViewTask = ({ route }) => {
     try {
       setLoading(true);
       const response = await fetchTask(agenda_id);
-      console.log(response);
       setTask(response[0]);
       setIsChecked(response[0].estFait);
     } catch (error) {

@@ -32,7 +32,7 @@ async function getProfileData() {
     const userData = JSON.parse(await AsyncStorage.getItem("user_data"));
     return userData;
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 

@@ -97,7 +97,6 @@ async function associateRessourceColor(student_year) {
     prefix1 = "R1.";
     prefix2 = "R2.";
   } else if (student_year.includes("Y2")) {
-    console.log("Y2");
     prefix1 = "R3.";
     prefix2 = "R4.";
   } else if (student_year.includes("Y3")) {
