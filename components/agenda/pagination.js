@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LeftArrowAgenda, RightArrowAgenda } from "../../assets/icons/Icons";
+import { ThemeContext } from "./../../utils/themeContext";
 
 const PaginationHeader = ({
   currentDay,
@@ -13,6 +14,76 @@ const PaginationHeader = ({
   evalCount,
   taskCount,
 }) => {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      flexDirection: "column",
+    },
+    content: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      paddingHorizontal: 24,
+      alignItems: "center",
+    },
+    day: {
+      fontSize: 15,
+      fontFamily: "Ubuntu_500Medium",
+      color: colors.black,
+    },
+    btntoday: {
+      alignSelf: "center",
+    },
+    around: {
+      padding: 10,
+    },
+    return: {
+      fontSize: 15,
+      fontFamily: "Ubuntu_500Medium",
+      color: colors.grey,
+      paddingHorizontal: 24,
+      textDecorationLine: "underline",
+    },
+    week: {
+      fontSize: 17,
+      fontFamily: "Ubuntu_500Medium",
+      color: colors.black,
+      paddingHorizontal: 24,
+    },
+    counts: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      gap: 5,
+      marginTop: 10,
+      marginBottom: 20,
+      paddingHorizontal: 24,
+    },
+    evalCount: {
+      borderColor: colors.red_variable,
+      borderWidth: 1,
+      paddingHorizontal: 13,
+      paddingVertical: 7,
+      borderRadius: 10,
+    },
+    taskCount: {
+      borderColor: colors.blue_variable,
+      borderWidth: 1,
+      borderRadius: 10,
+      paddingHorizontal: 13,
+      paddingVertical: 7,
+    },
+    evalText: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.red_variable,
+    },
+    taskText: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.blue_variable,
+    },
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.recap}>
@@ -33,7 +104,7 @@ const PaginationHeader = ({
             style={styles.around}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <LeftArrowAgenda fill="#252525" />
+            <LeftArrowAgenda fill={colors.black} />
           </TouchableOpacity>
         )}
         {index === 0 && (
@@ -42,7 +113,7 @@ const PaginationHeader = ({
             style={styles.around}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <LeftArrowAgenda fill="#7A7C7C" />
+            <LeftArrowAgenda fill={colors.black} />
           </TouchableOpacity>
         )}
 
@@ -52,7 +123,7 @@ const PaginationHeader = ({
           style={styles.around}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
-          <RightArrowAgenda fill="#252525" />
+          <RightArrowAgenda fill={colors.black} />
         </TouchableOpacity>
       </View>
       {index !== defaultIndex && (
@@ -72,74 +143,5 @@ const PaginationHeader = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-    backgroundColor: "#F4F5F9",
-  },
-  content: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 24,
-    alignItems: "center",
-    backgroundColor: "#F4F5F9",
-  },
-  day: {
-    fontSize: 15,
-    fontFamily: "Ubuntu_500Medium",
-  },
-  btntoday: {
-    alignSelf: "center",
-  },
-  around: {
-    padding: 10,
-  },
-  return: {
-    fontSize: 15,
-    fontFamily: "Ubuntu_500Medium",
-    color: "#7A797C",
-    paddingHorizontal: 24,
-    textDecorationLine: "underline",
-  },
-  week: {
-    fontSize: 17,
-    fontFamily: "Ubuntu_500Medium",
-    color: "#252525",
-    paddingHorizontal: 24,
-  },
-  counts: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 5,
-    marginTop: 10,
-    marginBottom: 20,
-    paddingHorizontal: 24,
-  },
-  evalCount: {
-    borderColor: "#BB0000",
-    borderWidth: 1,
-    paddingHorizontal: 13,
-    paddingVertical: 7,
-    borderRadius: 10,
-  },
-  taskCount: {
-    borderColor: "#0760FB",
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 13,
-    paddingVertical: 7,
-  },
-  evalText: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
-    color: "#BB0000",
-  },
-  taskText: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
-    color: "#0760FB",
-  },
-});
 
 export default PaginationHeader;

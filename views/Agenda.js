@@ -4,6 +4,7 @@ import React, {
   useEffect,
   PureComponent,
   Suspense,
+  useContext,
 } from "react";
 import {
   View,
@@ -21,6 +22,7 @@ import Button from "../components/scolarite/button";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import "moment/locale/fr";
 import fetchAgenda from "../api/Agenda/fetch";
+import { ThemeContext } from "./../utils/themeContext";
 
 // Import explicite des composants à pré-charger
 import EvalHome from "../components/agenda/items/Eval";
@@ -54,52 +56,96 @@ const preloadComponent = (component) => {
   });
 };
 
-class Item extends PureComponent {
-  render() {
-    const { item, currentDay, onTaskCheck, onTaskUncheck } = this.props;
-
-    let ComponentToRender = null;
-
-    const slideDay = moment(currentDay).format("YYYY-MM-DD");
-    const itemDay = moment(item?.date_fin).format("YYYY-MM-DD");
-
-    if (itemDay === slideDay) {
-      if (item?.type === "eval") {
-        ComponentToRender = EvalHome;
-      } else if (item?.type === "devoir") {
-        ComponentToRender = TaskHome;
-      }
-      if (item?.type === "none") {
-        ComponentToRender = null;
-      }
-    }
-
-    return ComponentToRender ? (
-      <View style={styles.items}>
-        <Suspense fallback={<ActivityIndicator size="large" color="#0000ff" />}>
-          <ComponentToRender
-            item={item}
-            titre={item.titre}
-            agenda_id={item.agenda_id}
-            date={item.date_fin}
-            matiere={item.Ressource?.nom_ressource}
-            checked={item.estFait}
-            onTaskCheck={onTaskCheck} // Passer le callback ici
-            onTaskUncheck={onTaskUncheck} // Passer le callback ici
-          />
-        </Suspense>
-      </View>
-    ) : (
-      <View style={styles.noItemContainer}>
-        <Text style={styles.textNone}>
-          Aucun élément à afficher pour cette journée
-        </Text>
-      </View>
-    );
-  }
-}
-
 const Agenda = () => {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+      paddingVertical: 25,
+    },
+    swiperContainer: {
+      flex: 1,
+    },
+    itemContainer: {
+      flex: 1,
+      width: Dimensions.get("window").width,
+      paddingHorizontal: "5%",
+      marginTop: 20,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: colors.background,
+    },
+    noItemContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignSelf: "center",
+      width: Dimensions.get("window").width,
+    },
+    textNone: {
+      textAlign: "center",
+      alignItems: "center",
+      fontFamily: "Ubuntu_400Regular",
+      color: colors.black,
+    },
+    addButton: {
+      position: "absolute",
+      bottom: 20,
+      alignSelf: "center",
+    },
+  });
+
+  class Item extends PureComponent {
+    render() {
+      const { item, currentDay, onTaskCheck, onTaskUncheck } = this.props;
+
+      let ComponentToRender = null;
+
+      const slideDay = moment(currentDay).format("YYYY-MM-DD");
+      const itemDay = moment(item?.date_fin).format("YYYY-MM-DD");
+
+      if (itemDay === slideDay) {
+        if (item?.type === "eval") {
+          ComponentToRender = EvalHome;
+        } else if (item?.type === "devoir") {
+          ComponentToRender = TaskHome;
+        }
+        if (item?.type === "none") {
+          ComponentToRender = null;
+        }
+      }
+
+      return ComponentToRender ? (
+        <View style={styles.items}>
+          <Suspense
+            fallback={<ActivityIndicator size="large" color="#0000ff" />}
+          >
+            <ComponentToRender
+              item={item}
+              titre={item.titre}
+              agenda_id={item.agenda_id}
+              date={item.date_fin}
+              matiere={item.Ressource?.nom_ressource}
+              checked={item.estFait}
+              onTaskCheck={onTaskCheck} // Passer le callback ici
+              onTaskUncheck={onTaskUncheck} // Passer le callback ici
+            />
+          </Suspense>
+        </View>
+      ) : (
+        <View style={styles.noItemContainer}>
+          <Text style={styles.textNone}>
+            Aucun élément à afficher pour cette journée
+          </Text>
+        </View>
+      );
+    }
+  }
+
   const [user_data, setUser_data] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
@@ -338,45 +384,5 @@ const Agenda = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F4F5F9",
-    paddingVertical: 25,
-  },
-  swiperContainer: {
-    flex: 1,
-  },
-  itemContainer: {
-    flex: 1,
-    width: Dimensions.get("window").width,
-    paddingHorizontal: "5%",
-    marginTop: 20,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F4F5F9",
-  },
-  noItemContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignSelf: "center",
-    width: Dimensions.get("window").width,
-  },
-  textNone: {
-    textAlign: "center",
-    alignItems: "center",
-    fontFamily: "Ubuntu_400Regular",
-    color: "#252525",
-  },
-  addButton: {
-    position: "absolute",
-    bottom: 20,
-    alignSelf: "center",
-  },
-});
 
 export default Agenda;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   View,
   Text,
@@ -18,8 +18,57 @@ import saveAgenda from "../../../api/Agenda/save";
 import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment-timezone";
+import { ThemeContext } from "./../../../utils/themeContext";
 
 const Add = ({ route }) => {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    background: {
+      backgroundColor: colors.background,
+      flex: 1,
+    },
+    container: {
+      width: "90%",
+      alignSelf: "center",
+      paddingTop: 20,
+    },
+    title: {
+      fontSize: 15,
+      fontFamily: "Ubuntu_500Medium",
+      color: colors.black,
+      marginBottom: 10,
+    },
+    input: {
+      height: 45,
+      borderRadius: 10,
+      borderColor: colors.input_border,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      color: colors.black,
+      borderWidth: 1,
+      marginBottom: 20,
+      justifyContent: "center",
+      backgroundColor: colors.white_background,
+      fontFamily: "Ubuntu_400Regular",
+    },
+    date: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    description: {
+      height: 135,
+      textAlignVertical: "top",
+    },
+    textDate: {
+      color: colors.black,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      textTransform: "capitalize",
+    },
+  });
+
   const navigation = useNavigation();
   const { date } = route.params;
 
@@ -93,6 +142,7 @@ const Add = ({ route }) => {
 
   const [value, setValue] = useState(null);
   const [value2, setValue2] = useState(null);
+
   return (
     <KeyboardAwareScrollView
       style={styles.background}
@@ -110,7 +160,7 @@ const Add = ({ route }) => {
               <Text style={styles.textDate}>
                 {dates.format("dddd DD MMMM")}
               </Text>
-              <Calendar />
+              <Calendar fill={colors.black} />
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isDatePickerVisible}
@@ -150,7 +200,7 @@ const Add = ({ route }) => {
             <Text style={styles.title}>Titre*</Text>
             <TextInput
               style={styles.input}
-              placeholderTextColor="#A3A3A3"
+              placeholderTextColor={colors.text_placeholder}
               placeholder="Titre de la tâche"
               onChangeText={(text) => setTitre(text)}
             />
@@ -159,7 +209,7 @@ const Add = ({ route }) => {
             <Text style={styles.title}>Description</Text>
             <TextInput
               style={[styles.input, styles.description]}
-              placeholderTextColor="#A3A3A3"
+              placeholderTextColor={colors.text_placeholder}
               placeholder="Description de la tâche"
               multiline={true}
               onChangeText={(text) => setDescription(text)}
@@ -177,51 +227,5 @@ const Add = ({ route }) => {
     </KeyboardAwareScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  background: {
-    backgroundColor: "#F4F5F9",
-    flex: 1,
-  },
-  container: {
-    width: "90%",
-    alignSelf: "center",
-    paddingTop: 20,
-    backgroundColor: "#F4F5F9",
-  },
-  title: {
-    fontSize: 15,
-    fontFamily: "Ubuntu_500Medium",
-    color: "#252525",
-    marginBottom: 10,
-  },
-  input: {
-    height: 45,
-    borderRadius: 10,
-    borderColor: "#252525",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    color: "#252525",
-    borderWidth: 1,
-    marginBottom: 20,
-    justifyContent: "center",
-    backgroundColor: "#FFF",
-  },
-  date: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  description: {
-    height: 135,
-    textAlignVertical: "top",
-  },
-  textDate: {
-    color: "#252525",
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
-    textTransform: "capitalize",
-  },
-});
 
 export default Add;
