@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Text,
   View,
@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
-import { Timetable, Chapeau, Task } from "../../../assets/icons/Icons";
+import { Timetable, Chapeau, Task, Bin } from "../../../assets/icons/Icons";
 import * as Haptics from "expo-haptics";
 import { Pen } from "../../../assets/icons/Icons";
 import fetchTask from "../../../api/Agenda/fetchTask";
@@ -16,8 +16,111 @@ import { checkAgenda, uncheckAgenda } from "../../../api/Agenda/check";
 import moment from "moment";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useNavigation } from "@react-navigation/native";
+import { ThemeContext } from "./../../../utils/themeContext";
 
 const ViewTask = ({ route }) => {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "space-between",
+      backgroundColor: colors.background,
+      padding: 20,
+      gap: 20,
+    },
+    containerItems: {
+      flexDirection: "column",
+      gap: 20,
+    },
+    taskInfo: {
+      flexDirection: "column",
+      padding: 20,
+      backgroundColor: colors.white_background,
+      borderRadius: 10,
+      gap: 20,
+    },
+    taskInfoContent: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 10,
+    },
+    taskContent: {
+      padding: 20,
+      backgroundColor: colors.white_background,
+      borderRadius: 10,
+      gap: 10,
+    },
+    taskFooter: {
+      padding: 20,
+      backgroundColor: colors.white_background,
+      borderRadius: 10,
+      flexDirection: "row",
+    },
+    taskInfoTitle: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 15,
+      color: colors.black,
+    },
+    taskInfoDesc: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.black,
+    },
+    taskState: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.red_variable,
+    },
+    taskGood: {
+      color: colors.green_variable,
+    },
+    taskDisclaimer: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      color: colors.red_variable,
+      textAlign: "center",
+    },
+    taskCTA: {
+      flexDirection: "row",
+      width: "95%",
+      marginHorizontal: "auto",
+      justifyContent: "center",
+      gap: 15,
+    },
+    taskCTADelete: {
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "row",
+      gap: 10,
+      backgroundColor: colors.red700,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      borderRadius: 10,
+      width: "45%",
+    },
+    taskCTAEdit: {
+      backgroundColor: colors.blue700,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      borderRadius: 10,
+      alignItems: "center",
+      flexDirection: "row",
+      justifyContent: "center",
+      gap: 10,
+      width: "55%",
+    },
+    taskCTAText: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 17,
+      color: colors.white,
+    },
+    taskCTATextDelete: {
+      color: colors.white,
+    },
+  });
+
   const navigation = useNavigation();
   const agenda_id = route.params.agenda_id;
   const [task, setTask] = useState({});
@@ -46,7 +149,7 @@ const ViewTask = ({ route }) => {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color={colors.grey} />
       </View>
     );
   }
@@ -87,71 +190,74 @@ const ViewTask = ({ route }) => {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.taskInfo}>
-        <View style={styles.taskInfoContent}>
-          <Timetable fill="#252525" width="23" height="23" />
-          <View>
-            <Text style={styles.taskInfoTitle}>Date</Text>
-            <Text style={styles.taskInfoDesc}>
-              {moment(task.date_fin).format("ddd DD MMMM")}
-            </Text>
+      <View style={styles.containerItems}>
+        <View style={styles.taskInfo}>
+          <View style={styles.taskInfoContent}>
+            <Timetable fill={colors.black} width="23" height="23" />
+            <View>
+              <Text style={styles.taskInfoTitle}>Date</Text>
+              <Text style={styles.taskInfoDesc}>
+                {moment(task.date_fin).format("ddd DD MMMM")}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.taskInfoContent}>
+            <Chapeau fill={colors.black} />
+            <View>
+              <Text style={styles.taskInfoTitle}>Matière</Text>
+              <Text style={styles.taskInfoDesc}>
+                {task.Ressource.nom_ressource || "Matière indisponible"}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.taskInfoContent}>
+            <Task fill={colors.black} />
+            <View>
+              <Text style={styles.taskInfoTitle}>Type de tâche</Text>
+              <Text style={styles.taskInfoDesc}>
+                {task.type == "eval" ? "Evaluation" : "Tâche à faire"}
+              </Text>
+            </View>
           </View>
         </View>
-        <View style={styles.taskInfoContent}>
-          <Chapeau />
+        <View style={styles.taskContent}>
           <View>
-            <Text style={styles.taskInfoTitle}>Matière</Text>
+            <Text style={styles.taskInfoTitle}>Titre</Text>
             <Text style={styles.taskInfoDesc}>
-              {task.Ressource.nom_ressource || "Matière indisponible"}
+              {task.titre || "Titre indisponible"}
             </Text>
           </View>
-        </View>
-        <View style={styles.taskInfoContent}>
-          <Task />
-          <View>
-            <Text style={styles.taskInfoTitle}>Type de tâche</Text>
-            <Text style={styles.taskInfoDesc}>
-              {task.type == "eval" ? "Evaluation" : "Tâche à faire"}
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.taskContent}>
-        <View>
-          <Text style={styles.taskInfoTitle}>Titre</Text>
-          <Text style={styles.taskInfoDesc}>
-            {task.titre || "Titre indisponible"}
-          </Text>
+          {task.type == "devoir" && (
+            <View>
+              <Text style={styles.taskInfoTitle}>Description</Text>
+              <Text style={styles.taskInfoDesc}>
+                {task.contenu || "Contenu indisponible"}
+              </Text>
+            </View>
+          )}
         </View>
         {task.type == "devoir" && (
-          <View>
-            <Text style={styles.taskInfoTitle}>Description</Text>
-            <Text style={styles.taskInfoDesc}>
-              {task.contenu || "Contenu indisponible"}
-            </Text>
+          <View style={styles.taskFooter}>
+            <BouncyCheckbox
+              fillColor={colors.blue_variable}
+              unfillColor={colors.white}
+              onPress={handleCheckboxPress}
+              isChecked={isChecked}
+            />
+
+            <View>
+              <Text style={styles.taskInfoTitle}>État</Text>
+              <Text style={[styles.taskState, isChecked && styles.taskGood]}>
+                {isChecked ? "Fait" : "Non fait"}
+              </Text>
+            </View>
           </View>
         )}
-      </View>{task.type == "devoir" && (
-        <View style={styles.taskFooter}>
-          <BouncyCheckbox
-            fillColor="#0760FB"
-            unfillColor="#FFFFFF"
-            iconStyle={{ borderColor: "#7A797C" }}
-            onPress={handleCheckboxPress}
-            isChecked={isChecked}
-          />
-
-          <View>
-            <Text style={styles.taskInfoTitle}>Etat</Text>
-            <Text style={[styles.taskState, isChecked && styles.taskGood]}>
-              {isChecked ? "Fait" : "Non fait"}
-            </Text>
-          </View>
-
-        </View>)}
-      <Text style={styles.taskDisclaimer}>
-        Cette {task.type == "devoir" ? "tâche" : "évaluation"} n'a pas été validé par l'enseignant
-      </Text>
+      </View>
+      {/* <Text style={styles.taskDisclaimer}>
+        Cette {task.type == "devoir" ? "tâche" : "évaluation"} n'a pas été
+        validé par l'enseignant
+      </Text> */}
       <View style={styles.taskCTA}>
         <TouchableOpacity
           style={styles.taskCTADelete}
@@ -169,93 +275,5 @@ const ViewTask = ({ route }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F4F5F9",
-    padding: 20,
-    gap: 20,
-  },
-  taskInfo: {
-    flexDirection: "column",
-    padding: 20,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    gap: 20,
-  },
-  taskInfoContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  taskContent: {
-    padding: 20,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    gap: 10,
-  },
-  taskFooter: {
-    padding: 20,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    flexDirection: "row",
-  },
-  taskInfoTitle: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 15,
-    color: "#252525",
-  },
-  taskInfoDesc: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
-    color: "#252525",
-  },
-  taskState: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
-    color: "#BB0000",
-  },
-  taskGood: {
-    color: "#0760FB",
-  },
-  taskDisclaimer: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 13,
-    color: "#BB0000",
-    textAlign: "center",
-  },
-  taskCTA: {
-    flexDirection: "row",
-
-    justifyContent: "center",
-    gap: 15
-  },
-  taskCTADelete: {
-    backgroundColor: "#FB070710",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderWidth: 1,
-    borderColor: "#FB0707",
-    borderRadius: 10,
-  },
-  taskCTAEdit: {
-    backgroundColor: "#0760FB",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    alignItems: "center",
-    flexDirection: "row",
-    gap: 10,
-  },
-  taskCTAText: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 17,
-    color: "#fff",
-  },
-  taskCTATextDelete: {
-    color: "#FB0707",
-  },
-});
 
 export default ViewTask;
