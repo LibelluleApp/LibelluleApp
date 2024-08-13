@@ -7,7 +7,8 @@ import {
   Text,
 } from "react-native";
 
-import CalendarKit from "react-native-calendar-kit";
+import { TimelineCalendar } from '@howljs/calendar-kit';
+import { MomentConfig } from '@howljs/calendar-kit';
 
 import fetchTimetable from "../../api/Timetable/timetable";
 
@@ -52,9 +53,6 @@ const Jour = () => {
     },
   ];
 
-  const initialLocales = {
-    en: { weekDayShort: "Dim_Lun_Mar_Mer_Jeu_Ven_Sam".split("_") },
-  };
   if (!timetable) {
     return (
       <View style={styles.container}>
@@ -62,22 +60,29 @@ const Jour = () => {
       </View>
     );
   }
+
+  MomentConfig.updateLocale('fr', {
+    weekdaysShort: 'Dim_Lun_Mar_Mer_Jeu_Ven_Sam'.split('_'),
+  });
   return (
     <View style={styles.container}>
-      <CalendarKit
-        viewMode="workWeek"
-        initialLocales={initialLocales}
-        locale="en"
-        timeZone="Europe/Paris"
-        minDate={"2023-09-01"}
+
+      <TimelineCalendar minDate={"2024-09-02"}
         showWeekNumber={true}
-        start={8 * 60}
-        end={18 * 60}
-        firstDay={1}
+        start={8}
+        end={18.5}
+        viewMode="workWeek"
+        events={timetable}
         showNowIndicator={true}
+        spaceFromTop={4}
+        locale="fr"
         theme={{
+          backgroundColor: "#F4F5F9",
+          dayNumberContainer: {
+            backgroundColor: "#F4f5f9",
+          },
           colors: {
-            background: "#F4F5F9",
+            background: "#F000",
             border: "#7A797C50",
             text: "#252525",
           },
@@ -99,22 +104,33 @@ const Jour = () => {
           dayNumber: {
             color: "#7A797C",
           },
+          leftBar: {
+            backgroundColor: '#ECECEC',
+            borderRadius: 7,
+            padding: 2,
+          },
+          leftBarText: {
+            fontFamily: 'Ubuntu_500Medium',
+            color: "#252525",
+            textTransform: "capitalize",
+            fontSize: 12,
+          }
         }}
-        events={timetable}
-        renderEvent={(event) => {
+        renderEventContent={(event) => {
           return (
             <View
               style={{
                 backgroundColor: "#FF0000",
                 padding: 10,
                 borderRadius: 5,
+                flex: 1,
+
               }}
             >
               <Text>{event.title}</Text>
             </View>
           );
-        }}
-      />
+        }} />
     </View>
   );
 };

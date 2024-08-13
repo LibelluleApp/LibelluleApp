@@ -7,7 +7,7 @@ import {
   Text,
 } from "react-native";
 
-import CalendarKit from "react-native-calendar-kit";
+import { TimelineCalendar } from '@howljs/calendar-kit';
 import { Location, PeopleFill, Clock } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
 
@@ -43,28 +43,9 @@ const Jour = () => {
     });
   }, []);
 
-  const events = [
-    {
-      start: "2024-06-14T15:00:00.000Z",
-      end: "2024-06-14T16:00:00.000Z",
-      id: "1",
-      title: "test",
-      isAllDay: true,
-      color: "#FF0000",
-    },
-    {
-      start: "2024-06-27T00:00:00.000Z",
-      end: "2024-06-28T00:00:00.000Z",
-      id: "2",
-      title: "test",
-      isAllDay: true,
-      color: "#FF0000",
-    },
-  ];
 
-  const initialLocales = {
-    en: { weekDayShort: "Dim_Lun_Mar_Mer_Jeu_Ven_Sam".split("_") },
-  };
+
+
   if (!timetable) {
     return (
       <View style={styles.container}>
@@ -74,20 +55,23 @@ const Jour = () => {
   }
   return (
     <View style={styles.container}>
-      <CalendarKit
+      <TimelineCalendar minDate={"2024-09-02"}
+        showWeekNumber={true}
+        start={8}
+        end={18.5}
         viewMode="day"
-        initialLocales={initialLocales}
-        locale="en"
-        timeZone="Europe/Paris"
-        minDate={"2023-09-01"}
-        start={8 * 60}
-        end={18 * 60}
+        events={timetable}
         showNowIndicator={true}
-        minTimeIntervalHeight={40}
-        initialTimeIntervalHeight={50}
+        spaceFromTop={4}
+        locale="fr"
+        holidays={['2024-09-04', '2024-09-05']}
         theme={{
+          backgroundColor: "#F4F5F9",
+          dayNumberContainer: {
+            backgroundColor: "#F4f5f9",
+          },
           colors: {
-            background: "#F4F5F9",
+            background: "#F000",
             border: "#7A797C50",
             text: "#252525",
           },
@@ -109,10 +93,19 @@ const Jour = () => {
           dayNumber: {
             color: "#7A797C",
           },
-          nowIndicatorColor: "#FF0000",
+          leftBar: {
+            backgroundColor: '#ECECEC',
+            borderRadius: 7,
+            padding: 2,
+          },
+          leftBarText: {
+            fontFamily: 'Ubuntu_500Medium',
+            color: "#252525",
+            textTransform: "capitalize",
+            fontSize: 12,
+          }
         }}
-        events={timetable}
-        renderEvent={(event) => {
+        renderEventContent={(event) => {
           const formattedProfessor = event.professor
             ? formatProfessorName(event.professor)
             : "N/C";
@@ -138,8 +131,7 @@ const Jour = () => {
               </View>
             </View>
           );
-        }}
-      />
+        }} />
     </View>
   );
 };
@@ -159,6 +151,7 @@ const styles = StyleSheet.create({
   },
   eventBack: {
     paddingVertical: 5,
+    backgroundColor: "#F4F5F9",
   },
   eventBottom: {
     flexDirection: "row",

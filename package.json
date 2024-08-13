@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/ubuntu": "^0.2.3",
+    "@howljs/calendar-kit": "github:LibelluleApp/react-native-calendar-kit",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-community/netinfo": "11.3.1",
@@ -37,7 +38,6 @@
     "react": "18.2.0",
     "react-native": "0.74.5",
     "react-native-bouncy-checkbox": "^4.0.0",
-    "react-native-calendar-kit": "https://github.com/Raphitpt/react-native-calendar-kit.git",
     "react-native-calendar-strip": "^1.4.2",
     "react-native-calendars": "^1.1305.0",
     "react-native-dotenv": "^3.4.11",
