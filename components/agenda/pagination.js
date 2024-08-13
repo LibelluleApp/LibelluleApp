@@ -20,6 +20,9 @@ const PaginationHeader = ({
     container: {
       flexDirection: "column",
     },
+    recap: {
+      marginBottom: 20,
+    },
     content: {
       flexDirection: "row",
       justifyContent: "space-between",
@@ -53,24 +56,31 @@ const PaginationHeader = ({
     counts: {
       flexDirection: "row",
       justifyContent: "space-between",
-      gap: 5,
+      gap: 10,
       marginTop: 10,
       marginBottom: 20,
       paddingHorizontal: 24,
+      width: "95%",
     },
     evalCount: {
+      flexDirection: "row",
+      justifyContent: "center",
       borderColor: colors.red_variable,
       borderWidth: 1,
       paddingHorizontal: 13,
       paddingVertical: 7,
       borderRadius: 10,
+      width: "50%",
     },
     taskCount: {
+      flexDirection: "row",
+      justifyContent: "center",
       borderColor: colors.blue_variable,
       borderWidth: 1,
       borderRadius: 10,
       paddingHorizontal: 13,
       paddingVertical: 7,
+      width: "50%",
     },
     evalText: {
       fontFamily: "Ubuntu_400Regular",
@@ -88,14 +98,6 @@ const PaginationHeader = ({
     <View style={styles.container}>
       <View style={styles.recap}>
         <Text style={styles.week}>Semaine {currentWeekNumber}</Text>
-        <View style={styles.counts}>
-          <View style={styles.evalCount}>
-            <Text style={styles.evalText}>{evalCount} évaluation prévue</Text>
-          </View>
-          <View style={styles.taskCount}>
-            <Text style={styles.taskText}>{taskCount} tâche restante</Text>
-          </View>
-        </View>
       </View>
       <View style={styles.content}>
         {index > 0 && (
@@ -140,6 +142,14 @@ const PaginationHeader = ({
           <Text style={styles.return}>Revenir à aujourd'hui</Text>
         </TouchableOpacity>
       )}
+      <View style={styles.counts}>
+        <View style={styles.evalCount}>
+          <Text style={styles.evalText}>{evalCount} évaluation prévue</Text>
+        </View>
+        <View style={styles.taskCount}>
+          <Text style={styles.taskText}>{taskCount} tâche restante</Text>
+        </View>
+      </View>
     </View>
   );
 };

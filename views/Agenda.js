@@ -72,7 +72,6 @@ const Agenda = () => {
       flex: 1,
       width: Dimensions.get("window").width,
       paddingHorizontal: "5%",
-      marginTop: 20,
     },
     loadingContainer: {
       flex: 1,
