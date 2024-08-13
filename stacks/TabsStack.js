@@ -80,7 +80,7 @@ const TabsStack = () => {
         : {
             paddingHorizontal: 8,
           },
-      { backgroundColor: colors.background, borderTopWidth: 0 },
+      { backgroundColor: colors.white_background, borderTopWidth: 0 },
       insets.bottom > 30
         ? {
             height: 90,
