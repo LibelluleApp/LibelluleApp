@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Text, View, StyleSheet, Image, ActivityIndicator } from "react-native";
 import PropTypes from "prop-types";
 import { CalendarFill } from "../../../assets/icons/Icons";
@@ -11,10 +11,67 @@ import fetchWeekAgenda from "../../../api/Agenda/fetchweek";
 import { showMessage } from "react-native-flash-message";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { ThemeContext } from "./../../../utils/themeContext";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 function EventDay({ date }) {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      width: "90%",
+      alignSelf: "center",
+      flexDirection: "column",
+    },
+    topContainer: {
+      flexDirection: "row",
+      width: "100%",
+      paddingVertical: 25,
+      gap: 11,
+      justifyContent: "space-between",
+    },
+    hourContainer: {
+      flexDirection: "row",
+      gap: 8,
+      alignItems: "center",
+    },
+    hourContent: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 13,
+      color: colors.grey_variable,
+      textAlign: "center",
+    },
+    weatherContainer: {
+      flexDirection: "row",
+      gap: 8,
+      alignItems: "center",
+    },
+    weatherContent: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 15,
+      color: colors.grey_variable,
+      textAlign: "center",
+    },
+    weatherIcon: {
+      width: 23,
+      height: 23,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    errorContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    errorText: {
+      color: colors.red,
+    },
+  });
+
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [agenda, setAgenda] = useState({});
@@ -69,7 +126,7 @@ function EventDay({ date }) {
       <View style={styles.container}>
         <View style={styles.topContainer}>
           <View style={styles.hourContainer}>
-            <CalendarFill />
+            <CalendarFill fill={colors.grey_variable} width={20} height={20} />
             <Text style={styles.hourContent}>7h30 de cours</Text>
           </View>
           <View style={styles.weatherContainer}>
@@ -86,59 +143,5 @@ function EventDay({ date }) {
     </ShimmerPlaceholder>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: "90%",
-    alignSelf: "center",
-    flexDirection: "column",
-  },
-  topContainer: {
-    flexDirection: "row",
-    width: "100%",
-    paddingVertical: 25,
-    gap: 11,
-    justifyContent: "space-between",
-  },
-  hourContainer: {
-    flexDirection: "row",
-    gap: 8,
-    alignItems: "center",
-  },
-  hourContent: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 13,
-    color: "#7A797C",
-    textAlign: "center",
-  },
-  weatherContainer: {
-    flexDirection: "row",
-    gap: 8,
-    alignItems: "center",
-  },
-  weatherContent: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 15,
-    color: "#7A797C",
-    textAlign: "center",
-  },
-  weatherIcon: {
-    width: 23,
-    height: 23,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  errorContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  errorText: {
-    color: "red",
-  },
-});
 
 export default EventDay;

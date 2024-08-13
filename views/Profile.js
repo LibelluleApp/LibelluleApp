@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   View,
   ScrollView,
@@ -25,6 +25,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
+import { ThemeContext } from "./../utils/themeContext";
 
 async function getProfileData() {
   try {
@@ -36,6 +37,7 @@ async function getProfileData() {
 }
 
 function Profile() {
+  const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
   const [isEnabled, setIsEnabled] = useState(false);
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -116,9 +118,8 @@ function Profile() {
             <Switch
               trackColor={{ false: "#7A797C", true: "#0760FB" }}
               thumbColor={isEnabled ? "#fff" : "#fff"}
-              onValueChange={toggleSwitch}
-              ios_backgroundColor={"#7A797C"}
-              value={isEnabled}
+              onValueChange={toggleTheme}
+              value={isDarkMode}
             ></Switch>
           </View>
           <View style={styles.switcherContent}>
@@ -126,9 +127,8 @@ function Profile() {
             <Switch
               trackColor={{ false: "#7A797C", true: "#0760FB" }}
               thumbColor={isEnabled ? "#fff" : "#fff"}
-              onValueChange={toggleSwitch}
-              ios_backgroundColor={"#7A797C"}
-              value={isEnabled}
+              onValueChange={toggleTheme}
+              value={isDarkMode}
             ></Switch>
           </View>
           <View style={styles.separatorStick}></View>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import {
   Text,
   View,
@@ -14,13 +14,13 @@ import { getRessourceColor } from "../../../utils/ressources/colorsRessources";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import { ThemeContext } from "./../../../utils/themeContext";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 const { width } = Dimensions.get("window");
 const slideWidth = width * 0.9; // Largeur de la diapositive
 const slideHeight = 90; // Hauteur de la diapositive
-const data = [...new Array(2).keys()];
 
 const fetchCourse = async () => {
   try {
@@ -43,10 +43,115 @@ const fetchColor = async (data) => {
 };
 
 function ItemCourse({ data, color }) {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    slide: {
+      height: slideHeight,
+      alignSelf: "center",
+      gap: 10,
+    },
+    container: {
+      backgroundColor: "#5088F3",
+      fontFamily: "Ubuntu_400Regular",
+      includeFontPadding: false,
+      borderRadius: 10,
+      width: slideWidth,
+      height: "100%",
+      paddingHorizontal: 17,
+      paddingVertical: 15,
+      alignItems: "center",
+      flexDirection: "row",
+    },
+    hour: {
+      gap: 8,
+      justifyContent: "center",
+    },
+    textHour: {
+      fontFamily: "Ubuntu_500Medium",
+      includeFontPadding: false,
+      fontSize: 17,
+      color: colors.white,
+    },
+    stick: {
+      backgroundColor: colors.white_background,
+      height: "90%",
+      width: 1,
+      marginHorizontal: 14,
+    },
+    textSubject: {
+      fontFamily: "Ubuntu_500Medium",
+      includeFontPadding: false,
+      fontSize: 17,
+      color: colors.white,
+    },
+    teacher: {
+      flexDirection: "row",
+      gap: 10,
+      alignItems: "center",
+    },
+    textTeacher: {
+      fontFamily: "Ubuntu_400Regular",
+      includeFontPadding: false,
+      fontSize: 14,
+      color: colors.white,
+      gap: 10,
+    },
+    contentLeft: {
+      gap: 5,
+      justifyContent: "center",
+    },
+    hourClock: {
+      fontFamily: "Ubuntu_500Medium",
+      includeFontPadding: false,
+      fontSize: 14,
+      color: colors.white,
+    },
+    content: {
+      flexDirection: "row",
+      gap: 6,
+      alignItems: "center",
+    },
+    placeholder: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    placeholderText: {
+      color: colors.text_placeholder,
+      fontSize: 16,
+    },
+    slide: {
+      height: slideHeight,
+      backgroundColor: colors.white_background,
+      borderRadius: 10,
+      padding: 15,
+    },
+    title: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 13,
+      color: colors.black,
+    },
+    content: {
+      marginTop: 10,
+      flexDirection: "row",
+      gap: 5,
+    },
+    textContent: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      color: colors.black50,
+    },
+  });
+
   if (!data) {
     return (
       <TouchableOpacity style={[styles.slide]}>
-        <View style={[styles.container, { backgroundColor: "#7A797C70" }]}>
+        <View
+          style={[
+            styles.container,
+            { backgroundColor: colors.white_background },
+          ]}
+        >
           <Text style={styles.textSubject}>Aucun cours à venir</Text>
         </View>
       </TouchableOpacity>
@@ -55,7 +160,7 @@ function ItemCourse({ data, color }) {
   const [remainingTime, setRemainingTime] = useState("");
 
   function formatProfessorName(professor) {
-    const parts = professor.split(" "); 
+    const parts = professor.split(" ");
     const initial = parts[1][0];
     const nom = parts[0];
     return `${initial}. ${nom}`;
@@ -93,7 +198,12 @@ function ItemCourse({ data, color }) {
 
   return (
     <TouchableOpacity style={[styles.slide]}>
-      <View style={[styles.container, color && { backgroundColor: color }]}>
+      <View
+        style={[
+          styles.container,
+          color && { backgroundColor: colors.white_background },
+        ]}
+      >
         <View style={styles.hour}>
           <Text style={styles.textHour}>{data.debut || "--:--"}</Text>
           <Text style={styles.textHour}>{data.fin || "--:--"}</Text>
@@ -105,11 +215,11 @@ function ItemCourse({ data, color }) {
           </Text>
           <View style={styles.teacher}>
             <View style={styles.content}>
-              <Location />
+              <Location fill={colors.white} />
               <Text style={styles.textTeacher}>{data.lieu || "N/C"}</Text>
             </View>
             <View style={styles.content}>
-              <PeopleFill />
+              <PeopleFill fill={colors.white} />
               <Text style={styles.textTeacher}>
                 {formatProfessorName(data.description) ||
                   "Professeur indisponible"}
@@ -117,7 +227,7 @@ function ItemCourse({ data, color }) {
             </View>
           </View>
           <View style={styles.content}>
-            <Clock />
+            <Clock fill={colors.white} />
             <Text style={styles.textTeacher}>
               Dans <Text style={styles.hourClock}>{remainingTime}</Text>
             </Text>
@@ -128,21 +238,22 @@ function ItemCourse({ data, color }) {
   );
 }
 
-function ItemInfo() {
-  return (
-    <View style={[infos.slide]}>
-      <Text style={infos.title}>Informations</Text>
-      <View style={infos.content}>
-        <Text style={infos.textContent}>•</Text>
-        <Text style={infos.textContent}>
-          01/04 au 05/04 : Vous êtes le propriétaire du cahier.
-        </Text>
-      </View>
-    </View>
-  );
-}
+// function ItemInfo() {
+//   return (
+//     <View style={[infos.slide]}>
+//       <Text style={infos.title}>Informations</Text>
+//       <View style={infos.content}>
+//         <Text style={infos.textContent}>•</Text>
+//         <Text style={infos.textContent}>
+//           01/04 au 05/04 : Vous êtes le propriétaire du cahier.
+//         </Text>
+//       </View>
+//     </View>
+//   );
+// }
 
 function NextCourse() {
+  const { colors } = useContext(ThemeContext);
   const ref = useRef(null);
   const progress = useSharedValue(0);
   const [nextCourse, setNextCourse] = useState(null);
@@ -183,6 +294,13 @@ function NextCourse() {
     }
   }, [isFocused]);
 
+  const styles = StyleSheet.create({
+    swiper: {
+      width: "90%",
+      alignSelf: "center",
+    },
+  });
+
   return (
     <View style={styles.swiper}>
       <ShimmerPlaceholder
@@ -191,141 +309,18 @@ function NextCourse() {
         height={slideHeight}
         visible={isLoading ? false : true}
       >
-        <Carousel
-          ref={ref}
-          width={slideWidth}
-          height={slideHeight}
-          data={data}
-          loop={false}
-          onProgressChange={progress}
-          renderItem={({ index }) => {
-            // if (nextCourse !== null) {
-            return index === 0 ? (
-              <ItemCourse data={nextCourse} color={color} />
-            ) : (
-              <ItemInfo />
-            );
-            // } else {
-            //   return <ItemInfo />;
-            // }
-          }}
-        />
-
+        <ItemCourse data={nextCourse} color={color} />
+        {/* 
         <Pagination.Basic
           progress={progress}
           data={data}
           dotStyle={{ backgroundColor: "#619AFE", borderRadius: 50, height: 8 }}
           activeDotStyle={{ backgroundColor: "#0760FB", borderRadius: 50 }}
           containerStyle={{ gap: 5, marginTop: 10 }}
-        />
+        /> */}
       </ShimmerPlaceholder>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  swiper: {
-    width: "90%",
-    alignSelf: "center",
-  },
-  slide: {
-    height: slideHeight,
-    alignSelf: "center",
-    gap: 10,
-  },
-  container: {
-    backgroundColor: "#5088F3",
-    fontFamily: "Ubuntu_400Regular",
-    includeFontPadding: false,
-    borderRadius: 10,
-    width: slideWidth,
-    height: "100%",
-    paddingHorizontal: 17,
-    paddingVertical: 15,
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  hour: {
-    gap: 8,
-    justifyContent: "center",
-  },
-  textHour: {
-    fontFamily: "Ubuntu_500Medium",
-    includeFontPadding: false,
-    fontSize: 17,
-    color: "#fff",
-  },
-  stick: {
-    backgroundColor: "#fff",
-    height: "90%",
-    width: 1,
-    marginHorizontal: 14,
-  },
-  textSubject: {
-    fontFamily: "Ubuntu_500Medium",
-    includeFontPadding: false,
-    fontSize: 17,
-    color: "#fff",
-  },
-  teacher: {
-    flexDirection: "row",
-    gap: 10,
-    alignItems: "center",
-  },
-  textTeacher: {
-    fontFamily: "Ubuntu_400Regular",
-    includeFontPadding: false,
-    fontSize: 14,
-    color: "#fff",
-    gap: 10,
-  },
-  contentLeft: {
-    gap: 5,
-    justifyContent: "center",
-  },
-  hourClock: {
-    fontFamily: "Ubuntu_500Medium",
-    includeFontPadding: false,
-    fontSize: 14,
-    color: "#fff",
-  },
-  content: {
-    flexDirection: "row",
-    gap: 6,
-    alignItems: "center",
-  },
-  placeholder: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  placeholderText: {
-    color: "#999",
-    fontSize: 16,
-  },
-});
-
-const infos = StyleSheet.create({
-  slide: {
-    height: slideHeight,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 15,
-  },
-  title: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 13,
-    color: "#252525",
-  },
-  content: {
-    marginTop: 10,
-    flexDirection: "row",
-    gap: 5,
-  },
-  textContent: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 13,
-    color: "#535353",
-  },
-});
 
 export default NextCourse;

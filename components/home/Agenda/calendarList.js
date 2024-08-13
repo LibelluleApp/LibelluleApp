@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
@@ -6,10 +6,43 @@ import moment from "moment";
 import { is } from "date-fns/locale";
 import { isLoading } from "expo-font";
 import { set } from "date-fns";
+import { ThemeContext } from "././../../../utils/themeContext";
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 function CalendarList({ onDateSelect }) {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      marginTop: 22,
+      width: "90%",
+      alignSelf: "center",
+      flexDirection: "row",
+    },
+    dateContainer: {
+      flex: 1,
+      flexDirection: "column",
+      alignItems: "center",
+      borderWidth: 0.5,
+      borderColor: colors.blue_variable,
+      paddingVertical: 10,
+      paddingHorizontal: 13,
+      borderRadius: 10,
+    },
+    selected: {
+      backgroundColor: colors.blue_variable,
+    },
+    dateText: {
+      fontSize: 15,
+      fontFamily: "Ubuntu_400Regular",
+      color: colors.blue_variable,
+    },
+    selectedText: {
+      color: colors.white,
+    },
+  });
+
   function getNextWeekday(date) {
     const day = date.day();
     if (day === 0) {
@@ -106,35 +139,5 @@ function CalendarList({ onDateSelect }) {
     </ShimmerPlaceHolder>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 22,
-    width: "90%",
-    alignSelf: "center",
-    flexDirection: "row",
-  },
-  dateContainer: {
-    flex: 1,
-    flexDirection: "column",
-    alignItems: "center",
-    borderWidth: 0.5,
-    borderColor: "#0760FB",
-    paddingVertical: 10,
-    paddingHorizontal: 13,
-    borderRadius: 10,
-  },
-  selected: {
-    backgroundColor: "#0760FB",
-  },
-  dateText: {
-    fontSize: 15,
-    fontFamily: "Ubuntu_400Regular",
-    color: "#0760FB",
-  },
-  selectedText: {
-    color: "#FFF",
-  },
-});
 
 export default CalendarList;
