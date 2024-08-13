@@ -18,7 +18,7 @@ function Absence() {
     try {
       fetchAbsence().then((data) => {
         setAbsence(data.absences);
-        console.log(absence);
+
       });
     } catch (error) {
       console.error("Error fetching absence:", error);

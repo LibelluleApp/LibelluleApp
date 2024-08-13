@@ -30,7 +30,6 @@ const Jour = () => {
   React.useEffect(() => {
     getTimetable().then((response) => {
       setTimetable(response);
-      console.log(response);
     });
   }, []);
 
