@@ -12,6 +12,7 @@ import * as Haptics from "expo-haptics";
 import { Pen } from "../../../assets/icons/Icons";
 import fetchTask from "../../../api/Agenda/fetchTask";
 import deleteTask from "../../../api/Agenda/delete";
+import { checkAgenda, uncheckAgenda } from "../../../api/Agenda/check";
 import moment from "moment";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useNavigation } from "@react-navigation/native";
@@ -22,12 +23,14 @@ const ViewTask = ({ route }) => {
   const [task, setTask] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isChecked, setIsChecked] = useState(true);
+  const [isChecked, setIsChecked] = useState(null);
   const fetchData = async () => {
     try {
       setLoading(true);
       const response = await fetchTask(agenda_id);
+      console.log(response);
       setTask(response[0]);
+      setIsChecked(response[0].estFait);
     } catch (error) {
       console.error("Erreur lors de la récupération de la tâche:", error);
       setError(error);
@@ -51,6 +54,17 @@ const ViewTask = ({ route }) => {
   const handleCheckboxPress = () => {
     setIsChecked(!isChecked);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    if (isChecked) {
+      uncheckAgenda(agenda_id);
+      if (typeof onTaskUncheck === "function") {
+        onTaskUncheck(agenda_id);
+      }
+    } else {
+      checkAgenda(agenda_id);
+      if (typeof onTaskCheck === "function") {
+        onTaskCheck(agenda_id);
+      }
+    }
   };
   const handleConfirmDelete = () => {
     Alert.alert(
@@ -109,30 +123,34 @@ const ViewTask = ({ route }) => {
             {task.titre || "Titre indisponible"}
           </Text>
         </View>
-        <View>
-          <Text style={styles.taskInfoTitle}>Description</Text>
-          <Text style={styles.taskInfoDesc}>
-            {task.contenu || "Contenu indisponible"}
-          </Text>
-        </View>
-      </View>
-      <View style={styles.taskFooter}>
-        <BouncyCheckbox
-          fillColor="#0760FB"
-          unfillColor="#FFFFFF"
-          iconStyle={{ borderColor: "#7A797C" }}
-          onPress={handleCheckboxPress}
-          isChecked={isChecked}
-        />
-        <View>
-          <Text style={styles.taskInfoTitle}>Etat</Text>
-          <Text style={[styles.taskState, isChecked && styles.taskGood]}>
-            {isChecked ? "Fait" : "Non fait"}
-          </Text>
-        </View>
-      </View>
+        {task.type == "devoir" && (
+          <View>
+            <Text style={styles.taskInfoTitle}>Description</Text>
+            <Text style={styles.taskInfoDesc}>
+              {task.contenu || "Contenu indisponible"}
+            </Text>
+          </View>
+        )}
+      </View>{task.type == "devoir" && (
+        <View style={styles.taskFooter}>
+          <BouncyCheckbox
+            fillColor="#0760FB"
+            unfillColor="#FFFFFF"
+            iconStyle={{ borderColor: "#7A797C" }}
+            onPress={handleCheckboxPress}
+            isChecked={isChecked}
+          />
+
+          <View>
+            <Text style={styles.taskInfoTitle}>Etat</Text>
+            <Text style={[styles.taskState, isChecked && styles.taskGood]}>
+              {isChecked ? "Fait" : "Non fait"}
+            </Text>
+          </View>
+
+        </View>)}
       <Text style={styles.taskDisclaimer}>
-        Cette tâche n'a pas été validé par l'enseignant
+        Cette {task.type == "devoir" ? "tâche" : "évaluation"} n'a pas été validé par l'enseignant
       </Text>
       <View style={styles.taskCTA}>
         <TouchableOpacity
@@ -145,7 +163,7 @@ const ViewTask = ({ route }) => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.taskCTAEdit}>
           <Pen />
-          <Text style={styles.taskCTAText}>Modifier une tâche</Text>
+          <Text style={styles.taskCTAText}>Modifier</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -209,7 +227,9 @@ const styles = StyleSheet.create({
   },
   taskCTA: {
     flexDirection: "row",
-    justifyContent: "space-between",
+
+    justifyContent: "center",
+    gap: 15
   },
   taskCTADelete: {
     backgroundColor: "#FB070710",
