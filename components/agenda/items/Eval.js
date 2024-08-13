@@ -5,10 +5,16 @@ import {
   TimetableSmall,
   LeftArrow,
 } from "../../../assets/icons/Icons";
+import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import { ThemeContext } from "./../../../utils/themeContext";
 
-function EvalHome({ titre, id, date }) {
+function EvalHome({ date,
+  titre,
+  agenda_id,
+  matiere, }) {
+  const navigation = useNavigation();
+
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -52,7 +58,7 @@ function EvalHome({ titre, id, date }) {
 
   const [dates, setDates] = useState(moment(date).format("ddd D MMMM"));
   return (
-    <TouchableOpacity style={styles.evalTask}>
+    <TouchableOpacity style={styles.evalTask} onPress={() => navigation.navigate("viewAgenda", { agenda_id })} >
       <View style={styles.evalTop}>
         <Warning />
         <Text style={styles.evalTitle}>
