@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { View, Platform, TouchableOpacity } from "react-native";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -7,15 +7,21 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import LogoTitle from "../components/logo";
 
+import { ThemeContext } from "./../utils/themeContext";
+
 const Stack = createNativeStackNavigator();
-function NotificationBell({ onPress }) {
-  return (
-    <TouchableOpacity onPress={onPress} style={{ paddingRight: 10 }}>
-      <Feather name="bell" size={24} color="black" />
-    </TouchableOpacity>
-  );
-}
+
 const AppStack = ({ navigation }) => {
+  const { colors } = useContext(ThemeContext);
+
+  function NotificationBell({ onPress }) {
+    return (
+      <TouchableOpacity onPress={onPress} style={{ paddingRight: 10 }}>
+        <Feather name="bell" size={24} color={colors.black} />
+      </TouchableOpacity>
+    );
+  }
+
   const views = [
     {
       name: "TabsStack",
@@ -52,7 +58,7 @@ const AppStack = ({ navigation }) => {
           fontSize: 16,
         },
         headerStyle: {
-          backgroundColor: "#F4F5F9",
+          backgroundColor: colors.background,
           shadowColor: "transparent",
           elevation: 0,
         },
@@ -107,7 +113,7 @@ const AppStack = ({ navigation }) => {
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: "#F4F5F9",
+            backgroundColor: colors.background,
             shadowColor: "transparent",
             elevation: 0,
             shadowOffset: {
@@ -115,10 +121,11 @@ const AppStack = ({ navigation }) => {
               height: 0,
             },
           },
-          headerTintColor: "#252525",
+          headerTintColor: colors.black,
           headerTitleStyle: {
             fontFamily: "Ubuntu_500Medium",
             fontSize: 18,
+            color: colors.black,
           },
           headerBackTitle: "Retour",
           headerBackTitleStyle: {
@@ -126,7 +133,7 @@ const AppStack = ({ navigation }) => {
             fontSize: 16,
           },
           headerStyle: {
-            backgroundColor: "#F4F5F9",
+            backgroundColor: colors.background,
             shadowColor: "transparent",
             elevation: 0,
           },

@@ -29,7 +29,7 @@ function Eval({ data }) {
 
   const stylesNothing = StyleSheet.create({
     container: {
-      backgroundColor: colors.green,
+      backgroundColor: colors.green_variable,
     },
     evalText: {
       color: colors.green900,

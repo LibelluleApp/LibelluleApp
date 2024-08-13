@@ -92,6 +92,7 @@ const TabsStack = () => {
     headerStyle: {
       backgroundColor: colors.background,
       elevation: 0,
+      shadowColor: colors.background,
     },
     headerTitleStyle: {
       fontFamily: "Ubuntu_500Medium",

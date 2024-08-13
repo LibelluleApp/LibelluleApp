@@ -1,9 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { StyleSheet } from "react-native";
 import { Dropdown } from "react-native-searchable-dropdown-kj";
 import { BottomArrow } from "./../../../assets/icons/Icons";
+import { ThemeContext } from "./../../../utils/themeContext";
 
 const SelectComponent = ({ onChange, data, value }) => {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    dropdown: {
+      backgroundColor: colors.white_background,
+      borderWidth: 1,
+      borderColor: colors.input_border,
+      borderRadius: 10,
+      height: 45,
+      paddingHorizontal: 20,
+      marginBottom: 20,
+    },
+    icon: {
+      marginRight: 5,
+    },
+    placeholderStyle: {
+      fontSize: 15,
+      fontFamily: "Ubuntu_400Regular",
+      color: colors.black,
+    },
+    selectedTextStyle: {
+      fontSize: 15,
+      fontFamily: "Ubuntu_400Regular",
+      color: colors.black,
+    },
+    iconStyle: {
+      width: 20,
+      height: 20,
+    },
+    inputSearchStyle: {
+      height: 40,
+      fontSize: 15,
+      color: "#252525",
+    },
+    containerStyle: {
+      borderWidth: 1,
+      borderColor: colors.white_background,
+      borderRadius: 10,
+      backgroundColor: colors.white_background,
+    },
+  });
+
   return (
     <Dropdown
       style={styles.dropdown}
@@ -19,49 +62,9 @@ const SelectComponent = ({ onChange, data, value }) => {
       placeholder="Choisir le type de tâche"
       value={value}
       onChange={onChange}
-      renderRightIcon={() => <BottomArrow />}
+      renderRightIcon={() => <BottomArrow fill={colors.black} />}
     />
   );
 };
 
 export default SelectComponent;
-
-const styles = StyleSheet.create({
-  dropdown: {
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderColor: "#252525",
-    borderRadius: 10,
-    height: 45,
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  icon: {
-    marginRight: 5,
-  },
-  placeholderStyle: {
-    fontSize: 15,
-    fontFamily: "Ubuntu_400Regular",
-    color: "#252525",
-  },
-  selectedTextStyle: {
-    fontSize: 15,
-    fontFamily: "Ubuntu_400Regular",
-    color: "#252525",
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 15,
-    color: "#252525",
-    borderBottomColor: "#252525",
-  },
-  containerStyle: {
-    borderWidth: 1,
-    borderColor: "#252525",
-    borderRadius: 10,
-  },
-});

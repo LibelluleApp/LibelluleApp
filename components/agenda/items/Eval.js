@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import {
   Warning,
@@ -6,15 +6,57 @@ import {
   LeftArrow,
 } from "../../../assets/icons/Icons";
 import moment from "moment";
+import { ThemeContext } from "./../../../utils/themeContext";
 
 function EvalHome({ titre, id, date }) {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    evalTask: {
+      backgroundColor: colors.red700,
+      borderRadius: 10,
+      marginBottom: 15,
+      paddingHorizontal: 17,
+      paddingVertical: 12,
+    },
+    evalTop: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 10,
+    },
+    evalTitle: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 16,
+      color: colors.white,
+    },
+    evalBottom: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginTop: 10,
+    },
+    evalBottomLeft: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 10,
+    },
+    evalBottomRight: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 10,
+    },
+    evalContent: {
+      fontFamily: "Ubuntu_400Regular",
+      color: colors.white,
+    },
+  });
+
   const [dates, setDates] = useState(moment(date).format("ddd D MMMM"));
   return (
     <TouchableOpacity style={styles.evalTask}>
       <View style={styles.evalTop}>
         <Warning />
         <Text style={styles.evalTitle}>
-          [Evaluation] {titre || "Titre non disponible"}
+          [Évaluation] {titre || "Titre non disponible"}
         </Text>
       </View>
       <View style={styles.evalBottom}>
@@ -32,42 +74,5 @@ function EvalHome({ titre, id, date }) {
     </TouchableOpacity>
   );
 }
-const styles = StyleSheet.create({
-  evalTask: {
-    backgroundColor: "#BB0000",
-    borderRadius: 10,
-    marginBottom: 15,
-    paddingHorizontal: 17,
-    paddingVertical: 12,
-  },
-  evalTop: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  evalTitle: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 16,
-    color: "#fff",
-  },
-  evalBottom: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 10,
-  },
-  evalBottomLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  evalBottomRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  evalContent: {
-    fontFamily: "Ubuntu_400Regular",
-    color: "#fff",
-  },
-});
+
 export default EvalHome;

@@ -68,7 +68,7 @@ function EventDay({ date }) {
       alignItems: "center",
     },
     errorText: {
-      color: colors.red,
+      color: colors.red_variable,
     },
   });
 
