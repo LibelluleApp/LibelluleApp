@@ -3,6 +3,7 @@ import { Text, View, StatusBar, TextInput, Platform } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
 import * as NavigationBar from "expo-navigation-bar";
+import { ThemeProvider } from "./utils/themeContext";
 
 import {
   SafeAreaProvider,
@@ -59,16 +60,18 @@ function App() {
   }
 
   return (
-    <NavigationContainer>
-      <AuthProvider>
-        <AuthStackSwitcher />
-        <FlashMessage
-          position="top"
-          hideStatusBar={false}
-          statusBarHeight={StatusBar.currentHeight}
-        />
-      </AuthProvider>
-    </NavigationContainer>
+    <ThemeProvider>
+      <NavigationContainer>
+        <AuthProvider>
+          <AuthStackSwitcher />
+          <FlashMessage
+            position="top"
+            hideStatusBar={false}
+            statusBarHeight={StatusBar.currentHeight}
+          />
+        </AuthProvider>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
 

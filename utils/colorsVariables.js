@@ -1,4 +1,4 @@
-export const COLORS_LIGHT = {
+export const lightModeColors = {
   background: "#F4F5F9",
   white_background: "#FFFFFF",
 
@@ -10,7 +10,7 @@ export const COLORS_LIGHT = {
   text_placeholder: "#9AA5B3",
   text_value: "#18313F",
 
-  blue: "#0760FB",
+  blue_variable: "#0760FB",
   blue700: "#0760FB",
   blue70050: "#619AFE",
   blue900: "#0F4199",
@@ -27,7 +27,7 @@ export const COLORS_LIGHT = {
   orange: "BB9200",
 };
 
-export const COLORS_DARK = {
+export const darkModeColors = {
   background: "#10162A",
   white_background: "#101D47",
 
@@ -39,7 +39,7 @@ export const COLORS_DARK = {
   text_placeholder: "#9AA5B3",
   text_value: "#18313F",
 
-  blue: "#68AEFF",
+  blue_variable: "#68AEFF",
   blue700: "#0760FB",
   blue70050: "#619AFE",
   blue900: "#0F4199",

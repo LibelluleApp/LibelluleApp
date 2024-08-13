@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Text,
   View,
@@ -18,6 +18,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
+import { ThemeContext } from "./../utils/themeContext";
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -32,6 +33,7 @@ const getData = async () => {
 };
 
 function Home() {
+  const { colors } = useContext(ThemeContext);
   const [user, setUser] = useState({});
   const today = moment();
   const dayIndex = today.format("ddd");
@@ -48,6 +50,34 @@ function Home() {
 
     fetchData();
   }, []);
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: colors.background,
+      fontFamily: "Ubuntu_400Regular",
+      flex: 1,
+    },
+    image: {
+      width: 50,
+      height: 50,
+    },
+    topContainer: {
+      flexDirection: "row",
+      width: "90%",
+      paddingVertical: 25,
+      gap: 11,
+      alignSelf: "center",
+    },
+    topContent: {
+      flexDirection: "column",
+    },
+    headerInfo: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "80%",
+      alignItems: "center",
+    },
+  });
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -75,6 +105,7 @@ function Home() {
                   style={{
                     fontFamily: "Ubuntu_400Regular",
                     fontSize: 13,
+                    color: colors.black,
                   }}
                 >
                   Bonne journée,
@@ -85,7 +116,13 @@ function Home() {
                 height={20}
                 visible={isLoading ? false : true}
               >
-                <Text style={{ fontFamily: "Ubuntu_500Medium", fontSize: 17 }}>
+                <Text
+                  style={{
+                    fontFamily: "Ubuntu_500Medium",
+                    fontSize: 17,
+                    color: colors.black,
+                  }}
+                >
                   {user.prenom}
                 </Text>
               </ShimmerPlaceHolder>
@@ -94,7 +131,7 @@ function Home() {
               <Text
                 style={{
                   fontFamily: "Ubuntu_500Medium",
-                  color: "#0760FB",
+                  color: colors.blue_variable,
                   fontSize: 15,
                 }}
               >{`${formattedDate}`}</Text>
@@ -108,33 +145,5 @@ function Home() {
     </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#F4F5F9",
-    fontFamily: "Ubuntu_400Regular",
-    flex: 1,
-  },
-  image: {
-    width: 50,
-    height: 50,
-  },
-  topContainer: {
-    flexDirection: "row",
-    width: "90%",
-    paddingVertical: 25,
-    gap: 11,
-    alignSelf: "center",
-  },
-  topContent: {
-    flexDirection: "column",
-  },
-  headerInfo: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "80%",
-    alignItems: "center",
-  },
-});
 
 export default Home;
