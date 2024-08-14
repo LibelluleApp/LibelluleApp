@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Text,
   View,
@@ -7,8 +7,33 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { ThemeContext } from "./../../utils/themeContext";
 
 function ButtonAuth({ title, onPress, loading }) {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      width: "100%",
+    },
+    button: {
+      flexDirection: "row",
+      backgroundColor: colors.blue700,
+      paddingHorizontal: 20,
+      paddingVertical: 13,
+      borderRadius: 10,
+      width: "100%",
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    buttonText: {
+      fontFamily: "Ubuntu_400Regular",
+      color: colors.white,
+      fontSize: 17,
+    },
+  });
+
   const navigation = useNavigation();
 
   return (
@@ -19,7 +44,7 @@ function ButtonAuth({ title, onPress, loading }) {
     >
       <View style={styles.button}>
         {loading ? (
-          <ActivityIndicator size="small" color="#FFF" />
+          <ActivityIndicator size="small" color={colors.white} />
         ) : (
           <Text style={styles.buttonText}>{title}</Text>
         )}
@@ -27,28 +52,5 @@ function ButtonAuth({ title, onPress, loading }) {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 22,
-  },
-  button: {
-    flexDirection: "row",
-    backgroundColor: "#0760FB",
-    paddingHorizontal: 20,
-    paddingVertical: 13,
-    borderRadius: 10,
-    marginTop: 20,
-    width: "100%",
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    fontFamily: "Ubuntu_400Regular",
-    color: "#FFF",
-    fontSize: 16,
-  },
-});
 
 export default ButtonAuth;

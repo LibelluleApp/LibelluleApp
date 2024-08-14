@@ -665,19 +665,19 @@ function Eye(props) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width={24}
+      height={24}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-eye"
+      strokeWidth={1}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-eye"
       {...props}
     >
-      <Path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-      <Circle cx="12" cy="12" r="3" />
+      <Path d="M2.062 12.348a1 1 0 010-.696 10.75 10.75 0 0119.876 0 1 1 0 010 .696 10.75 10.75 0 01-19.876 0" />
+      <Circle cx={12} cy={12} r={3} />
     </Svg>
   );
 }
@@ -703,24 +703,23 @@ function Bin(props) {
     </Svg>
   );
 }
-function EyeSlash() {
+function EyeSlash(props) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
+      width={24}
+      height={24}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      class="lucide lucide-eye-off"
+      strokeWidth={1}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-eye-off"
+      {...props}
     >
-      <Path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-      <Path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
-      <Path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-      <Line x1="2" x2="22" y1="2" y2="22" />
+      <Path d="M10.733 5.076a10.744 10.744 0 0111.205 6.575 1 1 0 010 .696 10.747 10.747 0 01-1.444 2.49M14.084 14.158a3 3 0 01-4.242-4.242" />
+      <Path d="M17.479 17.499a10.75 10.75 0 01-15.417-5.151 1 1 0 010-.696 10.75 10.75 0 014.446-5.143M2 2l20 20" />
     </Svg>
   );
 }

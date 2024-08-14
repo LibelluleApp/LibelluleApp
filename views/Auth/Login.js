@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   View,
@@ -6,14 +6,89 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 import ButtonAuth from "../../components/auth/buttonAuth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Input from "../../components/auth/input";
 import { useAuth } from "../../context/AuthContext";
 import { showMessage } from "react-native-flash-message";
+import { ThemeContext } from "./../../utils/themeContext";
 
 function Login({ navigation }) {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      position: "relative",
+      justifyContent: "center",
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    caca: {
+      flex: 1,
+      justifyContent: "center",
+    },
+    containerContent: {
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: 30,
+      width: "90%",
+      alignSelf: "center",
+    },
+    titleContent: {
+      alignItems: "center",
+      alignSelf: "center",
+      width: "100%",
+    },
+    textContent: {
+      width: "100%",
+      alignSelf: "center",
+      gap: 20,
+    },
+    passwordContent: {
+      gap: 10,
+    },
+    title: {
+      fontFamily: "Ubuntu_700Bold",
+      alignSelf: "flex-start",
+      fontSize: 27,
+      letterSpacing: -1,
+      color: colors.black,
+    },
+    forgotpass: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 14,
+      color: colors.grey,
+      textDecorationLine: "underline",
+      alignSelf: "flex-end",
+    },
+    buttonContent: {
+      width: "100%",
+      alignSelf: "center",
+    },
+    accountContainer: {
+      position: "absolute",
+      bottom: 20,
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      alignSelf: "center",
+      gap: 10,
+    },
+    accountText: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 14,
+      color: colors.grey,
+    },
+    accountButton: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 14,
+      color: colors.blue700,
+    },
+  });
+
   const [email_edu, setEmail] = useState("");
   const [mot_de_passe, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,7 +117,8 @@ function Login({ navigation }) {
       }
     } catch (error) {
       showMessage({
-        message: "An error occurred during login. Please try again.",
+        message:
+          "Une erreur d'authentification s'est produite. Veuillez réessayer.",
         type: "danger",
       });
     } finally {
@@ -54,91 +130,63 @@ function Login({ navigation }) {
     <KeyboardAwareScrollView
       extraScrollHeight={40}
       keyboardOpeningTime={10}
-      contentContainerStyle={styles.inner} // Déplacer les styles ici
+      contentContainerStyle={styles.container} // Déplacer les styles ici
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View>
-          <View style={styles.info}>
-            <Text style={styles.title}>Connectez-vous</Text>
-            <Text style={styles.underTitle}>
-              Vous avez reçu vos identifiants sur votre adresse mail
-              universitaire
-            </Text>
-          </View>
+        <View style={styles.caca}>
+          <View style={styles.containerContent}>
+            <View style={styles.titleContent}>
+              <Text style={styles.title}>Se connecter</Text>
+            </View>
 
-          <View style={styles.contentText}>
-            <Input
-              label="Mail"
-              placeholder="Adresse mail"
-              placeholderTextColor="#A3A3A3"
-              autoComplete="email"
-              inputMode="email"
-              secureTextEntry={false}
-              keyboardType="email-address"
-              onChangeText={(text) => setEmail(text)}
-            />
-            <Input
-              label="Mot de passe"
-              placeholder="Votre mot de passe"
-              placeholderTextColor="#A3A3A3"
-              autoComplete="password"
-              secureTextEntry={true}
-              onChangeText={(text) => setPassword(text)}
-            />
-            <Text style={styles.forgotpass}>J'ai oublié mon mot de passe</Text>
-          </View>
+            <View style={styles.textContent}>
+              <Input
+                label="Mail"
+                placeholder="Entrer l'adresse mail universitaire"
+                placeholderTextColor={colors.text_placeholder}
+                autoComplete="email"
+                inputMode="email"
+                secureTextEntry={false}
+                keyboardType="email-address"
+                onChangeText={(text) => setEmail(text)}
+              />
+              <View style={styles.passwordContent}>
+                <Input
+                  label="Mot de passe"
+                  placeholder="Entrer le mot de passe"
+                  placeholderTextColor={colors.text_placeholder}
+                  autoComplete="password"
+                  secureTextEntry={true}
+                  onChangeText={(text) => setPassword(text)}
+                />
+                <Text style={styles.forgotpass}>
+                  J'ai oublié mon mot de passe
+                </Text>
+              </View>
+            </View>
 
-          <ButtonAuth
-            title="Se connecter"
-            onPress={handleLogin}
-            loading={loading}
-          />
+            <View style={styles.buttonContent}>
+              <ButtonAuth
+                title="Se connecter"
+                onPress={handleLogin}
+                loading={loading}
+              />
+            </View>
+          </View>
+          <View style={styles.accountContainer}>
+            <Text style={styles.accountText}>Pas encore de compte ?</Text>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL("");
+              }}
+            >
+              <Text style={styles.accountButton}>Créer un compte</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-  },
-  inner: {
-    justifyContent: "center",
-    flex: 1,
-    backgroundColor: "#F4F5F9",
-  },
-  info: {
-    alignItems: "center",
-    alignSelf: "center",
-    width: "90%",
-  },
-  contentText: {
-    width: "90%",
-    alignSelf: "center",
-  },
-  title: {
-    fontFamily: "Ubuntu_500Medium",
-    alignSelf: "flex-start",
-    fontSize: 22,
-    color: "#252525",
-    marginTop: 10,
-  },
-  underTitle: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
-    color: "#7A797C",
-    marginTop: 3,
-    alignSelf: "flex-start",
-  },
-  forgotpass: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 13,
-    color: "#7A797C",
-    textDecorationLine: "underline",
-    alignSelf: "flex-end",
-    marginTop: 10,
-  },
-});
 
 export default Login;
