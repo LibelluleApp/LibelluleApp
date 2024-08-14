@@ -99,6 +99,8 @@ function Login({ navigation }) {
       showMessage({
         message: "Merci d'entrer votre adresse mail et votre mot de passe.",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -111,6 +113,8 @@ function Login({ navigation }) {
         showMessage({
           message: result.message,
           type: "danger",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+          statusBarHeight: 15,
         });
       } else {
         // Gérer la redirection après une connexion réussie
@@ -120,6 +124,8 @@ function Login({ navigation }) {
         message:
           "Une erreur d'authentification s'est produite. Veuillez réessayer.",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
     } finally {
       setLoading(false);
