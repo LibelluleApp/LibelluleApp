@@ -20,6 +20,8 @@ import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
 import { ThemeContext } from "./../utils/themeContext";
+import Timetable from "./Timetable";
+import Profile from "./Profile";
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -86,17 +88,19 @@ function Home() {
     <GestureHandlerRootView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.topContainer}>
-          <ShimmerPlaceHolder
-            width={50}
-            height={50}
-            shimmerStyle={{ borderRadius: 100 }}
-            visible={isLoading ? false : true}
-          >
-            <Image
-              source={require("../assets/images/logo.png")}
-              style={styles.image}
-            />
-          </ShimmerPlaceHolder>
+          <TouchableOpacity onPress={() => navigation.navigate(Profile)}>
+            <ShimmerPlaceHolder
+              width={50}
+              height={50}
+              shimmerStyle={{ borderRadius: 100 }}
+              visible={isLoading ? false : true}
+            >
+              <Image
+                source={require("../assets/images/logo.png")}
+                style={styles.image}
+              />
+            </ShimmerPlaceHolder>
+          </TouchableOpacity>
 
           <View style={styles.headerInfo}>
             <View style={styles.topContent}>
@@ -131,10 +135,7 @@ function Home() {
               </ShimmerPlaceHolder>
             </View>
             <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
-              <TouchableOpacity
-              // onPress={() => navigation.navigate("Timetable")}
-              // Faire un lien vers emploi du temps
-              >
+              <TouchableOpacity onPress={() => navigation.navigate(Timetable)}>
                 <Text
                   style={{
                     fontFamily: "Ubuntu_500Medium",
