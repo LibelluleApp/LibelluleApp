@@ -31,7 +31,7 @@ function AuthStack() {
     titleLogoContainer: {
       fontFamily: "Ubuntu_700Bold",
       fontSize: 30,
-      letterSpacing: -0.5,
+      letterSpacing: -1,
       color: colors.blue_variable,
     },
     textContainer: {
