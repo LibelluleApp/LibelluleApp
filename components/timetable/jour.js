@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -7,9 +7,10 @@ import {
   Text,
 } from "react-native";
 
-import { TimelineCalendar } from '@howljs/calendar-kit';
+import { TimelineCalendar } from "@howljs/calendar-kit";
 import { Location, PeopleFill, Clock } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
+import { ThemeContext } from "./../../utils/themeContext";
 
 const getTimetable = async () => {
   try {
@@ -35,6 +36,58 @@ function formatProfessorName(professor) {
 }
 
 const Jour = () => {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+      gap: 10,
+      paddingTop: 10,
+    },
+    itemContainer: {
+      flex: 1,
+      width: Dimensions.get("window").width,
+      justifyContent: "flex-start",
+      paddingHorizontal: "5%",
+    },
+    eventBack: {
+      paddingVertical: 5,
+      backgroundColor: colors.background,
+    },
+    eventBottom: {
+      flexDirection: "row",
+      gap: 10,
+      alignItems: "center",
+    },
+    eventContent: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 6,
+    },
+    eventContainer: {
+      height: "100%",
+      backgroundColor: colors.blue_variable,
+      paddingVertical: 10,
+      paddingHorizontal: 10,
+      borderRadius: 10,
+      justifyContent: "space-around",
+    },
+    eventTextContent: {
+      fontFamily: "Ubuntu_400Regular",
+      includeFontPadding: false,
+      fontSize: 13,
+      color: colors.white,
+      gap: 10,
+    },
+    eventTitle: {
+      fontFamily: "Ubuntu_500Medium",
+      includeFontPadding: false,
+      fontSize: 16,
+      color: colors.white,
+    },
+  });
+
   const [timetable, setTimetable] = React.useState(null);
 
   React.useEffect(() => {
@@ -43,19 +96,17 @@ const Jour = () => {
     });
   }, []);
 
-
-
-
   if (!timetable) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0760FB" />
+        <ActivityIndicator size="large" color={colors.blue_variable} />
       </View>
     );
   }
   return (
     <View style={styles.container}>
-      <TimelineCalendar minDate={"2024-09-02"}
+      <TimelineCalendar
+        minDate={"2024-09-02"}
         showWeekNumber={true}
         start={8}
         end={18.5}
@@ -64,46 +115,43 @@ const Jour = () => {
         showNowIndicator={true}
         spaceFromTop={4}
         locale="fr"
-        holidays={['2024-09-04', '2024-09-05']}
+        holidays={["2024-09-04", "2024-09-05"]}
         theme={{
-          backgroundColor: "#F4F5F9",
+          backgroundColor: colors.background,
           dayNumberContainer: {
-            backgroundColor: "#F4f5f9",
+            backgroundColor: colors.background,
           },
           colors: {
-            background: "#F000",
-            border: "#7A797C50",
-            text: "#252525",
+            background: colors.background,
+            border: colors.grey,
+            text: colors.black,
           },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
           },
           todayNumberContainer: {
-            backgroundColor: "#0760FB",
+            backgroundColor: colors.blue_variable,
           },
           todayNumber: {
-            color: "#FFF",
+            color: colors.white,
           },
           todayName: {
-            color: "#0760FB",
+            color: colors.blue_variable,
           },
           dayName: {
-            color: "#7A797C",
+            color: colors.grey,
+            fontFamily: "Ubuntu_400Regular",
           },
           dayNumber: {
-            color: "#7A797C",
-          },
-          leftBar: {
-            backgroundColor: '#ECECEC',
-            borderRadius: 7,
-            padding: 2,
+            color: colors.grey,
+            fontFamily: "Ubuntu_400Regular",
           },
           leftBarText: {
-            fontFamily: 'Ubuntu_500Medium',
-            color: "#252525",
+            fontFamily: "Ubuntu_500Medium",
+            color: colors.black,
             textTransform: "capitalize",
             fontSize: 12,
-          }
+          },
         }}
         renderEventContent={(event) => {
           const formattedProfessor = event.professor
@@ -131,59 +179,10 @@ const Jour = () => {
               </View>
             </View>
           );
-        }} />
+        }}
+      />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F4F5F9",
-    gap: 10,
-    paddingTop: 10,
-  },
-  itemContainer: {
-    flex: 1,
-    width: Dimensions.get("window").width,
-    justifyContent: "flex-start",
-    paddingHorizontal: "5%",
-  },
-  eventBack: {
-    paddingVertical: 5,
-    backgroundColor: "#F4F5F9",
-  },
-  eventBottom: {
-    flexDirection: "row",
-    gap: 10,
-    alignItems: "center",
-  },
-  eventContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-  },
-  eventContainer: {
-    height: "100%",
-    backgroundColor: "#FF0000",
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-    borderRadius: 10,
-    justifyContent: "space-between",
-  },
-  eventTextContent: {
-    fontFamily: "Ubuntu_400Regular",
-    includeFontPadding: false,
-    fontSize: 14,
-    color: "#fff",
-    gap: 10,
-  },
-  eventTitle: {
-    fontFamily: "Ubuntu_500Medium",
-    includeFontPadding: false,
-    fontSize: 17,
-    color: "#fff",
-  },
-});
 
 export default Jour;

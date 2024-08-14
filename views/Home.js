@@ -10,6 +10,7 @@ import {
   Platform,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 import NextCourse from "../components/home/nextCourse/nextCourse";
 import AgendaHome from "../components/home/Agenda/agendaHome";
 import ParcourirHome from "../components/home/Parcourir";
@@ -79,6 +80,8 @@ function Home() {
     },
   });
 
+  const navigation = useNavigation();
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -128,13 +131,18 @@ function Home() {
               </ShimmerPlaceHolder>
             </View>
             <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
-              <Text
-                style={{
-                  fontFamily: "Ubuntu_500Medium",
-                  color: colors.blue_variable,
-                  fontSize: 15,
-                }}
-              >{`${formattedDate}`}</Text>
+              <TouchableOpacity
+              // onPress={() => navigation.navigate("Timetable")}
+              // Faire un lien vers emploi du temps
+              >
+                <Text
+                  style={{
+                    fontFamily: "Ubuntu_500Medium",
+                    color: colors.blue_variable,
+                    fontSize: 15,
+                  }}
+                >{`${formattedDate}`}</Text>
+              </TouchableOpacity>
             </ShimmerPlaceHolder>
           </View>
         </View>

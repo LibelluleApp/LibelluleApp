@@ -8,6 +8,8 @@ import {
   Image,
   TouchableOpacity,
   Button,
+  Linking,
+  Alert,
 } from "react-native";
 import {
   ChangePP,
@@ -20,6 +22,7 @@ import {
   Changelog,
   CGU,
   ColorPal,
+  Exit,
 } from "../assets/icons/Icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../context/AuthContext";
@@ -38,6 +41,121 @@ async function getProfileData() {
 
 function Profile() {
   const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    logout: {
+      position: "absolute",
+      padding: 20,
+      top: 0,
+      right: 0,
+    },
+    topProfile: {
+      alignItems: "center",
+      padding: 20,
+    },
+    image: {
+      width: 70,
+      height: 70,
+    },
+    changePicture: {
+      position: "relative",
+    },
+    ChangePP: {
+      position: "absolute",
+      bottom: 0,
+      right: 0,
+    },
+    profileContainer: {
+      marginTop: 15,
+      alignItems: "center",
+    },
+    profileName: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 17,
+      color: colors.black,
+    },
+    profileEmail: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.grey,
+      textDecorationLine: "underline",
+    },
+    profileCTA: {
+      marginVertical: 15,
+      alignItems: "center",
+      gap: 12,
+    },
+    profileButton: {
+      backgroundColor: colors.white_background,
+      paddingVertical: 17,
+      paddingHorizontal: 20,
+      borderRadius: 10,
+      width: "90%",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    profileBtnText: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.black,
+    },
+    profileBtnUnderText: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      color: colors.grey,
+    },
+    CTAContent: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 15,
+    },
+    profileSwitcher: {
+      paddingHorizontal: 20,
+      width: "90%",
+      marginVertical: 12,
+    },
+    switcherContent: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    containerMediaLinks: {
+      flexDirection: "column",
+      gap: 20,
+    },
+    mediaLinks: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 10,
+    },
+    profileBtnSwitch: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 16,
+      color: colors.black,
+    },
+    separatorStick: {
+      marginVertical: 20,
+      height: 1,
+      backgroundColor: colors.grey,
+    },
+    profileMediaInsta: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 16,
+      color: "#FE068D",
+    },
+    profileMediaMail: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 16,
+      color: colors.blue_variable,
+      paddingBottom: 5,
+    },
+  });
+
   const [isEnabled, setIsEnabled] = useState(false);
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -76,8 +194,28 @@ function Profile() {
     );
   }
 
+  const handleConfirmLogout = () => {
+    Alert.alert("Déconnexion", "Êtes-vous sûr de vouloir vous déconnecter ?", [
+      {
+        text: "Annuler",
+        style: "cancel",
+      },
+      {
+        text: "Se déconnecter",
+        onPress: async () => {
+          await signOut();
+        },
+      },
+    ]);
+  };
+
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.logout}>
+        <TouchableOpacity onPress={() => handleConfirmLogout()}>
+          <Exit stroke={colors.red700} />
+        </TouchableOpacity>
+      </View>
       <View style={styles.topProfile}>
         <TouchableOpacity style={styles.changePicture}>
           <Image
@@ -93,70 +231,92 @@ function Profile() {
           <Text style={styles.profileName}>
             {userData.prenom} {userData.nom}
           </Text>
-          <Text style={styles.profileEmail}>{userData.email_edu}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL(`mailto:${userData.email_edu}`);
+            }}
+          >
+            <Text style={styles.profileEmail}>{userData.email_edu}</Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.profileCTA}>
         <TouchableOpacity style={styles.profileButton}>
           <View style={styles.CTAContent}>
-            <ProfileCard />
+            <ProfileCard fill={colors.black} />
             <Text style={styles.profileBtnText}>Mes informations</Text>
           </View>
-          <LeftArrow />
+          <LeftArrow fill={colors.black} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.profileButton}>
           <View style={styles.CTAContent}>
-            <Locker />
+            <Locker fill={colors.black} />
             <Text style={styles.profileBtnText}>Modifier mon mot de passe</Text>
           </View>
-          <LeftArrow />
+          <LeftArrow fill={colors.black} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.profileButton}>
           <View style={styles.CTAContent}>
-            <ForwardRole />
+            <ForwardRole fill={colors.black} />
             <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
           </View>
-          <LeftArrow />
+          <LeftArrow fill={colors.black} />
         </TouchableOpacity>
         <View style={styles.profileSwitcher}>
           <View style={styles.switcherContent}>
             <Text style={styles.profileBtnSwitch}>Mode sombre</Text>
             <Switch
-              trackColor={{ false: "#7A797C", true: "#0760FB" }}
-              thumbColor={isEnabled ? "#fff" : "#fff"}
+              trackColor={{ false: colors.grey, true: colors.blue_variable }}
+              thumbColor={isEnabled ? colors.white : colors.white}
               onValueChange={toggleTheme}
               value={isDarkMode}
             ></Switch>
           </View>
           <View style={styles.switcherContent}>
-            <Text style={styles.profileBtnSwitch}>Notifcations</Text>
+            <Text style={styles.profileBtnSwitch}>Notifications</Text>
             <Switch
-              trackColor={{ false: "#7A797C", true: "#0760FB" }}
-              thumbColor={isNotification ? "#fff" : "#fff"}
+              trackColor={{ false: colors.grey, true: colors.blue_variable }}
+              thumbColor={isNotification ? colors.white : colors.white}
               onValueChange={toggleNotification}
               value={isNotification}
             ></Switch>
           </View>
           <View style={styles.separatorStick}></View>
-          <View style={styles.mediaLinks}>
-            <InstaIcon />
-            <Text style={styles.profileMediaInsta}>@libellule</Text>
-          </View>
-          <View style={styles.mediaLinks}>
-            <MailProfile />
-            <Text style={styles.profileMediaMail}>support@libellule.app</Text>
+          <View style={styles.containerMediaLinks}>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL("https://www.instagram.com/libelluleapp");
+              }}
+            >
+              <View style={styles.mediaLinks}>
+                <InstaIcon />
+                <Text style={styles.profileMediaInsta}>@libellule</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                Linking.openURL("mailto:support@libellule.app");
+              }}
+            >
+              <View style={styles.mediaLinks}>
+                <MailProfile fill={colors.blue_variable} />
+                <Text style={styles.profileMediaMail}>
+                  support@libellule.app
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         <TouchableOpacity style={styles.profileButton}>
           <View style={styles.CTAContent}>
-            <Changelog />
+            <Changelog fill={colors.black} />
             <Text style={styles.profileBtnText}>Journal des mises à jours</Text>
           </View>
-          <LeftArrow />
+          <LeftArrow fill={colors.black} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.profileButton}>
           <View style={styles.CTAContent}>
-            <CGU />
+            <CGU fill={colors.black} />
             <View>
               <Text style={styles.profileBtnText}>CGU</Text>
               <Text style={styles.profileBtnUnderText}>
@@ -164,119 +324,11 @@ function Profile() {
               </Text>
             </View>
           </View>
-          <LeftArrow />
+          <LeftArrow fill={colors.black} />
         </TouchableOpacity>
-      </View>
-      <View>
-        <Button title="Se déconnecter" onPress={signOut} />
       </View>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F4F5F9",
-  },
-  topProfile: {
-    alignItems: "center",
-    padding: 20,
-  },
-  image: {
-    width: 70,
-    height: 70,
-  },
-  changePicture: {
-    position: "relative",
-  },
-  ChangePP: {
-    position: "absolute",
-    bottom: 0,
-    right: 0,
-  },
-  profileContainer: {
-    marginTop: 15,
-    alignItems: "center",
-  },
-  profileName: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 17,
-    color: "#252525",
-  },
-  profileEmail: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
-    color: "#7A797C",
-    textDecorationLine: "underline",
-  },
-  profileCTA: {
-    marginTop: 15,
-    alignItems: "center",
-    gap: 12,
-  },
-  profileButton: {
-    backgroundColor: "#FFF",
-    paddingVertical: 17,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    width: "90%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  profileBtnText: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
-    color: "#252525",
-  },
-  profileBtnUnderText: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 13,
-    color: "#7A797C",
-  },
-  CTAContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 15,
-  },
-  profileSwitcher: {
-    paddingHorizontal: 20,
-    width: "90%",
-    marginTop: 12,
-    gap: 20,
-  },
-  switcherContent: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  mediaLinks: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  profileBtnSwitch: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 17,
-    color: "#252525",
-  },
-  separatorStick: {
-    marginVertical: 20,
-    height: 1,
-    backgroundColor: "#7A797C",
-  },
-  profileMediaInsta: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 17,
-    color: "#FE068D",
-  },
-  profileMediaMail: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 17,
-    color: "#0760FB",
-    paddingBottom: 5,
-  },
-});
 
 export default Profile;

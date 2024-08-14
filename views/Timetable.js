@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Jour from "../components/timetable/jour";
 import Semaine from "../components/timetable/semaine";
+import { ThemeContext } from "./../utils/themeContext";
 
 const Tab = createMaterialTopTabNavigator();
 
 function Timetable() {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    modalBackground: {
+      flex: 1,
+    },
+  });
+
   return (
     <View style={styles.modalBackground}>
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
-            backgroundColor: "#F4F5F9",
+            backgroundColor: colors.background,
             elevation: 0,
             shadowOffset: {
               width: 0,
@@ -21,8 +30,8 @@ function Timetable() {
           },
           swipeEnabled: false,
 
-          tabBarActiveTintColor: "#252525",
-          tabBarInactiveTintColor: "#7A797C",
+          tabBarActiveTintColor: colors.black,
+          tabBarInactiveTintColor: colors.grey,
           tabBarLabelStyle: {
             fontFamily: "Ubuntu_400Regular",
             fontSize: 17,
@@ -30,7 +39,7 @@ function Timetable() {
           },
 
           tabBarIndicatorStyle: {
-            backgroundColor: "#252525",
+            backgroundColor: colors.black,
           },
         }}
       >
@@ -40,12 +49,5 @@ function Timetable() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  modalBackground: {
-    backgroundColor: "#F4F5F9",
-    flex: 1,
-  },
-});
 
 export default Timetable;

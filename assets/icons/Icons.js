@@ -1255,13 +1255,13 @@ function MailProfile(props) {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <G clipPath="url(#clip0_1172_135475)" fill="#0760FB">
+      <G clipPath="url(#clip0_1172_135475)" fill="#0760FB" {...props}>
         <Path d="M16.967 3.926l-5.962 5.963a3.547 3.547 0 01-5.01 0L.033 3.926C.023 4.038 0 4.139 0 4.25v8.5a3.546 3.546 0 003.542 3.542h9.916A3.546 3.546 0 0017 12.75v-8.5c0-.111-.023-.212-.033-.324z" />
         <Path d="M10.003 8.887l6.47-6.47A3.532 3.532 0 0013.458.707H3.542A3.532 3.532 0 00.527 2.416l6.47 6.47a2.13 2.13 0 003.006 0z" />
       </G>
       <Defs>
         <ClipPath id="clip0_1172_135475">
-          <Path fill="#fff" d="M0 0H17V17H0z" />
+          <Path fill="#fff" d="M0 0H17V17H0z" {...props} />
         </ClipPath>
       </Defs>
     </Svg>
@@ -1325,6 +1325,27 @@ function ResetList(props) {
     </Svg>
   );
 }
+function Exit(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-log-out"
+      {...props}
+    >
+      <Path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+      <Path d="M16 17L21 12 16 7" />
+      <Path d="M21 12L9 12" />
+    </Svg>
+  );
+}
 export {
   Home,
   HomeFocused,
@@ -1377,4 +1398,5 @@ export {
   Bin,
   Add,
   ResetList,
+  Exit,
 };
