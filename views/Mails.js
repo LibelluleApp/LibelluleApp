@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -7,8 +7,36 @@ import {
   Linking,
 } from "react-native";
 import Mail from "../components/mails/Mail";
+import { ThemeContext } from "./../utils/themeContext";
 
 function Mails() {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    content: {
+      width: "90%",
+      alignSelf: "center",
+      marginTop: 25,
+    },
+    text: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      color: colors.grey,
+      marginBottom: 20,
+    },
+    link: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      color: colors.grey,
+      lineHeight: 20,
+      textDecorationLine: "underline",
+    },
+  });
+
   const [emails, setEmails] = useState([]);
 
   return (
@@ -32,30 +60,5 @@ function Mails() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F4F5F9",
-  },
-  content: {
-    width: "90%",
-    alignSelf: "center",
-    marginTop: 25,
-  },
-  text: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 13,
-    color: "#7A797C",
-    marginBottom: 20,
-  },
-  link: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 13,
-    color: "#7A797C",
-    lineHeight: 20,
-    textDecorationLine: "underline",
-  },
-});
 
 export default Mails;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Text,
   View,
@@ -9,8 +9,52 @@ import {
   ScrollView,
 } from "react-native";
 import { People } from "../../assets/icons/Icons";
+import { ThemeContext } from "./../../utils/themeContext";
 
 function MailDetail() {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    container: {
+      backgroundColor: colors.background,
+      flex: 1,
+    },
+    mailContent: {
+      backgroundColor: colors.white_background,
+      borderRadius: 10,
+      width: "90%",
+      marginTop: 20,
+      padding: 15,
+    },
+    subject: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 15,
+      color: colors.black,
+      marginBottom: 15,
+    },
+    body: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.black,
+    },
+    mailSender: {
+      width: "90%",
+      marginTop: 20,
+      backgroundColor: colors.white_background,
+      borderRadius: 10,
+      paddingVertical: 20,
+      paddingHorizontal: 15,
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 5,
+    },
+    sender: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.black,
+    },
+  });
+
   return (
     <ScrollView
       style={styles.container}
@@ -40,52 +84,11 @@ function MailDetail() {
         </Text>
       </View>
       <View style={styles.mailSender}>
-        <People fill="#252525" />
+        <People fill={colors.black} />
         <Text style={styles.sender}>Pierre Martin</Text>
       </View>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#F4F5F9",
-    flex: 1,
-  },
-  mailContent: {
-    backgroundColor: "#FFF",
-    borderRadius: 10,
-    width: "90%",
-    marginTop: 20,
-    padding: 15,
-  },
-  subject: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 15,
-    color: "#252525",
-    marginBottom: 15,
-  },
-  body: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
-    color: "#252525",
-  },
-  mailSender: {
-    width: "90%",
-    marginTop: 20,
-    backgroundColor: "#FFF",
-    borderRadius: 10,
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 5,
-  },
-  sender: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 15,
-    color: "#252525",
-  },
-});
 
 export default MailDetail;
