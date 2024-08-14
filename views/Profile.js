@@ -25,12 +25,24 @@ import {
   ColorPal,
   Exit,
 } from "../assets/icons/Icons";
+import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../utils/themeContext";
-// import messaging from '@react-native-firebase/messaging';
 
+const isExpoGo = Constants.appOwnership === "expo";
+
+let messaging;
+if (!isExpoGo) {
+  (async () => {
+    messaging = (await import("@react-native-firebase/messaging")).default;
+  })();
+} else {
+  console.log(
+    "Expo Go détecté, `@react-native-firebase/messaging` ne sera pas importé."
+  );
+}
 async function getProfileData() {
   try {
     const userData = JSON.parse(await AsyncStorage.getItem("user_data"));
