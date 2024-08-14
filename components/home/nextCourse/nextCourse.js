@@ -19,8 +19,8 @@ import { ThemeContext } from "./../../../utils/themeContext";
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 const { width } = Dimensions.get("window");
-const slideWidth = width * 0.9; // Largeur de la diapositive
-const slideHeight = 90; // Hauteur de la diapositive
+const slideWidth = width * 0.9;
+const slideHeight = 90;
 
 const fetchCourse = async () => {
   try {
@@ -44,7 +44,7 @@ const fetchColor = async (data) => {
 
 function ItemCourse({ data, color }) {
   const { colors } = useContext(ThemeContext);
-
+  const [remainingTime, setRemainingTime] = useState("");
   const styles = StyleSheet.create({
     slide: {
       height: slideHeight,
@@ -98,7 +98,6 @@ function ItemCourse({ data, color }) {
       gap: 10,
     },
     contentLeft: {
-
       justifyContent: "center",
     },
     hourClock: {
@@ -141,7 +140,6 @@ function ItemCourse({ data, color }) {
       color: colors.black50,
     },
   });
-
   if (!data) {
     return (
       <TouchableOpacity style={[styles.slide]}>
@@ -156,7 +154,6 @@ function ItemCourse({ data, color }) {
       </TouchableOpacity>
     );
   }
-  const [remainingTime, setRemainingTime] = useState("");
 
   function formatProfessorName(professor) {
     const parts = professor.split(" ");
