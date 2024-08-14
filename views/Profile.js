@@ -122,8 +122,7 @@ function Profile() {
     },
     switcherToggle: {
       flexDirection: "column",
-      gap: Platform.OS === "ios" ? 20 : 0,
-      // autres styles ici
+      gap: Platform.OS === "ios" ? 10 : 0,
     },
     switcherContent: {
       flexDirection: "row",
