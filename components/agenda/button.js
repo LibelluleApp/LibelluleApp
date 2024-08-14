@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import { RedirectTo, Add } from "../../assets/icons/Icons";
+import { RedirectTo, Add } from "./../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
 
-function Button({ title, onPress, icon, style }) {
+function Button({ title, onPress, style }) {
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -16,7 +16,7 @@ function Button({ title, onPress, icon, style }) {
       marginTop: 10,
       alignSelf: "center",
       alignItems: "center",
-      justifyContent: "space-between",
+      justifyContent: "center",
     },
     buttonText: {
       fontFamily: "Ubuntu_400Regular",
@@ -26,12 +26,8 @@ function Button({ title, onPress, icon, style }) {
   });
 
   return (
-    <TouchableOpacity
-      style={[styles.button, !icon && { justifyContent: "center" }, style]}
-      onPress={onPress}
-    >
+    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
       <Add fill={colors.white} />
-      {icon && <RedirectTo fill={colors.white} />}
     </TouchableOpacity>
   );
 }

@@ -19,7 +19,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SwiperFlatList from "react-native-swiper-flatlist";
 import PaginationHeader from "../components/agenda/pagination";
 import moment from "moment-timezone";
-import Button from "../components/scolarite/button";
+import Button from "./../components/agenda/button";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import "moment/locale/fr";
 import fetchAgenda from "../api/Agenda/fetch";

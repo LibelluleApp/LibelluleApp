@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Text,
   View,
@@ -13,6 +13,7 @@ import { showMessage } from "react-native-flash-message";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { he, is } from "date-fns/locale";
+import { ThemeContext } from "./../../../utils/themeContext";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
@@ -30,6 +31,56 @@ const getLinks = async () => {
 };
 
 function LiensExterne() {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    modalBackground: {
+      backgroundColor: colors.background,
+      flex: 1,
+    },
+    container: {
+      fontFamily: "Ubuntu_400Regular",
+      alignSelf: "center",
+      width: "90%",
+      marginTop: 22,
+      marginBottom: 15,
+    },
+    title: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 17,
+      color: colors.grey,
+      marginBottom: 14,
+    },
+    liens: {
+      flexDirection: "column",
+      justifyContent: "space-between",
+      gap: 7,
+    },
+    lien: {
+      backgroundColor: colors.white_background,
+      width: "100%",
+      borderRadius: 10,
+      padding: 17,
+      marginBottom: 10,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    titleText: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 15,
+      color: colors.black,
+    },
+    descriptionText: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      color: colors.grey,
+    },
+    content: {
+      gap: 5,
+    },
+  });
+
   const [links, setLinks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -90,7 +141,7 @@ function LiensExterne() {
                   <Text style={styles.titleText}>{link.titre}</Text>
                   <Text style={styles.descriptionText}>{link.description}</Text>
                 </View>
-                <RedirectTo />
+                <RedirectTo fill={colors.black} />
               </TouchableOpacity>
             ))}
         </View>
@@ -98,53 +149,5 @@ function LiensExterne() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  modalBackground: {
-    backgroundColor: "#F4F5F9",
-    flex: 1,
-  },
-  container: {
-    fontFamily: "Ubuntu_400Regular",
-    alignSelf: "center",
-    width: "90%",
-    marginTop: 22,
-    marginBottom: 15,
-  },
-  title: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 17,
-    color: "#7A797C",
-    marginBottom: 14,
-  },
-  liens: {
-    flexDirection: "column",
-    justifyContent: "space-between",
-    gap: 7,
-  },
-  lien: {
-    backgroundColor: "#FFFFFF",
-    width: "100%",
-    borderRadius: 10,
-    padding: 17,
-    marginBottom: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  titleText: {
-    fontFamily: "Ubuntu_500Medium",
-    fontSize: 15,
-    color: "#000",
-  },
-  descriptionText: {
-    fontFamily: "Ubuntu_400Regular",
-    fontSize: 13,
-    color: "#7A797C",
-  },
-  content: {
-    gap: 5,
-  },
-});
 
 export default LiensExterne;
