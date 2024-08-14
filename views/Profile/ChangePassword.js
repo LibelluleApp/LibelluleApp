@@ -56,6 +56,7 @@ const ChangePassword = () => {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 17,
       color: colors.white,
+      letterSpacing: -0.5,
     },
     forgotPasswordText: {
       fontFamily: "Ubuntu_400Regular",

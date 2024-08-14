@@ -1366,6 +1366,43 @@ function Check(props) {
     </Svg>
   );
 }
+function CircleHome(props) {
+  return (
+    <Svg
+      width={127}
+      height={127}
+      viewBox="0 0 127 127"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Circle cx={63.5} cy={63.5} r={62.5} stroke="#0760FB" strokeWidth={0.5} />
+    </Svg>
+  );
+}
+function SquareHome(props) {
+  return (
+    <Svg
+      width={69}
+      height={69}
+      viewBox="0 0 69 69"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <Rect
+        x={23.5665}
+        y={-3}
+        width={55.3111}
+        height={55.3111}
+        rx={10}
+        transform="rotate(28.706 23.567 -3)"
+        stroke="#0760FB"
+        strokeWidth={0.5}
+      />
+    </Svg>
+  );
+}
 export {
   Home,
   HomeFocused,
@@ -1420,4 +1457,6 @@ export {
   ResetList,
   Exit,
   Check,
+  CircleHome,
+  SquareHome,
 };

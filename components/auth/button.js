@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { ThemeContext } from "./../../utils/themeContext";
 
 function Button({ title, onPress }) {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    button: {
+      flexDirection: "row",
+      backgroundColor: colors.blue700,
+      paddingHorizontal: 20,
+      paddingVertical: 11,
+      borderRadius: 10,
+      marginTop: 20,
+      width: "100%",
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    buttonText: {
+      fontFamily: "Ubuntu_400Regular",
+      color: colors.white,
+      fontSize: 17,
+      letterSpacing: -0.5,
+    },
+  });
+
   const navigation = useNavigation();
   return (
     <TouchableOpacity
@@ -15,28 +39,5 @@ function Button({ title, onPress }) {
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 22,
-  },
-  button: {
-    flexDirection: "row",
-    backgroundColor: "#0760FB",
-    paddingHorizontal: 20,
-    paddingVertical: 13,
-    borderRadius: 10,
-    marginTop: 20,
-    width: "100%",
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    fontFamily: "Ubuntu_400Regular",
-    color: "#FFF",
-    fontSize: 16,
-  },
-});
 
 export default Button;

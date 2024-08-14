@@ -31,6 +31,7 @@ function ButtonAuth({ title, onPress, loading }) {
       fontFamily: "Ubuntu_400Regular",
       color: colors.white,
       fontSize: 17,
+      letterSpacing: -0.5,
     },
   });
 
