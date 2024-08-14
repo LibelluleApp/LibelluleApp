@@ -102,9 +102,8 @@ const TutorialAgenda = () => {
         <View style={styles.containerContent}>
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              <Agenda fill={colors.black} width={18} height={18} />
               <Text style={styles.titleText}>
-                Comment fonctionne l’agenda ?
+                ✅ Comment fonctionne l’agenda ?
               </Text>
             </View>
             <View style={styles.textContentContainer}>
