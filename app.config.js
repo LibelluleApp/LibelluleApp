@@ -34,6 +34,9 @@ export default {
       backgroundColor: "#0760FB",
       image: "./assets/splash.png",
     },
+    entitlements: {
+      "aps-environment": "production",
+    },
   },
   android: {
     adaptiveIcon: {
@@ -50,14 +53,19 @@ export default {
   web: {
     favicon: "./assets/favicon.png",
   },
-  plugins: ["expo-font", "expo-secure-store", "@react-native-firebase/app", [
-    "expo-build-properties",
-    {
-      "ios": {
-        "useFrameworks": "static"
-      }
-    }
-  ]],
+  plugins: [
+    "expo-font",
+    "expo-secure-store",
+    "@react-native-firebase/app",
+    [
+      "expo-build-properties",
+      {
+        ios: {
+          useFrameworks: "static",
+        },
+      },
+    ],
+  ],
   extra: {
     eas: {
       projectId: "142931be-af91-443d-9e7d-57ecd13da335",
