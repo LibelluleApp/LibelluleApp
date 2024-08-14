@@ -10,6 +10,7 @@ import {
   Button,
   Linking,
   Alert,
+  Platform,
 } from "react-native";
 import {
   ChangePP,
@@ -118,6 +119,11 @@ function Profile() {
       paddingHorizontal: 20,
       width: "90%",
       marginVertical: 12,
+    },
+    switcherToggle: {
+      flexDirection: "column",
+      gap: Platform.OS === "ios" ? 20 : 0,
+      // autres styles ici
     },
     switcherContent: {
       flexDirection: "row",
@@ -263,23 +269,25 @@ function Profile() {
           <LeftArrow fill={colors.black} />
         </TouchableOpacity>
         <View style={styles.profileSwitcher}>
-          <View style={styles.switcherContent}>
-            <Text style={styles.profileBtnSwitch}>Mode sombre</Text>
-            <Switch
-              trackColor={{ false: colors.grey, true: colors.blue_variable }}
-              thumbColor={isEnabled ? colors.white : colors.white}
-              onValueChange={toggleTheme}
-              value={isDarkMode}
-            ></Switch>
-          </View>
-          <View style={styles.switcherContent}>
-            <Text style={styles.profileBtnSwitch}>Notifications</Text>
-            <Switch
-              trackColor={{ false: colors.grey, true: colors.blue_variable }}
-              thumbColor={isNotification ? colors.white : colors.white}
-              onValueChange={toggleNotification}
-              value={isNotification}
-            ></Switch>
+          <View style={styles.switcherToggle}>
+            <View style={styles.switcherContent}>
+              <Text style={styles.profileBtnSwitch}>Mode sombre</Text>
+              <Switch
+                trackColor={{ false: colors.grey, true: colors.blue_variable }}
+                thumbColor={isEnabled ? colors.white : colors.white}
+                onValueChange={toggleTheme}
+                value={isDarkMode}
+              ></Switch>
+            </View>
+            <View style={styles.switcherContent}>
+              <Text style={styles.profileBtnSwitch}>Notifications</Text>
+              <Switch
+                trackColor={{ false: colors.grey, true: colors.blue_variable }}
+                thumbColor={isNotification ? colors.white : colors.white}
+                onValueChange={toggleNotification}
+                value={isNotification}
+              ></Switch>
+            </View>
           </View>
           <View style={styles.separatorStick}></View>
           <View style={styles.containerMediaLinks}>
