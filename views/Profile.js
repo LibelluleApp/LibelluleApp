@@ -231,7 +231,7 @@ function Profile() {
     <ScrollView style={styles.container}>
       <View style={styles.logout}>
         <TouchableOpacity onPress={() => handleConfirmLogout()}>
-          <Exit stroke={colors.red700} />
+          <Exit stroke={colors.grey_variable} />
         </TouchableOpacity>
       </View>
       <View style={styles.topProfile}>
