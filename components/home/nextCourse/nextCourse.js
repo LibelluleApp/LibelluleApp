@@ -45,6 +45,7 @@ const fetchColor = async (data) => {
 function ItemCourse({ data, color }) {
   const { colors } = useContext(ThemeContext);
   const [remainingTime, setRemainingTime] = useState("");
+
   const styles = StyleSheet.create({
     slide: {
       height: slideHeight,
@@ -140,29 +141,9 @@ function ItemCourse({ data, color }) {
       color: colors.black50,
     },
   });
-  if (!data) {
-    return (
-      <TouchableOpacity style={[styles.slide]}>
-        <View
-          style={[
-            styles.container,
-            { backgroundColor: colors.white_background },
-          ]}
-        >
-          <Text style={styles.textSubject}>Aucun cours à venir</Text>
-        </View>
-      </TouchableOpacity>
-    );
-  }
-
-  function formatProfessorName(professor) {
-    const parts = professor.split(" ");
-    const initial = parts[1][0];
-    const nom = parts[0];
-    return `${initial}. ${nom}`;
-  }
-
   useEffect(() => {
+    if (!data) return; // Exit early if there's no data
+
     const calculateTimeRemaining = () => {
       const targetTime = new Date(data.start).getTime();
       const now = Date.now();
@@ -177,11 +158,12 @@ function ItemCourse({ data, color }) {
       const minutes = Math.floor((remainingTime % 3600000) / 60000);
       const seconds = Math.floor((remainingTime % 60000) / 1000);
 
-      setRemainingTime(`${hours}h ${minutes}m ${seconds}s`);
       if (hours === 0 && minutes === 0) {
         setRemainingTime(`${seconds}s`);
       } else if (hours === 0) {
         setRemainingTime(`${minutes}m ${seconds}s`);
+      } else {
+        setRemainingTime(`${hours}h ${minutes}m ${seconds}s`);
       }
     };
 
@@ -191,6 +173,29 @@ function ItemCourse({ data, color }) {
 
     return () => clearInterval(interval); // Cleanup on component unmount
   }, [data]);
+
+  function formatProfessorName(professor) {
+    const parts = professor?.split(" ");
+    if (parts.length < 2) return professor; // Handle cases where the name format is unexpected
+    const initial = parts[1][0];
+    const nom = parts[0];
+    return `${initial}. ${nom}`;
+  }
+
+  if (!data) {
+    return (
+      <TouchableOpacity style={[styles.slide]}>
+        <View
+          style={[
+            styles.container,
+            { backgroundColor: colors.white_background },
+          ]}
+        >
+          <Text style={styles.textSubject}>Aucun cours à venir</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
 
   return (
     <TouchableOpacity style={[styles.slide]}>

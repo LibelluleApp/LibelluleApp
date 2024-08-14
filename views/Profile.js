@@ -253,7 +253,10 @@ function Profile() {
           </View>
           <LeftArrow fill={colors.black} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.profileButton}>
+        <TouchableOpacity
+          style={styles.profileButton}
+          onPress={() => navigation.navigate("ChangePassword")}
+        >
           <View style={styles.CTAContent}>
             <Locker fill={colors.black} />
             <Text style={styles.profileBtnText}>Modifier mon mot de passe</Text>

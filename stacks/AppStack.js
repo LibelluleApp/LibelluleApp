@@ -107,6 +107,15 @@ const AppStack = ({ navigation }) => {
         presentation: "modal",
       },
     },
+    {
+      name: "ChangePassword",
+      component: require("../views/Profile/ChangePassword").default,
+      options: {
+        title: "Changer de mot de passe",
+        headerShadowVisible: false,
+        presentation: "modal",
+      },
+    },
   ];
   const insets = useSafeAreaInsets();
   return (
