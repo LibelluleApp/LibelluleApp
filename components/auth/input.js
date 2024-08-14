@@ -37,8 +37,8 @@ function Input({
     input: {
       backgroundColor: colors.white_background,
       borderRadius: 10,
-      borderWidth: 1,
-      borderColor: colors.white_background,
+      borderWidth: 0.5,
+      borderColor: colors.input_border,
       paddingHorizontal: 20,
       paddingVertical: 15,
       fontFamily: "Ubuntu_400Regular",
