@@ -1,37 +1,39 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import { RedirectTo } from "../../assets/icons/Icons";
+import { RedirectTo, Add } from "../../assets/icons/Icons";
+import { ThemeContext } from "./../../utils/themeContext";
 
 function Button({ title, onPress, icon, style }) {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    button: {
+      flexDirection: "row",
+      backgroundColor: colors.blue700,
+      width: 50,
+      height: 50,
+      borderRadius: 10,
+      marginTop: 10,
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "space-between",
+    },
+    buttonText: {
+      fontFamily: "Ubuntu_400Regular",
+      color: colors.white,
+      fontSize: 16,
+    },
+  });
+
   return (
     <TouchableOpacity
       style={[styles.button, !icon && { justifyContent: "center" }, style]}
       onPress={onPress}
     >
-      <Text style={styles.buttonText}>{title}</Text>
-      {icon && <RedirectTo fill="#fff" />}
+      <Add fill={colors.white} />
+      {icon && <RedirectTo fill={colors.white} />}
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    flexDirection: "row",
-    backgroundColor: "#0760FB",
-    paddingHorizontal: 20,
-    paddingVertical: 13,
-    borderRadius: 10,
-    marginTop: 10,
-    width: "55%",
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  buttonText: {
-    fontFamily: "Ubuntu_400Regular",
-    color: "#FFF",
-    fontSize: 16,
-  },
-});
 
 export default Button;

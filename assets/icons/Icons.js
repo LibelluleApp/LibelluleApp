@@ -1267,6 +1267,64 @@ function MailProfile(props) {
     </Svg>
   );
 }
+function Add(props) {
+  return (
+    <Svg
+      width={19}
+      height={20}
+      viewBox="0 0 19 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <G clipPath="url(#clip0_1523_3057)">
+        <Path
+          d="M17.833 9.333h-7.666V1.177a.843.843 0 00-.225-.576A.744.744 0 009.4.36a.744.744 0 00-.542.24.843.843 0 00-.225.576v8.156H.967a.744.744 0 00-.542.24.843.843 0 00-.225.576c0 .216.08.424.225.577a.744.744 0 00.542.239h7.666v8.156c0 .216.081.423.225.576a.744.744 0 00.542.24.744.744 0 00.542-.24.843.843 0 00.225-.576v-8.156h7.666a.744.744 0 00.543-.24.843.843 0 00.224-.576.843.843 0 00-.225-.577.744.744 0 00-.542-.239z"
+          fill="#fff"
+          {...props}
+        />
+      </G>
+      <Defs>
+        <ClipPath id="clip0_1523_3057">
+          <Path
+            fill="#fff"
+            transform="translate(.2 .362)"
+            d="M0 0H18.4V19.5745H0z"
+            {...props}
+          />
+        </ClipPath>
+      </Defs>
+    </Svg>
+  );
+}
+function ResetList(props) {
+  return (
+    <Svg
+      width={26}
+      height={26}
+      viewBox="0 0 26 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <Path
+        d="M22.75 6.5H3.25M7.583 13H3.25M7.583 19.5H3.25M13 19.5a5.417 5.417 0 009.75-3.25 4.875 4.875 0 00-4.875-4.875c-1.44 0-2.752.585-3.694 1.527l-2.264 2.265"
+        stroke="#9AA5B3"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...props}
+      />
+      <Path
+        d="M11.917 10.833v4.334h4.333"
+        stroke="#9AA5B3"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...props}
+      />
+    </Svg>
+  );
+}
 export {
   Home,
   HomeFocused,
@@ -1317,4 +1375,6 @@ export {
   ColorPal,
   MailProfile,
   Bin,
+  Add,
+  ResetList,
 };
