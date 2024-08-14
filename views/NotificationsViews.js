@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   RefreshControl,
   SafeAreaView,
@@ -6,8 +6,22 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
+import { ThemeContext } from "./../utils/themeContext";
 
 function Notifications() {
+  const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    modalBackground: {
+      backgroundColor: colors.background,
+      flex: 1,
+    },
+    scrollView: {
+      backgroundColor: colors.background,
+      flex: 1,
+    },
+  });
+
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = React.useCallback(() => {
@@ -25,16 +39,5 @@ function Notifications() {
     ></ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  modalBackground: {
-    backgroundColor: "#F4F5F9",
-    flex: 1,
-  },
-  scrollView: {
-    backgroundColor: "#F4F5F9",
-    flex: 1,
-  },
-});
 
 export default Notifications;
