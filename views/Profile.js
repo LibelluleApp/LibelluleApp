@@ -53,6 +53,7 @@ function Profile() {
       padding: 20,
       top: 0,
       right: 0,
+      zIndex: 99,
     },
     topProfile: {
       alignItems: "center",
@@ -324,7 +325,10 @@ function Profile() {
           </View>
           <LeftArrow fill={colors.black} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.profileButton}>
+        <TouchableOpacity
+          style={styles.profileButton}
+          onPress={() => navigation.navigate("CGU")}
+        >
           <View style={styles.CTAContent}>
             <CGU fill={colors.black} />
             <View>

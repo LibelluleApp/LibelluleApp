@@ -116,6 +116,22 @@ const AppStack = ({ navigation }) => {
         presentation: "modal",
       },
     },
+    {
+      name: "CGU",
+      component: require("../views/Profile/CGU").default,
+      options: {
+        title: "Conditions Générales d'Utilisation",
+        headerShadowVisible: false,
+        presentation: "modal",
+      },
+    },
+    {
+      name: "TutorialAgenda",
+      component: require("../views/Tutorial/Agenda").default,
+      options: {
+        headerShown: false,
+      },
+    },
   ];
   const insets = useSafeAreaInsets();
   return (

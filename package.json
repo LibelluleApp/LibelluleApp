@@ -27,6 +27,7 @@
     "date-fns": "^3.6.0",
     "expo": "~51.0.26",
     "expo-build-properties": "~0.12.5",
+    "expo-constants": "~16.0.2",
     "expo-font": "~12.0.5",
     "expo-haptics": "~13.0.1",
     "expo-linear-gradient": "~13.0.2",
@@ -52,6 +53,7 @@
     "react-native-keyboard-controller": "^1.11.7",
     "react-native-modal-datetime-picker": "^17.1.0",
     "react-native-pager-view": "6.3.0",
+    "react-native-password-validate-checklist": "github:farzanshibu/react-native-password-validate-checklist",
     "react-native-progress": "^5.0.1",
     "react-native-pure-jwt": "^3.0.2",
     "react-native-reanimated": "~3.10.1",
@@ -64,8 +66,7 @@
     "react-native-svg": "15.2.0",
     "react-native-swiper-flatlist": "^3.2.4",
     "react-native-vector-icons": "^10.0.3",
-    "reanimated-color-picker": "^3.0.4",
-    "expo-constants": "~16.0.2"
+    "reanimated-color-picker": "^3.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

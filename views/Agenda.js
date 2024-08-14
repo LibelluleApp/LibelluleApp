@@ -14,6 +14,7 @@ import {
   Text,
   ScrollView,
   ResetList,
+  TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SwiperFlatList from "react-native-swiper-flatlist";
@@ -58,7 +59,24 @@ const preloadComponent = (component) => {
 };
 
 const Agenda = () => {
+  const resetFirstVisit = async () => {
+    await AsyncStorage.removeItem("isFirstVisitAgenda");
+  };
+
   const { colors } = useContext(ThemeContext);
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
+  const [user_data, setUser_data] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const swiperRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [daysOfWeek, setDaysOfWeek] = useState([]);
+  const [defaultIndex, setDefaultIndex] = useState(0);
+  const [currentWeekNumber, setCurrentWeekNumber] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [evalCount, setEvalCount] = useState(0);
+  const [taskCount, setTaskCount] = useState(0);
 
   const styles = StyleSheet.create({
     container: {
@@ -98,6 +116,28 @@ const Agenda = () => {
       alignSelf: "center",
     },
   });
+  const checkFirstVisit = async () => {
+    try {
+      const value = await AsyncStorage.getItem("isFirstVisitAgenda");
+      if (!value) {
+        await AsyncStorage.setItem("isFirstVisitAgenda", "true");
+        setIsFirstVisit(true);
+      } else {
+        setIsFirstVisit(false);
+      }
+    } catch (e) {
+      console.log("Error accessing AsyncStorage:", e);
+    }
+  };
+  if (isFocused) {
+    checkFirstVisit();
+  }
+
+  useEffect(() => {
+    if (isFirstVisit && isFocused) {
+      navigation.navigate("TutorialAgenda");
+    }
+  }, [isFirstVisit, isFocused, navigation]);
 
   class Item extends PureComponent {
     render() {
@@ -145,19 +185,6 @@ const Agenda = () => {
       );
     }
   }
-
-  const [user_data, setUser_data] = useState(null);
-  const [refreshing, setRefreshing] = useState(false);
-  const navigation = useNavigation();
-  const isFocused = useIsFocused(); // Utilisation de useIsFocused pour détecter si la page est en focus
-  const swiperRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [daysOfWeek, setDaysOfWeek] = useState([]);
-  const [defaultIndex, setDefaultIndex] = useState(0);
-  const [currentWeekNumber, setCurrentWeekNumber] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [evalCount, setEvalCount] = useState(0);
-  const [taskCount, setTaskCount] = useState(0);
 
   const fetchData = async () => {
     try {
@@ -316,6 +343,9 @@ const Agenda = () => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={resetFirstVisit}>
+        <Text>Delete la visite</Text>
+      </TouchableOpacity>
       <PaginationHeader
         currentDay={daysOfWeek[currentIndex]?.date.format("dddd DD MMMM")}
         onPrev={handlePrevDay}

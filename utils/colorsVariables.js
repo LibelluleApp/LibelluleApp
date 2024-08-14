@@ -12,6 +12,7 @@ export const lightModeColors = {
   text_value: "#18313F",
 
   blue_variable: "#0760FB",
+  blue400: "#619AFE",
   blue700: "#0760FB",
   blue70050: "#619AFE",
   blue900: "#0F4199",
@@ -43,6 +44,7 @@ export const darkModeColors = {
   text_value: "#18313F",
 
   blue_variable: "#68AEFF",
+  blue400: "#619AFE",
   blue700: "#0760FB",
   blue70050: "#619AFE",
   blue900: "#0F4199",
