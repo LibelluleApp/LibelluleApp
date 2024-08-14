@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Button,
 } from "react-native";
-import { Chapeau, Agenda } from "./../../assets/icons/Icons";
+import { Chapeau, Agenda, Check } from "./../../assets/icons/Icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../utils/themeContext";
@@ -44,7 +44,7 @@ const TutorialAgenda = () => {
     titleContainer: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 10,
+      gap: 7,
     },
     titleText: {
       fontFamily: "Ubuntu_500Medium",
@@ -102,8 +102,9 @@ const TutorialAgenda = () => {
         <View style={styles.containerContent}>
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
+              <Check stroke={colors.black} width={20} height={20} />
               <Text style={styles.titleText}>
-                ✅ Comment fonctionne l’agenda ?
+                Comment fonctionne l’agenda ?
               </Text>
             </View>
             <View style={styles.textContentContainer}>

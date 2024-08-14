@@ -1346,6 +1346,26 @@ function Exit(props) {
     </Svg>
   );
 }
+function Check(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-circle-check"
+      {...props}
+    >
+      <Circle cx={12} cy={12} r={10} />
+      <Path d="M9 12l2 2 4-4" />
+    </Svg>
+  );
+}
 export {
   Home,
   HomeFocused,
@@ -1399,4 +1419,5 @@ export {
   Add,
   ResetList,
   Exit,
+  Check,
 };
