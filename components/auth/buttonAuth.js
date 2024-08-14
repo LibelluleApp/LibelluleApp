@@ -20,7 +20,7 @@ function ButtonAuth({ title, onPress, loading }) {
       flexDirection: "row",
       backgroundColor: colors.blue700,
       paddingHorizontal: 20,
-      paddingVertical: 13,
+      paddingVertical: 11,
       borderRadius: 10,
       width: "100%",
       alignSelf: "center",

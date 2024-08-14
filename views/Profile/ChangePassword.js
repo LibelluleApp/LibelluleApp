@@ -42,7 +42,7 @@ const ChangePassword = () => {
     editBtn: {
       backgroundColor: colors.blue700,
       paddingHorizontal: 20,
-      paddingVertical: 10,
+      paddingVertical: 11,
       borderRadius: 10,
       alignItems: "center",
       flexDirection: "row",
