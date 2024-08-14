@@ -5,6 +5,8 @@ import { ThemeContext } from "../../utils/themeContext";
 import PasswordValidate from "react-native-password-validate-checklist";
 import Input from "../../components/auth/input";
 import { showMessage } from "react-native-flash-message";
+import updatePassword from "../../api/User/updatePassword";
+import { useNavigation } from "@react-navigation/native";
 
 const ChangePassword = () => {
   const { colors } = useContext(ThemeContext);
@@ -60,6 +62,7 @@ const ChangePassword = () => {
       fontSize: 15,
       color: colors.grey,
       padding: 15,
+      paddingBottom: 30,
     },
   });
 
@@ -68,6 +71,7 @@ const ChangePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validated, setValidated] = useState(false);
   const [passwordCorrect, setPasswordCorrect] = useState(false);
+  const navigation = useNavigation();
 
   const handleValidated = async () => {
     if (!validated) {
@@ -78,6 +82,28 @@ const ChangePassword = () => {
         statusBarHeight: 15,
       });
       return;
+    } else {
+      try {
+        const response = await updatePassword(
+          currentPassword,
+          newPassword,
+          confirmPassword
+        );
+        showMessage({
+          message: response,
+          type: "success",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+          statusBarHeight: 15,
+        });
+        navigation.goBack();
+      } catch (error) {
+        showMessage({
+          message: error.message,
+          type: "danger",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+          statusBarHeight: 15,
+        });
+      }
     }
   };
 

@@ -113,7 +113,6 @@ const AppStack = ({ navigation }) => {
       options: {
         title: "Changer de mot de passe",
         headerShadowVisible: false,
-        presentation: "modal",
       },
     },
     {
