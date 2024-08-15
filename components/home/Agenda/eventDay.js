@@ -27,7 +27,7 @@ function EventDay({ date }) {
     topContainer: {
       flexDirection: "row",
       width: "100%",
-      paddingVertical: 25,
+      paddingBottom: 15,
       gap: 11,
       justifyContent: "space-between",
     },
