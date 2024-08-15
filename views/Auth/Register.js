@@ -7,6 +7,7 @@ import {
   Keyboard,
   ScrollView,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
 import Input from "../../components/auth/input";
@@ -158,12 +159,11 @@ const Register = () => {
     }
   }, [formData]);
 
-  // Logique pour filtrer les options de groupe TP en fonction du BUT sélectionné
   const filteredGroupeTPOptions = useMemo(() => {
     if (formData.but === "CL") {
-      return groupeTPOptions; // Retourner toutes les options pour TC
+      return groupeTPOptions;
     }
-    return groupeTPOptions.slice(0, 4); // Retourner seulement TP1-TP4 pour les autres BUT
+    return groupeTPOptions.slice(0, 4);
   }, [formData.but]);
 
   const styles = useMemo(
@@ -181,7 +181,7 @@ const Register = () => {
           paddingBottom: 5,
           flex: 1,
           flexDirection: "column",
-          gap: 20,
+          gap: 30,
           justifyContent: "center",
         },
         topInput: {
@@ -192,7 +192,6 @@ const Register = () => {
         },
         inputContainer: {
           justifyContent: "center",
-          flex: 1,
           flexDirection: "column",
           gap: 20,
         },
@@ -212,19 +211,14 @@ const Register = () => {
           gap: 20,
         },
         inputList: {
-          backgroundColor: colors.background,
-          borderColor: colors.grey,
-          borderWidth: 1,
-          width: 60,
-          alignItems: "center",
-          padding: 10,
+          backgroundColor: colors.white_background,
+          paddingVertical: 10,
+          paddingHorizontal: 15,
           borderRadius: 10,
           marginRight: 10,
-          height: 40,
-          justifyContent: "center",
         },
         inputListSelected: {
-          backgroundColor: colors.blue700,
+          backgroundColor: colors.blue_variable,
           borderColor: colors.grey,
           borderWidth: 1,
         },
@@ -261,6 +255,12 @@ const Register = () => {
             <View style={styles.inputContainer}>
               {secondePage ? (
                 <>
+                  <TouchableOpacity
+                    style={styles.topInput}
+                    onPress={() => setSecondePage(false)}
+                  >
+                    <Text>Retour</Text>
+                  </TouchableOpacity>
                   <View>
                     <Text>BUT</Text>
                     <ScrollView
