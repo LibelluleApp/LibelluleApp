@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Text, View, StyleSheet, Image, ActivityIndicator } from "react-native";
 import PropTypes from "prop-types";
-import { CalendarFill } from "../../../assets/icons/Icons";
+import { Calendar } from "../../../assets/icons/Icons";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { Orage } from "../../../assets/icons/Weather";
 import Eval from "./Eval";
@@ -126,7 +126,7 @@ function EventDay({ date }) {
       <View style={styles.container}>
         <View style={styles.topContainer}>
           <View style={styles.hourContainer}>
-            <CalendarFill fill={colors.grey_variable} width={20} height={20} />
+            <Calendar stroke={colors.grey_variable} width={20} height={20} />
             <Text style={styles.hourContent}>7h30 de cours</Text>
           </View>
           <View style={styles.weatherContainer}>

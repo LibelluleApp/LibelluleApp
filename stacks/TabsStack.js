@@ -1,93 +1,56 @@
-// File for tabs navigation
-
 import React, { useContext } from "react";
-import { Text, View, Image, TouchableOpacity, Platform } from "react-native";
-
-import { Feather } from "@expo/vector-icons";
-import LogoTitle from "../components/logo";
-import { useNavigation } from "@react-navigation/native";
+import { View, TouchableOpacity, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
+
+import LogoTitle from "../components/logo";
 import Notifications from "../views/NotificationsViews";
 import {
   Home,
-  HomeFocused,
-  Agenda,
-  AgendaFocused,
-  TimetableNoProps as Timetable,
-  TimetableFocused,
+  Check,
+  Calendar,
   Mail,
-  MailFocused,
-  Profile,
-  ProfileFocused,
+  User,
   Notification,
 } from "../assets/icons/Icons";
 import { ThemeContext } from "./../utils/themeContext";
 
 const Tab = createBottomTabNavigator();
 
-function NotificationBell({ onPress }) {
+function NotificationBell() {
+  const { colors } = useContext(ThemeContext);
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate(onPress)}
+      onPress={() => navigation.navigate("Notifications")}
       style={{ paddingRight: 10 }}
     >
-      <Notification />
+      <Notification stroke={colors.grey} />
     </TouchableOpacity>
   );
 }
 
 const TabsStack = () => {
   const { colors } = useContext(ThemeContext);
-
-  const getIcon = (Icon, IconFill, color, size, focused, force) => {
-    const width = size + 2;
-    const height = size + 2;
-
-    const same = Icon == IconFill;
-
-    return focused ? (
-      <IconFill
-        fill={!same || force ? color : "transparent"}
-        stroke={color}
-        width={width}
-        height={height}
-      />
-    ) : (
-      <Icon
-        fill={!same || force ? color : "transparent"}
-        stroke={color}
-        width={width}
-        height={height}
-      />
-    );
-  };
-
   const insets = useSafeAreaInsets();
 
+  const getIcon = (Icon, color, size, focused) => {
+    const fillColor = focused ? colors.blue_variable : color; // Change icon color to blue when focused
+
+    return <Icon stroke={fillColor} />;
+  };
+
   const baseHeaderOptions = {
-    tabBarShowLabel: false,
+    tabBarShowLabel: true,
     headerShown: true,
-    tabBarLabelStyle: {
-      marginTop: insets.bottom > 30 ? -3 : 0,
-    },
     tabBarStyle: [
-      Platform.OS === "ios"
-        ? {
-            paddingHorizontal: 8,
-          }
-        : {
-            paddingHorizontal: 8,
-          },
-      { backgroundColor: colors.white_background, borderTopWidth: 0 },
-      insets.bottom > 30
-        ? {
-            height: 90,
-          }
-        : {
-            height: 70,
-          },
+      {
+        paddingHorizontal: 8,
+        backgroundColor: colors.white_background,
+        borderTopWidth: 0,
+      },
+      insets.bottom > 30 ? { height: 90 } : { height: 75 },
     ],
     headerStyle: {
       backgroundColor: colors.background,
@@ -107,7 +70,7 @@ const TabsStack = () => {
     headerRightContainerStyle: {
       paddingRight: 17,
     },
-    headerRight: () => <NotificationBell onPress="Notifications" />,
+    headerRight: () => <NotificationBell />,
   };
 
   const views = [
@@ -115,8 +78,9 @@ const TabsStack = () => {
       name: "Vue d'ensemble",
       component: require("../views/Home").default,
       options: {
+        tabBarLabel: "Accueil",
         tabBarIcon: ({ color, size, focused }) =>
-          getIcon(Home, HomeFocused, color, size, focused),
+          getIcon(Home, color, size, focused),
         headerLeft: () => <LogoTitle />,
         ...baseHeaderOptions,
       },
@@ -125,8 +89,9 @@ const TabsStack = () => {
       name: "Emploi du temps",
       component: require("../views/Timetable").default,
       options: {
+        tabBarLabel: "Cours",
         tabBarIcon: ({ color, size, focused }) =>
-          getIcon(Timetable, TimetableFocused, color, size, focused),
+          getIcon(Calendar, color, size, focused),
         headerLeft: () => <LogoTitle />,
         ...baseHeaderOptions,
       },
@@ -135,8 +100,9 @@ const TabsStack = () => {
       name: "Agenda",
       component: require("../views/Agenda").default,
       options: {
+        tabBarLabel: "Agenda",
         tabBarIcon: ({ color, size, focused }) =>
-          getIcon(Agenda, AgendaFocused, color, size, focused),
+          getIcon(Check, color, size, focused),
         headerLeft: () => <LogoTitle />,
         ...baseHeaderOptions,
       },
@@ -145,8 +111,9 @@ const TabsStack = () => {
       name: "Mails",
       component: require("../views/Mails").default,
       options: {
+        tabBarLabel: "Mails",
         tabBarIcon: ({ color, size, focused }) =>
-          getIcon(Mail, MailFocused, color, size, focused),
+          getIcon(Mail, color, size, focused),
         headerLeft: () => <LogoTitle />,
         ...baseHeaderOptions,
       },
@@ -155,8 +122,9 @@ const TabsStack = () => {
       name: "Profil",
       component: require("../views/Profile").default,
       options: {
+        tabBarLabel: "Profil",
         tabBarIcon: ({ color, size, focused }) =>
-          getIcon(Profile, ProfileFocused, color, size, focused),
+          getIcon(User, color, size, focused),
         headerLeft: () => <LogoTitle />,
         ...baseHeaderOptions,
       },
@@ -169,6 +137,13 @@ const TabsStack = () => {
         screenOptions={{
           headerShown: false,
           lazy: false,
+          tabBarActiveTintColor: colors.blue_variable, // Active text color
+          tabBarInactiveTintColor: colors.grey, // Inactive text color
+          tabBarLabelStyle: {
+            bottom: 12,
+            fontFamily: "Ubuntu_500Medium",
+            fontSize: 11,
+          },
         }}
       >
         {views.map((view) => (
