@@ -7,7 +7,6 @@ import {
   Keyboard,
   ScrollView,
   Pressable,
-  TouchableOpacity,
 } from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
 import Input from "../../components/auth/input";
@@ -35,8 +34,6 @@ const groupeTPOptions = [
   { label: "TP2", value: "TP2" },
   { label: "TP3", value: "TP3" },
   { label: "TP4", value: "TP4" },
-  { label: "TP5", value: "TP5" }, // TP5 ajouté
-  { label: "TP6", value: "TP6" }, // TP6 ajouté
 ];
 
 const Register = () => {
@@ -76,6 +73,7 @@ const Register = () => {
       });
       return;
     }
+    // Vérification de la force du mot de passe
     if (password.length < 8) {
       showMessage({
         message: "Le mot de passe doit contenir au moins 8 caractères",
@@ -159,13 +157,6 @@ const Register = () => {
     }
   }, [formData]);
 
-  const filteredGroupeTPOptions = useMemo(() => {
-    if (formData.but === "CL") {
-      return groupeTPOptions;
-    }
-    return groupeTPOptions.slice(0, 4);
-  }, [formData.but]);
-
   const styles = useMemo(
     () =>
       StyleSheet.create({
@@ -215,7 +206,6 @@ const Register = () => {
           paddingVertical: 10,
           paddingHorizontal: 15,
           borderRadius: 10,
-          marginRight: 10,
         },
         inputListSelected: {
           backgroundColor: colors.blue_variable,
@@ -241,123 +231,132 @@ const Register = () => {
     ));
 
   return (
-    <View style={styles.background}>
-      <KeyboardAwareScrollView
-        extraScrollHeight={40}
-        keyboardOpeningTime={10}
-        contentContainerStyle={styles.container}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <>
-            <View style={styles.titleContent}>
-              <Text style={styles.title}>Créer un compte</Text>
-            </View>
-            <View style={styles.inputContainer}>
-              {secondePage ? (
-                <>
-                  <TouchableOpacity
-                    style={styles.topInput}
-                    onPress={() => setSecondePage(false)}
+    <KeyboardAwareScrollView
+      extraScrollHeight={40}
+      keyboardOpeningTime={10}
+      contentContainerStyle={styles.background}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.container}>
+          <View style={styles.titleContent}>
+            <Text style={styles.title}>Créer un compte</Text>
+          </View>
+
+          {secondePage ? (
+            <>
+              <View style={styles.inputContainer}>
+                <View>
+                  <Text>BUT</Text>
+                  <ScrollView
+                    horizontal
+                    style={styles.scrollList}
+                    bounces={false}
                   >
-                    <Text>Retour</Text>
-                  </TouchableOpacity>
-                  <View>
-                    <Text>BUT</Text>
-                    <ScrollView
-                      horizontal
-                      style={styles.scrollList}
-                      bounces={false}
-                    >
-                      {renderOptions(butOptions, formData.but, (value) =>
-                        handleInputChange("but", value)
-                      )}
-                    </ScrollView>
-                  </View>
-                  <View>
-                    <Text>Année de BUT</Text>
-                    <ScrollView
-                      horizontal
-                      style={styles.scrollList}
-                      bounces={false}
-                    >
-                      {renderOptions(anneeOptions, formData.anneeBut, (value) =>
-                        handleInputChange("anneeBut", value)
-                      )}
-                    </ScrollView>
-                  </View>
-                  <View>
-                    <Text>Groupe de TP</Text>
-                    <ScrollView
-                      horizontal
-                      style={styles.scrollList}
-                      bounces={false}
-                    >
-                      {renderOptions(
-                        filteredGroupeTPOptions,
-                        formData.groupeTP,
-                        (value) => handleInputChange("groupeTP", value)
-                      )}
-                    </ScrollView>
-                  </View>
-
-                  <ButtonAuth
-                    title="Suivant"
-                    onPress={handleRegister}
-                    loading={loading}
-                  />
-                </>
-              ) : (
-                <>
-                  <View style={styles.topInput}>
-                    <Input
-                      label="Prénom"
-                      placeholder="Prénom"
-                      placeholderTextColor={colors.text_placeholder}
-                      onChangeText={(text) => handleInputChange("prenom", text)}
-                    />
-                    <Input
-                      label="Nom"
-                      placeholder="Nom"
-                      placeholderTextColor={colors.text_placeholder}
-                      onChangeText={(text) => handleInputChange("nom", text)}
-                    />
-                  </View>
+                    {renderOptions(butOptions, formData.but, (value) =>
+                      handleInputChange("but", value)
+                    )}
+                  </ScrollView>
+                </View>
+                <View>
+                  <Text>Année de BUT</Text>
+                  <ScrollView
+                    horizontal
+                    style={styles.scrollList}
+                    bounces={false}
+                  >
+                    {renderOptions(anneeOptions, formData.anneeBut, (value) =>
+                      handleInputChange("anneeBut", value)
+                    )}
+                  </ScrollView>
+                </View>
+                <View>
+                  <Text>Groupe de TP</Text>
+                  <ScrollView
+                    horizontal
+                    style={styles.scrollList}
+                    bounces={false}
+                  >
+                    {renderOptions(
+                      groupeTPOptions,
+                      formData.groupeTP,
+                      (value) => handleInputChange("groupeTP", value)
+                    )}
+                  </ScrollView>
+                </View>
+              </View>
+              <View style={styles.buttonContent}>
+                <ButtonAuth
+                  title="Suivant"
+                  onPress={handleRegister}
+                  loading={loading}
+                />
+              </View>
+            </>
+          ) : (
+            <>
+              <View style={styles.inputContainer}>
+                <View style={styles.topInput}>
                   <Input
-                    label="Email"
-                    placeholder="Email"
+                    label="Prénom"
+                    placeholder="Prénom"
                     placeholderTextColor={colors.text_placeholder}
-                    onChangeText={(text) => handleInputChange("email", text)}
+                    onChangeText={(text) => handleInputChange("prenom", text)}
+                    secureTextEntry={false}
+                    autoComplete="given-name"
+                    keyboardType="default"
                   />
                   <Input
-                    label="Mot de passe"
-                    placeholder="Mot de passe"
-                    secureTextEntry
+                    label="Nom"
+                    placeholder="Nom"
                     placeholderTextColor={colors.text_placeholder}
-                    onChangeText={(text) => handleInputChange("password", text)}
+                    onChangeText={(text) => handleInputChange("nom", text)}
+                    secureTextEntry={false}
+                    autoComplete="family-name"
+                    keyboardType="default"
                   />
-                  <Input
-                    label="Confirmation du mot de passe"
-                    placeholder="Confirmation du mot de passe"
-                    secureTextEntry
-                    placeholderTextColor={colors.text_placeholder}
-                    onChangeText={(text) =>
-                      handleInputChange("confirmPassword", text)
-                    }
-                  />
-
-                  <ButtonAuth
-                    title="Suivant"
-                    onPress={handleSecondePage}
-                    loading={loading}
-                  />
-                </>
-              )}
-            </View>
-          </>
-        </TouchableWithoutFeedback>
-      </KeyboardAwareScrollView>
-    </View>
+                </View>
+                <Input
+                  label="Email universitaire"
+                  placeholder="Entrer l'adresse mail universitaire"
+                  placeholderTextColor={colors.text_placeholder}
+                  autoComplete="email"
+                  inputMode="email"
+                  secureTextEntry={false}
+                  keyboardType="email-address"
+                  onChangeText={(text) => handleInputChange("email", text)}
+                />
+                <Input
+                  label="Mot de passe"
+                  placeholder="Entrer le mot de passe"
+                  placeholderTextColor={colors.text_placeholder}
+                  autoComplete="password"
+                  secureTextEntry
+                  onChangeText={(text) => handleInputChange("password", text)}
+                />
+                <Input
+                  label="Confirmer mot de passe"
+                  placeholder="Répéter le mot de passe"
+                  placeholderTextColor={colors.text_placeholder}
+                  autoComplete="password"
+                  secureTextEntry
+                  onChangeText={(text) =>
+                    handleInputChange("confirmPassword", text)
+                  }
+                />
+              </View>
+              <View style={styles.buttonContent}>
+                <ButtonAuth
+                  title="Suivant"
+                  onPress={handleSecondePage}
+                  loading={loading}
+                />
+              </View>
+            </>
+          )}
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAwareScrollView>
   );
 };
 
-export default Register;
+export default React.memo(Register);
