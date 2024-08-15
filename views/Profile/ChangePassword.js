@@ -6,6 +6,7 @@ import Input from "../../components/auth/input";
 import { showMessage } from "react-native-flash-message";
 import updatePassword from "../../api/User/updatePassword";
 import { useNavigation } from "@react-navigation/native";
+import { lostPasswordConnected } from "../../api/User/lostPassword";
 
 const ChangePassword = () => {
   const { colors } = useContext(ThemeContext);
@@ -107,6 +108,27 @@ const ChangePassword = () => {
     }
   };
 
+  const handleLostPassword = async () => {
+    try {
+      await lostPasswordConnected();
+      showMessage({
+        message:
+          "Un mail de réinitialisation de mot de passe vous a été envoyé",
+        type: "success",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
+      });
+      navigation.goBack();
+    } catch (error) {
+      showMessage({
+        message: "Une erreur est survenue",
+        type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
+      });
+    }
+  };
+
   useEffect(() => {
     if (
       newPassword &&
@@ -205,9 +227,7 @@ const ChangePassword = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.forgotPassword}
-            onPress={() => {
-              Linking.openURL("");
-            }}
+            onPress={handleLostPassword}
           >
             <Text style={styles.forgotPasswordText}>
               J'ai oublié mon mot de passe

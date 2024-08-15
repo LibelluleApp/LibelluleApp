@@ -44,6 +44,7 @@ function Input({
       paddingVertical: 15,
       fontFamily: "Ubuntu_400Regular",
       paddingRight: 40,
+      color: colors.black,
     },
     icon: {
       position: "absolute",
