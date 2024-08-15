@@ -184,11 +184,7 @@ function Login({ navigation }) {
           </View>
           <View style={styles.accountContainer}>
             <Text style={styles.accountText}>Pas encore de compte ?</Text>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL("");
-              }}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
               <Text style={styles.accountButton}>Créer un compte</Text>
             </TouchableOpacity>
           </View>

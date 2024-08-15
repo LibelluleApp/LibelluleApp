@@ -29,6 +29,14 @@ const AuthStack = ({ navigation }) => {
         headerShadowVisible: false,
       },
     },
+    {
+      name: "Register",
+      component: require("../views/Auth/Register").default,
+      options: {
+        title: "Créer un compte",
+        headerShadowVisible: false,
+      },
+    },
   ];
 
   return (

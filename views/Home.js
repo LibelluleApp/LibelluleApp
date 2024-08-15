@@ -57,7 +57,6 @@ function Home() {
   };
 
   useEffect(() => {
-    // On focus, request user permission
     if (requestUserPermission()) {
       messaging()
         .getToken()
