@@ -15,7 +15,7 @@ function CalendarList({ onDateSelect }) {
 
   const styles = StyleSheet.create({
     container: {
-      marginTop: 22,
+      marginVertical: 25,
       width: "90%",
       alignSelf: "center",
       flexDirection: "row",
