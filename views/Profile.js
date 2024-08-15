@@ -13,17 +13,18 @@ import {
   Platform,
 } from "react-native";
 import {
-  ChangePP,
+  ImageUp,
   ChevronRight,
-  ProfileCard,
-  Locker,
-  ForwardRole,
+  IdCard,
+  Lock,
+  UserRoundPen,
   InstaIcon,
   MailProfile,
-  Changelog,
-  CGU,
+  NotepadText,
+  Landmark,
   ColorPal,
-  Exit,
+  Mail,
+  LogOut,
 } from "../assets/icons/Icons";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -80,8 +81,11 @@ function Profile() {
     },
     ChangePP: {
       position: "absolute",
-      bottom: 0,
-      right: 0,
+      bottom: -2,
+      right: -2,
+      backgroundColor: colors.blue_variable,
+      borderRadius: 50,
+      padding: 5,
     },
     profileContainer: {
       marginTop: 15,
@@ -227,7 +231,12 @@ function Profile() {
     <ScrollView style={styles.container}>
       <View style={styles.logout}>
         <TouchableOpacity onPress={() => handleConfirmLogout()}>
-          <Exit stroke={colors.grey_variable} />
+          <LogOut
+            stroke={colors.grey_variable}
+            strokeWidth={1.75}
+            width={20}
+            height={20}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.topProfile}>
@@ -237,7 +246,12 @@ function Profile() {
             style={styles.image}
           />
           <View style={styles.ChangePP}>
-            <ChangePP />
+            <ImageUp
+              stroke={colors.white}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
           </View>
         </TouchableOpacity>
 
@@ -257,7 +271,12 @@ function Profile() {
       <View style={styles.profileCTA}>
         <TouchableOpacity style={styles.profileButton}>
           <View style={styles.CTAContent}>
-            <ProfileCard fill={colors.black} />
+            <IdCard
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
             <Text style={styles.profileBtnText}>Mes informations</Text>
           </View>
           <ChevronRight
@@ -272,7 +291,12 @@ function Profile() {
           onPress={() => navigation.navigate("ChangePassword")}
         >
           <View style={styles.CTAContent}>
-            <Locker fill={colors.black} />
+            <Lock
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
             <Text style={styles.profileBtnText}>Modifier mon mot de passe</Text>
           </View>
           <ChevronRight
@@ -284,7 +308,12 @@ function Profile() {
         </TouchableOpacity>
         <TouchableOpacity style={styles.profileButton}>
           <View style={styles.CTAContent}>
-            <ForwardRole fill={colors.black} />
+            <UserRoundPen
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
             <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
           </View>
           <ChevronRight
@@ -323,7 +352,12 @@ function Profile() {
               }}
             >
               <View style={styles.mediaLinks}>
-                <InstaIcon />
+                <InstaIcon
+                  stroke="#FE068D"
+                  strokeWidth={1.75}
+                  width={18}
+                  height={18}
+                />
                 <Text style={styles.profileMediaInsta}>@libellule</Text>
               </View>
             </TouchableOpacity>
@@ -333,7 +367,12 @@ function Profile() {
               }}
             >
               <View style={styles.mediaLinks}>
-                <MailProfile fill={colors.blue_variable} />
+                <Mail
+                  stroke={colors.blue_variable}
+                  strokeWidth={1.75}
+                  width={18}
+                  height={18}
+                />
                 <Text style={styles.profileMediaMail}>
                   support@libellule.app
                 </Text>
@@ -343,7 +382,12 @@ function Profile() {
         </View>
         <TouchableOpacity style={styles.profileButton}>
           <View style={styles.CTAContent}>
-            <Changelog fill={colors.black} />
+            <NotepadText
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
             <Text style={styles.profileBtnText}>Journal des mises à jours</Text>
           </View>
           <ChevronRight
@@ -358,7 +402,12 @@ function Profile() {
           onPress={() => navigation.navigate("CGU")}
         >
           <View style={styles.CTAContent}>
-            <CGU fill={colors.black} />
+            <Landmark
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
             <View>
               <Text style={styles.profileBtnText}>CGU</Text>
               <Text style={styles.profileBtnUnderText}>

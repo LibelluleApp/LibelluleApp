@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import { Add } from "./../../assets/icons/Icons";
+import { Plus } from "./../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
 
 function Button({ title, onPress, style }) {
@@ -27,7 +27,7 @@ function Button({ title, onPress, style }) {
 
   return (
     <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-      <Add fill={colors.white} />
+      <Plus stroke={colors.white} strokeWidth={1.75} width={25} height={25} />
     </TouchableOpacity>
   );
 }

@@ -41,7 +41,7 @@ function Mail() {
     bottomLeft: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 5,
+      gap: 7,
     },
     bottomRight: {
       flexDirection: "row",
@@ -54,7 +54,7 @@ function Mail() {
       color: colors.black,
     },
     action: {
-      fontFamily: "Ubuntu_400Regular",
+      fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
       color: colors.black,
     },
@@ -70,7 +70,12 @@ function Mail() {
       <Text style={styles.subject}>Objet du mail</Text>
       <View style={styles.bottom}>
         <View style={styles.bottomLeft}>
-          <Calendar stroke={colors.black} />
+          <Calendar
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={15}
+            height={15}
+          />
           <Text style={styles.date}>01 avr.</Text>
         </View>
         <View style={styles.bottomRight}>

@@ -8,7 +8,7 @@ import {
   Linking,
   ScrollView,
 } from "react-native";
-import { People } from "../../assets/icons/Icons";
+import { UserRound } from "../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
 
 function MailDetail() {
@@ -24,7 +24,7 @@ function MailDetail() {
       borderRadius: 10,
       width: "90%",
       marginTop: 20,
-      padding: 15,
+      padding: 20,
     },
     subject: {
       fontFamily: "Ubuntu_500Medium",
@@ -42,11 +42,10 @@ function MailDetail() {
       marginTop: 20,
       backgroundColor: colors.white_background,
       borderRadius: 10,
-      paddingVertical: 20,
-      paddingHorizontal: 15,
+      padding: 20,
       flexDirection: "row",
       alignItems: "center",
-      gap: 5,
+      gap: 7,
     },
     sender: {
       fontFamily: "Ubuntu_400Regular",
@@ -84,7 +83,12 @@ function MailDetail() {
         </Text>
       </View>
       <View style={styles.mailSender}>
-        <People fill={colors.black} />
+        <UserRound
+          stroke={colors.black}
+          strokeWidth={1.75}
+          width={18}
+          height={18}
+        />
         <Text style={styles.sender}>Pierre Martin</Text>
       </View>
     </ScrollView>

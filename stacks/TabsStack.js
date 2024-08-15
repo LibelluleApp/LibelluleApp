@@ -19,7 +19,7 @@ function NotificationBell() {
       onPress={() => navigation.navigate("Notifications")}
       style={{ paddingRight: 10 }}
     >
-      <Bell color={colors.grey} />
+      <Bell stroke={colors.grey} strokeWidth={1.75} width={22} height={22} />
     </TouchableOpacity>
   );
 }
