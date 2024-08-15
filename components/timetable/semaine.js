@@ -43,7 +43,7 @@ const Jour = () => {
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
-      color: colors.black,
+      color: colors.white,
       fontSize: 11,
     },
   });
