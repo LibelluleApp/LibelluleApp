@@ -20,13 +20,13 @@ function LostPassword({ navigation }) {
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
-    container: {
+    background: {
       position: "relative",
       justifyContent: "center",
       flex: 1,
       backgroundColor: colors.background,
     },
-    caca: {
+    container: {
       flex: 1,
       justifyContent: "center",
     },
@@ -130,10 +130,10 @@ function LostPassword({ navigation }) {
     <KeyboardAwareScrollView
       extraScrollHeight={40}
       keyboardOpeningTime={10}
-      contentContainerStyle={styles.container} // Déplacer les styles ici
+      contentContainerStyle={styles.background} // Déplacer les styles ici
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.caca}>
+        <View style={styles.container}>
           <View style={styles.containerContent}>
             <View style={styles.titleContent}>
               <Text style={styles.title}>Mot de passe oublié</Text>
