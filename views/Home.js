@@ -22,6 +22,8 @@ import moment from "moment";
 import { ThemeContext } from "./../utils/themeContext";
 import Timetable from "./Timetable";
 import Profile from "./Profile";
+import messaging from "@react-native-firebase/messaging";
+import saveNotifications from "../api/Notifications/saveNotifications";
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -43,6 +45,30 @@ function Home() {
   const formattedDate = today.format("ddd D MMMM");
   const { signOut } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log("Authorization status:", authStatus);
+    }
+  };
+
+  useEffect(() => {
+    // On focus, request user permission
+    if (requestUserPermission()) {
+      messaging()
+        .getToken()
+        .then((token) => {
+          saveNotifications(token);
+          console.log(token);
+        });
+    } else {
+      console.log("Permission not granted", authStatus);
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {

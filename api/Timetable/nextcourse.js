@@ -4,7 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 async function fetchNextCourse() {
   try {
     const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
-
     if (!user_data.groupe_id) {
       throw new Error("Le groupe_id n'est pas défini dans AsyncStorage.");
     }

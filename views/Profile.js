@@ -178,20 +178,16 @@ function Profile() {
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isNotification, setIsNotification] = useState(false);
+  const [fcmToken, setFcmToken] = useState("");
   const { signOut } = useAuth();
   const navigation = useNavigation();
 
   const toggleNotification = async () => {
     try {
-      if (isNotification) {
-        await messaging().unregisterDeviceForRemoteMessages();
-        setIsNotification(false);
-      } else {
-        await messaging().registerDeviceForRemoteMessages();
-        const token = await messaging().getToken();
-        console.log(token);
-        setIsNotification(true);
-      }
+      // Récupère le token FCM
+      const token = await messaging().getToken();
+      setFcmToken(token);
+      console.log("FCM Token:", token);
     } catch (error) {
       console.error("Failed to toggle notifications", error);
     }
@@ -294,7 +290,7 @@ function Profile() {
                 value={isDarkMode}
               ></Switch>
             </View>
-            <View style={styles.switcherContent}>
+            {/* <View style={styles.switcherContent}>
               <Text style={styles.profileBtnSwitch}>Notifications</Text>
               <Switch
                 trackColor={{ false: colors.grey, true: colors.blue_variable }}
@@ -302,7 +298,7 @@ function Profile() {
                 onValueChange={toggleNotification}
                 value={isNotification}
               ></Switch>
-            </View>
+            </View> */}
           </View>
           <View style={styles.separatorStick}></View>
           <View style={styles.containerMediaLinks}>

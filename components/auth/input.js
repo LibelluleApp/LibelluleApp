@@ -10,6 +10,7 @@ import {
 import { Eye, EyeSlash } from "./../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../utils/themeContext";
+import { set } from "date-fns";
 
 function Input({
   label,
@@ -18,7 +19,7 @@ function Input({
   keyboardType,
   inputMode,
   onChangeText,
-  setSecureTextEntry,
+  secureTextEntry,
   placeholderTextColor,
 }) {
   const { colors } = useContext(ThemeContext);
@@ -52,7 +53,8 @@ function Input({
     },
   });
 
-  const [securePasswordEntry, setSecurePasswordEntry] = useState(true);
+  const [securePasswordEntry, setSecurePasswordEntry] =
+    useState(secureTextEntry);
 
   return (
     <View style={styles.container}>
