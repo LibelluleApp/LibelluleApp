@@ -11,6 +11,7 @@ import { TimelineCalendar } from "@howljs/calendar-kit";
 import { MapPin, UserRound, Clock } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
 import { ThemeContext } from "./../../utils/themeContext";
+import { useNavigation } from "@react-navigation/native";
 
 const getTimetable = async () => {
   try {
@@ -36,6 +37,7 @@ function formatProfessorName(professor) {
 }
 
 const Jour = () => {
+  const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -53,7 +55,6 @@ const Jour = () => {
     },
     eventBack: {
       paddingVertical: 5,
-      backgroundColor: colors.background,
     },
     eventBottom: {
       flexDirection: "row",
@@ -67,11 +68,11 @@ const Jour = () => {
     },
     eventContainer: {
       height: "100%",
-      backgroundColor: colors.blue_variable,
       paddingVertical: 10,
       paddingHorizontal: 10,
       borderRadius: 10,
       justifyContent: "space-around",
+      backgroundColor: colors.blue_variable,
     },
     eventTextContent: {
       fontFamily: "Ubuntu_400Regular",
@@ -115,7 +116,6 @@ const Jour = () => {
         showNowIndicator={true}
         spaceFromTop={4}
         locale="fr"
-        holidays={["2024-09-04", "2024-09-05"]}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
@@ -152,6 +152,15 @@ const Jour = () => {
             textTransform: "capitalize",
             fontSize: 12,
           },
+          hourText: {
+            fontFamily: "Ubuntu_400Regular",
+            fontSize: 12,
+            color: colors.grey,
+          },
+          cellBorderColor: colors.grey,
+        }}
+        onPressEvent={(event) => {
+          navigator.navigate("DetailEvent", { event });
         }}
         renderEventContent={(event) => {
           const formattedProfessor = event.professor

@@ -131,6 +131,15 @@ const AppStack = ({ navigation }) => {
         headerShown: false,
       },
     },
+    {
+      name: "DetailEvent",
+      component: require("../views/Timetable/DetailEvent").default,
+      options: {
+        title: "Détails de l'événement",
+        headerShadowVisible: false,
+        presentation: "modal",
+      },
+    },
   ];
   const insets = useSafeAreaInsets();
   return (

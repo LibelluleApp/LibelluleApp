@@ -176,6 +176,9 @@ function Profile() {
       color: colors.blue_variable,
       paddingBottom: 5,
     },
+    disabled: {
+      opacity: 0.4,
+    },
   });
 
   const [isEnabled, setIsEnabled] = useState(false);
@@ -269,7 +272,10 @@ function Profile() {
         </View>
       </View>
       <View style={styles.profileCTA}>
-        <TouchableOpacity style={styles.profileButton}>
+        <TouchableOpacity
+          style={[styles.profileButton, styles.disabled]}
+          disabled={true}
+        >
           <View style={styles.CTAContent}>
             <IdCard
               stroke={colors.black}
@@ -306,7 +312,10 @@ function Profile() {
             height={18}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.profileButton}>
+        <TouchableOpacity
+          style={[styles.profileButton, styles.disabled]}
+          disabled={true}
+        >
           <View style={styles.CTAContent}>
             <UserRoundPen
               stroke={colors.black}
@@ -380,7 +389,10 @@ function Profile() {
             </TouchableOpacity>
           </View>
         </View>
-        <TouchableOpacity style={styles.profileButton}>
+        <TouchableOpacity
+          style={[styles.profileButton, styles.disabled]}
+          disabled={true}
+        >
           <View style={styles.CTAContent}>
             <NotepadText
               stroke={colors.black}

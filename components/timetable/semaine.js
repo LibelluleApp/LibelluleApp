@@ -10,7 +10,7 @@ import {
 import { TimelineCalendar } from "@howljs/calendar-kit";
 import { MomentConfig } from "@howljs/calendar-kit";
 import { ThemeContext } from "./../../utils/themeContext";
-
+import { useNavigation } from "@react-navigation/native";
 import fetchTimetable from "../../api/Timetable/timetable";
 
 const getTimetable = async () => {
@@ -26,6 +26,7 @@ const getTimetable = async () => {
 };
 
 const Jour = () => {
+  const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -45,6 +46,17 @@ const Jour = () => {
       fontFamily: "Ubuntu_500Medium",
       color: colors.white,
       fontSize: 11,
+    },
+    eventBack: {
+      paddingVertical: 5,
+    },
+    eventContainer: {
+      height: "100%",
+      paddingVertical: 10,
+      paddingHorizontal: 10,
+      borderRadius: 10,
+      justifyContent: "space-around",
+      backgroundColor: colors.blue_variable,
     },
   });
 
@@ -100,14 +112,33 @@ const Jour = () => {
         locale="fr"
         theme={{
           backgroundColor: colors.background,
+          dayNumberContainer: {
+            backgroundColor: colors.background,
+          },
+          colors: {
+            background: colors.background,
+            border: colors.grey,
+            text: colors.black,
+          },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
           },
+          todayNumberContainer: {
+            backgroundColor: colors.blue_variable,
+          },
+          todayNumber: {
+            color: colors.white,
+          },
+          todayName: {
+            color: colors.blue_variable,
+          },
           dayName: {
             color: colors.grey,
+            fontFamily: "Ubuntu_400Regular",
           },
           dayNumber: {
             color: colors.grey,
+            fontFamily: "Ubuntu_400Regular",
           },
           leftBarText: {
             fontFamily: "Ubuntu_500Medium",
@@ -115,19 +146,22 @@ const Jour = () => {
             textTransform: "capitalize",
             fontSize: 12,
           },
+          hourText: {
+            fontFamily: "Ubuntu_400Regular",
+            fontSize: 12,
+            color: colors.grey,
+          },
+          cellBorderColor: colors.grey,
+        }}
+        onPressEvent={(event) => {
+          navigator.navigate("DetailEvent", { event });
         }}
         renderEventContent={(event) => {
           return (
-            <View
-              style={{
-                backgroundColor: colors.blue_variable,
-                padding: 10,
-                borderRadius: 10,
-                flex: 1,
-                fontFamily: "Ubuntu_400Regular",
-              }}
-            >
-              <Text style={styles.eventTitle}>{event.title}</Text>
+            <View style={styles.eventBack}>
+              <View style={styles.eventContainer}>
+                <Text style={styles.eventTitle}>{event.title}</Text>
+              </View>
             </View>
           );
         }}

@@ -343,9 +343,6 @@ const Agenda = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={resetFirstVisit}>
-        <Text>Delete la visite</Text>
-      </TouchableOpacity>
       <PaginationHeader
         currentDay={daysOfWeek[currentIndex]?.date.format("dddd DD MMMM")}
         onPrev={handlePrevDay}
