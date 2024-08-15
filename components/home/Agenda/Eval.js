@@ -13,7 +13,7 @@ function Eval({ data }) {
       backgroundColor: colors.green_variable,
       gap: 20,
       borderRadius: 10,
-      paddingVertical: 12,
+      height: 50,
       paddingHorizontal: 24,
     },
     containerEval: {
