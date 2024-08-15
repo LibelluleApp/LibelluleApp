@@ -141,7 +141,12 @@ function LiensExterne() {
                   <Text style={styles.titleText}>{link.titre}</Text>
                   <Text style={styles.descriptionText}>{link.description}</Text>
                 </View>
-                <RedirectTo fill={colors.black} />
+                <RedirectTo
+                  stroke={colors.grey}
+                  strokeWidth={1.75}
+                  width={16}
+                  height={16}
+                />
               </TouchableOpacity>
             ))}
         </View>

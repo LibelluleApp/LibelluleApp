@@ -1,17 +1,26 @@
 import React, { useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { BigWarning, BigPouce } from "../../../assets/icons/Icons";
+import { CircleAlert, BigPouce } from "../../../assets/icons/Icons";
 import { ThemeContext } from "./../../../utils/themeContext";
 
 function Eval({ data }) {
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
-    container: {
+    containerTask: {
+      alignItems: "center",
+      flexDirection: "row",
+      backgroundColor: colors.green_variable,
+      gap: 20,
+      borderRadius: 10,
+      paddingVertical: 12,
+      paddingHorizontal: 24,
+    },
+    containerEval: {
       alignItems: "center",
       flexDirection: "row",
       backgroundColor: colors.red700,
-      gap: 20,
+      gap: 10,
       borderRadius: 10,
       paddingVertical: 12,
       paddingHorizontal: 24,
@@ -38,7 +47,7 @@ function Eval({ data }) {
 
   if (!data || (Array.isArray(data) && data.length === 0)) {
     return (
-      <View style={[styles.container, stylesNothing.container]}>
+      <View style={[styles.containerTask, stylesNothing.container]}>
         <View style={styles.leftContainer}>
           <BigPouce fill={colors.green900} />
         </View>
@@ -51,15 +60,20 @@ function Eval({ data }) {
     );
   } else {
     return (
-      <View style={styles.container}>
+      <View style={styles.containerEval}>
         <View style={styles.leftContainer}>
-          <BigWarning />
+          <CircleAlert
+            stroke={colors.white}
+            strokeWidth={1.75}
+            width={20}
+            height={20}
+          />
         </View>
         <View style={styles.rightContainer}>
           {data.map((item) => (
             <View key={item.agenda_id} style={styles.rightContainer}>
               <Text style={styles.evalText}>
-                [Evaluation] {item.Ressource.nom_ressource}
+                [Évaluation] {item.Ressource.nom_ressource}
               </Text>
             </View>
           ))}

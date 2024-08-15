@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 import { TimelineCalendar } from "@howljs/calendar-kit";
-import { Location, PeopleFill, Clock } from "../../assets/icons/Icons";
+import { MapPin, UserRound, Clock } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
 import { ThemeContext } from "./../../utils/themeContext";
 
@@ -164,13 +164,23 @@ const Jour = () => {
                 <Text style={styles.eventTitle}>{event.title}</Text>
                 <View style={styles.eventBottom}>
                   <View style={styles.eventContent}>
-                    <Location />
+                    <MapPin
+                      stroke={colors.white}
+                      width={14}
+                      height={14}
+                      strokeWidth={1.75}
+                    />
                     <Text style={styles.eventTextContent}>
                       {event.location || "N/C"}
                     </Text>
                   </View>
                   <View style={styles.eventContent}>
-                    <PeopleFill />
+                    <UserRound
+                      stroke={colors.white}
+                      width={14}
+                      height={14}
+                      strokeWidth={1.75}
+                    />
                     <Text style={styles.eventTextContent}>
                       {formattedProfessor}
                     </Text>

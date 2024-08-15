@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
-import { Location, PeopleFill, Clock } from "../../../assets/icons/Icons";
+import { MapPin, UserRound, Clock } from "../../../assets/icons/Icons";
 import Carousel, { Pagination } from "react-native-reanimated-carousel";
 import { useSharedValue } from "react-native-reanimated";
 import fetchNextCourse from "../../../api/Timetable/nextcourse";
@@ -75,7 +75,7 @@ function ItemCourse({ data, color }) {
       color: colors.white,
     },
     stick: {
-      backgroundColor: colors.white_background,
+      backgroundColor: colors.white,
       height: "90%",
       width: 1,
       marginHorizontal: 14,
@@ -216,11 +216,21 @@ function ItemCourse({ data, color }) {
           </Text>
           <View style={styles.teacher}>
             <View style={styles.content}>
-              <Location fill={colors.white} />
+              <MapPin
+                stroke={colors.white}
+                width={14}
+                height={14}
+                strokeWidth={1.75}
+              />
               <Text style={styles.textTeacher}>{data.lieu || "N/C"}</Text>
             </View>
             <View style={styles.content}>
-              <PeopleFill fill={colors.white} />
+              <UserRound
+                stroke={colors.white}
+                width={14}
+                height={14}
+                strokeWidth={1.75}
+              />
               <Text style={styles.textTeacher}>
                 {formatProfessorName(data.description) ||
                   "Professeur indisponible"}
@@ -228,7 +238,12 @@ function ItemCourse({ data, color }) {
             </View>
           </View>
           <View style={styles.content}>
-            <Clock fill={colors.white} />
+            <Clock
+              stroke={colors.white}
+              width={14}
+              height={14}
+              strokeWidth={1.75}
+            />
             <Text style={styles.textTeacher}>
               Dans <Text style={styles.hourClock}>{remainingTime}</Text>
             </Text>

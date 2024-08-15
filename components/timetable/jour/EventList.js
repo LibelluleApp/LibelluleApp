@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { PeopleFill, Location } from "../../../assets/icons/Icons";
+import { UserRound, MapPin } from "../../../assets/icons/Icons";
 
 const EventList = ({
   heureDebut,
@@ -22,11 +22,11 @@ const EventList = ({
         <Text style={styles.textSubject}>{matiere}</Text>
         <View style={styles.teacher}>
           <View style={styles.detail}>
-            <Location />
+            <MapPin stroke={colors.white} width={14} height={14} />
             <Text style={styles.textTeacher}>{salle.slice(0, 14)}...</Text>
           </View>
           <View style={styles.detail}>
-            <PeopleFill />
+            <UserRound stroke={colors.white} width={14} height={14} />
             <Text style={styles.textTeacher}>{professeur}</Text>
           </View>
         </View>

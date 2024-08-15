@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import { RedirectTo, Add } from "./../../assets/icons/Icons";
+import { Add } from "./../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
 
 function Button({ title, onPress, style }) {

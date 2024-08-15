@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Book, Student, Meal, Links } from "../../assets/icons/Icons";
+import { BookOpen, Student, Utensils, Link } from "../../assets/icons/Icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { ThemeContext } from "./../../utils/themeContext";
 
@@ -25,7 +25,7 @@ function ParcourirHome() {
     },
     tile: {
       backgroundColor: colors.white_background,
-      width: 90,
+      width: 100,
       borderRadius: 10,
       paddingHorizontal: 17,
       paddingVertical: 10,
@@ -54,26 +54,46 @@ function ParcourirHome() {
           onPress={() => navigation.navigate("liensExterne")}
           style={styles.tile}
         >
-          <Links fill={colors.black} />
+          <Link
+            stroke={colors.black}
+            width={20}
+            height={20}
+            strokeWidth={1.75}
+          />
           <Text style={styles.tileText}>Liens</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("Restauration")}
           style={styles.tile}
         >
-          <Meal fill={colors.black} />
+          <Utensils
+            stroke={colors.black}
+            width={20}
+            height={20}
+            strokeWidth={1.75}
+          />
           <Text style={styles.tileText}>Menu</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tile}
           onPress={() => navigation.navigate("Scolarite")}
         >
-          <Book fill={colors.black} />
+          <BookOpen
+            stroke={colors.black}
+            width={20}
+            height={20}
+            strokeWidth={1.75}
+          />
           <Text style={styles.tileText}>Scolarité</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.tile}>
-          <Student fill={colors.black} />
-          <Text style={styles.tileText}>Mon TP</Text>
+          <Student
+            color={colors.black}
+            width={20}
+            height={20}
+            strokeWidth={1.75}
+          />
+          <Text style={styles.tileText}>Ma Promo</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

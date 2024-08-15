@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { LeftArrowAgenda, RightArrowAgenda } from "../../../assets/icons/Icons";
+import { ArrowLeft, ArrowRight } from "../../../assets/icons/Icons";
 
 const PaginationHeader = ({
   currentDay,
@@ -19,7 +19,12 @@ const PaginationHeader = ({
             style={styles.around}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <LeftArrowAgenda fill="#252525" />
+            <ArrowLeft
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
           </TouchableOpacity>
         )}
         {index === 0 && (
@@ -28,7 +33,12 @@ const PaginationHeader = ({
             style={styles.around}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <LeftArrowAgenda fill="#7A7C7C" />
+            <ArrowLeft
+              stroke={colors.grey}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
           </TouchableOpacity>
         )}
 
@@ -38,7 +48,12 @@ const PaginationHeader = ({
           style={styles.around}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
-          <RightArrowAgenda fill="#252525" />
+          <ArrowRight
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
         </TouchableOpacity>
       </View>
       {index !== defaultIndex && (

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Pen } from "../../assets/icons/Icons";
 import { ThemeContext } from "../../utils/themeContext";
 import PasswordValidate from "react-native-password-validate-checklist";
 import Input from "../../components/auth/input";

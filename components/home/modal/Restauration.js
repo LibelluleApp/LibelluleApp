@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { Location, Clock } from "../../../assets/icons/Icons";
+import { Phone, Calendar } from "../../../assets/icons/Icons";
 import { ThemeContext } from "./../../../utils/themeContext";
 
 function Restauration() {
@@ -99,12 +99,22 @@ function Restauration() {
           <View style={styles.infoRight}>
             <Text style={styles.title}>RU Le Crousty</Text>
             <View style={styles.content}>
-              <Location fill={colors.black} />
+              <Phone
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={16}
+                height={16}
+              />
               <Text style={styles.description}>05.45.25.51.51</Text>
             </View>
             <View style={styles.content}>
-              <Clock fill={colors.black} />
-              <Text style={styles.description}>Du Lundi au Vendredi</Text>
+              <Calendar
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={16}
+                height={16}
+              />
+              <Text style={styles.description}>Du lundi au vendredi</Text>
             </View>
           </View>
         </View>

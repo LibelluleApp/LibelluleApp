@@ -6,14 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import LogoTitle from "../components/logo";
 import Notifications from "../views/NotificationsViews";
-import {
-  Home,
-  Check,
-  Calendar,
-  Mail,
-  User,
-  Notification,
-} from "../assets/icons/Icons";
+import { Home, Check, Calendar, Mail, User, Bell } from "../assets/icons/Icons";
 import { ThemeContext } from "./../utils/themeContext";
 
 const Tab = createBottomTabNavigator();
@@ -26,7 +19,7 @@ function NotificationBell() {
       onPress={() => navigation.navigate("Notifications")}
       style={{ paddingRight: 10 }}
     >
-      <Notification stroke={colors.grey} />
+      <Bell color={colors.grey} />
     </TouchableOpacity>
   );
 }

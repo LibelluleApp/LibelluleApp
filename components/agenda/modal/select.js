@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { StyleSheet } from "react-native";
 import { Dropdown } from "react-native-searchable-dropdown-kj";
-import { BottomArrow } from "./../../../assets/icons/Icons";
+import { ChevronDown } from "./../../../assets/icons/Icons";
 import { ThemeContext } from "./../../../utils/themeContext";
 
 const SelectComponent = ({ onChange, data, value }) => {
@@ -10,7 +10,7 @@ const SelectComponent = ({ onChange, data, value }) => {
   const styles = StyleSheet.create({
     dropdown: {
       backgroundColor: colors.white_background,
-      borderWidth: 1,
+      borderWidth: 0.5,
       borderColor: colors.input_border,
       borderRadius: 10,
       height: 45,
@@ -62,7 +62,14 @@ const SelectComponent = ({ onChange, data, value }) => {
       placeholder="Choisir le type de tâche"
       value={value}
       onChange={onChange}
-      renderRightIcon={() => <BottomArrow fill={colors.black} />}
+      renderRightIcon={() => (
+        <ChevronDown
+          stroke={colors.black}
+          strokeWidth={1.75}
+          width={18}
+          height={18}
+        />
+      )}
     />
   );
 };

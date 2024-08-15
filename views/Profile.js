@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import {
   ChangePP,
-  LeftArrow,
+  ChevronRight,
   ProfileCard,
   Locker,
   ForwardRole,
@@ -260,7 +260,12 @@ function Profile() {
             <ProfileCard fill={colors.black} />
             <Text style={styles.profileBtnText}>Mes informations</Text>
           </View>
-          <LeftArrow fill={colors.black} />
+          <ChevronRight
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.profileButton}
@@ -270,14 +275,24 @@ function Profile() {
             <Locker fill={colors.black} />
             <Text style={styles.profileBtnText}>Modifier mon mot de passe</Text>
           </View>
-          <LeftArrow fill={colors.black} />
+          <ChevronRight
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
         </TouchableOpacity>
         <TouchableOpacity style={styles.profileButton}>
           <View style={styles.CTAContent}>
             <ForwardRole fill={colors.black} />
             <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
           </View>
-          <LeftArrow fill={colors.black} />
+          <ChevronRight
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
         </TouchableOpacity>
         <View style={styles.profileSwitcher}>
           <View style={styles.switcherToggle}>
@@ -331,7 +346,12 @@ function Profile() {
             <Changelog fill={colors.black} />
             <Text style={styles.profileBtnText}>Journal des mises à jours</Text>
           </View>
-          <LeftArrow fill={colors.black} />
+          <ChevronRight
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.profileButton}
@@ -346,7 +366,12 @@ function Profile() {
               </Text>
             </View>
           </View>
-          <LeftArrow fill={colors.black} />
+          <ChevronRight
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
         </TouchableOpacity>
       </View>
     </ScrollView>
