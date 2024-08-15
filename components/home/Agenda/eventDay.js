@@ -89,6 +89,8 @@ function EventDay({ date }) {
         message: "Erreur de chargement",
         description: "Impossible de charger l'agenda",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
     } finally {
       setLoading(false);

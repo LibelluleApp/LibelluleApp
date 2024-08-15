@@ -489,60 +489,6 @@ function Info(props) {
   );
 }
 
-function People(props) {
-  return (
-    <Svg
-      width="18"
-      height="17"
-      viewBox="0 0 18 17"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <G clip-path="url(#clip0_307_4873)">
-        <Path
-          d="M9 8.5C9.89002 8.5 10.76 8.25074 11.5001 7.78375C12.2401 7.31675 12.8169 6.65299 13.1575 5.87641C13.4981 5.09982 13.5872 4.24529 13.4135 3.42087C13.2399 2.59645 12.8113 1.83917 12.182 1.2448C11.5526 0.650425 10.7508 0.245652 9.87791 0.0816645C9.00499 -0.0823227 8.10019 0.00184147 7.27792 0.323514C6.45566 0.645186 5.75285 1.18992 5.25839 1.88883C4.76392 2.58774 4.5 3.40943 4.5 4.25C4.50119 5.37683 4.97568 6.45718 5.81934 7.25396C6.66299 8.05075 7.80689 8.49888 9 8.5ZM9 1.41667C9.59334 1.41667 10.1734 1.58284 10.6667 1.89417C11.1601 2.2055 11.5446 2.64801 11.7716 3.16573C11.9987 3.68346 12.0581 4.25314 11.9424 4.80276C11.8266 5.35237 11.5409 5.85722 11.1213 6.25347C10.7018 6.64972 10.1672 6.91957 9.58527 7.02889C9.00333 7.13822 8.40013 7.08211 7.85195 6.86766C7.30377 6.65321 6.83524 6.29006 6.50559 5.82412C6.17595 5.35818 6 4.81038 6 4.25C6 3.49856 6.31607 2.77789 6.87868 2.24653C7.44129 1.71518 8.20435 1.41667 9 1.41667Z"
-          fill="#252525"
-          {...props}
-        />
-        <Path
-          d="M9 9.91675C7.2104 9.91862 5.49466 10.5909 4.22922 11.786C2.96378 12.9812 2.25199 14.6016 2.25 16.2917C2.25 16.4796 2.32902 16.6598 2.46967 16.7926C2.61032 16.9255 2.80109 17.0001 3 17.0001C3.19891 17.0001 3.38968 16.9255 3.53033 16.7926C3.67098 16.6598 3.75 16.4796 3.75 16.2917C3.75 14.9767 4.30312 13.7155 5.28769 12.7857C6.27226 11.8558 7.60761 11.3334 9 11.3334C10.3924 11.3334 11.7277 11.8558 12.7123 12.7857C13.6969 13.7155 14.25 14.9767 14.25 16.2917C14.25 16.4796 14.329 16.6598 14.4697 16.7926C14.6103 16.9255 14.8011 17.0001 15 17.0001C15.1989 17.0001 15.3897 16.9255 15.5303 16.7926C15.671 16.6598 15.75 16.4796 15.75 16.2917C15.748 14.6016 15.0362 12.9812 13.7708 11.786C12.5053 10.5909 10.7896 9.91862 9 9.91675Z"
-          fill="#252525"
-          {...props}
-        />
-      </G>
-      <Defs>
-        <ClipPath id="clip0_307_4873">
-          <Rect width="18" height="17" fill="white" {...props} />
-        </ClipPath>
-      </Defs>
-    </Svg>
-  );
-}
-
-function Bin(props) {
-  return (
-    <Svg
-      width={25}
-      height={28}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <Path
-        d="M22.375 9.5h-2.712A4.383 4.383 0 0015.375 6h-1.75a4.383 4.383 0 00-4.287 3.5H6.625a.875.875 0 000 1.75H7.5v11.375A4.38 4.38 0 0011.875 27h5.25a4.38 4.38 0 004.375-4.375V11.25h.875a.875.875 0 100-1.75zm-8.75-1.75h1.75A2.63 2.63 0 0117.85 9.5h-6.7a2.631 2.631 0 012.475-1.75zm6.125 14.875a2.625 2.625 0 01-2.625 2.625h-5.25a2.625 2.625 0 01-2.625-2.625V11.25h10.5v11.375z"
-        fill="#E80D0D"
-        {...props}
-      />
-      <Path
-        d="M12.75 21.75a.875.875 0 00.875-.875v-5.25a.875.875 0 10-1.75 0v5.25a.875.875 0 00.875.875zM16.25 21.75a.875.875 0 00.875-.875v-5.25a.875.875 0 10-1.75 0v5.25a.875.875 0 00.875.875z"
-        fill="#E80D0D"
-        {...props}
-      />
-    </Svg>
-  );
-}
-
 // ArrowRight - Lucide
 function ArrowRight(props) {
   return (
@@ -646,6 +592,92 @@ function LayoutList(props) {
       <Rect width={7} height={7} x={3} y={3} rx={1} />
       <Rect width={7} height={7} x={3} y={14} rx={1} />
       <Path d="M14 4h7M14 9h7M14 15h7M14 20h7" />
+    </Svg>
+  );
+}
+
+// DoorOpen - Lucide
+function DoorOpen(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-door-open"
+      {...props}
+    >
+      <Path d="M13 4h3a2 2 0 012 2v14M2 20h3M13 20h9M10 12v.01M13 4.562v16.157a1 1 0 01-1.242.97L5 20V5.562a2 2 0 011.515-1.94l4-1A2 2 0 0113 4.561z" />
+    </Svg>
+  );
+}
+
+// Hourglass - Lucide
+function Hourglass(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-hourglass"
+      {...props}
+    >
+      <Path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 00-.586-1.414L12 12l-4.414 4.414A2 2 0 007 17.828V22M7 2v4.172a2 2 0 00.586 1.414L12 12l4.414-4.414A2 2 0 0017 6.172V2" />
+    </Svg>
+  );
+}
+
+// Clock2 - Lucide
+function Clock2(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-clock-2"
+      {...props}
+    >
+      <Circle cx={12} cy={12} r={10} />
+      <Path d="M12 6L12 12 16 10" />
+    </Svg>
+  );
+}
+
+// Clock8 - Lucide
+function Clock8(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-clock-8"
+      {...props}
+    >
+      <Circle cx={12} cy={12} r={10} />
+      <Path d="M12 6L12 12 8 14" />
     </Svg>
   );
 }
@@ -993,6 +1025,10 @@ export {
   ChevronDown,
   BigPouce,
   LayoutList,
+  DoorOpen,
+  Hourglass,
+  Clock2,
+  Clock8,
   ImageUp,
   IdCard,
   Lock,
@@ -1002,7 +1038,6 @@ export {
   Landmark,
   ColorPal,
   MailProfile,
-  Bin,
   Plus,
   ResetList,
   LogOut,

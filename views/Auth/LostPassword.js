@@ -98,6 +98,8 @@ function LostPassword({ navigation }) {
       showMessage({
         message: "Veuillez renseigner votre adresse mail",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -106,6 +108,8 @@ function LostPassword({ navigation }) {
       showMessage({
         message: "Veuillez renseigner une adresse mail universitaire",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -116,12 +120,16 @@ function LostPassword({ navigation }) {
         message:
           "Un mail de réinitialisation de mot de passe vous a été envoyé",
         type: "success",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       navigation.navigate("Login");
     } catch (error) {
       showMessage({
         message: "Une erreur est survenue",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
     }
   };

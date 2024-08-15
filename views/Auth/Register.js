@@ -17,23 +17,23 @@ import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
 
 const butOptions = [
-  { label: "TC", value: "CL" },
-  { label: "GMP", value: "GM" },
-  { label: "QLIO", value: "QL" },
-  { label: "GEII", value: "GI" },
+  { label: "TC", value: "CL", selected: true },
+  { label: "GMP", value: "GM", selected: false },
+  { label: "QLIO", value: "QL", selected: false },
+  { label: "GEII", value: "GI", selected: false },
 ];
 
 const anneeOptions = [
-  { label: "1er année", value: "Y1" },
-  { label: "2eme année", value: "Y2" },
-  { label: "3eme année", value: "Y3" },
+  { label: "1e année", value: "Y1", selected: true },
+  { label: "2e année", value: "Y2", selected: false },
+  { label: "3e année", value: "Y3", selected: false },
 ];
 
 const groupeTPOptions = [
-  { label: "TP1", value: "TP1" },
-  { label: "TP2", value: "TP2" },
-  { label: "TP3", value: "TP3" },
-  { label: "TP4", value: "TP4" },
+  { label: "TP1", value: "TP1", selected: true },
+  { label: "TP2", value: "TP2", selected: false },
+  { label: "TP3", value: "TP3", selected: false },
+  { label: "TP4", value: "TP4", selected: false },
 ];
 
 const Register = () => {
@@ -63,6 +63,8 @@ const Register = () => {
       showMessage({
         message: "Veuillez remplir tous les champs",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -70,6 +72,8 @@ const Register = () => {
       showMessage({
         message: "Les mots de passe ne correspondent pas",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -78,6 +82,8 @@ const Register = () => {
       showMessage({
         message: "Le mot de passe doit contenir au moins 8 caractères",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -85,6 +91,8 @@ const Register = () => {
       showMessage({
         message: "Le mot de passe doit contenir au moins une majuscule",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -92,6 +100,8 @@ const Register = () => {
       showMessage({
         message: "Le mot de passe doit contenir au moins une minuscule",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -99,6 +109,8 @@ const Register = () => {
       showMessage({
         message: "Le mot de passe doit contenir au moins un chiffre",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -106,6 +118,8 @@ const Register = () => {
       showMessage({
         message: "Le mot de passe doit contenir au moins un caractère spécial",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -113,6 +127,8 @@ const Register = () => {
       showMessage({
         message: "Veuillez rentrer une adresse mail universitaire valide",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       return;
     }
@@ -137,12 +153,16 @@ const Register = () => {
         showMessage({
           message: "Compte créé avec succès, un email vous a été envoyé",
           type: "success",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+          statusBarHeight: 15,
         });
         navigator.navigate("Login");
       } else {
         showMessage({
           message: "Erreur lors de la création du compte",
           type: "danger",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+          statusBarHeight: 15,
         });
       }
     } catch (error) {
@@ -150,6 +170,8 @@ const Register = () => {
         message:
           error?.message || "Une erreur est survenue. Veuillez réessayer.",
         type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
       });
       setSecondePage(false);
     } finally {
@@ -186,6 +208,14 @@ const Register = () => {
           flexDirection: "column",
           gap: 20,
         },
+        titleItemInputContainer: {
+          fontFamily: "Ubuntu_500Medium",
+          fontSize: 15,
+          color: colors.black,
+        },
+        inputScrollView: {
+          paddingVertical: 15,
+        },
         titleContent: {
           alignItems: "center",
           alignSelf: "center",
@@ -198,37 +228,50 @@ const Register = () => {
           letterSpacing: -1,
           color: colors.black,
         },
-        scrollList: {
-          gap: 20,
-        },
         inputList: {
           backgroundColor: colors.white_background,
-          paddingVertical: 10,
-          paddingHorizontal: 15,
+          paddingVertical: 11,
+          paddingHorizontal: 30,
           borderRadius: 10,
+          marginRight: 15,
         },
         inputListSelected: {
-          backgroundColor: colors.blue_variable,
-          borderColor: colors.grey,
-          borderWidth: 1,
+          backgroundColor: colors.blue100_variable,
+        },
+        inputListTitle: {
+          fontFamily: "Ubuntu_400Regular",
+          fontSize: 15,
+          color: colors.black,
+        },
+        inputListTitleSelected: {
+          fontFamily: "Ubuntu_400Regular",
+          fontSize: 15,
+          color: colors.blue_variable,
         },
       }),
     [colors]
   );
 
   const renderOptions = (options, selectedValue, onSelect) =>
-    options.map((option) => (
-      <Pressable
-        key={option.value}
-        onPress={() => onSelect(option.value)}
-        style={[
-          styles.inputList,
-          selectedValue === option.value && styles.inputListSelected,
-        ]}
-      >
-        <Text>{option.label}</Text>
-      </Pressable>
-    ));
+    options.map(({ label, value, selected }) => {
+      const isSelected = selectedValue === value || selectedValue === selected;
+      return (
+        <Pressable
+          key={value}
+          onPress={() => onSelect(value)}
+          style={[styles.inputList, isSelected && styles.inputListSelected]}
+        >
+          <Text
+            style={[
+              styles.inputListTitle,
+              isSelected && styles.inputListTitleSelected,
+            ]}
+          >
+            {label}
+          </Text>
+        </Pressable>
+      );
+    });
 
   return (
     <KeyboardAwareScrollView
@@ -245,23 +288,25 @@ const Register = () => {
           {secondePage ? (
             <>
               <View style={styles.inputContainer}>
-                <View>
-                  <Text>BUT</Text>
+                <View style={styles.itemInputContainer}>
+                  <Text style={styles.titleItemInputContainer}>BUT</Text>
                   <ScrollView
                     horizontal
-                    style={styles.scrollList}
                     bounces={false}
+                    style={styles.inputScrollView}
                   >
                     {renderOptions(butOptions, formData.but, (value) =>
                       handleInputChange("but", value)
                     )}
                   </ScrollView>
                 </View>
-                <View>
-                  <Text>Année de BUT</Text>
+                <View style={styles.itemInputContainer}>
+                  <Text style={styles.titleItemInputContainer}>
+                    Année de BUT
+                  </Text>
                   <ScrollView
                     horizontal
-                    style={styles.scrollList}
+                    style={styles.inputScrollView}
                     bounces={false}
                   >
                     {renderOptions(anneeOptions, formData.anneeBut, (value) =>
@@ -269,11 +314,13 @@ const Register = () => {
                     )}
                   </ScrollView>
                 </View>
-                <View>
-                  <Text>Groupe de TP</Text>
+                <View style={styles.itemInputContainer}>
+                  <Text style={styles.titleItemInputContainer}>
+                    Groupe de TP
+                  </Text>
                   <ScrollView
                     horizontal
-                    style={styles.scrollList}
+                    style={styles.inputScrollView}
                     bounces={false}
                   >
                     {renderOptions(
