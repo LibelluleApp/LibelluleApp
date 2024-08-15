@@ -13,9 +13,10 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Input from "../../components/auth/input";
 import { useAuth } from "../../context/AuthContext";
 import { showMessage } from "react-native-flash-message";
+import lostPassword from "../../api/User/lostPassword";
 import { ThemeContext } from "./../../utils/themeContext";
 
-function Login({ navigation }) {
+function LostPassword({ navigation }) {
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -90,45 +91,38 @@ function Login({ navigation }) {
   });
 
   const [email_edu, setEmail] = useState("");
-  const [mot_de_passe, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signIn } = useAuth();
 
-  const handleLogin = async () => {
-    if (!email_edu || !mot_de_passe) {
+  const handleLostPassword = async () => {
+    if (email_edu === "") {
       showMessage({
-        message: "Merci d'entrer votre adresse mail et votre mot de passe.",
+        message: "Veuillez renseigner votre adresse mail",
         type: "danger",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
       return;
     }
 
-    setLoading(true);
+    if (!email_edu.includes("univ-poitiers.fr")) {
+      showMessage({
+        message: "Veuillez renseigner une adresse mail universitaire",
+        type: "danger",
+      });
+      return;
+    }
 
     try {
-      const result = await signIn(email_edu, mot_de_passe);
-      if (result.status === "error") {
-        showMessage({
-          message: result.message,
-          type: "danger",
-          titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
-        });
-      } else {
-        // Gérer la redirection après une connexion réussie
-      }
-    } catch (error) {
+      await lostPassword(email_edu);
       showMessage({
         message:
-          "Une erreur d'authentification s'est produite. Veuillez réessayer.",
-        type: "danger",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
+          "Un mail de réinitialisation de mot de passe vous a été envoyé",
+        type: "success",
       });
-    } finally {
-      setLoading(false);
+      navigation.navigate("Login");
+    } catch (error) {
+      showMessage({
+        message: "Une erreur est survenue",
+        type: "danger",
+      });
     }
   };
 
@@ -142,7 +136,7 @@ function Login({ navigation }) {
         <View style={styles.caca}>
           <View style={styles.containerContent}>
             <View style={styles.titleContent}>
-              <Text style={styles.title}>Se connecter</Text>
+              <Text style={styles.title}>Mot de passe oublié</Text>
             </View>
 
             <View style={styles.textContent}>
@@ -156,41 +150,15 @@ function Login({ navigation }) {
                 keyboardType="email-address"
                 onChangeText={(text) => setEmail(text)}
               />
-              <View style={styles.passwordContent}>
-                <Input
-                  label="Mot de passe"
-                  placeholder="Entrer le mot de passe"
-                  placeholderTextColor={colors.text_placeholder}
-                  autoComplete="password"
-                  secureTextEntry={true}
-                  onChangeText={(text) => setPassword(text)}
-                />
-                <Text
-                  style={styles.forgotpass}
-                  onPress={() => navigation.navigate("LostPassword")}
-                >
-                  J'ai oublié mon mot de passe
-                </Text>
-              </View>
             </View>
 
             <View style={styles.buttonContent}>
               <ButtonAuth
-                title="Se connecter"
-                onPress={handleLogin}
+                title="Réinitialiser le mot de passe"
+                onPress={handleLostPassword}
                 loading={loading}
               />
             </View>
-          </View>
-          <View style={styles.accountContainer}>
-            <Text style={styles.accountText}>Pas encore de compte ?</Text>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL("");
-              }}
-            >
-              <Text style={styles.accountButton}>Créer un compte</Text>
-            </TouchableOpacity>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -198,4 +166,4 @@ function Login({ navigation }) {
   );
 }
 
-export default Login;
+export default LostPassword;
