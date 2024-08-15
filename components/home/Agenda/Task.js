@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { LeftArrow } from "../../../assets/icons/Icons";
+import { ChevronRight } from "../../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
 import * as Progress from "react-native-progress";
 import { ThemeContext } from "./../../../utils/themeContext";
@@ -143,7 +143,12 @@ function Task({ data }) {
                   </Text>
                   <Text style={styles.taskDesc}>{item.titre}</Text>
                 </View>
-                <LeftArrow fill="#fff" />
+                <ChevronRight
+                  stroke={colors.black}
+                  strokeWidth={1.75}
+                  width={18}
+                  height={18}
+                />
               </View>
             </TouchableOpacity>
           ))}

@@ -46,7 +46,7 @@ const Add = ({ route }) => {
       paddingHorizontal: 20,
       paddingVertical: 10,
       color: colors.black,
-      borderWidth: 1,
+      borderWidth: 0.5,
       marginBottom: 20,
       justifyContent: "center",
       backgroundColor: colors.white_background,
@@ -160,7 +160,12 @@ const Add = ({ route }) => {
               <Text style={styles.textDate}>
                 {dates.format("dddd DD MMMM")}
               </Text>
-              <Calendar fill={colors.black} />
+              <Calendar
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={16}
+                height={16}
+              />
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isDatePickerVisible}

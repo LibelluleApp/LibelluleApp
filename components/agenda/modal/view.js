@@ -7,9 +7,8 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
-import { Timetable, Chapeau, Task, Bin } from "../../../assets/icons/Icons";
+import { Calendar, Student, LayoutList } from "../../../assets/icons/Icons";
 import * as Haptics from "expo-haptics";
-import { Pen } from "../../../assets/icons/Icons";
 import fetchTask from "../../../api/Agenda/fetchTask";
 import deleteTask from "../../../api/Agenda/delete";
 import { checkAgenda, uncheckAgenda } from "../../../api/Agenda/check";
@@ -44,7 +43,7 @@ const ViewTask = ({ route }) => {
     taskInfoContent: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 10,
+      gap: 15,
     },
     taskContent: {
       padding: 20,
@@ -192,7 +191,12 @@ const ViewTask = ({ route }) => {
       <View style={styles.containerItems}>
         <View style={styles.taskInfo}>
           <View style={styles.taskInfoContent}>
-            <Timetable fill={colors.black} width="23" height="23" />
+            <Calendar
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={20}
+              height={20}
+            />
             <View>
               <Text style={styles.taskInfoTitle}>Date</Text>
               <Text style={styles.taskInfoDesc}>
@@ -201,7 +205,12 @@ const ViewTask = ({ route }) => {
             </View>
           </View>
           <View style={styles.taskInfoContent}>
-            <Chapeau fill={colors.black} />
+            <Student
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={20}
+              height={20}
+            />
             <View>
               <Text style={styles.taskInfoTitle}>Matière</Text>
               <Text style={styles.taskInfoDesc}>
@@ -210,7 +219,12 @@ const ViewTask = ({ route }) => {
             </View>
           </View>
           <View style={styles.taskInfoContent}>
-            <Task fill={colors.black} />
+            <LayoutList
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={20}
+              height={20}
+            />
             <View>
               <Text style={styles.taskInfoTitle}>Type de tâche</Text>
               <Text style={styles.taskInfoDesc}>
@@ -267,7 +281,6 @@ const ViewTask = ({ route }) => {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.taskCTAEdit}>
-          <Pen />
           <Text style={styles.taskCTAText}>Modifier</Text>
         </TouchableOpacity>
       </View>

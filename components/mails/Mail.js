@@ -8,7 +8,7 @@ import {
   Linking,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { TimetableSmall, LeftArrow } from "../../assets/icons/Icons";
+import { Calendar, ChevronRight } from "../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
 
 function Mail() {
@@ -70,12 +70,17 @@ function Mail() {
       <Text style={styles.subject}>Objet du mail</Text>
       <View style={styles.bottom}>
         <View style={styles.bottomLeft}>
-          <TimetableSmall fill={colors.black} />
+          <Calendar stroke={colors.black} />
           <Text style={styles.date}>01 avr.</Text>
         </View>
         <View style={styles.bottomRight}>
           <Text style={styles.action}>Ouvrir</Text>
-          <LeftArrow fill={colors.black} />
+          <ChevronRight
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
         </View>
       </View>
     </TouchableOpacity>

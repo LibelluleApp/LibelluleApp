@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Linking,
 } from "react-native";
-import { Info, ClockEmpty } from "../../assets/icons/Icons";
+import { Info } from "../../assets/icons/Icons";
 import fetchAbsence from "../../api/Scolarite/fetchAbsence";
 import { ThemeContext } from "./../../utils/themeContext";
 
@@ -198,7 +198,12 @@ function Notes() {
           <GridRecap number={notes.length} moyenne={moyenne.toFixed(2)} />
         </View>
         <View style={styles.textContent}>
-          <Info fill={colors.black} />
+          <Info
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
           <Text style={styles.content}>
             Pour valider une compétence, il faut avoir une moyenne d’au moins{" "}
             <Text style={{ fontFamily: "Ubuntu_500Medium" }}>10/20.</Text>

@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Linking,
 } from "react-native";
-import { Info, ClockEmpty } from "../../assets/icons/Icons";
+import { Info, Clock } from "../../assets/icons/Icons";
 import fetchAbsence from "../../api/Scolarite/fetchAbsence";
 import { ThemeContext } from "./../../utils/themeContext";
 
@@ -127,13 +127,23 @@ function Absence() {
           )}
         </View>
         <View style={styles.textContent}>
-          <ClockEmpty fill={colors.black} />
+          <Clock
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
           <Text style={styles.content}>
             Les absences sont relevées en fin de semaine.
           </Text>
         </View>
         <View style={styles.textContent}>
-          <Info fill={colors.black} />
+          <Info
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
           <Text style={styles.content}>
             Au delà de{" "}
             <Text style={{ fontFamily: "Ubuntu_500Medium" }}>

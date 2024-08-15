@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import {
-  Warning,
-  TimetableSmall,
-  LeftArrow,
+  CircleAlert,
+  Calendar,
+  ChevronRight,
 } from "../../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
@@ -25,7 +25,7 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
     evalTop: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 10,
+      gap: 7,
     },
     evalTitle: {
       fontFamily: "Ubuntu_500Medium",
@@ -40,16 +40,22 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
     evalBottomLeft: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 10,
+      gap: 7,
     },
     evalBottomRight: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 10,
+      gap: 5,
     },
-    evalContent: {
+    evalContentDate: {
       fontFamily: "Ubuntu_400Regular",
       color: colors.white,
+      fontSize: 13,
+    },
+    evalContentMore: {
+      fontFamily: "Ubuntu_500Medium",
+      color: colors.white,
+      fontSize: 13,
     },
   });
 
@@ -60,21 +66,36 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
       onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
     >
       <View style={styles.evalTop}>
-        <Warning />
+        <CircleAlert
+          stroke={colors.white}
+          width={20}
+          height={20}
+          strokeWidth={1.75}
+        />
         <Text style={styles.evalTitle}>
           [Évaluation] {titre || "Titre non disponible"}
         </Text>
       </View>
       <View style={styles.evalBottom}>
         <View style={styles.evalBottomLeft}>
-          <TimetableSmall />
-          <Text style={styles.evalContent}>
+          <Calendar
+            stroke={colors.white}
+            width={15}
+            height={15}
+            strokeWidth={1.75}
+          />
+          <Text style={styles.evalContentDate}>
             {dates || "Date non disponible"}
           </Text>
         </View>
         <View style={styles.evalBottomRight}>
-          <Text style={styles.evalContent}>Voir plus</Text>
-          <LeftArrow fill="#FFF" />
+          <Text style={styles.evalContentMore}>Voir plus</Text>
+          <ChevronRight
+            stroke={colors.white}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
         </View>
       </View>
     </TouchableOpacity>

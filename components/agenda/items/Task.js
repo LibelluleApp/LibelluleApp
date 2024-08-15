@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
-import { TimetableSmall, LeftArrow } from "../../../assets/icons/Icons";
+import { Calendar, ChevronRight } from "../../../assets/icons/Icons";
 import * as Haptics from "expo-haptics";
 import { checkAgenda, uncheckAgenda } from "../../../api/Agenda/check";
 import { useNavigation } from "@react-navigation/native";
@@ -48,16 +48,22 @@ function TaskHome({
     taskBottomLeft: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 10,
+      gap: 7,
     },
     taskBottomRight: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 10,
+      gap: 5,
     },
-    taskContent: {
+    taskContentDate: {
       fontFamily: "Ubuntu_400Regular",
       color: colors.black,
+      fontSize: 13,
+    },
+    taskContentMore: {
+      fontFamily: "Ubuntu_500Medium",
+      color: colors.black,
+      fontSize: 13,
     },
     taskDescription: {
       fontFamily: "Ubuntu_400Regular",
@@ -113,12 +119,24 @@ function TaskHome({
       </View>
       <View style={styles.taskBottom}>
         <View style={styles.taskBottomLeft}>
-          <TimetableSmall fill={colors.black} />
-          <Text style={styles.taskContent}>{dates || "Date indisponible"}</Text>
+          <Calendar
+            stroke={colors.black}
+            width={15}
+            height={15}
+            strokeWidth={1.75}
+          />
+          <Text style={styles.taskContentDate}>
+            {dates || "Date indisponible"}
+          </Text>
         </View>
         <View style={styles.taskBottomRight}>
-          <Text style={styles.taskContent}>Voir plus</Text>
-          <LeftArrow fill={colors.black} />
+          <Text style={styles.taskContentMore}>Voir plus</Text>
+          <ChevronRight
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
         </View>
       </View>
     </TouchableOpacity>

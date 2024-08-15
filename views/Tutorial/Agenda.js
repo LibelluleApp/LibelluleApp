@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Button,
 } from "react-native";
-import { Chapeau, Agenda, Check } from "./../../assets/icons/Icons";
+import { Student, Agenda, Check } from "./../../assets/icons/Icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../utils/themeContext";
@@ -130,7 +130,12 @@ const TutorialAgenda = () => {
             </View>
           </View>
           <View style={styles.responsableContainer}>
-            <Chapeau fill={colors.black} width={18} height={18} />
+            <Student
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
             <View style={styles.textResponsableContent}>
               <Text style={styles.textResponsable}>
                 Responsable de l'agenda :{" "}

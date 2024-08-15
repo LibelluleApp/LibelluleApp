@@ -1,10 +1,6 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import {
-  LeftArrowAgenda,
-  RightArrowAgenda,
-  ResetList,
-} from "../../assets/icons/Icons";
+import { ArrowLeft, ArrowRight, ResetList } from "../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
 
 const PaginationHeader = ({
@@ -51,7 +47,7 @@ const PaginationHeader = ({
       alignItems: "center",
     },
     day: {
-      fontSize: 15,
+      fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
       color: colors.black,
     },
@@ -114,7 +110,7 @@ const PaginationHeader = ({
             onPress={returnToday}
             style={{ paddingTop: 10, paddingBottom: 10, paddingLeft: 10 }}
           >
-            <ResetList stroke={colors.grey_variable} />
+            <ResetList stroke={colors.grey_variable} strokeWidth={1.75} />
           </TouchableOpacity>
         )}
         {index === defaultIndex && (
@@ -128,7 +124,7 @@ const PaginationHeader = ({
             }}
             disabled={true}
           >
-            <ResetList stroke={colors.grey_variable} />
+            <ResetList stroke={colors.grey_variable} strokeWidth={1.75} />
           </TouchableOpacity>
         )}
       </View>
@@ -139,7 +135,12 @@ const PaginationHeader = ({
             style={styles.aroundLeft}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <LeftArrowAgenda fill={colors.black} />
+            <ArrowLeft
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={20}
+              height={20}
+            />
           </TouchableOpacity>
         )}
         {index === 0 && (
@@ -148,7 +149,12 @@ const PaginationHeader = ({
             style={styles.aroundLeft}
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
-            <LeftArrowAgenda fill={colors.black} />
+            <ArrowLeft
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={20}
+              height={20}
+            />
           </TouchableOpacity>
         )}
 
@@ -158,7 +164,12 @@ const PaginationHeader = ({
           style={styles.aroundRight}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
-          <RightArrowAgenda fill={colors.black} />
+          <ArrowRight
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={20}
+            height={20}
+          />
         </TouchableOpacity>
       </View>
       <View style={styles.counts}>
