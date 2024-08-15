@@ -54,7 +54,7 @@ const Jour = () => {
       paddingHorizontal: "5%",
     },
     eventBack: {
-      paddingVertical: 5,
+      paddingVertical: 2,
     },
     eventBottom: {
       flexDirection: "row",

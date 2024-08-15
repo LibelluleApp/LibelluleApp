@@ -39,6 +39,9 @@ function ParcourirHome() {
       fontSize: 13,
       color: colors.black,
     },
+    disabled: {
+      opacity: 0.4,
+    },
   });
 
   const navigation = useNavigation();
@@ -86,7 +89,10 @@ function ParcourirHome() {
           />
           <Text style={styles.tileText}>Scolarité</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.tile}>
+        <TouchableOpacity
+          style={[styles.tile, styles.disabled]}
+          disabled={true}
+        >
           <Student
             color={colors.black}
             width={20}

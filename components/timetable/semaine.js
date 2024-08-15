@@ -48,7 +48,7 @@ const Jour = () => {
       fontSize: 11,
     },
     eventBack: {
-      paddingVertical: 5,
+      paddingVertical: 2,
     },
     eventContainer: {
       height: "100%",

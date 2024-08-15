@@ -34,6 +34,8 @@ const groupeTPOptions = [
   { label: "TP2", value: "TP2" },
   { label: "TP3", value: "TP3" },
   { label: "TP4", value: "TP4" },
+  { label: "TP5", value: "TP5" }, // TP5 ajouté
+  { label: "TP6", value: "TP6" }, // TP6 ajouté
 ];
 
 const Register = () => {
@@ -73,7 +75,6 @@ const Register = () => {
       });
       return;
     }
-    // Vérification de la force du mot de passe
     if (password.length < 8) {
       showMessage({
         message: "Le mot de passe doit contenir au moins 8 caractères",
@@ -156,6 +157,14 @@ const Register = () => {
       setLoading(false);
     }
   }, [formData]);
+
+  // Logique pour filtrer les options de groupe TP en fonction du BUT sélectionné
+  const filteredGroupeTPOptions = useMemo(() => {
+    if (formData.but === "CL") {
+      return groupeTPOptions; // Retourner toutes les options pour TC
+    }
+    return groupeTPOptions.slice(0, 4); // Retourner seulement TP1-TP4 pour les autres BUT
+  }, [formData.but]);
 
   const styles = useMemo(
     () =>
@@ -284,12 +293,13 @@ const Register = () => {
                       bounces={false}
                     >
                       {renderOptions(
-                        groupeTPOptions,
+                        filteredGroupeTPOptions,
                         formData.groupeTP,
                         (value) => handleInputChange("groupeTP", value)
                       )}
                     </ScrollView>
                   </View>
+
                   <ButtonAuth
                     title="Suivant"
                     onPress={handleRegister}
@@ -304,48 +314,37 @@ const Register = () => {
                       placeholder="Prénom"
                       placeholderTextColor={colors.text_placeholder}
                       onChangeText={(text) => handleInputChange("prenom", text)}
-                      secureTextEntry={false}
-                      autoComplete="given-name"
-                      keyboardType="default"
                     />
                     <Input
                       label="Nom"
                       placeholder="Nom"
                       placeholderTextColor={colors.text_placeholder}
                       onChangeText={(text) => handleInputChange("nom", text)}
-                      secureTextEntry={false}
-                      autoComplete="family-name"
-                      keyboardType="default"
                     />
                   </View>
                   <Input
-                    label="Email universitaire"
-                    placeholder="Entrer l'adresse mail universitaire"
+                    label="Email"
+                    placeholder="Email"
                     placeholderTextColor={colors.text_placeholder}
-                    autoComplete="email"
-                    inputMode="email"
-                    secureTextEntry={false}
-                    keyboardType="email-address"
                     onChangeText={(text) => handleInputChange("email", text)}
                   />
                   <Input
                     label="Mot de passe"
                     placeholder="Mot de passe"
-                    placeholderTextColor={colors.text_placeholder}
-                    autoComplete="password"
                     secureTextEntry
+                    placeholderTextColor={colors.text_placeholder}
                     onChangeText={(text) => handleInputChange("password", text)}
                   />
                   <Input
-                    label="Confirmer mot de passe"
-                    placeholder="Mot de passe"
-                    placeholderTextColor={colors.text_placeholder}
-                    autoComplete="password"
+                    label="Confirmation du mot de passe"
+                    placeholder="Confirmation du mot de passe"
                     secureTextEntry
+                    placeholderTextColor={colors.text_placeholder}
                     onChangeText={(text) =>
                       handleInputChange("confirmPassword", text)
                     }
                   />
+
                   <ButtonAuth
                     title="Suivant"
                     onPress={handleSecondePage}
@@ -361,4 +360,4 @@ const Register = () => {
   );
 };
 
-export default React.memo(Register);
+export default Register;
