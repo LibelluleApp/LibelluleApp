@@ -132,9 +132,7 @@ function AuthStack() {
             En continuant, nos{" "}
             <Text
               style={{ textDecorationLine: "underline" }}
-              onPress={() =>
-                Linking.openURL("https://mmi-companion.fr/cgu.html")
-              }
+              onPress={() => Linking.openURL("https://libellule.app/cgu")}
             >
               conditions générales d’utilisation
             </Text>{" "}

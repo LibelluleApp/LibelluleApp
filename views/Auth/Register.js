@@ -47,13 +47,14 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    but: "",
-    anneeBut: "",
-    groupeTP: "",
+    but: butOptions[0].value, // Valeur par défaut
+    anneeBut: anneeOptions[0].value, // Valeur par défaut
+    groupeTP: groupeTPOptions[0].value, // Valeur par défaut
   });
 
   const handleInputChange = (field, value) => {
     setFormData((prevData) => ({ ...prevData, [field]: value }));
+    // setSelectedData((prevData) => ({ ...prevData, [field]: value }));
   };
 
   const handleSecondePage = useCallback(() => {
@@ -237,6 +238,10 @@ const Register = () => {
         },
         inputListSelected: {
           backgroundColor: colors.blue100_variable,
+          paddingVertical: 11,
+          paddingHorizontal: 30,
+          borderRadius: 10,
+          marginRight: 15,
         },
         inputListTitle: {
           fontFamily: "Ubuntu_400Regular",
@@ -253,25 +258,25 @@ const Register = () => {
   );
 
   const renderOptions = (options, selectedValue, onSelect) =>
-    options.map(({ label, value, selected }) => {
-      const isSelected = selectedValue === value || selectedValue === selected;
-      return (
-        <Pressable
-          key={value}
-          onPress={() => onSelect(value)}
-          style={[styles.inputList, isSelected && styles.inputListSelected]}
+    options.map((option) => (
+      <Pressable
+        key={option.value}
+        onPress={() => onSelect(option.value)}
+        style={[
+          styles.inputList,
+          selectedValue === option.value && styles.inputListSelected,
+        ]}
+      >
+        <Text
+          style={[
+            styles.inputListTitle,
+            selectedValue === option.value && styles.inputListTitleSelected,
+          ]}
         >
-          <Text
-            style={[
-              styles.inputListTitle,
-              isSelected && styles.inputListTitleSelected,
-            ]}
-          >
-            {label}
-          </Text>
-        </Pressable>
-      );
-    });
+          {option.label}
+        </Text>
+      </Pressable>
+    ));
 
   return (
     <KeyboardAwareScrollView
