@@ -17,23 +17,23 @@ import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
 
 const butOptions = [
-  { label: "TC", value: "CL", selected: true },
-  { label: "GMP", value: "GM", selected: false },
-  { label: "QLIO", value: "QL", selected: false },
-  { label: "GEII", value: "GI", selected: false },
+  { label: "TC", value: "CL" },
+  { label: "GMP", value: "GM" },
+  { label: "QLIO", value: "QL" },
+  { label: "GEII", value: "GI" },
 ];
 
 const anneeOptions = [
-  { label: "1e année", value: "Y1", selected: true },
-  { label: "2e année", value: "Y2", selected: false },
-  { label: "3e année", value: "Y3", selected: false },
+  { label: "1e année", value: "Y1" },
+  { label: "2e année", value: "Y2" },
+  { label: "3e année", value: "Y3" },
 ];
 
 const groupeTPOptions = [
-  { label: "TP1", value: "TP1", selected: true },
-  { label: "TP2", value: "TP2", selected: false },
-  { label: "TP3", value: "TP3", selected: false },
-  { label: "TP4", value: "TP4", selected: false },
+  { label: "TP1", value: "TP1" },
+  { label: "TP2", value: "TP2" },
+  { label: "TP3", value: "TP3" },
+  { label: "TP4", value: "TP4" },
 ];
 
 const Register = () => {
