@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
 import PasswordValidate from "react-native-password-validate-checklist";
 import Input from "../../components/auth/input";
 import { showMessage } from "react-native-flash-message";
 import updatePassword from "../../api/User/updatePassword";
 import { useNavigation } from "@react-navigation/native";
+import { Lock } from "./../../assets/icons/Icons";
 import { lostPasswordConnected } from "../../api/User/lostPassword";
 
 const ChangePassword = () => {
@@ -109,24 +110,39 @@ const ChangePassword = () => {
   };
 
   const handleLostPassword = async () => {
-    try {
-      await lostPasswordConnected();
-      showMessage({
-        message:
-          "Un mail de réinitialisation de mot de passe vous a été envoyé",
-        type: "success",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
-      });
-      navigation.goBack();
-    } catch (error) {
-      showMessage({
-        message: "Une erreur est survenue",
-        type: "danger",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
-      });
-    }
+    Alert.alert(
+      "Réinitialisation du mot de passe",
+      "Êtes-vous sûr de vouloir réinitialiser votre mot de passe ?",
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Réinitialiser",
+          onPress: async () => {
+            try {
+              await lostPasswordConnected();
+              showMessage({
+                message:
+                  "Un mail de réinitialisation de mot de passe vous a été envoyé",
+                type: "success",
+                titleStyle: { fontFamily: "Ubuntu_400Regular" },
+                statusBarHeight: 15,
+              });
+              navigation.goBack();
+            } catch (error) {
+              showMessage({
+                message: "Une erreur est survenue",
+                type: "danger",
+                titleStyle: { fontFamily: "Ubuntu_400Regular" },
+                statusBarHeight: 15,
+              });
+            }
+          },
+        },
+      ]
+    );
   };
 
   useEffect(() => {
@@ -150,6 +166,7 @@ const ChangePassword = () => {
             <Input
               label="Mot de passe actuel"
               placeholder="Votre mot de passe actuel"
+              icon={Lock}
               placeholderTextColor="#A3A3A3"
               autoComplete="password"
               secureTextEntry={true}
@@ -158,6 +175,7 @@ const ChangePassword = () => {
             <Input
               label="Nouveau mot de passe"
               placeholder="Votre nouveau mot de passe"
+              icon={Lock}
               placeholderTextColor="#A3A3A3"
               autoComplete="password"
               secureTextEntry={true}
@@ -165,6 +183,7 @@ const ChangePassword = () => {
             />
             <Input
               label="Confirmer mot de passe"
+              icon={Lock}
               placeholder="Confirmer votre mot de passe"
               placeholderTextColor="#A3A3A3"
               autoComplete="password"

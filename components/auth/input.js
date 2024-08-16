@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import { Eye, EyeSlash, Mail } from "./../../assets/icons/Icons";
+import { Eye, EyeSlash } from "./../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../utils/themeContext";
 import { set } from "date-fns";
