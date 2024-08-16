@@ -13,7 +13,7 @@ const DropdownComponent = ({ onChange, data, value }) => {
       borderWidth: 0.5,
       borderColor: colors.input_border,
       borderRadius: 10,
-      height: 45,
+      height: 58,
       paddingHorizontal: 20,
       marginBottom: 20,
     },

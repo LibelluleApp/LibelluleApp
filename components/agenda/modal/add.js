@@ -40,11 +40,10 @@ const Add = ({ route }) => {
       marginBottom: 10,
     },
     input: {
-      height: 45,
       borderRadius: 10,
       borderColor: colors.input_border,
       paddingHorizontal: 20,
-      paddingVertical: 10,
+      height: 58,
       color: colors.black,
       borderWidth: 0.5,
       marginBottom: 20,
