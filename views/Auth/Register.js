@@ -14,6 +14,7 @@ import ButtonAuth from "../../components/auth/buttonAuth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import register from "../../api/User/register";
 import { showMessage } from "react-native-flash-message";
+import { UserRound, Mail, Lock } from "./../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
 
 const butOptions = [
@@ -351,6 +352,7 @@ const Register = () => {
                   <Input
                     label="Prénom"
                     placeholder="Prénom"
+                    icon={UserRound}
                     placeholderTextColor={colors.text_placeholder}
                     onChangeText={(text) => handleInputChange("prenom", text)}
                     secureTextEntry={false}
@@ -360,6 +362,7 @@ const Register = () => {
                   <Input
                     label="Nom"
                     placeholder="Nom"
+                    icon={UserRound}
                     placeholderTextColor={colors.text_placeholder}
                     onChangeText={(text) => handleInputChange("nom", text)}
                     secureTextEntry={false}
@@ -370,6 +373,7 @@ const Register = () => {
                 <Input
                   label="Email universitaire"
                   placeholder="Entrer l'adresse mail universitaire"
+                  icon={Mail}
                   placeholderTextColor={colors.text_placeholder}
                   autoComplete="email"
                   inputMode="email"
@@ -380,6 +384,7 @@ const Register = () => {
                 <Input
                   label="Mot de passe"
                   placeholder="Entrer le mot de passe"
+                  icon={Lock}
                   placeholderTextColor={colors.text_placeholder}
                   autoComplete="password"
                   secureTextEntry
@@ -388,6 +393,7 @@ const Register = () => {
                 <Input
                   label="Confirmer mot de passe"
                   placeholder="Répéter le mot de passe"
+                  icon={Lock}
                   placeholderTextColor={colors.text_placeholder}
                   autoComplete="password"
                   secureTextEntry

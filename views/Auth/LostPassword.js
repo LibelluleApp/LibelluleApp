@@ -14,6 +14,7 @@ import Input from "../../components/auth/input";
 import { useAuth } from "../../context/AuthContext";
 import { showMessage } from "react-native-flash-message";
 import lostPassword from "../../api/User/lostPassword";
+import { Mail } from "./../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
 
 function LostPassword({ navigation }) {
@@ -151,6 +152,7 @@ function LostPassword({ navigation }) {
               <Input
                 label="Mail"
                 placeholder="Entrer l'adresse mail universitaire"
+                icon={Mail}
                 placeholderTextColor={colors.text_placeholder}
                 autoComplete="email"
                 inputMode="email"

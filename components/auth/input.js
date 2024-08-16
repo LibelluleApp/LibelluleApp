@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import { Eye, EyeSlash } from "./../../assets/icons/Icons";
+import { Eye, EyeSlash, Mail } from "./../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../utils/themeContext";
 import { set } from "date-fns";
@@ -21,6 +21,7 @@ function Input({
   onChangeText,
   secureTextEntry,
   placeholderTextColor,
+  icon: IconComponent,
 }) {
   const { colors } = useContext(ThemeContext);
 
@@ -40,17 +41,23 @@ function Input({
       borderRadius: 10,
       borderWidth: 0.5,
       borderColor: colors.input_border,
-      paddingHorizontal: 20,
-      paddingVertical: 15,
+      height: 58,
       fontFamily: "Ubuntu_400Regular",
-      paddingRight: 40,
+      paddingHorizontal: 45,
       color: colors.black,
     },
-    icon: {
+
+    iconRight: {
       position: "absolute",
       right: 10,
-      top: 7,
+      top: 19.3 - 10, // Hauteur de l'input / 3 - padding
       padding: 10,
+    },
+    iconLeft: {
+      zIndex: 1,
+      position: "absolute",
+      left: 15,
+      top: 19.3, // Hauteur de l'input / 3
     },
   });
 
@@ -61,6 +68,15 @@ function Input({
     <View style={styles.container}>
       <Text style={styles.inputLabel}>{label}</Text>
       <View>
+        {IconComponent && (
+          <IconComponent
+            style={styles.iconLeft}
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
+        )}
         <TextInput
           secureTextEntry={securePasswordEntry}
           autoComplete={autoComplete}
@@ -73,7 +89,7 @@ function Input({
         />
         {autoComplete === "password" && (
           <TouchableOpacity
-            style={styles.icon}
+            style={styles.iconRight}
             onPress={() => setSecurePasswordEntry(!securePasswordEntry)}
           >
             {securePasswordEntry ? (

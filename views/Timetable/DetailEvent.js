@@ -92,7 +92,7 @@ const DetailEvent = ({ route }) => {
                 height={20}
               />
               <View>
-                <Text style={styles.eventInfoTitle}>Enseignant.e</Text>
+                <Text style={styles.eventInfoTitle}>Enseignant</Text>
                 <Text style={styles.eventInfoDesc}>{event.professor}</Text>
               </View>
             </View>
