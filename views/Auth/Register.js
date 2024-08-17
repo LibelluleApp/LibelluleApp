@@ -7,6 +7,7 @@ import {
   Keyboard,
   ScrollView,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
 import Input from "../../components/auth/input";
@@ -14,9 +15,10 @@ import ButtonAuth from "../../components/auth/buttonAuth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import register from "../../api/User/register";
 import { showMessage } from "react-native-flash-message";
-import { UserRound, Mail, Lock } from "./../../assets/icons/Icons";
+import { UserRound, Mail, Lock, ArrowLeft } from "./../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
 
+// Options statiques pour le BUT et l'année
 const butOptions = [
   { label: "TC", value: "CL" },
   { label: "GMP", value: "GM" },
@@ -30,11 +32,14 @@ const anneeOptions = [
   { label: "3e année", value: "Y3" },
 ];
 
+// Options pour le groupe TP
 const groupeTPOptions = [
   { label: "TP1", value: "TP1" },
   { label: "TP2", value: "TP2" },
   { label: "TP3", value: "TP3" },
   { label: "TP4", value: "TP4" },
+  { label: "TP5", value: "TP5" },
+  { label: "TP6", value: "TP6" },
 ];
 
 const Register = () => {
@@ -48,16 +53,26 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    but: butOptions[0].value, // Valeur par défaut
-    anneeBut: anneeOptions[0].value, // Valeur par défaut
-    groupeTP: groupeTPOptions[0].value, // Valeur par défaut
+    but: butOptions[0].value,
+    anneeBut: anneeOptions[0].value,
+    groupeTP: groupeTPOptions[0].value,
   });
 
+  // Fonction pour gérer les changements dans le formulaire
   const handleInputChange = (field, value) => {
     setFormData((prevData) => ({ ...prevData, [field]: value }));
-    // setSelectedData((prevData) => ({ ...prevData, [field]: value }));
   };
 
+  // Fonction pour filtrer dynamiquement les groupes TP en fonction du BUT sélectionné
+  const filteredGroupeTPOptions = useMemo(() => {
+    if (formData.but === "CL") {
+      return groupeTPOptions; // Toutes les options pour "TC"
+    } else {
+      return groupeTPOptions.slice(0, 4); // Seulement TP1 à TP4 pour les autres BUT
+    }
+  }, [formData.but]);
+
+  // Fonction pour gérer le passage à la deuxième page du formulaire
   const handleSecondePage = useCallback(() => {
     const { prenom, nom, email, password, confirmPassword } = formData;
 
@@ -79,46 +94,16 @@ const Register = () => {
       });
       return;
     }
-    // Vérification de la force du mot de passe
-    if (password.length < 8) {
+    if (
+      password.length < 8 ||
+      !/[A-Z]/.test(password) ||
+      !/[a-z]/.test(password) ||
+      !/[0-9]/.test(password) ||
+      !/[^A-Za-z0-9]/.test(password)
+    ) {
       showMessage({
-        message: "Le mot de passe doit contenir au moins 8 caractères",
-        type: "danger",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
-      });
-      return;
-    }
-    if (!/[A-Z]/.test(password)) {
-      showMessage({
-        message: "Le mot de passe doit contenir au moins une majuscule",
-        type: "danger",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
-      });
-      return;
-    }
-    if (!/[a-z]/.test(password)) {
-      showMessage({
-        message: "Le mot de passe doit contenir au moins une minuscule",
-        type: "danger",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
-      });
-      return;
-    }
-    if (!/[0-9]/.test(password)) {
-      showMessage({
-        message: "Le mot de passe doit contenir au moins un chiffre",
-        type: "danger",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
-      });
-      return;
-    }
-    if (!/[^A-Za-z0-9]/.test(password)) {
-      showMessage({
-        message: "Le mot de passe doit contenir au moins un caractère spécial",
+        message:
+          "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre, et un caractère spécial",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
         statusBarHeight: 15,
@@ -137,6 +122,7 @@ const Register = () => {
     setSecondePage(true);
   }, [formData]);
 
+  // Fonction pour gérer l'inscription
   const handleRegister = useCallback(async () => {
     try {
       setLoading(true);
@@ -180,6 +166,14 @@ const Register = () => {
       setLoading(false);
     }
   }, [formData]);
+
+  const handleRetour = useCallback(() => {
+    navigator.goBack();
+  }, []);
+
+  const handleFirstPage = useCallback(() => {
+    setSecondePage(false);
+  }, []);
 
   const styles = useMemo(
     () =>
@@ -254,6 +248,16 @@ const Register = () => {
           fontSize: 15,
           color: colors.blue_variable,
         },
+        buttonContent: {
+          gap: 15,
+        },
+        backButton: {
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          alignSelf: "flex-start",
+          gap: 10,
+        },
       }),
     [colors]
   );
@@ -293,6 +297,15 @@ const Register = () => {
 
           {secondePage ? (
             <>
+              <View style={styles.topInput}>
+                <TouchableOpacity
+                  onPress={handleFirstPage}
+                  style={styles.backButton}
+                >
+                  <ArrowLeft stroke={colors.black} />
+                  <Text style={styles.titleItemInputContainer}>Retour</Text>
+                </TouchableOpacity>
+              </View>
               <View style={styles.inputContainer}>
                 <View style={styles.itemInputContainer}>
                   <Text style={styles.titleItemInputContainer}>BUT</Text>
@@ -330,7 +343,7 @@ const Register = () => {
                     bounces={false}
                   >
                     {renderOptions(
-                      groupeTPOptions,
+                      filteredGroupeTPOptions,
                       formData.groupeTP,
                       (value) => handleInputChange("groupeTP", value)
                     )}
@@ -406,6 +419,11 @@ const Register = () => {
                 <ButtonAuth
                   title="Suivant"
                   onPress={handleSecondePage}
+                  loading={loading}
+                />
+                <ButtonAuth
+                  title="Se connecter"
+                  onPress={handleRetour}
                   loading={loading}
                 />
               </View>

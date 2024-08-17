@@ -35,6 +35,7 @@ const AuthStack = ({ navigation }) => {
       options: {
         title: "Créer un compte",
         headerShadowVisible: false,
+        headerShown: false,
       },
     },
   ];

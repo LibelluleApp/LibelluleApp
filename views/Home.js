@@ -113,7 +113,7 @@ function Home() {
     <GestureHandlerRootView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.topContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate(Profile)}>
+          <TouchableOpacity onPress={() => navigation.navigate("Profil")}>
             <ShimmerPlaceHolder
               width={50}
               height={50}
@@ -160,7 +160,9 @@ function Home() {
               </ShimmerPlaceHolder>
             </View>
             <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
-              <TouchableOpacity onPress={() => navigation.navigate(Timetable)}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Emploi du temps")}
+              >
                 <Text
                   style={{
                     fontFamily: "Ubuntu_500Medium",
