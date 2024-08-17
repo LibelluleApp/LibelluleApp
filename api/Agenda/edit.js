@@ -17,6 +17,7 @@ async function saveEditAgenda(
   }
   try {
     const data = {
+      agenda_id,
       titre,
       description,
       date,
@@ -25,7 +26,7 @@ async function saveEditAgenda(
       groupe_id: user_data.groupe_id,
       utilisateur_id: user_data.utilisateur_id,
     };
-    const response = await ApiManager.post("/agenda/edit", data);
+    const response = await ApiManager.post("/agenda/edittask", data);
     if (response.data.status === "success") {
       return response.data;
     } else {

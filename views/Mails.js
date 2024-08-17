@@ -78,6 +78,7 @@ function Mails() {
       flex: 1,
       justifyContent: "center",
       backgroundColor: colors.background,
+      paddingTop: 20,
     },
     containerContent: {
       flexDirection: "column",
@@ -154,7 +155,7 @@ function Mails() {
     content: {
       width: "90%",
       alignSelf: "center",
-      marginTop: 25,
+      paddingTop: 25,
     },
     emailItem: {
       padding: 10,
