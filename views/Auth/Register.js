@@ -249,14 +249,40 @@ const Register = () => {
           color: colors.blue_variable,
         },
         buttonContent: {
-          gap: 15,
+          paddingBottom: 75,
+        },
+        accountContainer: {
+          position: "absolute",
+          bottom: 20,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          alignSelf: "center",
+          gap: 10,
+        },
+        accountText: {
+          fontFamily: "Ubuntu_400Regular",
+          fontSize: 14,
+          color: colors.grey,
+        },
+        accountButton: {
+          fontFamily: "Ubuntu_500Medium",
+          fontSize: 14,
+          color: colors.blue700,
         },
         backButton: {
+          position: "absolute",
+          top: 75,
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
           alignSelf: "flex-start",
           gap: 10,
+        },
+        titleBackButton: {
+          fontFamily: "Ubuntu_500Medium",
+          fontSize: 16,
+          color: colors.black,
         },
       }),
     [colors]
@@ -291,21 +317,26 @@ const Register = () => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
+          {secondePage && (
+            <TouchableOpacity
+              onPress={handleFirstPage}
+              style={styles.backButton}
+            >
+              <ArrowLeft
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <Text style={styles.titleBackButton}>Retour</Text>
+            </TouchableOpacity>
+          )}
           <View style={styles.titleContent}>
             <Text style={styles.title}>Créer un compte</Text>
           </View>
 
           {secondePage ? (
             <>
-              <View style={styles.topInput}>
-                <TouchableOpacity
-                  onPress={handleFirstPage}
-                  style={styles.backButton}
-                >
-                  <ArrowLeft stroke={colors.black} />
-                  <Text style={styles.titleItemInputContainer}>Retour</Text>
-                </TouchableOpacity>
-              </View>
               <View style={styles.inputContainer}>
                 <View style={styles.itemInputContainer}>
                   <Text style={styles.titleItemInputContainer}>BUT</Text>
@@ -421,14 +452,15 @@ const Register = () => {
                   onPress={handleSecondePage}
                   loading={loading}
                 />
-                <ButtonAuth
-                  title="Se connecter"
-                  onPress={handleRetour}
-                  loading={loading}
-                />
               </View>
             </>
           )}
+          <View style={styles.accountContainer}>
+            <Text style={styles.accountText}>Déjà un compte ?</Text>
+            <TouchableOpacity onPress={handleRetour}>
+              <Text style={styles.accountButton}>Se connecter</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAwareScrollView>
