@@ -10,6 +10,7 @@ import moment from "moment";
 import { ThemeContext } from "./../../../utils/themeContext";
 
 function EvalHome({ date, titre, agenda_id, matiere }) {
+  console.log(matiere);
   const navigation = useNavigation();
 
   const { colors } = useContext(ThemeContext);
@@ -73,7 +74,7 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
           strokeWidth={1.75}
         />
         <Text style={styles.evalTitle}>
-          [Évaluation] {titre || "Titre non disponible"}
+          [Évaluation] {matiere || "Titre non disponible"}
         </Text>
       </View>
       <View style={styles.evalBottom}>

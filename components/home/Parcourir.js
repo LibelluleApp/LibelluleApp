@@ -1,12 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BookOpen, Student, Utensils, Link } from "../../assets/icons/Icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { ThemeContext } from "./../../utils/themeContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function ParcourirHome() {
   const { colors } = useContext(ThemeContext);
+  const [user, setUser] = React.useState({});
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("user_data");
+        console.log("value", value);
+        return value ? JSON.parse(value) : null;
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        return null;
+      }
+    };
+    getData().then((data) => {
+      setUser(data);
+    });
+  }, []);
 
   const styles = StyleSheet.create({
     container: {
@@ -77,18 +95,21 @@ function ParcourirHome() {
           />
           <Text style={styles.tileText}>Menu</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.tile}
-          onPress={() => navigation.navigate("Scolarite")}
-        >
-          <BookOpen
-            stroke={colors.black}
-            width={20}
-            height={20}
-            strokeWidth={1.75}
-          />
-          <Text style={styles.tileText}>Scolarité</Text>
-        </TouchableOpacity>
+        {user?.groupe_id?.includes("UI") && (
+          <TouchableOpacity
+            style={styles.tile}
+            onPress={() => navigation.navigate("Scolarite")}
+          >
+            <BookOpen
+              stroke={colors.black}
+              width={20}
+              height={20}
+              strokeWidth={1.75}
+            />
+            <Text style={styles.tileText}>Scolarité</Text>
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity
           style={[styles.tile, styles.disabled]}
           disabled={true}

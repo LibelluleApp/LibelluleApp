@@ -12,7 +12,6 @@ import fetchLinks from "../../../api/Links/fetchLinks";
 import { showMessage } from "react-native-flash-message";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
-import { he, is } from "date-fns/locale";
 import { ThemeContext } from "./../../../utils/themeContext";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);

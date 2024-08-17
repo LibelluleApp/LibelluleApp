@@ -2,7 +2,7 @@ import ApiManager from "../ApiManager";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-async function saveAgenda(titre, description, date, ressource_id, type) {
+async function saveAgenda(titre, description, date, ressource_name, type) {
   const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
 
   if (!user_data.groupe_id) {
@@ -13,7 +13,7 @@ async function saveAgenda(titre, description, date, ressource_id, type) {
       titre,
       description,
       date,
-      ressource_id,
+      ressource_name,
       type,
       groupe_id: user_data.groupe_id,
       utilisateur_id: user_data.utilisateur_id,

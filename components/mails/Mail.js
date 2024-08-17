@@ -60,7 +60,7 @@ function Mail({ email }) {
   const date = moment(email.d).format("DD/MM/YYYY");
 
   // Extract email sender
-  const from = email.e[0].p;
+  const from = email.e[email.e.length - 1]?.p;
 
   return (
     <TouchableOpacity

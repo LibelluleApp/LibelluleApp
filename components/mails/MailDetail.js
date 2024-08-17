@@ -149,6 +149,7 @@ function MailDetail({ route }) {
           width={18}
           height={18}
         />
+
         <Text style={styles.sender}>
           {emailAddresses[0]?.p || emailAddresses[0]?.a || "Expéditeur inconnu"}
         </Text>

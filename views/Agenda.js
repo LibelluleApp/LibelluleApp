@@ -217,30 +217,43 @@ const Agenda = () => {
 
   const initializeAgenda = async (data) => {
     const startDate = moment("2024-07-10");
-    const endDate = moment("2024-12-31");
+    const endDate = moment("2025-07-31");
 
     const weekdays = [];
     let currentDate = startDate.clone();
+
     while (currentDate <= endDate) {
-      if (currentDate.day() !== 0 && currentDate.day() !== 6) {
-        let dayData = data.filter((item) =>
-          moment(item.date_fin).isSame(currentDate, "day")
-        );
-        if (dayData.length === 0) {
-          dayData = [
-            {
-              agenda_id: 0,
-              date_fin: currentDate.format("YYYY-MM-DD"),
-              titre: "Aucun élément à afficher",
-              type: "none",
-              Ressource: { nom_ressource: "Aucune matière" },
-            },
-          ];
-        }
-        weekdays.push({ date: currentDate.clone(), data: dayData });
+      if (currentDate.day() === 6) {
+        // Si c'est samedi
+        currentDate.add(2, "days"); // Passez au lundi suivant
+      } else if (currentDate.day() === 0) {
+        // Si c'est dimanche
+        currentDate.add(1, "days"); // Passez au lundi suivant
       }
-      currentDate.add(1, "day");
+
+      if (currentDate > endDate) {
+        break;
+      }
+
+      let dayData = data.filter((item) =>
+        moment(item.date_fin).isSame(currentDate, "day")
+      );
+      if (dayData.length === 0) {
+        dayData = [
+          {
+            agenda_id: 0,
+            date_fin: currentDate.format("YYYY-MM-DD"),
+            titre: "Aucun élément à afficher",
+            type: "none",
+            Ressource: { nom_ressource: "Aucune matière" },
+          },
+        ];
+      }
+      weekdays.push({ date: currentDate.clone(), data: dayData });
+      currentDate.add(1, "day"); // Passez au jour suivant
     }
+
+    // Définir l'index du jour actuel, en ignorant les jours de week-end
     const todayIndex = weekdays.findIndex((day) =>
       day.date.isSame(moment(), "day")
     );

@@ -59,6 +59,7 @@ const Add = ({ route }) => {
     description: {
       height: 135,
       textAlignVertical: "top",
+      paddingVertical: 10,
     },
     textDate: {
       color: colors.black,
@@ -83,14 +84,26 @@ const Add = ({ route }) => {
   const [error, setError] = useState(null);
 
   const handleSaveTask = async () => {
-    if (!dates || !matiere || !type || !titre) {
-      showMessage({
-        message: "Veuillez remplir tous les champs obligatoires.",
-        type: "danger",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
-      });
-      return;
+    if (type !== "eval") {
+      if (!dates || !matiere || !type || !titre) {
+        showMessage({
+          message: "Veuillez remplir tous les champs obligatoires.",
+          type: "danger",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+          statusBarHeight: 15,
+        });
+        return;
+      }
+    } else {
+      if (!dates || !matiere || !type) {
+        showMessage({
+          message: "Veuillez remplir tous les champs obligatoires.",
+          type: "danger",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+          statusBarHeight: 15,
+        });
+        return;
+      }
     }
 
     setLoading(true);
@@ -185,14 +198,11 @@ const Add = ({ route }) => {
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>Matière*</Text>
-            <DropdownComponent
-              onChange={(item) => {
-                setValue(item.value);
-                setMatiere(item.value);
-              }}
-              data={data}
-              value={value}
-              save={true}
+            <TextInput
+              style={styles.input}
+              placeholderTextColor={colors.text_placeholder}
+              placeholder="Nom de la matière"
+              onChangeText={(text) => setMatiere(text)}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -206,15 +216,17 @@ const Add = ({ route }) => {
               value={value2}
             />
           </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.title}>Titre*</Text>
-            <TextInput
-              style={styles.input}
-              placeholderTextColor={colors.text_placeholder}
-              placeholder="Titre de la tâche"
-              onChangeText={(text) => setTitre(text)}
-            />
-          </View>
+          {type !== "eval" && (
+            <View style={styles.inputContainer}>
+              <Text style={styles.title}>Titre*</Text>
+              <TextInput
+                style={styles.input}
+                placeholderTextColor={colors.text_placeholder}
+                placeholder="Titre de la tâche"
+                onChangeText={(text) => setTitre(text)}
+              />
+            </View>
+          )}
           <View style={styles.inputContainer}>
             <Text style={styles.title}>Description</Text>
             <TextInput
