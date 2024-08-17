@@ -140,6 +140,14 @@ const AppStack = ({ navigation }) => {
         presentation: "modal",
       },
     },
+    {
+      name: "editAgenda",
+      component: require("../components/agenda/modal/edit").default,
+      options: {
+        title: "Modifier une tâche",
+        headerShadowVisible: false,
+      },
+    },
   ];
   const insets = useSafeAreaInsets();
   return (

@@ -10,7 +10,6 @@ import moment from "moment";
 import { ThemeContext } from "./../../../utils/themeContext";
 
 function EvalHome({ date, titre, agenda_id, matiere }) {
-  console.log(matiere);
   const navigation = useNavigation();
 
   const { colors } = useContext(ThemeContext);

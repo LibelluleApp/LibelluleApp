@@ -11,7 +11,6 @@ import {
 import { Calendar } from "./../../../assets/icons/Icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import DropdownComponent from "./dropdown";
 import SelectComponent from "./select";
 import ButtonAuth from "../../auth/buttonAuth";
 import saveAgenda from "../../../api/Agenda/save";
