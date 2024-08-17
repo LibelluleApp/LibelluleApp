@@ -39,13 +39,15 @@ const Jour = () => {
     itemContainer: {
       flex: 1,
       width: Dimensions.get("window").width,
-      justifyContent: "flex-start",
+      justifyContent: "start",
       paddingHorizontal: "5%",
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
       color: colors.white,
       fontSize: 11,
+      maxWidth: "100%",
+      alignItems: "start",
     },
     eventBack: {
       paddingVertical: 2,
@@ -55,7 +57,6 @@ const Jour = () => {
       paddingVertical: 10,
       paddingHorizontal: 10,
       borderRadius: 10,
-      justifyContent: "space-around",
       backgroundColor: colors.blue_variable,
     },
   });
@@ -160,7 +161,13 @@ const Jour = () => {
           return (
             <View style={styles.eventBack}>
               <View style={styles.eventContainer}>
-                <Text style={styles.eventTitle}>{event.title}</Text>
+                <Text
+                  style={styles.eventTitle}
+                  numberOfLines={4} // Limite le texte à une seule ligne
+                  ellipsizeMode="tail"
+                >
+                  {event.title}
+                </Text>
               </View>
             </View>
           );
