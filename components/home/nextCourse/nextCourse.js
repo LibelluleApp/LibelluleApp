@@ -32,19 +32,20 @@ const fetchCourse = async () => {
   }
 };
 
-const fetchColor = async (data) => {
-  try {
-    const response = await getRessourceColor(data.title);
-    return response;
-  } catch (error) {
-    console.error("Error fetching next course:", error);
-    return null; // Return null in case of error
-  }
-};
+// const fetchColor = async (data) => {
+//   try {
+//     const response = await getRessourceColor(data.title);
+//     return response;
+//   } catch (error) {
+//     console.error("Error fetching next course:", error);
+//     return null; // Return null in case of error
+//   }
+// };
 
 function ItemCourse({ data, color }) {
   const { colors } = useContext(ThemeContext);
   const [remainingTime, setRemainingTime] = useState("");
+  const navigator = useNavigation();
 
   const styles = StyleSheet.create({
     slide: {
@@ -198,13 +199,11 @@ function ItemCourse({ data, color }) {
   }
 
   return (
-    <TouchableOpacity style={[styles.slide]}>
-      <View
-        style={[
-          styles.container,
-          color && { backgroundColor: colors.white_background },
-        ]}
-      >
+    <TouchableOpacity
+      style={[styles.slide]}
+      onPress={() => navigator.navigate("DetailEvent", { data })}
+    >
+      <View style={[styles.container, color]}>
         <View style={styles.hour}>
           <Text style={styles.textHour}>{data.debut || "--:--"}</Text>
           <Text style={styles.textHour}>{data.fin || "--:--"}</Text>
@@ -282,10 +281,11 @@ function NextCourse() {
     fetchCourse().then((response) => {
       if (response !== null) {
         setNextCourse(response);
-        fetchColor(response).then((color) => {
-          setColor(color);
-          setIsLoading(false);
-        });
+        // fetchColor(response).then((color) => {
+        //   setColor(color);
+        //   setIsLoading(false);
+        // });
+        setIsLoading(false);
       } else {
         setNextCourse(null);
         setIsLoading(false);
@@ -298,10 +298,11 @@ function NextCourse() {
       fetchCourse().then((response) => {
         if (response !== null) {
           setNextCourse(response);
-          fetchColor(response).then((color) => {
-            setColor(color);
-            setIsLoading(false);
-          });
+          // fetchColor(response).then((color) => {
+          //   setColor(color);
+          //   setIsLoading(false);
+          // });
+          setIsLoading(false);
         } else {
           setNextCourse(null);
           setIsLoading(false);

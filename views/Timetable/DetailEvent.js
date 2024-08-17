@@ -14,7 +14,8 @@ import moment from "moment";
 const DetailEvent = ({ route }) => {
   const { colors } = useContext(ThemeContext);
 
-  const event = route.params.event;
+  const event = route.params.data || route.params.event;
+
   const startHour = moment(event.start).format("HH:mm");
   const endHour = moment(event.end).format("HH:mm");
   const duration = moment
@@ -88,7 +89,7 @@ const DetailEvent = ({ route }) => {
               <View>
                 <Text style={styles.eventInfoTitle}>Salle de cours</Text>
                 <Text style={styles.eventInfoDesc}>
-                  {event.location || "N/C"}
+                  {event.location || event.lieu || "N/C"}
                 </Text>
               </View>
             </View>
@@ -102,7 +103,7 @@ const DetailEvent = ({ route }) => {
               <View>
                 <Text style={styles.eventInfoTitle}>Enseignant</Text>
                 <Text style={styles.eventInfoDesc}>
-                  {event.professor || "N/C"}
+                  {event.professor || event.description || "N/C"}
                 </Text>
               </View>
             </View>
