@@ -6,7 +6,14 @@ import { useNavigation } from "@react-navigation/native";
 
 import LogoTitle from "../components/logo";
 import Notifications from "../views/NotificationsViews";
-import { Home, Check, Calendar, Mail, User, Bell } from "../assets/icons/Icons";
+import {
+  Home,
+  Check,
+  Calendar,
+  Envelope,
+  User,
+  Bell,
+} from "../assets/icons/Icons";
 import { ThemeContext } from "./../utils/themeContext";
 
 const Tab = createBottomTabNavigator();
@@ -106,7 +113,7 @@ const TabsStack = () => {
       options: {
         tabBarLabel: "Mails",
         tabBarIcon: ({ color, size, focused }) =>
-          getIcon(Mail, color, size, focused),
+          getIcon(Envelope, color, size, focused),
         headerLeft: () => <LogoTitle />,
         ...baseHeaderOptions,
       },

@@ -19,11 +19,9 @@ import {
   Lock,
   UserRoundPen,
   InstaIcon,
-  MailProfile,
   NotepadText,
   Landmark,
-  ColorPal,
-  Mail,
+  Envelope,
   LogOut,
 } from "../assets/icons/Icons";
 import Constants from "expo-constants";
@@ -376,7 +374,7 @@ function Profile() {
               }}
             >
               <View style={styles.mediaLinks}>
-                <Mail
+                <Envelope
                   stroke={colors.blue_variable}
                   strokeWidth={1.75}
                   width={18}
@@ -390,8 +388,10 @@ function Profile() {
           </View>
         </View>
         <TouchableOpacity
-          style={[styles.profileButton, styles.disabled]}
-          disabled={true}
+          style={styles.profileButton}
+          onPress={() => {
+            Linking.openURL("https://libellule.app/patchnotes");
+          }}
         >
           <View style={styles.CTAContent}>
             <NotepadText
@@ -400,7 +400,7 @@ function Profile() {
               width={18}
               height={18}
             />
-            <Text style={styles.profileBtnText}>Journal des mises à jours</Text>
+            <Text style={styles.profileBtnText}>Journal des mises à jour</Text>
           </View>
           <ChevronRight
             stroke={colors.black}
@@ -411,7 +411,9 @@ function Profile() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.profileButton}
-          onPress={() => navigation.navigate("CGU")}
+          onPress={() => {
+            Linking.openURL("https://libellule.app/cgu");
+          }}
         >
           <View style={styles.CTAContent}>
             <Landmark

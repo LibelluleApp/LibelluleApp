@@ -58,6 +58,8 @@ const Add = ({ route }) => {
     },
     description: {
       height: 135,
+      paddingHorizontal: 20,
+      padding: 15,
       textAlignVertical: "top",
       paddingVertical: 10,
     },

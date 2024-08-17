@@ -157,6 +157,7 @@ function Login({ navigation }) {
                 secureTextEntry={false}
                 keyboardType="email-address"
                 onChangeText={(text) => setEmail(text)}
+                autoCapitalize="none"
               />
               <View style={styles.passwordContent}>
                 <Input
