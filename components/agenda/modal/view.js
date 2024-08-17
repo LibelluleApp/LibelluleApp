@@ -243,21 +243,22 @@ const ViewTask = ({ route }) => {
             </View>
           </View>
         </View>
+
         <View style={styles.taskContent}>
-          <View>
-            <Text style={styles.taskInfoTitle}>Titre</Text>
-            <Text style={styles.taskInfoDesc}>
-              {task.titre || "Titre indisponible"}
-            </Text>
-          </View>
           {task.type == "devoir" && (
             <View>
-              <Text style={styles.taskInfoTitle}>Description</Text>
+              <Text style={styles.taskInfoTitle}>Titre</Text>
               <Text style={styles.taskInfoDesc}>
-                {task.contenu || "Contenu indisponible"}
+                {task.titre || "Titre indisponible"}
               </Text>
             </View>
           )}
+          <View>
+            <Text style={styles.taskInfoTitle}>Description</Text>
+            <Text style={styles.taskInfoDesc}>
+              {task.contenu || "Contenu indisponible"}
+            </Text>
+          </View>
         </View>
         {task.type == "devoir" && (
           <View style={styles.taskFooter}>
