@@ -9,12 +9,18 @@ import {
 } from "./../../assets/icons/Icons";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
+import moment from "moment";
 
 const DetailEvent = ({ route }) => {
   const { colors } = useContext(ThemeContext);
 
   const event = route.params.event;
-  console.log(event);
+  const startHour = moment(event.start).format("HH:mm");
+  const endHour = moment(event.end).format("HH:mm");
+  const duration = moment
+    .utc(moment(endHour, "HH:mm").diff(moment(startHour, "HH:mm")))
+    .format("HH:mm");
+  const date = moment(event.start).format("DD/MM/YYYY");
   const styles = StyleSheet.create({
     background: {
       flex: 1,
@@ -81,7 +87,9 @@ const DetailEvent = ({ route }) => {
               />
               <View>
                 <Text style={styles.eventInfoTitle}>Salle de cours</Text>
-                <Text style={styles.eventInfoDesc}>{event.location}</Text>
+                <Text style={styles.eventInfoDesc}>
+                  {event.location || "N/C"}
+                </Text>
               </View>
             </View>
             <View style={styles.eventInfoContent}>
@@ -93,7 +101,9 @@ const DetailEvent = ({ route }) => {
               />
               <View>
                 <Text style={styles.eventInfoTitle}>Enseignant</Text>
-                <Text style={styles.eventInfoDesc}>{event.professor}</Text>
+                <Text style={styles.eventInfoDesc}>
+                  {event.professor || "N/C"}
+                </Text>
               </View>
             </View>
           </View>
@@ -107,7 +117,7 @@ const DetailEvent = ({ route }) => {
               />
               <View>
                 <Text style={styles.eventInfoTitle}>Date du cours</Text>
-                <Text style={styles.eventInfoDesc}>{event.start}</Text>
+                <Text style={styles.eventInfoDesc}>{date}</Text>
               </View>
             </View>
             <View style={styles.eventInfoContent}>
@@ -119,7 +129,7 @@ const DetailEvent = ({ route }) => {
               />
               <View>
                 <Text style={styles.eventInfoTitle}>Durée du cours</Text>
-                <Text style={styles.eventInfoDesc}>{event.duration}</Text>
+                <Text style={styles.eventInfoDesc}>{duration}</Text>
               </View>
             </View>
             <View style={styles.eventInfoContent}>
@@ -131,7 +141,7 @@ const DetailEvent = ({ route }) => {
               />
               <View>
                 <Text style={styles.eventInfoTitle}>Début du cours</Text>
-                <Text style={styles.eventInfoDesc}>{event.startHour}</Text>
+                <Text style={styles.eventInfoDesc}>{startHour}</Text>
               </View>
             </View>
             <View style={styles.eventInfoContent}>
@@ -143,7 +153,7 @@ const DetailEvent = ({ route }) => {
               />
               <View>
                 <Text style={styles.eventInfoTitle}>Fin du cours</Text>
-                <Text style={styles.eventInfoDesc}>{event.endHour}</Text>
+                <Text style={styles.eventInfoDesc}>{endHour}</Text>
               </View>
             </View>
           </View>
