@@ -86,6 +86,7 @@ const Jour = () => {
       includeFontPadding: false,
       fontSize: 16,
       color: colors.white,
+      maxWidth: "100%",
     },
   });
 
@@ -170,7 +171,13 @@ const Jour = () => {
           return (
             <View style={styles.eventBack}>
               <View style={styles.eventContainer}>
-                <Text style={styles.eventTitle}>{event.title}</Text>
+                <Text
+                  style={styles.eventTitle}
+                  numberOfLines={1} // Limite le texte à une seule ligne
+                  ellipsizeMode="tail"
+                >
+                  {event.title}
+                </Text>
                 <View style={styles.eventBottom}>
                   <View style={styles.eventContent}>
                     <MapPin

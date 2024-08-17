@@ -20,7 +20,7 @@ const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 const { width } = Dimensions.get("window");
 const slideWidth = width * 0.9;
-const slideHeight = 90;
+const slideHeight = 95;
 
 const fetchCourse = async () => {
   try {
@@ -86,10 +86,15 @@ function ItemCourse({ data, color }) {
       includeFontPadding: false,
       fontSize: 17,
       color: colors.white,
+      maxWidth: "88%",
+    },
+    descriptionContainer: {
+      flexDirection: "column",
+      gap: 5,
     },
     teacher: {
       flexDirection: "row",
-      gap: 10,
+      gap: 15,
       alignItems: "center",
     },
     textTeacher: {
@@ -97,21 +102,17 @@ function ItemCourse({ data, color }) {
       includeFontPadding: false,
       fontSize: 14,
       color: colors.white,
-      gap: 10,
+      gap: 7,
     },
     contentLeft: {
       justifyContent: "center",
+      gap: 7,
     },
     hourClock: {
       fontFamily: "Ubuntu_500Medium",
       includeFontPadding: false,
       fontSize: 14,
       color: colors.white,
-    },
-    content: {
-      flexDirection: "row",
-      gap: 6,
-      alignItems: "center",
     },
     placeholder: {
       justifyContent: "center",
@@ -132,9 +133,8 @@ function ItemCourse({ data, color }) {
       color: colors.black,
     },
     content: {
-      marginTop: 10,
       flexDirection: "row",
-      gap: 5,
+      gap: 7,
     },
     textContent: {
       fontFamily: "Ubuntu_400Regular",
@@ -192,7 +192,13 @@ function ItemCourse({ data, color }) {
             { backgroundColor: colors.white_background },
           ]}
         >
-          <Text style={styles.textSubject}>Aucun cours à venir</Text>
+          <Text
+            style={styles.textSubject}
+            numberOfLines={1} // Limite le texte à une seule ligne
+            ellipsizeMode="tail"
+          >
+            Aucun cours à venir
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -210,42 +216,48 @@ function ItemCourse({ data, color }) {
         </View>
         <View style={styles.stick}></View>
         <View style={styles.contentLeft}>
-          <Text style={styles.textSubject}>
+          <Text
+            style={styles.textSubject}
+            numberOfLines={1} // Limite le texte à une seule ligne
+            ellipsizeMode="tail"
+          >
             {data.title || "Matière indisponible"}
           </Text>
-          <View style={styles.teacher}>
-            <View style={styles.content}>
-              <MapPin
-                stroke={colors.white}
-                width={14}
-                height={14}
-                strokeWidth={1.75}
-              />
-              <Text style={styles.textTeacher}>{data.lieu || "N/C"}</Text>
+          <View style={styles.descriptionContainer}>
+            <View style={styles.teacher}>
+              <View style={styles.content}>
+                <MapPin
+                  stroke={colors.white}
+                  width={14}
+                  height={14}
+                  strokeWidth={1.75}
+                />
+                <Text style={styles.textTeacher}>{data.lieu || "N/C"}</Text>
+              </View>
+              <View style={styles.content}>
+                <UserRound
+                  stroke={colors.white}
+                  width={14}
+                  height={14}
+                  strokeWidth={1.75}
+                />
+                <Text style={styles.textTeacher}>
+                  {formatProfessorName(data.description) ||
+                    "Professeur indisponible"}
+                </Text>
+              </View>
             </View>
             <View style={styles.content}>
-              <UserRound
+              <Clock
                 stroke={colors.white}
                 width={14}
                 height={14}
                 strokeWidth={1.75}
               />
               <Text style={styles.textTeacher}>
-                {formatProfessorName(data.description) ||
-                  "Professeur indisponible"}
+                Dans <Text style={styles.hourClock}>{remainingTime}</Text>
               </Text>
             </View>
-          </View>
-          <View style={styles.content}>
-            <Clock
-              stroke={colors.white}
-              width={14}
-              height={14}
-              strokeWidth={1.75}
-            />
-            <Text style={styles.textTeacher}>
-              Dans <Text style={styles.hourClock}>{remainingTime}</Text>
-            </Text>
           </View>
         </View>
       </View>
