@@ -1,18 +1,13 @@
 import React, { useContext } from "react";
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Linking,
-} from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Calendar, ChevronRight } from "../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
+import moment from "moment";
 
-function Mail() {
+function Mail({ email }) {
   const { colors } = useContext(ThemeContext);
+  const navigation = useNavigation();
 
   const styles = StyleSheet.create({
     container: {
@@ -27,6 +22,7 @@ function Mail() {
       fontSize: 13,
       color: colors.grey,
       marginBottom: 5,
+      textTransform: "capitalize",
     },
     subject: {
       fontFamily: "Ubuntu_500Medium",
@@ -60,14 +56,19 @@ function Mail() {
     },
   });
 
-  const navigation = useNavigation();
+  // Format date
+  const date = moment(email.d).format("DD/MM/YYYY");
+
+  // Extract email sender
+  const from = email.e[0].p;
+
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate("MailDetail")}
+      onPress={() => navigation.navigate("MailDetail", { email })}
     >
-      <Text style={styles.sender}>Pierre Martin</Text>
-      <Text style={styles.subject}>Objet du mail</Text>
+      <Text style={styles.sender}>{from || email.e[0].a}</Text>
+      <Text style={styles.subject}>{email.su}</Text>
       <View style={styles.bottom}>
         <View style={styles.bottomLeft}>
           <Calendar
@@ -76,7 +77,7 @@ function Mail() {
             width={15}
             height={15}
           />
-          <Text style={styles.date}>01 avr.</Text>
+          <Text style={styles.date}>{date}</Text>
         </View>
         <View style={styles.bottomRight}>
           <Text style={styles.action}>Ouvrir</Text>

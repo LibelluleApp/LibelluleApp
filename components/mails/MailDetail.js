@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -10,8 +10,69 @@ import {
 } from "react-native";
 import { UserRound } from "../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
+import fetchMailFromId from "../../api/Mail/fetchMailDetail";
 
-function MailDetail() {
+const extractData = (xml) => {
+  // Extract content inside <fr> tags
+  const contentMatch = xml.match(/<fr>([\s\S]*?)<\/fr>/);
+  const content = contentMatch ? contentMatch[1].trim() : "";
+
+  // Extract subject inside <su> tags
+  const suMatch = xml.match(/<su>([\s\S]*?)<\/su>/);
+  const su = suMatch ? suMatch[1].trim() : "";
+
+  // Extract email addresses from <e> tags
+  const emailMatches =
+    xml.match(
+      '<e\\s+p="([^"]+)"\\s+a="([^"]+)"\\s+d="([^"]+)"\\s+t="([^"]+)"/>'
+    ) || [];
+
+  const emailAddresses = emailMatches.map((email) => {
+    const pMatch = email.match(/p="([^"]+)"/);
+    const aMatch = email.match(/a="([^"]+)"/);
+    const dMatch = email.match(/d="([^"]+)"/);
+    return {
+      p: pMatch ? pMatch[1] : "",
+      a: aMatch ? aMatch[1] : "",
+      d: dMatch ? dMatch[1] : "",
+    };
+  });
+
+  // Extract plain text content inside <content> tags within <mp>
+  const plainTextContentMatch = xml.match(
+    /<mp ct="text\/plain"[\s\S]*?<content>([\s\S]*?)<\/content>/
+  );
+  const plainTextContent = plainTextContentMatch
+    ? plainTextContentMatch[1].trim()
+    : "";
+
+  return {
+    content, // Body content inside <fr> tag
+    su, // Subject inside <su> tag
+    emailAddresses, // List of email addresses
+    plainTextContent, // Plain text content from <content> tag
+  };
+};
+
+function MailDetail({ route }) {
+  const email = route.params.email;
+  const [mail, setMail] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMail = async () => {
+      try {
+        const fetchedMail = await fetchMailFromId(email.id);
+        setMail(fetchedMail);
+        setLoading(false);
+      } catch (error) {
+        console.error("Failed to fetch mail:", error);
+        setLoading(false);
+      }
+    };
+    fetchMail();
+  }, [email.id]);
+
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -54,33 +115,32 @@ function MailDetail() {
     },
   });
 
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (!mail) {
+    return (
+      <View style={styles.container}>
+        <Text>No mail data available.</Text>
+      </View>
+    );
+  }
+
+  const { content, su, emailAddresses, plainTextContent } = extractData(mail); // Make sure mail.xmlData is correct
+
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={{ alignItems: "center" }}
     >
       <View style={styles.mailContent}>
-        <Text style={styles.subject}>
-          Journée portes ouvertes - Samedi 10 février 2024
-        </Text>
-        <Text style={styles.body}>
-          Bonjour à toutes et à tous,{"\n"}
-          {"\n"}Ce samedi 10 février, l'IUT ouvre ses portes et accueillera les
-          familles de 9h30 à 17h, sans interruption.
-          {"\n"}
-          {"\n"}L'entrée unique, pour les visiteurs, se fera par le portail
-          situé en face du Crousty où ils seront accueillis dans un premier
-          temps par des personnels des services communs (distribution de
-          bracelets, administration d'un questionnaire) puis par des étudiants
-          "navettes" qui les accompagneront jusqu'aux départements pour démarrer
-          les visites.{"\n"}
-          {"\n"}Comme indiqué précédemment par Isabelle, le portail pour accéder
-          au parking avenue de Varsovie sera ouvert de 8h00 à 9h00 puis à partir
-          de 12h30 jusqu'à 13h00, le tout sous le contrôle d'un personnel du
-          service logistique et maintenance.{"\n"}
-          {"\n"}N'hésitez pas à revenir vers moi pour toutes questions.{"\n"}
-          {"\n"}Cordialement,{"\n"}Pierre
-        </Text>
+        <Text style={styles.subject}>{su}</Text>
+        <Text style={styles.body}>{plainTextContent}</Text>
       </View>
       <View style={styles.mailSender}>
         <UserRound
@@ -89,7 +149,9 @@ function MailDetail() {
           width={18}
           height={18}
         />
-        <Text style={styles.sender}>Pierre Martin</Text>
+        <Text style={styles.sender}>
+          {emailAddresses[0]?.p || emailAddresses[0]?.a || "Expéditeur inconnu"}
+        </Text>
       </View>
     </ScrollView>
   );

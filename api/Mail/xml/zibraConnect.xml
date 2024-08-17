@@ -1,0 +1,13 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+  <soap:Header>
+    <context xmlns="urn:zimbra">
+      <authToken></authToken>
+    </context>
+  </soap:Header>
+  <soap:Body>
+    <AuthRequest xmlns="urn:zimbraAccount">
+      <account by="name">{{email}}</account>
+      <password>{{password}}</password>
+    </AuthRequest>
+  </soap:Body>
+</soap:Envelope>
