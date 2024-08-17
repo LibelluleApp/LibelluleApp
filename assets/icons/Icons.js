@@ -119,7 +119,7 @@ function Check(props) {
   );
 }
 
-function Mail(props) {
+function Envelope(props) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -844,51 +844,6 @@ function Landmark(props) {
   );
 }
 
-function ColorPal(props) {
-  return (
-    <Svg
-      width={18}
-      height={18}
-      viewBox="0 0 18 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <G clipPath="url(#clip0_1315_10251)" fill="#000">
-        <Path d="M12.836 6.037a1.125 1.125 0 10.578 2.175 1.125 1.125 0 00-.578-2.175zM9.086 3.787a1.125 1.125 0 10.578 2.175 1.125 1.125 0 00-.578-2.175zM5.336 6.037a1.125 1.125 0 10.578 2.175 1.125 1.125 0 00-.578-2.175zM5.336 10.537a1.125 1.125 0 10.578 2.174 1.125 1.125 0 00-.578-2.174z" />
-        <Path d="M9.375.005A9 9 0 00.062 9a9.01 9.01 0 009 9c.254 0 .503-.017.75-.038a.75.75 0 00.687-.75l-.024-2.69a2.675 2.675 0 014.568-1.922l.075.075a1.432 1.432 0 001.327.39 1.417 1.417 0 001.032-.882 8.944 8.944 0 00.583-3.408A9.116 9.116 0 009.375.005zm6.736 11.55l-.01-.01a4.175 4.175 0 00-7.125 2.988l.018 1.967a7.5 7.5 0 11.068-15c.087 0 .176 0 .264.004a7.595 7.595 0 017.234 7.308 7.418 7.418 0 01-.446 2.738l-.003.005z" />
-      </G>
-      <Defs>
-        <ClipPath id="clip0_1315_10251">
-          <Path fill="#fff" d="M0 0H18V18H0z" />
-        </ClipPath>
-      </Defs>
-    </Svg>
-  );
-}
-function MailProfile(props) {
-  return (
-    <Svg
-      width={21}
-      height={21}
-      viewBox="0 0 21 21"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <G clipPath="url(#clip0_1172_135475)" fill="#0760FB" {...props}>
-        <Path d="M16.967 3.926l-5.962 5.963a3.547 3.547 0 01-5.01 0L.033 3.926C.023 4.038 0 4.139 0 4.25v8.5a3.546 3.546 0 003.542 3.542h9.916A3.546 3.546 0 0017 12.75v-8.5c0-.111-.023-.212-.033-.324z" />
-        <Path d="M10.003 8.887l6.47-6.47A3.532 3.532 0 0013.458.707H3.542A3.532 3.532 0 00.527 2.416l6.47 6.47a2.13 2.13 0 003.006 0z" />
-      </G>
-      <Defs>
-        <ClipPath id="clip0_1172_135475">
-          <Path fill="#fff" d="M0 0H17V17H0z" {...props} />
-        </ClipPath>
-      </Defs>
-    </Svg>
-  );
-}
-
 // Plus - Lucide
 function Plus(props) {
   return (
@@ -1002,7 +957,7 @@ export {
   Home,
   Calendar,
   Check,
-  Mail,
+  Envelope,
   User,
 
   // ----
@@ -1036,8 +991,6 @@ export {
   InstaIcon,
   NotepadText,
   Landmark,
-  ColorPal,
-  MailProfile,
   Plus,
   ResetList,
   LogOut,

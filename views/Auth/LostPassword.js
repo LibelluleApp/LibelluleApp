@@ -159,6 +159,7 @@ function LostPassword({ navigation }) {
                 secureTextEntry={false}
                 keyboardType="email-address"
                 onChangeText={(text) => setEmail(text)}
+                autoCapitalize="none"
               />
             </View>
 

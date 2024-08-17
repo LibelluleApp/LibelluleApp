@@ -19,11 +19,9 @@ import {
   Lock,
   UserRoundPen,
   InstaIcon,
-  MailProfile,
   NotepadText,
   Landmark,
-  ColorPal,
-  Mail,
+  Envelope,
   LogOut,
 } from "../assets/icons/Icons";
 import Constants from "expo-constants";
@@ -376,7 +374,7 @@ function Profile() {
               }}
             >
               <View style={styles.mediaLinks}>
-                <Mail
+                <Envelope
                   stroke={colors.blue_variable}
                   strokeWidth={1.75}
                   width={18}

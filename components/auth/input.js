@@ -22,6 +22,7 @@ function Input({
   secureTextEntry,
   placeholderTextColor,
   icon: IconComponent,
+  autoCapitalize,
 }) {
   const { colors } = useContext(ThemeContext);
 
@@ -86,6 +87,7 @@ function Input({
           placeholder={placeholder}
           onChangeText={onChangeText}
           placeholderTextColor={placeholderTextColor}
+          autoCapitalize={autoCapitalize}
         />
         {autoComplete === "password" && (
           <TouchableOpacity

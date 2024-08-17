@@ -424,6 +424,7 @@ const Register = () => {
                   secureTextEntry={false}
                   keyboardType="email-address"
                   onChangeText={(text) => handleInputChange("email", text)}
+                  autoCapitalize="none"
                 />
                 <Input
                   label="Mot de passe"
