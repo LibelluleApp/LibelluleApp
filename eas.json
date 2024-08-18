@@ -9,6 +9,9 @@
       "ios": {
         "enterpriseProvisioning": "adhoc",
         "image": "latest"
+      },
+      "env": {
+        "APP_VARIANT": "development"
       }
     },
     "preview": {

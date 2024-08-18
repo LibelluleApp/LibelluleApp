@@ -43,6 +43,7 @@
     "moment-timezone": "^0.5.45",
     "react": "18.2.0",
     "react-native": "0.74.5",
+    "react-native-autolink": "^4.2.0",
     "react-native-bouncy-checkbox": "^4.0.0",
     "react-native-bouncy-checkbox-group": "^1.0.0",
     "react-native-calendar-strip": "^1.4.2",
