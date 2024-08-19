@@ -21,6 +21,7 @@ import {
   InstaIcon,
   NotepadText,
   Landmark,
+  UserX,
   Envelope,
   LogOut,
 } from "../assets/icons/Icons";
@@ -59,6 +60,7 @@ function Profile() {
       flex: 1,
       backgroundColor: colors.background,
     },
+
     logout: {
       position: "absolute",
       padding: 20,
@@ -100,6 +102,10 @@ function Profile() {
       color: colors.grey,
       textDecorationLine: "underline",
     },
+    containerCTA: {
+      width: "90%",
+      marginHorizontal: "auto",
+    },
     profileCTA: {
       marginVertical: 15,
       alignItems: "center",
@@ -110,7 +116,7 @@ function Profile() {
       paddingVertical: 17,
       paddingHorizontal: 20,
       borderRadius: 10,
-      width: "90%",
+      width: "100%",
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
@@ -132,7 +138,7 @@ function Profile() {
     },
     profileSwitcher: {
       paddingHorizontal: 20,
-      width: "90%",
+      width: "100%",
       marginVertical: 12,
     },
     switcherToggle: {
@@ -161,6 +167,7 @@ function Profile() {
     separatorStick: {
       marginVertical: 20,
       height: 1,
+      width: "90%",
       backgroundColor: colors.grey,
     },
     profileMediaInsta: {
@@ -269,79 +276,85 @@ function Profile() {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.profileCTA}>
-        <TouchableOpacity
-          style={[styles.profileButton, styles.disabled]}
-          disabled={true}
-        >
-          <View style={styles.CTAContent}>
-            <IdCard
-              stroke={colors.black}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-            <Text style={styles.profileBtnText}>Mes informations</Text>
-          </View>
-          <ChevronRight
-            stroke={colors.black}
-            strokeWidth={1.75}
-            width={18}
-            height={18}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.profileButton}
-          onPress={() => navigation.navigate("ChangePassword")}
-        >
-          <View style={styles.CTAContent}>
-            <Lock
-              stroke={colors.black}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-            <Text style={styles.profileBtnText}>Modifier mon mot de passe</Text>
-          </View>
-          <ChevronRight
-            stroke={colors.black}
-            strokeWidth={1.75}
-            width={18}
-            height={18}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.profileButton, styles.disabled]}
-          disabled={true}
-        >
-          <View style={styles.CTAContent}>
-            <UserRoundPen
-              stroke={colors.black}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-            <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
-          </View>
-          <ChevronRight
-            stroke={colors.black}
-            strokeWidth={1.75}
-            width={18}
-            height={18}
-          />
-        </TouchableOpacity>
-        <View style={styles.profileSwitcher}>
-          <View style={styles.switcherToggle}>
-            <View style={styles.switcherContent}>
-              <Text style={styles.profileBtnSwitch}>Mode sombre</Text>
-              <Switch
-                trackColor={{ false: colors.grey, true: colors.blue_variable }}
-                thumbColor={isEnabled ? colors.white : colors.white}
-                onValueChange={toggleTheme}
-                value={isDarkMode}
-              ></Switch>
+      <View style={styles.containerCTA}>
+        <View style={styles.profileCTA}>
+          <TouchableOpacity
+            style={[styles.profileButton, styles.disabled]}
+            disabled={true}
+          >
+            <View style={styles.CTAContent}>
+              <IdCard
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+              <Text style={styles.profileBtnText}>Mes informations</Text>
             </View>
-            {/* <View style={styles.switcherContent}>
+            <ChevronRight
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.profileButton}
+            onPress={() => navigation.navigate("ChangePassword")}
+          >
+            <View style={styles.CTAContent}>
+              <Lock
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+              <Text style={styles.profileBtnText}>
+                Modifier mon mot de passe
+              </Text>
+            </View>
+            <ChevronRight
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.profileButton, styles.disabled]}
+            disabled={true}
+          >
+            <View style={styles.CTAContent}>
+              <UserRoundPen
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+              <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
+            </View>
+            <ChevronRight
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
+          </TouchableOpacity>
+          <View style={styles.profileSwitcher}>
+            <View style={styles.switcherToggle}>
+              <View style={styles.switcherContent}>
+                <Text style={styles.profileBtnSwitch}>Mode sombre</Text>
+                <Switch
+                  trackColor={{
+                    false: colors.grey,
+                    true: colors.blue_variable,
+                  }}
+                  thumbColor={isEnabled ? colors.white : colors.white}
+                  onValueChange={toggleTheme}
+                  value={isDarkMode}
+                ></Switch>
+              </View>
+              {/* <View style={styles.switcherContent}>
               <Text style={styles.profileBtnSwitch}>Notifications</Text>
               <Switch
                 trackColor={{ false: colors.grey, true: colors.blue_variable }}
@@ -350,92 +363,122 @@ function Profile() {
                 value={isNotification}
               ></Switch>
             </View> */}
-          </View>
-          <View style={styles.separatorStick}></View>
-          <View style={styles.containerMediaLinks}>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL("https://www.instagram.com/libelluleapp");
-              }}
-            >
-              <View style={styles.mediaLinks}>
-                <InstaIcon
-                  stroke="#FE068D"
-                  strokeWidth={1.75}
-                  width={18}
-                  height={18}
-                />
-                <Text style={styles.profileMediaInsta}>@libellule</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                Linking.openURL("mailto:support@libellule.app");
-              }}
-            >
-              <View style={styles.mediaLinks}>
-                <Envelope
-                  stroke={colors.blue_variable}
-                  strokeWidth={1.75}
-                  width={18}
-                  height={18}
-                />
-                <Text style={styles.profileMediaMail}>
-                  support@libellule.app
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <TouchableOpacity
-          style={styles.profileButton}
-          onPress={() => {
-            Linking.openURL("https://libellule.app/patchnotes");
-          }}
-        >
-          <View style={styles.CTAContent}>
-            <NotepadText
-              stroke={colors.black}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-            <Text style={styles.profileBtnText}>Journal des mises à jour</Text>
-          </View>
-          <ChevronRight
-            stroke={colors.black}
-            strokeWidth={1.75}
-            width={18}
-            height={18}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.profileButton}
-          onPress={() => {
-            Linking.openURL("https://libellule.app/cgu");
-          }}
-        >
-          <View style={styles.CTAContent}>
-            <Landmark
-              stroke={colors.black}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-            <View>
-              <Text style={styles.profileBtnText}>CGU</Text>
-              <Text style={styles.profileBtnUnderText}>
-                Conditions générales d'utilisation
-              </Text>
+            </View>
+            <View style={styles.separatorStick}></View>
+            <View style={styles.containerMediaLinks}>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL("https://www.instagram.com/libelluleapp");
+                }}
+              >
+                <View style={styles.mediaLinks}>
+                  <InstaIcon
+                    stroke="#FE068D"
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
+                  />
+                  <Text style={styles.profileMediaInsta}>@libellule</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL("mailto:support@libellule.app");
+                }}
+              >
+                <View style={styles.mediaLinks}>
+                  <Envelope
+                    stroke={colors.blue_variable}
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
+                  />
+                  <Text style={styles.profileMediaMail}>
+                    support@libellule.app
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </View>
-          <ChevronRight
-            stroke={colors.black}
-            strokeWidth={1.75}
-            width={18}
-            height={18}
-          />
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.profileButton}
+            onPress={() => {
+              Linking.openURL("https://libellule.app/patchnotes");
+            }}
+          >
+            <View style={styles.CTAContent}>
+              <NotepadText
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+              <Text style={styles.profileBtnText}>
+                Journal des mises à jour
+              </Text>
+            </View>
+            <ChevronRight
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.profileButton}
+            onPress={() => {
+              Linking.openURL("https://libellule.app/cgu");
+            }}
+          >
+            <View style={styles.CTAContent}>
+              <Landmark
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+              <View>
+                <Text style={styles.profileBtnText}>CGU</Text>
+                <Text style={styles.profileBtnUnderText}>
+                  Conditions générales d'utilisation
+                </Text>
+              </View>
+            </View>
+            <ChevronRight
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
+          </TouchableOpacity>
+          <View style={styles.separatorStick}></View>
+          <TouchableOpacity
+            style={[styles.profileButton, { backgroundColor: colors.red700 }]}
+            onPress={() => {
+              Linking.openURL("https://libellule.app/cgu");
+            }}
+          >
+            <View style={styles.CTAContent}>
+              <UserX
+                stroke={colors.white}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+              <View>
+                <Text style={[styles.profileBtnText, { color: colors.white }]}>
+                  Supprimer mon compte
+                </Text>
+              </View>
+            </View>
+            <ChevronRight
+              stroke={colors.white}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
   );

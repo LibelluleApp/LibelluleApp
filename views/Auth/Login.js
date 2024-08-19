@@ -14,7 +14,7 @@ import Input from "../../components/auth/input";
 import { useAuth } from "../../context/AuthContext";
 import { showMessage } from "react-native-flash-message";
 import { ThemeContext } from "./../../utils/themeContext";
-import { Mail, Lock } from "./../../assets/icons/Icons";
+import { Envelope, Lock } from "./../../assets/icons/Icons";
 
 function Login({ navigation }) {
   const { colors } = useContext(ThemeContext);
@@ -150,7 +150,7 @@ function Login({ navigation }) {
               <Input
                 label="Mail"
                 placeholder="Entrer l'adresse mail universitaire"
-                icon={Mail}
+                icon={Envelope}
                 placeholderTextColor={colors.text_placeholder}
                 autoComplete="email"
                 inputMode="email"
