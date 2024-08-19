@@ -41,6 +41,7 @@ export default {
     entitlements: {
       "aps-environment": "production",
     },
+    buildNumber: "1.1",
   },
   android: {
     adaptiveIcon: {
