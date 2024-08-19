@@ -10,6 +10,7 @@ import {
   Alert,
   TouchableOpacity,
   Linking,
+  RefreshControl,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import fetchMailFromZimbra from "../api/Mail/fetchMail";
@@ -264,6 +265,9 @@ function Mails() {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <Mail email={item} />}
             showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={loading} onRefresh={fetchEmails} />
+            }
           />
         )}
       </View>

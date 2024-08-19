@@ -1,7 +1,9 @@
+const IS_DEV = process.env.APP_VARIANT === "development";
+
 export default {
-  name: "Libellule",
+  name: IS_DEV ? "Libellule Dev" : "Libellule",
   slug: "libellule",
-  version: "0.0.2",
+  version: IS_DEV ? "1.0.0" : "1.0.0",
   orientation: "portrait",
   icon: "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
@@ -29,7 +31,9 @@ export default {
       usesNonExemptEncryption: false,
     },
     googleServicesFile: "./GoogleService-Info.plist",
-    bundleIdentifier: "com.libellule.libellule",
+    bundleIdentifier: IS_DEV
+      ? "com.libellule.libellule.dev"
+      : "com.libellule.libellule",
     splash: {
       backgroundColor: "#0760FB",
       image: "./assets/splash.png",
@@ -44,7 +48,7 @@ export default {
       backgroundColor: "#0760FB",
     },
     googleServicesFile: "./google-services.json",
-    package: "com.libellule.libellule",
+    package: IS_DEV ? "com.libellule.libellule.dev" : "com.libellule.libellule",
     splash: {
       backgroundColor: "#0760FB",
       image: "./assets/splash.png",

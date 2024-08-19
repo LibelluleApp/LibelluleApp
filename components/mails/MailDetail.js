@@ -11,6 +11,7 @@ import {
 import { UserRound } from "../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
 import fetchMailFromId from "../../api/Mail/fetchMailDetail";
+import Autolink from "react-native-autolink";
 
 const extractData = (xml) => {
   // Extract content inside <fr> tags
@@ -140,7 +141,17 @@ function MailDetail({ route }) {
     >
       <View style={styles.mailContent}>
         <Text style={styles.subject}>{su}</Text>
-        <Text style={styles.body}>{plainTextContent}</Text>
+        <Autolink
+          text={plainTextContent}
+          textProps={{ style: styles.body, selectable: true }}
+        />
+        {/* <Text
+          style={styles.body}
+          selectable={true}
+          selectionColor={colors.blue700}
+        >
+          {plainTextContent}
+        </Text> */}
       </View>
       <View style={styles.mailSender}>
         <UserRound

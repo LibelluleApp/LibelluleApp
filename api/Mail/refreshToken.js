@@ -3,8 +3,8 @@ import { DOMParser, XMLSerializer } from "xmldom";
 
 async function refreshAuthToken(email_edu, mot_de_passe) {
   try {
-    console.log("Email:", email_edu, "Password:", mot_de_passe);
-
+    // Supprimer l'ancien token
+    await SecureStore.deleteItemAsync("authToken");
     // Créer le document XML avec xmldom
     const doc = new DOMParser().parseFromString(
       `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
