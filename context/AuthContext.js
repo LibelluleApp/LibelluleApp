@@ -105,6 +105,10 @@ export const AuthProvider = ({ children }) => {
   const signOut = async () => {
     try {
       await SecureStore.deleteItemAsync(TOKEN_KEY);
+      await SecureStore.deleteItemAsync("email_edu");
+      await SecureStore.deleteItemAsync("mot_de_passe");
+      await SecureStore.deleteItemAsync("token");
+      await asyncStorage.removeItem("user_data");
       setUserToken(null);
       setIsAuthenticated(false);
       navigation.reset({

@@ -148,6 +148,14 @@ const AppStack = ({ navigation }) => {
         headerShadowVisible: false,
       },
     },
+    {
+      name: "DeleteAccount",
+      component: require("../views/Profile/DeleteAccount").default,
+      options: {
+        title: "Supprimer le compte",
+        headerShadowVisible: false,
+      },
+    },
   ];
   const insets = useSafeAreaInsets();
   return (

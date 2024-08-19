@@ -455,7 +455,7 @@ function Profile() {
           <TouchableOpacity
             style={[styles.profileButton, { backgroundColor: colors.red700 }]}
             onPress={() => {
-              Linking.openURL("https://libellule.app/cgu");
+              navigation.navigate("DeleteAccount");
             }}
           >
             <View style={styles.CTAContent}>
