@@ -25,7 +25,9 @@
         "image": "latest"
       }
     },
-    "production": {}
+    "production": {
+      "autoIncrement": true
+    }
   },
   "submit": {
     "production": {}
