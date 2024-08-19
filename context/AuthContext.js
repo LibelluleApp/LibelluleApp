@@ -16,33 +16,42 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
+
+  const clearAllData = async () => {
+    try {
+      await SecureStore.deleteItemAsync(TOKEN_KEY);
+      await SecureStore.deleteItemAsync("email_edu");
+      await SecureStore.deleteItemAsync("mdpMail");
+      await SecureStore.deleteItemAsync("authToken");
+      await asyncStorage.removeItem("user_data");
+    } catch (error) {
+      console.error("Erreur lors du nettoyage des données.", error);
+    }
+  };
+
   const checkTokenValidity = async () => {
     try {
       if (userToken) {
         const state = await NetInfo.fetch();
         if (!state.isConnected) {
           showMessage({
-            message:
-              "Vous êtes actuellement en mode hors-ligne. Certaines fonctionnalités peuvent ne pas être disponibles.",
+            message: "Vous êtes hors ligne. Certaines fonctionnalités peuvent ne pas être disponibles.",
             type: "warning",
             titleStyle: { fontFamily: "Ubuntu_400Regular" },
             statusBarHeight: 15,
           });
           return;
-        } else {
-          const response = await fetchToken(userToken);
+        }
 
-          if (response.status === "success") {
-            // Le token est valide, pas besoin de faire quoi que ce soit
-          } else {
-            showMessage({
-              message: "Votre session a expiré. Veuillez vous reconnecter.",
-              type: "warning",
-              titleStyle: { fontFamily: "Ubuntu_400Regular" },
-              statusBarHeight: 15,
-            });
-            await signOut();
-          }
+        const response = await fetchToken(userToken);
+        if (response.status !== "success") {
+          showMessage({
+            message: "Votre session a expiré. Veuillez vous reconnecter.",
+            type: "warning",
+            titleStyle: { fontFamily: "Ubuntu_400Regular" },
+            statusBarHeight: 15,
+          });
+          await signOut();
         }
       }
     } catch (error) {
@@ -56,16 +65,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    checkTokenValidity();
-  }, [userToken]);
-
-  useEffect(() => {
-    const loadToken = async () => {
+    const initializeAuth = async () => {
+      await clearAllData();
       try {
         const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);
         if (storedToken) {
-          setUserToken(storedToken);
-          setIsAuthenticated(true);
+          const response = await fetchToken(storedToken);
+          if (response.status === "success") {
+            setUserToken(storedToken);
+            setIsAuthenticated(true);
+          } else {
+            await signOut();
+          }
         }
       } catch (error) {
         console.error("Erreur lors du chargement du token.", error);
@@ -73,29 +84,28 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(false);
     };
 
-    loadToken();
+    initializeAuth();
   }, []);
 
   useEffect(() => {
     setupInterceptor(() => userToken);
+    checkTokenValidity();
   }, [userToken]);
 
   const signIn = async (email_edu, mot_de_passe) => {
     try {
       const result = await login(email_edu, mot_de_passe);
-
       if (result.status === "success") {
-        const token = await SecureStore.getItemAsync(TOKEN_KEY);
+        const token = result.token; // Supposant que vous recevez le token ici
+        await SecureStore.setItemAsync(TOKEN_KEY, token);
         setUserToken(token);
         setIsAuthenticated(true);
         navigation.reset({
           index: 0,
           routes: [{ name: "AppStack" }],
         });
-        return result;
-      } else {
-        return result;
       }
+      return result;
     } catch (error) {
       console.error("Connexion échouée. Veuillez réessayer.", error);
       throw new Error("Connexion échouée. Veuillez réessayer.");
@@ -104,11 +114,7 @@ export const AuthProvider = ({ children }) => {
 
   const signOut = async () => {
     try {
-      await SecureStore.deleteItemAsync(TOKEN_KEY);
-      await SecureStore.deleteItemAsync("email_edu");
-      await SecureStore.deleteItemAsync("mot_de_passe");
-      await SecureStore.deleteItemAsync("token");
-      await asyncStorage.removeItem("user_data");
+      await clearAllData();
       setUserToken(null);
       setIsAuthenticated(false);
       navigation.reset({
@@ -116,10 +122,7 @@ export const AuthProvider = ({ children }) => {
         routes: [{ name: "AuthStack" }],
       });
     } catch (error) {
-      console.error(
-        "Erreur lors de la déconnexion. Veuillez réessayer.",
-        error
-      );
+      console.error("Erreur lors de la déconnexion. Veuillez réessayer.", error);
       throw new Error("Erreur lors de la déconnexion. Veuillez réessayer.");
     }
   };
@@ -129,16 +132,12 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider
-      value={{ isAuthenticated, signIn, signOut, userToken }}
-    >
+    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, userToken }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);
 
 export default AuthContext;
