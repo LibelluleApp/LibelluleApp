@@ -19,6 +19,8 @@ import ButtonAuth from "../components/auth/buttonAuth";
 import Input from "./../components/auth/input";
 import { Envelope, Lock } from "./../assets/icons/Icons";
 import { ThemeContext } from "./../utils/themeContext";
+import connectZimbra from "../api/Mail/connect";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function Mails() {
   const { colors } = useContext(ThemeContext);
@@ -48,10 +50,20 @@ function Mails() {
         setIsAuthenticated(true);
         await fetchEmails();
       } else {
-        Alert.alert(
-          "Erreur de connexion",
-          "Veuillez vérifier vos identifiants."
-        );
+        const response = await connectZimbra(email, password);
+        if (response) {
+          setIsAuthenticated(true);
+          await fetchEmails();
+        } else {
+          Alert.alert(
+            "Erreur de connexion",
+            "Veuillez vérifier vos identifiants."
+          );
+        }
+        // Alert.alert(
+        //   "Erreur de connexion",
+        //   "Veuillez vérifier vos identifiants."
+        // );
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -75,6 +87,12 @@ function Mails() {
   };
 
   const styles = StyleSheet.create({
+    background: {
+      position: "relative",
+      justifyContent: "center",
+      flex: 1,
+      backgroundColor: colors.background,
+    },
     container: {
       flex: 1,
       justifyContent: "center",
@@ -201,45 +219,52 @@ function Mails() {
       //     <ButtonAuth title="Se connecter" onPress={handleLogin} />
       //   </View>
       // </View>
-      <View style={styles.container}>
-        <View style={styles.containerContent}>
-          <View style={styles.titleContent}>
-            <Text style={styles.title}>Se connecter</Text>
-            <Text style={styles.titleDescription}>
-              Pour consulter les mails, il faut se connecter avec les
-              identifiants de l’ENT.
-            </Text>
-          </View>
+      <KeyboardAwareScrollView
+        enableAutomaticScroll={true}
+        // extraScrollHeight={40}
+        keyboardOpeningTime={10}
+        contentContainerStyle={styles.background} // Déplacer les styles ici
+      >
+        <View style={styles.container}>
+          <View style={styles.containerContent}>
+            <View style={styles.titleContent}>
+              <Text style={styles.title}>Se connecter</Text>
+              <Text style={styles.titleDescription}>
+                Pour consulter les mails, il faut se connecter avec les
+                identifiants de l’ENT.
+              </Text>
+            </View>
 
-          <View style={styles.textContent}>
-            <Input
-              label="Mail"
-              placeholder="Entrer l'adresse mail universitaire"
-              icon={Envelope}
-              placeholderTextColor={colors.text_placeholder}
-              autoComplete="email"
-              inputMode="email"
-              secureTextEntry={false}
-              keyboardType="email-address"
-              onChangeText={(text) => setEmail(text)}
-              autoCapitalize="none"
-            />
-            <Input
-              label="Mot de passe"
-              placeholder="Entrer le mot de passe de l'ENT"
-              icon={Lock}
-              placeholderTextColor={colors.text_placeholder}
-              autoComplete="password"
-              secureTextEntry={true}
-              onChangeText={(text) => setPassword(text)}
-            />
-          </View>
+            <View style={styles.textContent}>
+              <Input
+                label="Mail"
+                placeholder="Entrer l'adresse mail universitaire"
+                icon={Envelope}
+                placeholderTextColor={colors.text_placeholder}
+                autoComplete="email"
+                inputMode="email"
+                secureTextEntry={false}
+                keyboardType="email-address"
+                onChangeText={(text) => setEmail(text)}
+                autoCapitalize="none"
+              />
+              <Input
+                label="Mot de passe"
+                placeholder="Entrer le mot de passe de l'ENT"
+                icon={Lock}
+                placeholderTextColor={colors.text_placeholder}
+                autoComplete="password"
+                secureTextEntry={true}
+                onChangeText={(text) => setPassword(text)}
+              />
+            </View>
 
-          <View style={styles.buttonContent}>
-            <ButtonAuth title="Se connecter" onPress={handleLogin} />
+            <View style={styles.buttonContent}>
+              <ButtonAuth title="Se connecter" onPress={handleLogin} />
+            </View>
           </View>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
 

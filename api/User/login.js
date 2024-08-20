@@ -46,8 +46,8 @@ async function login(email_edu, mot_de_passe) {
       mot_de_passe,
     });
     if (response.data.status === "success") {
-      const token = response.data.token;
-      await saveToken(token);
+      // const token = response.data.token;
+      // await saveToken(token);
 
       const userData = { ...response.data };
       delete userData.token;
@@ -56,7 +56,7 @@ async function login(email_edu, mot_de_passe) {
 
       await storeUserData(userData.user);
 
-      return { status: "success", message: "Connexion réussite" };
+      return response.data;
     } else {
       await deleteToken();
       return {

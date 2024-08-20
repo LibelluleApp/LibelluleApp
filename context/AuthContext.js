@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Text, ActivityIndicator } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import login from "../api/User/login";
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
       await SecureStore.deleteItemAsync("email_edu");
       await SecureStore.deleteItemAsync("mdpMail");
       await SecureStore.deleteItemAsync("authToken");
-      await asyncStorage.removeItem("user_data");
+      await AsyncStorage.removeItem("user_data");
     } catch (error) {
       console.error("Erreur lors du nettoyage des données.", error);
     }
@@ -35,7 +36,8 @@ export const AuthProvider = ({ children }) => {
         const state = await NetInfo.fetch();
         if (!state.isConnected) {
           showMessage({
-            message: "Vous êtes hors ligne. Certaines fonctionnalités peuvent ne pas être disponibles.",
+            message:
+              "Vous êtes hors ligne. Certaines fonctionnalités peuvent ne pas être disponibles.",
             type: "warning",
             titleStyle: { fontFamily: "Ubuntu_400Regular" },
             statusBarHeight: 15,
@@ -66,7 +68,9 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const initializeAuth = async () => {
-      await clearAllData();
+      // Supprimer cet appel pour éviter de supprimer les données sauvegardées
+      // await clearAllData();
+
       try {
         const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);
         if (storedToken) {
@@ -122,7 +126,10 @@ export const AuthProvider = ({ children }) => {
         routes: [{ name: "AuthStack" }],
       });
     } catch (error) {
-      console.error("Erreur lors de la déconnexion. Veuillez réessayer.", error);
+      console.error(
+        "Erreur lors de la déconnexion. Veuillez réessayer.",
+        error
+      );
       throw new Error("Erreur lors de la déconnexion. Veuillez réessayer.");
     }
   };
@@ -132,7 +139,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, userToken }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, signIn, signOut, userToken }}
+    >
       {children}
     </AuthContext.Provider>
   );
