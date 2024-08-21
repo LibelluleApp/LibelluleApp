@@ -15,7 +15,12 @@ import ButtonAuth from "../../components/auth/buttonAuth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import register from "../../api/User/register";
 import { showMessage } from "react-native-flash-message";
-import { UserRound, Mail, Lock, ArrowLeft } from "./../../assets/icons/Icons";
+import {
+  UserRound,
+  Envelope,
+  Lock,
+  ArrowLeft,
+} from "./../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
 
 // Options statiques pour le BUT et l'année
@@ -417,7 +422,7 @@ const Register = () => {
                 <Input
                   label="Email universitaire"
                   placeholder="Entrer l'adresse mail universitaire"
-                  icon={Mail}
+                  icon={Envelope}
                   placeholderTextColor={colors.text_placeholder}
                   autoComplete="email"
                   inputMode="email"
