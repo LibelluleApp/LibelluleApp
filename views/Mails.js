@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
   View,
+  ScrollView,
   Text,
   TextInput,
   Button,
@@ -93,13 +94,12 @@ function Mails() {
       flex: 1,
       backgroundColor: colors.background,
     },
-    container: {
+    containerLogin: {
       flex: 1,
       justifyContent: "center",
       backgroundColor: colors.background,
-      paddingTop: 20,
     },
-    containerContent: {
+    containerContentLogin: {
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
@@ -107,31 +107,31 @@ function Mails() {
       width: "90%",
       alignSelf: "center",
     },
-    titleContent: {
+    titleContentLogin: {
       alignItems: "center",
       alignSelf: "center",
       width: "100%",
       gap: 5,
     },
-    textContent: {
+    textLogin: {
       width: "100%",
       alignSelf: "center",
       gap: 20,
     },
-    title: {
+    titleLogin: {
       fontFamily: "Ubuntu_700Bold",
       alignSelf: "flex-start",
       fontSize: 27,
       letterSpacing: -1,
       color: colors.black,
     },
-    titleDescription: {
+    titleDescriptionLogin: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       color: colors.grey,
       alignSelf: "flex-start",
     },
-    buttonContent: {
+    buttonLogin: {
       width: "100%",
       alignSelf: "center",
     },
@@ -158,23 +158,31 @@ function Mails() {
     // button: {
     //   width: "80%",
     // },
-    text: {
-      fontFamily: "Ubuntu_400Regular",
-      fontSize: 13,
-      color: colors.grey,
-      marginBottom: 20,
+    containerMails: {
+      flex: 1,
+      backgroundColor: colors.background,
     },
-    link: {
-      fontFamily: "Ubuntu_400Regular",
-      fontSize: 13,
-      color: colors.grey,
-      lineHeight: 20,
-      textDecorationLine: "underline",
-    },
-    content: {
+    contentMails: {
       width: "90%",
       alignSelf: "center",
-      paddingTop: 25,
+      paddingTop: 20,
+      gap: 15,
+    },
+    descriptionMails: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    textDescriptionMails: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 14,
+      color: colors.grey,
+    },
+    linkDescriptionMails: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 14,
+      color: colors.grey,
+      textDecorationLine: "underline",
     },
     emailItem: {
       padding: 10,
@@ -225,17 +233,17 @@ function Mails() {
         keyboardOpeningTime={10}
         contentContainerStyle={styles.background} // Déplacer les styles ici
       >
-        <View style={styles.container}>
-          <View style={styles.containerContent}>
-            <View style={styles.titleContent}>
-              <Text style={styles.title}>Se connecter</Text>
-              <Text style={styles.titleDescription}>
+        <View style={styles.containerLogin}>
+          <View style={styles.containerContentLogin}>
+            <View style={styles.titleContentLogin}>
+              <Text style={styles.titleLogin}>Se connecter</Text>
+              <Text style={styles.titleDescriptionLogin}>
                 Pour consulter les mails, il faut se connecter avec les
                 identifiants de l’ENT.
               </Text>
             </View>
 
-            <View style={styles.textContent}>
+            <View style={styles.textLogin}>
               <Input
                 label="Mail"
                 placeholder="Entrer l'adresse mail universitaire"
@@ -259,7 +267,7 @@ function Mails() {
               />
             </View>
 
-            <View style={styles.buttonContent}>
+            <View style={styles.buttonLogin}>
               <ButtonAuth title="Se connecter" onPress={handleLogin} />
             </View>
           </View>
@@ -269,32 +277,35 @@ function Mails() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.text}>
-          Cette page vous propose une prévisualisation de vos mails. Pour plus
-          de fonctionnalités, connectez-vous à votre{" "}
+    <View style={styles.containerMails}>
+      <View style={styles.contentMails}>
+        <View style={styles.descriptionMails}>
+          <Text style={styles.textDescriptionMails}>
+            Accès à toutes les fonctionnalités sur{" "}
+          </Text>
           <TouchableOpacity
             onPress={() => {
               Linking.openURL("https://webmail.univ-poitiers.fr/");
             }}
           >
-            <Text style={styles.link}>webmail.</Text>
+            <Text style={styles.linkDescriptionMails}>Zimbra</Text>
           </TouchableOpacity>
-        </Text>
-        {loading ? (
-          <ActivityIndicator size="large" color={colors.primary} />
-        ) : (
-          <FlatList
-            data={emails}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <Mail email={item} />}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={loading} onRefresh={fetchEmails} />
-            }
-          />
-        )}
+        </View>
+        <View style={styles.listMails}>
+          {loading ? (
+            <ActivityIndicator size="large" color={colors.primary} />
+          ) : (
+            <FlatList
+              data={emails}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => <Mail email={item} />}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={loading} onRefresh={fetchEmails} />
+              }
+            />
+          )}
+        </View>
       </View>
     </View>
   );

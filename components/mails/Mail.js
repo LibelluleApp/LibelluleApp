@@ -15,7 +15,7 @@ function Mail({ email }) {
       borderRadius: 10,
       paddingHorizontal: 15,
       paddingVertical: 13,
-      marginVertical: 5,
+      marginVertical: 10,
     },
     sender: {
       fontFamily: "Ubuntu_400Regular",

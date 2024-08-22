@@ -101,7 +101,7 @@ function MailDetail({ route }) {
     },
     mailSender: {
       width: "90%",
-      marginTop: 20,
+      marginVertical: 20,
       backgroundColor: colors.white_background,
       borderRadius: 10,
       padding: 20,

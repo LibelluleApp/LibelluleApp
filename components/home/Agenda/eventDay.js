@@ -1,7 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Text, View, StyleSheet, Image, ActivityIndicator } from "react-native";
 import PropTypes from "prop-types";
-import { Clock } from "../../../assets/icons/Icons";
+
+import {
+  Thermometer,
+  Clock,
+  Cloud,
+  Sun,
+  CloudRain,
+  CloudSun,
+  Cloudy,
+  CloudSunRain,
+  CloudLightning,
+  SnowFlake,
+  Waves,
+} from "../../../assets/icons/Icons";
+
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { Orage } from "../../../assets/icons/Weather";
 import Eval from "./Eval";
@@ -55,10 +69,6 @@ function EventDay({ date }) {
       color: colors.grey_variable,
       textAlign: "center",
     },
-    weatherIcon: {
-      width: 35,
-      height: 35,
-    },
     loadingContainer: {
       flex: 1,
       justifyContent: "center",
@@ -84,6 +94,72 @@ function EventDay({ date }) {
 
   const currentDate = moment(date).format("YYYY-MM-DD");
 
+  // Weather
+  const fetchWeatherData = async () => {
+    try {
+      const response = await fetchWeather(currentDate);
+      setWeather(response.weather);
+    } catch (error) {
+      setError(error);
+      showMessage({
+        message: "Erreur de chargement",
+        description: "Impossible de charger la météo",
+        type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        statusBarHeight: 15,
+      });
+    }
+  };
+
+  const WeatherIcon = ({ iconName }) => {
+    let IconComponent;
+
+    // Mappez les noms des icônes de Lucide aux icônes OpenWeatherMap
+    switch (iconName) {
+      case "01d":
+        IconComponent = Sun;
+        break;
+      case "02d":
+        IconComponent = CloudSun;
+        break;
+      case "03d":
+        IconComponent = Cloud;
+        break;
+      case "04d":
+        IconComponent = Cloudy;
+        break;
+      case "09d":
+        IconComponent = CloudRain;
+        break;
+      case "10d":
+        IconComponent = CloudSunRain;
+        break;
+      case "11d":
+        IconComponent = CloudLightning;
+        break;
+      case "13d":
+        IconComponent = SnowFlake;
+        break;
+      case "50d":
+        IconComponent = Waves;
+        break;
+
+      // Ajoutez d'autres cas pour les autres icônes
+      default:
+        IconComponent = Thermometer; // Icône par défaut
+        break;
+    }
+
+    return (
+      <IconComponent
+        stroke={colors.grey_variable}
+        strokeWidth={1.75}
+        width={21}
+        height={21}
+      />
+    );
+  };
+
   const fetchAgenda = async () => {
     try {
       const response = await fetchWeekAgenda();
@@ -99,22 +175,6 @@ function EventDay({ date }) {
       });
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchWeatherData = async () => {
-    try {
-      const response = await fetchWeather(currentDate);
-      setWeather(response.weather);
-    } catch (error) {
-      setError(error);
-      showMessage({
-        message: "Erreur de chargement",
-        description: "Impossible de charger la météo",
-        type: "danger",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
-      });
     }
   };
 
@@ -174,7 +234,7 @@ function EventDay({ date }) {
               height={18}
             />
             {hourOfDay.totalHours === "00:00" ? (
-              <Text style={styles.hourContent}>Pas de cours</Text>
+              <Text style={styles.hourContent}>Aucun de cours</Text>
             ) : (
               <Text style={styles.hourContent}>
                 {hourOfDay.totalHours} de cours
@@ -185,12 +245,13 @@ function EventDay({ date }) {
             {weather ? (
               <>
                 <Text style={styles.weatherContent}>{weather.temp}°C</Text>
-                <Image
+                <WeatherIcon iconName={weather.icon} />
+                {/* <Image
                   source={{
                     uri: `https://openweathermap.org/img/wn/${weather.icon}@2x.png`,
                   }}
-                  style={styles.weatherIcon}
-                />
+                  style={{ width: 20, height: 20 }}
+                /> */}
               </>
             ) : (
               <ActivityIndicator size="small" color={colors.grey_variable} />

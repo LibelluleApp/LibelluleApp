@@ -100,7 +100,6 @@ function Profile() {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       color: colors.grey,
-      textDecorationLine: "underline",
     },
     containerCTA: {
       width: "90%",
@@ -253,14 +252,14 @@ function Profile() {
             source={require("../assets/images/logo.png")}
             style={styles.image}
           />
-          <View style={styles.ChangePP}>
+          {/* <View style={styles.ChangePP}>
             <ImageUp
               stroke={colors.white}
               strokeWidth={1.75}
               width={18}
               height={18}
             />
-          </View>
+          </View> */}
         </TouchableOpacity>
 
         <View style={styles.profileContainer}>
@@ -269,7 +268,7 @@ function Profile() {
           </Text>
           <TouchableOpacity
             onPress={() => {
-              Linking.openURL(`mailto:${userData.email_edu}`);
+              Linking.openURL("https://webmail.univ-poitiers.fr/");
             }}
           >
             <Text style={styles.profileEmail}>{userData.email_edu}</Text>

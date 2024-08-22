@@ -934,7 +934,235 @@ function UserX(props) {
   );
 }
 
-// Shapes
+// --- Weather ---
+
+// Thermometer - Lucide
+
+function Thermometer(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-thermometer"
+      {...props}
+    >
+      <Path d="M14 4v10.54a4 4 0 11-4 0V4a2 2 0 014 0z" />
+    </Svg>
+  );
+}
+
+// Cloud - Lucide
+
+function Cloud(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-cloud"
+      {...props}
+    >
+      <Path d="M17.5 19H9a7 7 0 116.71-9h1.79a4.5 4.5 0 110 9z" />
+    </Svg>
+  );
+}
+
+// Sun - Lucide
+
+function Sun(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-sun"
+      {...props}
+    >
+      <Circle cx={12} cy={12} r={4} />
+      <Path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+    </Svg>
+  );
+}
+
+// CloudRain - Lucide
+
+function CloudRain(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-cloud-rain"
+      {...props}
+    >
+      <Path d="M4 14.899A7 7 0 1115.71 8h1.79a4.5 4.5 0 012.5 8.242M16 14v6M8 14v6M12 16v6" />
+    </Svg>
+  );
+}
+
+// CloudSun - Lucide
+
+function CloudSun(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-cloud-sun"
+      {...props}
+    >
+      <Path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41M15.947 12.65a4 4 0 00-5.925-4.128M13 22H7a5 5 0 114.9-6H13a3 3 0 010 6z" />
+    </Svg>
+  );
+}
+
+// Cloudy - Lucide
+
+function Cloudy(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-cloudy"
+      {...props}
+    >
+      <Path d="M17.5 21H9a7 7 0 116.71-9h1.79a4.5 4.5 0 110 9z" />
+      <Path d="M22 10a3 3 0 00-3-3h-2.207a5.502 5.502 0 00-10.702.5" />
+    </Svg>
+  );
+}
+
+// CloudSunRain - Lucide
+
+function CloudSunRain(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-cloud-sun-rain"
+      {...props}
+    >
+      <Path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41M15.947 12.65a4 4 0 00-5.925-4.128M3 20a5 5 0 118.9-4H13a3 3 0 012 5.24M11 20v2M7 19v2" />
+    </Svg>
+  );
+}
+
+// CloudLightning - Lucide
+
+function CloudLightning(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-cloud-lightning"
+      {...props}
+    >
+      <Path d="M6 16.326A7 7 0 1115.71 8h1.79a4.5 4.5 0 01.5 8.973" />
+      <Path d="M13 12l-3 5h4l-3 5" />
+    </Svg>
+  );
+}
+
+// SnowFlake - Lucide
+
+function SnowFlake(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-snowflake"
+      {...props}
+    >
+      <Path d="M2 12L22 12" />
+      <Path d="M12 2L12 22" />
+      <Path d="M20 16l-4-4 4-4M4 8l4 4-4 4M16 4l-4 4-4-4M8 20l4-4 4 4" />
+    </Svg>
+  );
+}
+
+// Waves - Lucide
+
+function Waves(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-waves"
+      {...props}
+    >
+      <Path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" />
+    </Svg>
+  );
+}
+
+// --- Shapes ---
+
 function CircleHome(props) {
   return (
     <Svg
@@ -1019,6 +1247,20 @@ export {
   ResetList,
   LogOut,
   UserX,
+
+  // Weather
+  Thermometer,
+  Cloud,
+  Sun,
+  CloudRain,
+  CloudSun,
+  Cloudy,
+  CloudSunRain,
+  CloudLightning,
+  SnowFlake,
+  Waves,
+
+  // Shapes
   CircleHome,
   SquareHome,
 };

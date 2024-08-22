@@ -125,7 +125,7 @@ const ChangePassword = () => {
               await lostPasswordConnected();
               showMessage({
                 message:
-                  "Un mail de réinitialisation de mot de passe vous a été envoyé",
+                  "Un mail de réinitialisation de mot de passe a été envoyé",
                 type: "success",
                 titleStyle: { fontFamily: "Ubuntu_400Regular" },
                 statusBarHeight: 15,
@@ -165,18 +165,18 @@ const ChangePassword = () => {
           <View style={styles.passwordContainerContent}>
             <Input
               label="Mot de passe actuel"
-              placeholder="Votre mot de passe actuel"
+              placeholder="Entrer le mot de passe actuel"
               icon={Lock}
-              placeholderTextColor="#A3A3A3"
+              placeholderTextColor={colors.text_placeholder}
               autoComplete="password"
               secureTextEntry={true}
               onChangeText={setCurrentPassword}
             />
             <Input
               label="Nouveau mot de passe"
-              placeholder="Votre nouveau mot de passe"
+              placeholder="Entrer le nouveau mot de passe"
               icon={Lock}
-              placeholderTextColor="#A3A3A3"
+              placeholderTextColor={colors.text_placeholder}
               autoComplete="password"
               secureTextEntry={true}
               onChangeText={setNewPassword}
@@ -184,8 +184,8 @@ const ChangePassword = () => {
             <Input
               label="Confirmer mot de passe"
               icon={Lock}
-              placeholder="Confirmer votre mot de passe"
-              placeholderTextColor="#A3A3A3"
+              placeholder="Confirmer le nouveau mot de passe"
+              placeholderTextColor={colors.text_placeholder}
               autoComplete="password"
               secureTextEntry={true}
               onChangeText={setConfirmPassword}
@@ -198,26 +198,26 @@ const ChangePassword = () => {
               {
                 key: "MIN_LENGTH",
                 ruleValue: 9,
-                label: "Votre mot de passe doit contenir au moins 9 caractères",
+                label: "Le mot de passe doit contenir au moins 9 caractères",
               },
               {
                 key: "LOWERCASE_LETTER",
                 label:
-                  "Votre mot de passe doit contenir au moins une lettre minuscule",
+                  "Le mot de passe doit contenir au moins une lettre minuscule",
               },
               {
                 key: "UPPERCASE_LETTER",
                 label:
-                  "Votre mot de passe doit contenir au moins une lettre majuscule",
+                  "Le mot de passe doit contenir au moins une lettre majuscule",
               },
               {
                 key: "NUMERIC",
-                label: "Votre mot de passe doit contenir au moins un chiffre",
+                label: "Le mot de passe doit contenir au moins un chiffre",
               },
               {
                 key: "SPECIAL_CHARS",
                 label:
-                  "Votre mot de passe doit contenir au moins un caractère spécial",
+                  "Le mot de passe doit contenir au moins un caractère spécial",
               },
               {
                 key: "PASSWORDS_MATCH",

@@ -64,7 +64,7 @@ const PaginationHeader = ({
     counts: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginTop: 10,
+      marginTop: 2,
       marginBottom: 20,
       width: "90%",
       marginHorizontal: "auto",
@@ -74,10 +74,9 @@ const PaginationHeader = ({
       justifyContent: "center",
       borderColor: colors.red_variable,
       borderWidth: 1,
-      paddingHorizontal: 13,
       paddingVertical: 7,
       borderRadius: 10,
-      width: "48%",
+      width: "51%",
     },
     taskCount: {
       flexDirection: "row",
@@ -85,9 +84,8 @@ const PaginationHeader = ({
       borderColor: colors.blue_variable,
       borderWidth: 1,
       borderRadius: 10,
-      paddingHorizontal: 13,
       paddingVertical: 7,
-      width: "48%",
+      width: "45%",
     },
     evalText: {
       fontFamily: "Ubuntu_400Regular",
@@ -174,10 +172,14 @@ const PaginationHeader = ({
       </View>
       <View style={styles.counts}>
         <View style={styles.evalCount}>
-          <Text style={styles.evalText}>{evalCount} évaluation prévue</Text>
+          <Text style={styles.evalText}>
+            {evalCount} évaluation{evalCount > 1 ? "s prévues" : " prévue"}
+          </Text>
         </View>
         <View style={styles.taskCount}>
-          <Text style={styles.taskText}>{taskCount} tâche restante</Text>
+          <Text style={styles.taskText}>
+            {taskCount} tâche{taskCount > 1 ? "s restantes" : " restante"}
+          </Text>
         </View>
       </View>
     </View>
