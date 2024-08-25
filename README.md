@@ -20,6 +20,9 @@
     <a href="https://www.linkedin.com/in/libellule/">
       <img alt="LinkedIn" src="https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white">
     </a>
+    <a href="https://www.youtube.com/@LibelluleApp">
+      <img alt="YouTube" src="https://img.shields.io/badge/Youtube-ff0000?logo=youtube&logoColor=fff&style=for-the-badge">
+    </a>
     <a href="https://www.figma.com/design/zZKYcCDHp4bXGOJc6M65o4/Libellule?node-id=0-1&t=v9fxudCar8s8TSYq-1">
       <img alt="Figma" src="https://img.shields.io/badge/Figma-F24E1E?logo=figma&logoColor=fff&style=for-the-badge">
     </a>
