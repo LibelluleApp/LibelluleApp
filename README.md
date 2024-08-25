@@ -102,6 +102,7 @@
   - Transmission du rôle de responsable de l'agenda
   - Activation/Désactivation du mode sombre et des notifications
   - Déconnexion
+  - Supression de son compte
 - Informations Libellule
   - Réseaux sociaux (Instagram, LinkedIn)
   - Journal des mises à jour (patchnotes)
