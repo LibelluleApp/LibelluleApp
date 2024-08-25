@@ -68,7 +68,7 @@
 - Liste des mails de l'étudiant
   - Lecture uniquement, pas de réponse ni de suppression
 
-### Menu du restaurant universitaire (Le Crousty)
+### Menu du restaurant universitaire (Le Crousty) (en cours de développement)
 - Accessible depuis l'accueil
 - Informations pratiques sur le restaurant universitaire
 - Menu par jour
@@ -93,13 +93,13 @@
   - Lien vers MMI Dashboard
 
 ### Profil
-- Informations personnelles
+- Informations personnelles (en cours de développement)
   - Affichage/Modification de la photo de profil
   - Prénom, nom, adresse mail universitaire
   - Date de naissance, numéro de téléphone, site internet, comptes de réseaux sociaux (Instagram, Discord, etc.)
 - Options
   - Modification du mot de passe
-  - Transmission du rôle de responsable de l'agenda
+  - Transmission du rôle de responsable de l'agenda (en cours de développement)
   - Activation/Désactivation du mode sombre et des notifications
   - Déconnexion
   - Supression de son compte
@@ -107,33 +107,6 @@
   - Réseaux sociaux (Instagram, LinkedIn)
   - Journal des mises à jour (patchnotes)
   - Conditions générales d'utilisation
-
-
-## 💻 Exécuter localement
-
-Clonez le projet
-
-```bash
-git clone https://link-to-project
-```
-
-Accédez au répertoire du projet
-
-```bash
-cd my-project
-```
-
-Installez les dépendances
-
-```bash
-npm install
-```
-
-Lancez l'application avec Expo
-
-```bash
-npx expo start
-```
 
 
 ## 📱 Captures d'écran
