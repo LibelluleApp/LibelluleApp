@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "450903290499",
+    "project_id": "libellule-91698",
+    "storage_bucket": "libellule-91698.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450903290499:android:6d39da9dc6041b834a21b6",
+        "android_client_info": {
+          "package_name": "com.libellule.libellule.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQau0L-E-mPjt5aQyYoA9UOdcA2irFd20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,7 +5,7 @@ export default {
   slug: "libellule",
   version: IS_DEV ? "1.0.1" : "1.0.1",
   orientation: "portrait",
-  icon: "./assets/ios/logo@3x.png",
+  icon: IS_DEV ? "./assets/dev-icon.png" : "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/splash.png",
@@ -41,20 +41,24 @@ export default {
     entitlements: {
       "aps-environment": "production",
     },
-    buildNumber: "1.2",
+    buildNumber: "1.3",
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: "./assets/adaptive-icon.png",
+      foregroundImage: IS_DEV
+        ? "./assets/dev-icon.png"
+        : "./assets/adaptive-icon.png",
       backgroundColor: "#0760FB",
     },
-    googleServicesFile: "./google-services.json",
+    googleServicesFile: IS_DEV
+      ? "./google-services-dev.json"
+      : "./google-services.json",
     package: IS_DEV ? "com.libellule.libellule.dev" : "com.libellule.libellule",
     splash: {
       backgroundColor: "#0760FB",
       image: "./assets/splash.png",
     },
-    versionCode: 3,
+    versionCode: 4,
   },
   web: {
     favicon: "./assets/favicon.png",

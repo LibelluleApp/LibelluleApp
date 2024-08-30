@@ -88,6 +88,7 @@ function Home() {
     image: {
       width: 50,
       height: 50,
+      borderRadius: 100,
     },
     topContainer: {
       flexDirection: "row",
@@ -121,7 +122,7 @@ function Home() {
               visible={isLoading ? false : true}
             >
               <Image
-                source={require("../assets/images/logo.png")}
+                source={{ uri: user.lien_photo_profil }}
                 style={styles.image}
               />
             </ShimmerPlaceHolder>

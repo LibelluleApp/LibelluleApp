@@ -75,6 +75,7 @@ function Profile() {
     image: {
       width: 70,
       height: 70,
+      borderRadius: 50,
     },
     changePicture: {
       position: "relative",
@@ -249,7 +250,7 @@ function Profile() {
       <View style={styles.topProfile}>
         <TouchableOpacity style={styles.changePicture}>
           <Image
-            source={require("../assets/images/logo.png")}
+            source={{ uri: userData.lien_photo_profil }}
             style={styles.image}
           />
           {/* <View style={styles.ChangePP}>
