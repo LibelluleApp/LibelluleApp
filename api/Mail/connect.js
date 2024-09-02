@@ -5,15 +5,20 @@ async function connectZimbra(email_edu, mot_de_passe) {
   try {
     // Créez le document XML pour la requête SOAP
     const doc = new DOMParser().parseFromString(
-      `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-        <soap:Header/>
-        <soap:Body>
-          <AuthRequest xmlns="urn:zimbraAccount">
+      `<?xml version="1.0" ?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Header>
+        <context xmlns="urn:zimbra">
+            <format type="xml"/>
+        </context>
+    </soap:Header>
+    <soap:Body>
+        <AuthRequest xmlns="urn:zimbraAccount">
             <account by="name">${email_edu}</account>
             <password>${mot_de_passe}</password>
-          </AuthRequest>
-        </soap:Body>
-      </soap:Envelope>
+        </AuthRequest>
+    </soap:Body>
+</soap:Envelope>
     `,
       "application/xml"
     );
@@ -31,6 +36,10 @@ async function connectZimbra(email_edu, mot_de_passe) {
         method: "POST",
         headers: {
           "Content-Type": "application/xml",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: 0,
+          "user-agent": "ZimbraSoapClient",
         },
         body: soapBody,
       }

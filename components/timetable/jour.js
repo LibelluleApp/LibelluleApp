@@ -12,7 +12,8 @@ import { TimelineCalendar } from "@howljs/calendar-kit";
 import { MapPin, UserRound, Clock, ResetList } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
 import { ThemeContext } from "./../../utils/themeContext";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
+import { is } from "date-fns/locale";
 
 const getTimetable = async () => {
   try {
@@ -41,6 +42,7 @@ const Jour = () => {
   const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
   const calendarRef = React.useRef(null);
+  const isFocused = useIsFocused();
 
   const styles = StyleSheet.create({
     container: {
@@ -91,6 +93,14 @@ const Jour = () => {
       maxWidth: "100%",
     },
   });
+
+  if (isFocused) {
+    calendarRef.current?.goToDate({
+      hourScroll: true,
+      animatedHour: true,
+      animatedDate: true,
+    });
+  }
 
   const [timetable, setTimetable] = React.useState(null);
 
