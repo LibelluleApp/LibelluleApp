@@ -98,8 +98,9 @@ function ParcourirHome() {
         </TouchableOpacity>
         {user?.groupe_id?.includes("UI") && (
           <TouchableOpacity
-            style={styles.tile}
+            style={[styles.tile, styles.disabled]}
             onPress={() => navigation.navigate("Scolarite")}
+            disabled={true}
           >
             <BookOpen
               stroke={colors.black}
