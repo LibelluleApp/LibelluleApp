@@ -72,7 +72,8 @@
     "react-native-swiper-flatlist": "^3.2.4",
     "react-native-vector-icons": "^10.0.3",
     "react-native-xml2js": "^1.0.3",
-    "reanimated-color-picker": "^3.0.4"
+    "reanimated-color-picker": "^3.0.4",
+    "expo-device": "~6.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

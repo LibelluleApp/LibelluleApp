@@ -5,10 +5,11 @@ import {
   Dimensions,
   ActivityIndicator,
   Text,
+  TouchableOpacity,
 } from "react-native";
 
 import { TimelineCalendar } from "@howljs/calendar-kit";
-import { MapPin, UserRound, Clock } from "../../assets/icons/Icons";
+import { MapPin, UserRound, Clock, ResetList } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
 import { ThemeContext } from "./../../utils/themeContext";
 import { useNavigation } from "@react-navigation/native";
@@ -39,6 +40,7 @@ function formatProfessorName(professor) {
 const Jour = () => {
   const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
+  const calendarRef = React.useRef(null);
 
   const styles = StyleSheet.create({
     container: {
@@ -107,9 +109,29 @@ const Jour = () => {
   }
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={{
+          padding: 15,
+          backgroundColor: colors.background,
+          alignSelf: "flex-end",
+          position: "absolute",
+          zIndex: 99,
+          marginTop: 13,
+        }}
+        onPress={() =>
+          calendarRef.current?.goToDate({
+            hourScroll: true,
+            animatedHour: true,
+            animatedDate: true,
+          })
+        }
+      >
+        <ResetList stroke={colors.grey_variable} strokeWidth={1.75} />
+      </TouchableOpacity>
       <TimelineCalendar
         minDate={"2024-09-02"}
         showWeekNumber={true}
+        ref={calendarRef}
         start={8}
         end={18.5}
         viewMode="day"

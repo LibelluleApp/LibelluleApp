@@ -58,7 +58,7 @@ export default {
       backgroundColor: "#0760FB",
       image: "./assets/splash.png",
     },
-    versionCode: 5,
+    versionCode: 6,
   },
   web: {
     favicon: "./assets/favicon.png",

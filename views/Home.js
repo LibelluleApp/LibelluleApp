@@ -42,7 +42,7 @@ function Home() {
   const [user, setUser] = useState({});
   const today = moment();
   const dayIndex = today.format("ddd");
-  const formattedDate = today.format("ddd D MMMM");
+  const formattedDate = today.format("ddd D MMM");
   const { signOut } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const requestUserPermission = async () => {
