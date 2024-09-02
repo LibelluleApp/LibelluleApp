@@ -3,7 +3,7 @@ const IS_DEV = process.env.APP_VARIANT === "development";
 export default {
   name: IS_DEV ? "Libellule Dev" : "Libellule",
   slug: "libellule",
-  version: IS_DEV ? "1.0.1" : "1.0.1",
+  version: IS_DEV ? "1.0.1" : "1.0.3",
   orientation: "portrait",
   icon: IS_DEV ? "./assets/dev-icon.png" : "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
@@ -41,7 +41,7 @@ export default {
     entitlements: {
       "aps-environment": "production",
     },
-    buildNumber: "1.4",
+    buildNumber: "1.5",
   },
   android: {
     adaptiveIcon: {
@@ -49,6 +49,7 @@ export default {
         ? "./assets/dev-icon.png"
         : "./assets/adaptive-icon.png",
       backgroundColor: "#0760FB",
+      monochromeImage: "./assets/monochrome.png",
     },
     googleServicesFile: IS_DEV
       ? "./google-services-dev.json"
@@ -58,7 +59,7 @@ export default {
       backgroundColor: "#0760FB",
       image: "./assets/splash.png",
     },
-    versionCode: 6,
+    versionCode: 7,
   },
   web: {
     favicon: "./assets/favicon.png",
