@@ -116,6 +116,7 @@ function LostPassword({ navigation }) {
     }
 
     try {
+      navigation.navigate("Login");
       await lostPassword(email_edu);
       showMessage({
         message:
@@ -124,7 +125,6 @@ function LostPassword({ navigation }) {
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
         statusBarHeight: 15,
       });
-      navigation.navigate("Login");
     } catch (error) {
       showMessage({
         message: "Une erreur est survenue",

@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Text, ActivityIndicator } from "react-native";
+import { Text, ActivityIndicator, StyleSheet, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import login from "../api/User/login";
 import ApiManager, { setupInterceptor } from "../api/ApiManager";
 import fetchToken from "../api/User/fetchtoken";
 import NetInfo from "@react-native-community/netinfo";
 import { showMessage } from "react-native-flash-message";
+import { set } from "date-fns";
 
 const TOKEN_KEY = "secure_user_token";
 const AuthContext = createContext();
@@ -134,8 +135,45 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const styles = StyleSheet.create({
+    backLoading: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#0760FB",
+    },
+    imgContainer: {
+      marginBottom: 20,
+    },
+    img: {
+      width: 350,
+      height: 350,
+    },
+  });
+
   if (isLoading) {
-    return <ActivityIndicator size="large" style={{ alignSelf: "center" }} />;
+    return (
+      <View style={styles.backLoading}>
+        <View style={styles.imgContainer}>
+          <Image
+            source={require("../assets/adaptive-icon.png")}
+            style={styles.img}
+          />
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: 20,
+              fontFamily: "Ubuntu_500Medium",
+              alignSelf: "center",
+              marginBottom: 20,
+            }}
+          >
+            Chargement...
+          </Text>
+        </View>
+        <ActivityIndicator size="large" color={"#fff"} />
+      </View>
+    );
   }
 
   return (

@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 9.0.5"
+    "version": ">= 9.0.5",
+    "appVersionSource": "local"
   },
   "build": {
     "development": {
@@ -26,6 +27,11 @@
       }
     },
     "production": {
+      "autoIncrement": true,
+      "ios": {
+        "credentialsSource": "remote",
+        "appVersionSource": "config"
+      }
     }
   },
   "submit": {

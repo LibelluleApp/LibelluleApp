@@ -27,8 +27,6 @@ async function connectZimbra(email_edu, mot_de_passe) {
     const xmlSerializer = new XMLSerializer();
     const soapBody = xmlSerializer.serializeToString(doc);
 
-    console.log("Sending SOAP request with body:", soapBody);
-
     // Envoyer la requête
     const response = await fetch(
       "https://zimbra.univ-poitiers.fr/service/soap",

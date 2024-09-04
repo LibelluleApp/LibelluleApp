@@ -14,7 +14,6 @@ function ParcourirHome() {
     const getData = async () => {
       try {
         const value = await AsyncStorage.getItem("user_data");
-        console.log("value", value);
         return value ? JSON.parse(value) : null;
       } catch (error) {
         console.error("Error fetching user data:", error);

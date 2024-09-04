@@ -13,7 +13,6 @@ import { MapPin, UserRound, Clock, ResetList } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
 import { ThemeContext } from "./../../utils/themeContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
-import { is } from "date-fns/locale";
 
 const getTimetable = async () => {
   try {
@@ -27,15 +26,11 @@ const getTimetable = async () => {
   }
 };
 function formatProfessorName(professor) {
-  if (!professor) {
-    return null;
-  }
-  const parts = professor.split(" ");
-  if (parts.length == 2) {
-    const prenom = parts[1][0];
-    const nom = parts[0][0].toUpperCase() + parts[0].slice(1).toLowerCase();
-    return `${prenom}. ${nom}`;
-  }
+  const parts = professor?.split(" ");
+  if (parts.length < 2) return professor;
+  const initial = parts[1][0];
+  const nom = parts[0];
+  return `${initial}. ${nom}`;
 }
 
 const Jour = () => {

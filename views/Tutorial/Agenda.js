@@ -12,9 +12,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../utils/themeContext";
 import ButtonAuth from "./../../components/auth/buttonAuth";
+import whoIsChief from "../../api/Agenda/chef";
 
 const TutorialAgenda = () => {
+  const [chef, setChef] = useState(null);
+
   const { colors } = useContext(ThemeContext);
+
+  useEffect(() => {
+    const fetchChef = async () => {
+      const response = await whoIsChief();
+      setChef(response);
+    };
+    fetchChef();
+  }, []);
 
   styles = StyleSheet.create({
     background: {
@@ -95,6 +106,13 @@ const TutorialAgenda = () => {
       console.log(e);
     }
   };
+  if (!chef) {
+    return (
+      <View style={styles.background}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.background}>
@@ -140,7 +158,9 @@ const TutorialAgenda = () => {
               <Text style={styles.textResponsable}>
                 Responsable de l'agenda :{" "}
               </Text>
-              <Text style={styles.textResponsableName}>Amitou Lucas</Text>
+              <Text style={styles.textResponsableName}>
+                {chef.nom + " " + chef.prenom || "N/C"}
+              </Text>
             </View>
           </View>
         </View>

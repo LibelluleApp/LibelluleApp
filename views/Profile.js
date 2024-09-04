@@ -199,7 +199,6 @@ function Profile() {
       // Récupère le token FCM
       const token = await messaging().getToken();
       setFcmToken(token);
-      console.log("FCM Token:", token);
     } catch (error) {
       console.error("Failed to toggle notifications", error);
     }

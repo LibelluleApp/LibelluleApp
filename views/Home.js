@@ -51,9 +51,9 @@ function Home() {
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    if (enabled) {
-      console.log("Authorization status:", authStatus);
-    }
+    // if (enabled) {
+    //   console.log("Authorization status:", authStatus);
+    // }
   };
 
   useEffect(() => {
@@ -62,7 +62,7 @@ function Home() {
         .getToken()
         .then((token) => {
           saveNotifications(token);
-          console.log(token);
+          // console.log(token);
         });
     } else {
       console.log("Permission not granted", authStatus);

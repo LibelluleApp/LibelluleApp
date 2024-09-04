@@ -42,20 +42,18 @@ async function refreshAuthToken(email_edu, mot_de_passe) {
         body: xmlString,
       }
     );
-    console.log(xmlString);
+
     // if (!response.ok) {
     //   throw new Error(`HTTP error! Status: ${response.status}`);
     // }
 
     const data = await response.text();
-    console.log("Response:", data);
 
     // Extraire le nouveau token du XML
     const newToken = await extractTokenFromXML(data);
 
     if (newToken) {
       await SecureStore.setItemAsync("authToken", newToken);
-      console.log("Refreshed token saved:", newToken);
     } else {
       console.error("Failed to extract the token from the response");
     }
