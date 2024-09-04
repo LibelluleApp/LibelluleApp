@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: android-app
-          path: android/app/build/outputs/**/*.apk
+          path: /home/runner/work/LibelluleApp/LibelluleApp/*.aab
 
   ios-build:
     name: Build iOS App
