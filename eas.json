@@ -29,8 +29,7 @@
     "production": {
       "autoIncrement": true,
       "ios": {
-        "credentialsSource": "remote",
-        "appVersionSource": "config"
+        "credentialsSource": "remote"
       }
     }
   },
