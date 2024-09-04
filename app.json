@@ -18,9 +18,7 @@
       "visible": "immersive"
     },
     "owner": "libellule",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "config": {
@@ -35,7 +33,7 @@
       "entitlements": {
         "aps-environment": "production"
       },
-      "buildNumber": "1.6"
+      "buildNumber": "1.7"
     },
     "android": {
       "adaptiveIcon": {
@@ -49,7 +47,7 @@
         "backgroundColor": "#0760FB",
         "image": "./assets/splash.png"
       },
-      "versionCode": 11
+      "versionCode": 12
     },
     "web": {
       "favicon": "./assets/favicon.png"
