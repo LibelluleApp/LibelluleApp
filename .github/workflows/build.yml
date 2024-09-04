@@ -96,15 +96,11 @@ jobs:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Authenticate with Apple
-        run: |
-          echo "$APPLE_APP_SPECIFIC_PASSWORD" | xcrun altool --output-format xml --notarize-app --primary-bundle-id "com.libellule.libellule" --username "$APPLE_ID" --password @stdin
+      - name: Build iOS
+        run: eas build --platform ios --profile production --local
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-
-      - name: Build iOS
-        run: eas build --platform ios --profile production --local
 
       - name: Upload iOS artifact
         uses: actions/upload-artifact@v3
