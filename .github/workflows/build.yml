@@ -106,4 +106,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ios-app
-          path: ios/build/Build/Products/**/*.ipa
+          path: /Users/runner/work/LibelluleApp/LibelluleApp/*.ipa
