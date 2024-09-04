@@ -3,7 +3,7 @@ const IS_DEV = process.env.APP_VARIANT === "development";
 export default {
   name: IS_DEV ? "Libellule Dev" : "Libellule",
   slug: "libellule",
-  version: IS_DEV ? "1.0.1" : "1.0.3",
+  version: IS_DEV ? "1.0.1" : "1.0.4",
   orientation: "portrait",
   icon: IS_DEV ? "./assets/dev-icon.png" : "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
