@@ -27,41 +27,53 @@ async function connectZimbra(email_edu, mot_de_passe) {
     const xmlSerializer = new XMLSerializer();
     const soapBody = xmlSerializer.serializeToString(doc);
 
-    // Envoyer la requête
-    const response = await fetch(
-      "https://zimbra.univ-poitiers.fr/service/soap",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/xml",
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-          Pragma: "no-cache",
-          Expires: 0,
-          "user-agent": "ZimbraSoapClient",
-        },
-        body: soapBody,
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/xml");
+    myHeaders.append("User-Agent", "PostmanRuntime/7.41.2");
+    myHeaders.append("Accept", "*/*");
+    myHeaders.append("Cache-Control", "no-cache");
+    myHeaders.append("Connection", "keep-alive");
+    myHeaders.append("Pragma", "no-cache");
+    myHeaders.append("Expires", "0");
+
+    try {
+      // Supprimez l'ancien token
+      await SecureStore.deleteItemAsync("authToken");
+
+      const responseBis = await fetch(
+        "https://zimbra.univ-poitiers.fr/service/soap",
+        {
+          method: "POST",
+          headers: myHeaders,
+          body: soapBody,
+          credentials: "omit",
+        }
+      );
+      const data = await responseBis.text();
+
+      const responseDoc = new DOMParser().parseFromString(
+        data,
+        "application/xml"
+      );
+      // Envoyer la requête
+
+      // Utiliser DOMParser pour analyser la réponse XML
+
+      // Extraire le token d'authentification
+      const authTokenNode = responseDoc.getElementsByTagName("authToken")[0];
+      const authToken = authTokenNode ? authTokenNode.textContent : null;
+
+      if (authToken) {
+        await SecureStore.setItemAsync("authToken", authToken);
+        await SecureStore.setItemAsync("email_edu", email_edu);
+        await SecureStore.setItemAsync("mdpMail", mot_de_passe);
+        return authToken;
+      } else {
+        console.error("Failed to extract auth token from the response");
+        return null;
       }
-    );
-
-    const data = await response.text();
-
-    // Utiliser DOMParser pour analyser la réponse XML
-    const responseDoc = new DOMParser().parseFromString(
-      data,
-      "application/xml"
-    );
-
-    // Extraire le token d'authentification
-    const authTokenNode = responseDoc.getElementsByTagName("authToken")[0];
-    const authToken = authTokenNode ? authTokenNode.textContent : null;
-
-    if (authToken) {
-      await SecureStore.setItemAsync("authToken", authToken);
-      await SecureStore.setItemAsync("email_edu", email_edu);
-      await SecureStore.setItemAsync("mdpMail", mot_de_passe);
-      return authToken;
-    } else {
-      console.error("Failed to extract auth token from the response");
+    } catch (error) {
+      console.error("Error connecting to Zimbra:", error);
       return null;
     }
   } catch (error) {

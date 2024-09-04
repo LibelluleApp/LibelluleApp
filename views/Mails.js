@@ -229,7 +229,7 @@ function Mails() {
       marginTop: 5,
     },
     listMails: {
-    marginBottom: 20,
+      paddingBottom: 65,
     },
   });
 

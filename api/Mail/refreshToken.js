@@ -38,6 +38,7 @@ async function refreshAuthToken(email_edu, mot_de_passe) {
           "Cache-Control": "no-cache, no-store, must-revalidate",
           Pragma: "no-cache",
           Expires: 0,
+          credentials: "omit",
         },
         body: xmlString,
       }
