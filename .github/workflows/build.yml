@@ -1,10 +1,12 @@
 name: Build Expo App
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  workflow_dispatch:  
+      inputs:
+        platform:
+          description: 'Platform to build (android, ios, or both)'
+          required: true
+          default: 'both'
 
 jobs:
   android-build:
@@ -71,7 +73,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 16
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -81,6 +83,10 @@ jobs:
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Authenticate with Apple
+        run: |
+          echo "$APPLE_APP_SPECIFIC_PASSWORD" | xcrun altool --output-format xml --notarize-app --primary-bundle-id "com.libellule.libellule" --username "$APPLE_ID" --password @stdin
 
       - name: Build iOS
         run: eas build --platform ios --profile production --local
