@@ -41,7 +41,7 @@ export default {
     entitlements: {
       "aps-environment": "production",
     },
-    buildNumber: "1.6",
+    buildNumber: "1.7",
   },
   android: {
     adaptiveIcon: {
@@ -59,7 +59,7 @@ export default {
       backgroundColor: "#0760FB",
       image: "./assets/splash.png",
     },
-    versionCode: 10,
+    versionCode: 11,
   },
   web: {
     favicon: "./assets/favicon.png",
