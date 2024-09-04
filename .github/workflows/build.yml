@@ -2,16 +2,21 @@ name: Build Expo App
 
 on:
   workflow_dispatch:  
-      inputs:
-        platform:
-          description: 'Platform to build (android, ios, or both)'
-          required: true
-          default: 'both'
+    inputs:
+      platform:
+        type: choice
+        description: 'Build sur quelle plateforme ?'
+        options: 
+          - ios
+          - android
+          - les_deux
+        default: 'les_deux'
 
 jobs:
   android-build:
     name: Build Android App
     runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.platform == 'android' || github.event.inputs.platform == 'les_deux' }}
 
     steps:
       - name: Checkout repository
@@ -60,6 +65,7 @@ jobs:
   ios-build:
     name: Build iOS App
     runs-on: macos-latest
+    if: ${{ github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'les_deux' }}
 
     steps:
       - name: Checkout repository
