@@ -19,6 +19,8 @@ const DetailEvent = ({ route }) => {
     event.description = "N/C";
   }
 
+  console.log(event);
+
   const startHour = moment(event.start).format("HH:mm");
   const endHour = moment(event.end).format("HH:mm");
   const duration = moment

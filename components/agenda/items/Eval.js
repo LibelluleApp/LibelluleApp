@@ -16,13 +16,16 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
 
   const styles = StyleSheet.create({
     evalTask: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       backgroundColor: colors.red700,
       borderRadius: 10,
       marginBottom: 15,
       paddingHorizontal: 17,
       paddingVertical: 12,
     },
-    evalTop: {
+    evalLeft: {
       flexDirection: "row",
       alignItems: "center",
       gap: 7,
@@ -32,31 +35,6 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
       fontSize: 16,
       color: colors.white,
     },
-    evalBottom: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginTop: 10,
-    },
-    evalBottomLeft: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 7,
-    },
-    evalBottomRight: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 5,
-    },
-    evalContentDate: {
-      fontFamily: "Ubuntu_400Regular",
-      color: colors.white,
-      fontSize: 13,
-    },
-    evalContentMore: {
-      fontFamily: "Ubuntu_500Medium",
-      color: colors.white,
-      fontSize: 13,
-    },
   });
 
   const [dates, setDates] = useState(moment(date).format("ddd D MMMM"));
@@ -65,7 +43,7 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
       style={styles.evalTask}
       onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
     >
-      <View style={styles.evalTop}>
+      <View style={styles.evalLeft}>
         <CircleAlert
           stroke={colors.white}
           width={20}
@@ -76,27 +54,13 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
           [Évaluation] {matiere || "Titre non disponible"}
         </Text>
       </View>
-      <View style={styles.evalBottom}>
-        <View style={styles.evalBottomLeft}>
-          <Calendar
-            stroke={colors.white}
-            width={15}
-            height={15}
-            strokeWidth={1.75}
-          />
-          <Text style={styles.evalContentDate}>
-            {dates || "Date non disponible"}
-          </Text>
-        </View>
-        <View style={styles.evalBottomRight}>
-          <Text style={styles.evalContentMore}>Voir plus</Text>
-          <ChevronRight
-            stroke={colors.white}
-            strokeWidth={1.75}
-            width={18}
-            height={18}
-          />
-        </View>
+      <View style={styles.evalRight}>
+        <ChevronRight
+          stroke={colors.white}
+          strokeWidth={1.75}
+          width={18}
+          height={18}
+        />
       </View>
     </TouchableOpacity>
   );

@@ -148,7 +148,7 @@ const TutorialAgenda = () => {
             </View>
           </View>
           <View style={styles.responsableContainer}>
-            <Student
+            <Check
               stroke={colors.black}
               strokeWidth={1.75}
               width={18}

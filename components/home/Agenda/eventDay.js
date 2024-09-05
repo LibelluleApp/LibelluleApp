@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Text, View, StyleSheet, Image, ActivityIndicator } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import PropTypes from "prop-types";
 
 import {
@@ -64,6 +72,11 @@ function EventDay({ date }) {
       alignItems: "center",
     },
     weatherContent: {
+      flexDirection: "row",
+      gap: 8,
+      alignItems: "center",
+    },
+    weatherTitle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
       color: colors.grey_variable,
@@ -243,8 +256,13 @@ function EventDay({ date }) {
           </View>
           <View style={styles.weatherContainer}>
             {weather ? (
-              <>
-                <Text style={styles.weatherContent}>{weather.temp}°C</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL("https://openweathermap.org/city/3037598");
+                }}
+                style={styles.weatherContent}
+              >
+                <Text style={styles.weatherTitle}>{weather.temp}°C</Text>
                 <WeatherIcon iconName={weather.icon} />
                 {/* <Image
                   source={{
@@ -252,7 +270,7 @@ function EventDay({ date }) {
                   }}
                   style={{ width: 20, height: 20 }}
                 /> */}
-              </>
+              </TouchableOpacity>
             ) : (
               <ActivityIndicator size="small" color={colors.grey_variable} />
             )}
