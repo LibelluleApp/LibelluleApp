@@ -225,16 +225,6 @@ function Profile() {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.logout}>
-        <TouchableOpacity onPress={() => handleConfirmLogout()}>
-          <LogOut
-            stroke={colors.grey_variable}
-            strokeWidth={1.75}
-            width={20}
-            height={20}
-          />
-        </TouchableOpacity>
-      </View>
       <View style={styles.topProfile}>
         <TouchableOpacity style={styles.changePicture}>
           <Image
@@ -445,6 +435,30 @@ function Profile() {
             />
           </TouchableOpacity>
           <View style={styles.separatorStick}></View>
+
+          <TouchableOpacity
+            style={[
+              styles.profileButton,
+              {
+                backgroundColor: colors.red_background_variable,
+              },
+            ]}
+            onPress={() => handleConfirmLogout()}
+          >
+            <View style={styles.CTAContent}>
+              <LogOut
+                stroke={colors.red700}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+              <View>
+                <Text style={[styles.profileBtnText, { color: colors.red700 }]}>
+                  Se déconnecter
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity
             style={[styles.profileButton, { backgroundColor: colors.red700 }]}
             onPress={() => {
