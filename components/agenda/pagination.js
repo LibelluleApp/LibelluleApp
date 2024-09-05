@@ -225,7 +225,7 @@ const PaginationHeader = ({
           <TouchableOpacity
             onPress={onNext}
             style={styles.aroundRight}
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+            hitSlop={{ top: 20, bottom: 20, right: 20 }}
           >
             <ArrowRight
               stroke={colors.black}

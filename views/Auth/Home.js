@@ -121,7 +121,7 @@ function AuthStack() {
           <View style={styles.tagContainer}>
             <Tag title="GMP" color="#BB8700" />
             <Tag title="MMI" color="#AC00BB" />
-            <Tag title="CLIO" color="#BB0000" />
+            <Tag title="QLIO" color="#BB0000" />
             <Tag title="GEII" color="#1ABB00" />
             <Tag title="TC" color="#00B0BB" />
           </View>
