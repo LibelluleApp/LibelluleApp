@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -6,11 +6,9 @@ import {
   ActivityIndicator,
   Text,
 } from "react-native";
-
-import { TimelineCalendar } from "@howljs/calendar-kit";
-import { MomentConfig } from "@howljs/calendar-kit";
+import { TimelineCalendar, MomentConfig } from "@howljs/calendar-kit";
 import { ThemeContext } from "./../../utils/themeContext";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import fetchTimetable from "../../api/Timetable/timetable";
 
 const getTimetable = async () => {
@@ -25,9 +23,35 @@ const getTimetable = async () => {
   }
 };
 
-const Jour = () => {
+const Semaine = () => {
   const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
+  const isFocused = useIsFocused(); // Hook to check if the screen is focused
+  const calendarRef = useRef(null); // Ref for TimelineCalendar
+  const [timetable, setTimetable] = useState(null);
+
+  useEffect(() => {
+    // Fetch timetable data when the screen is focused
+    if (isFocused) {
+      getTimetable().then((response) => {
+        setTimetable(response);
+      });
+
+      // Move to today's date when the screen is focused
+      if (calendarRef.current) {
+        calendarRef.current.goToDate({
+          date: new Date(),
+          hourScroll: true,
+          animatedHour: true,
+          animatedDate: true,
+        });
+      }
+    }
+  }, [isFocused]); // Dependency array includes isFocused
+
+  MomentConfig.updateLocale("fr", {
+    weekdaysShort: "Dim_Lun_Mar_Mer_Jeu_Ven_Sam".split("_"),
+  });
 
   const styles = StyleSheet.create({
     container: {
@@ -61,44 +85,18 @@ const Jour = () => {
     },
   });
 
-  const [timetable, setTimetable] = React.useState(null);
-
-  React.useEffect(() => {
-    getTimetable().then((response) => {
-      setTimetable(response);
-    });
-  }, []);
-
-  const events = [
-    {
-      start: "2024-06-14T15:00:00.000Z",
-      end: "2024-06-14T16:00:00.000Z",
-      id: "1",
-      title: "test",
-      isAllDay: true,
-      color: colors.blue_variable,
-    },
-    {
-      start: "2024-06-27T00:00:00.000Z",
-      end: "2024-06-28T00:00:00.000Z",
-      id: "2",
-      title: "test",
-      isAllDay: true,
-      color: colors.blue_variable,
-    },
-  ];
-
   if (!timetable) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color={colors.blue_variable} />
+        <ActivityIndicator
+          size="large"
+          color={colors.blue_variable}
+          style={{ alignItems: "center" }}
+        />
       </View>
     );
   }
 
-  MomentConfig.updateLocale("fr", {
-    weekdaysShort: "Dim_Lun_Mar_Mer_Jeu_Ven_Sam".split("_"),
-  });
   return (
     <View style={styles.container}>
       <TimelineCalendar
@@ -111,6 +109,7 @@ const Jour = () => {
         showNowIndicator={true}
         spaceFromTop={4}
         locale="fr"
+        ref={calendarRef}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
@@ -163,7 +162,7 @@ const Jour = () => {
               <View style={styles.eventContainer}>
                 <Text
                   style={styles.eventTitle}
-                  numberOfLines={4} // Limite le texte à une seule ligne
+                  numberOfLines={4}
                   ellipsizeMode="tail"
                 >
                   {event.title}
@@ -177,4 +176,4 @@ const Jour = () => {
   );
 };
 
-export default Jour;
+export default Semaine;

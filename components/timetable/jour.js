@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -7,7 +7,6 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-
 import { TimelineCalendar } from "@howljs/calendar-kit";
 import { MapPin, UserRound, Clock, ResetList } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
@@ -25,6 +24,7 @@ const getTimetable = async () => {
     return null;
   }
 };
+
 function formatProfessorName(professor) {
   const parts = professor?.split(" ");
   if (parts.length < 2) return professor;
@@ -36,8 +36,24 @@ function formatProfessorName(professor) {
 const Jour = () => {
   const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
-  const calendarRef = React.useRef(null);
+  const calendarRef = useRef(null);
   const isFocused = useIsFocused();
+  const [timetable, setTimetable] = useState(null);
+
+  useEffect(() => {
+    if (isFocused) {
+      getTimetable().then((response) => {
+        setTimetable(response);
+      });
+    }
+    if (isFocused) {
+      calendarRef.current?.goToDate({
+        hourScroll: true,
+        animatedHour: true,
+        animatedDate: true,
+      });
+    }
+  }, [isFocused]);
 
   const styles = StyleSheet.create({
     container: {
@@ -89,22 +105,6 @@ const Jour = () => {
     },
   });
 
-  if (isFocused) {
-    calendarRef.current?.goToDate({
-      hourScroll: true,
-      animatedHour: true,
-      animatedDate: true,
-    });
-  }
-
-  const [timetable, setTimetable] = React.useState(null);
-
-  React.useEffect(() => {
-    getTimetable().then((response) => {
-      setTimetable(response);
-    });
-  }, []);
-
   if (!timetable) {
     return (
       <View style={styles.container}>
@@ -112,6 +112,7 @@ const Jour = () => {
       </View>
     );
   }
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
