@@ -29,6 +29,7 @@ import { ThemeContext } from "./../utils/themeContext";
 // Import explicite des composants à pré-charger
 import EvalHome from "../components/agenda/items/Eval";
 import TaskHome from "../components/agenda/items/Task";
+import { set } from "date-fns";
 
 // Import des fonctions pour le stockage et la récupération des données du cache
 const storeData = async (key, value) => {
@@ -77,6 +78,7 @@ const Agenda = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [evalCount, setEvalCount] = useState(0);
   const [taskCount, setTaskCount] = useState(0);
+  const [totalTaskCount, setTotalTaskCount] = useState(0);
 
   const styles = StyleSheet.create({
     container: {
@@ -335,6 +337,7 @@ const Agenda = () => {
   const calculateCounts = (dayData) => {
     let evalCounter = 0;
     let taskCounter = 0;
+    let totalTaskCounter = 0;
     dayData.forEach((item) => {
       if (item.type === "eval") {
         evalCounter++;
@@ -342,9 +345,15 @@ const Agenda = () => {
         taskCounter++;
       }
     });
+    dayData.forEach((item) => {
+      if (item.type === "devoir") {
+        totalTaskCounter++;
+      }
+    });
 
     setEvalCount(evalCounter);
     setTaskCount(taskCounter);
+    setTotalTaskCount(totalTaskCounter);
   };
 
   if (isLoading) {
@@ -367,6 +376,7 @@ const Agenda = () => {
         currentWeekNumber={currentWeekNumber}
         evalCount={evalCount} // Passage du compteur d'évaluations
         taskCount={taskCount} // Passage du compteur de tâches
+        totalTaskCount={totalTaskCount} // Passage du compteur total de tâches
       />
       <View style={styles.swiperContainer}>
         <SwiperFlatList
