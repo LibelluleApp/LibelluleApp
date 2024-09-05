@@ -3,10 +3,17 @@ import { DOMParser, XMLSerializer } from "xmldom";
 
 async function connectZimbra(email_edu, mot_de_passe) {
   try {
+    await SecureStore.deleteItemAsync("authToken");
+
     // Créez le document XML pour la requête SOAP
     const doc = new DOMParser().parseFromString(
-      `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-        <soap:Header/>
+      `<?xml version="1.0" encoding="UTF-8"?>
+      <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+        <soap:Header>
+          <context xmlns="urn:zimbra">
+            <userAgent name="zmprov" version="0.1"/>
+          </context>
+        </soap:Header>
         <soap:Body>
           <AuthRequest xmlns="urn:zimbraAccount">
             <account by="name">${email_edu}</account>
@@ -31,12 +38,16 @@ async function connectZimbra(email_edu, mot_de_passe) {
         method: "POST",
         headers: {
           "Content-Type": "application/xml",
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+          Expires: "0",
         },
         body: soapBody,
       }
     );
 
     const data = await response.text();
+    console.log(data);
 
     // Utiliser DOMParser pour analyser la réponse XML
     const responseDoc = new DOMParser().parseFromString(
