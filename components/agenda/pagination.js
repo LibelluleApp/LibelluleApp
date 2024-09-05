@@ -25,10 +25,16 @@ const PaginationHeader = ({
 }) => {
   const [chef, setChef] = React.useState({});
   const { colors } = useContext(ThemeContext);
-  // taskCount = totalTaskCount - taskCount;
+  let progression = 0;
+  let percentProgression = 0;
+  taskCount = totalTaskCount - taskCount;
 
-  const progression = taskCount / totalTaskCount;
-  const percentProgression = Math.round(progression * 100);
+  if (totalTaskCount === 0) {
+    progression = 0;
+  } else {
+    progression = taskCount / totalTaskCount;
+    percentProgression = Math.round(progression * 100);
+  }
 
   const styles = StyleSheet.create({
     container: {
