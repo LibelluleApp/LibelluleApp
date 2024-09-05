@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import {
   RefreshControl,
   SafeAreaView,
@@ -6,7 +5,8 @@ import {
   StyleSheet,
   Text,
 } from "react-native";
-import { ThemeContext } from "./../utils/themeContext";
+import React, { useContext } from "react";
+import { ThemeContext } from "../utils/themeContext";
 
 function Notifications() {
   const { colors } = useContext(ThemeContext);
