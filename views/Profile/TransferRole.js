@@ -170,7 +170,7 @@ const TransferRole = () => {
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               data={tp}
-              maxHeight={300}
+              maxHeight={200}
               minHeight={100}
               labelField="label"
               valueField="value"
