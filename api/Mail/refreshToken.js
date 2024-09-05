@@ -7,17 +7,22 @@ async function refreshAuthToken(email_edu, mot_de_passe) {
     await SecureStore.deleteItemAsync("authToken");
     // Créer le document XML avec xmldom
     const doc = new DOMParser().parseFromString(
-      `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
-        <soap:Header/>
-        <soap:Body>
-          <AuthRequest xmlns="urn:zimbraAccount">
+      `<?xml version="1.0" ?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Header>
+        <context xmlns="urn:zimbra">
+            <format type="xml"/>
+        </context>
+    </soap:Header>
+    <soap:Body>
+        <AuthRequest xmlns="urn:zimbraAccount">
             <account by="name">${email_edu}</account>
             <password>${mot_de_passe}</password>
-          </AuthRequest>
-        </soap:Body>
-      </soap:Envelope>
+        </AuthRequest>
+    </soap:Body>
+</soap:Envelope>
     `,
-      "application/soap+xml"
+      "application/xml"
     );
 
     // Sérialiser le document XML
@@ -29,25 +34,27 @@ async function refreshAuthToken(email_edu, mot_de_passe) {
       {
         method: "POST",
         headers: {
-          "Content-Type": "text/xml",
+          "Content-Type": "application/xml",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: 0,
+          credentials: "omit",
         },
         body: xmlString,
       }
     );
-    console.log(xmlString);
+
     // if (!response.ok) {
     //   throw new Error(`HTTP error! Status: ${response.status}`);
     // }
 
     const data = await response.text();
-    console.log("Response:", data);
 
     // Extraire le nouveau token du XML
     const newToken = await extractTokenFromXML(data);
 
     if (newToken) {
       await SecureStore.setItemAsync("authToken", newToken);
-      console.log("Refreshed token saved:", newToken);
     } else {
       console.error("Failed to extract the token from the response");
     }

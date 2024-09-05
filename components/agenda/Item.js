@@ -9,7 +9,6 @@ const TaskHome = lazy(() => import("./items/Task"));
 class Item extends PureComponent {
   render() {
     const { item, currentDay, onTaskCheck, onTaskUncheck } = this.props;
-    console.log(item);
 
     let ComponentToRender = null;
 

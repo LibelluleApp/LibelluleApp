@@ -14,7 +14,6 @@ function ParcourirHome() {
     const getData = async () => {
       try {
         const value = await AsyncStorage.getItem("user_data");
-        console.log("value", value);
         return value ? JSON.parse(value) : null;
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -98,8 +97,9 @@ function ParcourirHome() {
         </TouchableOpacity>
         {user?.groupe_id?.includes("UI") && (
           <TouchableOpacity
-            style={styles.tile}
+            style={[styles.tile, styles.disabled]}
             onPress={() => navigation.navigate("Scolarite")}
+            disabled={true}
           >
             <BookOpen
               stroke={colors.black}

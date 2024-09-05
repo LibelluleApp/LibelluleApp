@@ -15,6 +15,9 @@ const DetailEvent = ({ route }) => {
   const { colors } = useContext(ThemeContext);
 
   const event = route.params.data || route.params.event;
+  if (event.description?.includes("\\n")) {
+    event.description = "N/C";
+  }
 
   const startHour = moment(event.start).format("HH:mm");
   const endHour = moment(event.end).format("HH:mm");

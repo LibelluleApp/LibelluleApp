@@ -16,7 +16,6 @@ async function fetchMailFromZimbra() {
     );
 
     if (response.status === 401 || response.status === 500) {
-      console.log("Token expired, refreshing...");
       authToken = await refreshAuthToken(email_edu, mot_de_passe);
 
       if (!authToken) {

@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   Linking,
   RefreshControl,
+  Platform,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import fetchMailFromZimbra from "../api/Mail/fetchMail";
@@ -22,6 +23,7 @@ import { Envelope, Lock } from "./../assets/icons/Icons";
 import { ThemeContext } from "./../utils/themeContext";
 import connectZimbra from "../api/Mail/connect";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+// import * as Device from "expo-device";
 
 function Mails() {
   const { colors } = useContext(ThemeContext);
@@ -30,6 +32,7 @@ function Mails() {
   const [emails, setEmails] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const [rooted, setRooted] = useState(false);
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -39,6 +42,11 @@ function Mails() {
         await fetchEmails();
       }
     };
+    // const checkIfIsRooted = async () => {
+    //   const isRooted = await Device.isRootedExperimentalAsync();
+    //   setRooted(isRooted);
+    // };
+    // checkIfIsRooted();
 
     checkAuthentication();
   }, []);
@@ -87,6 +95,18 @@ function Mails() {
     setLoading(false);
   };
 
+  const handleOpenLink = () => {
+    if (Platform.OS === "android") {
+      Linking.openURL(
+        "https://developer.android.com/privacy-and-security/keystore?hl=fr"
+      );
+    } else {
+      Linking.openURL(
+        "https://developer.apple.com/documentation/security/keychain-services"
+      );
+    }
+  };
+
   const styles = StyleSheet.create({
     background: {
       position: "relative",
@@ -128,6 +148,12 @@ function Mails() {
     titleDescriptionLogin: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
+      color: colors.grey,
+      alignSelf: "flex-start",
+    },
+    titleWarningLogin: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
       color: colors.grey,
       alignSelf: "flex-start",
     },
@@ -202,6 +228,9 @@ function Mails() {
     body: {
       marginTop: 5,
     },
+    listMails: {
+      paddingBottom: 65,
+    },
   });
 
   if (!isAuthenticated) {
@@ -269,6 +298,14 @@ function Mails() {
 
             <View style={styles.buttonLogin}>
               <ButtonAuth title="Se connecter" onPress={handleLogin} />
+            </View>
+            <View style={styles.titleContentLogin}>
+              <Text style={styles.titleWarningLogin}>
+                En vous connectant, vous autorisez la sauvegarde de vos
+                identifiants encrypté sur votre appareil. {"\n"}
+                {"\n"}Pour en savoir plus sur la sécurité des vos identifiants,
+                nous vous invitons à relire les CGU ( Article 2.1 ).
+              </Text>
             </View>
           </View>
         </View>

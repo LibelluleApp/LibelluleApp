@@ -242,8 +242,7 @@ function ItemCourse({ data, color }) {
                   strokeWidth={1.75}
                 />
                 <Text style={styles.textTeacher}>
-                  {formatProfessorName(data.description) ||
-                    "Professeur indisponible"}
+                  {formatProfessorName(data.description) || "N/C"}
                 </Text>
               </View>
             </View>

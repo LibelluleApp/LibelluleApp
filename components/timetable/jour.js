@@ -5,13 +5,14 @@ import {
   Dimensions,
   ActivityIndicator,
   Text,
+  TouchableOpacity,
 } from "react-native";
 
 import { TimelineCalendar } from "@howljs/calendar-kit";
-import { MapPin, UserRound, Clock } from "../../assets/icons/Icons";
+import { MapPin, UserRound, Clock, ResetList } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
 import { ThemeContext } from "./../../utils/themeContext";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 
 const getTimetable = async () => {
   try {
@@ -25,20 +26,18 @@ const getTimetable = async () => {
   }
 };
 function formatProfessorName(professor) {
-  if (!professor) {
-    return null;
-  }
-  const parts = professor.split(" ");
-  if (parts.length == 2) {
-    const prenom = parts[1][0];
-    const nom = parts[0][0].toUpperCase() + parts[0].slice(1).toLowerCase();
-    return `${prenom}. ${nom}`;
-  }
+  const parts = professor?.split(" ");
+  if (parts.length < 2) return professor;
+  const initial = parts[1][0];
+  const nom = parts[0];
+  return `${initial}. ${nom}`;
 }
 
 const Jour = () => {
   const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
+  const calendarRef = React.useRef(null);
+  const isFocused = useIsFocused();
 
   const styles = StyleSheet.create({
     container: {
@@ -90,6 +89,14 @@ const Jour = () => {
     },
   });
 
+  if (isFocused) {
+    calendarRef.current?.goToDate({
+      hourScroll: true,
+      animatedHour: true,
+      animatedDate: true,
+    });
+  }
+
   const [timetable, setTimetable] = React.useState(null);
 
   React.useEffect(() => {
@@ -107,9 +114,29 @@ const Jour = () => {
   }
   return (
     <View style={styles.container}>
+      <TouchableOpacity
+        style={{
+          padding: 15,
+          backgroundColor: colors.background,
+          alignSelf: "flex-end",
+          position: "absolute",
+          zIndex: 99,
+          marginTop: 13,
+        }}
+        onPress={() =>
+          calendarRef.current?.goToDate({
+            hourScroll: true,
+            animatedHour: true,
+            animatedDate: true,
+          })
+        }
+      >
+        <ResetList stroke={colors.grey_variable} strokeWidth={1.75} />
+      </TouchableOpacity>
       <TimelineCalendar
         minDate={"2024-09-02"}
         showWeekNumber={true}
+        ref={calendarRef}
         start={8}
         end={18.5}
         viewMode="day"

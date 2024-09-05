@@ -282,7 +282,7 @@ const ViewTask = ({ route }) => {
         Cette {task.type == "devoir" ? "tâche" : "évaluation"} n'a pas été
         validé par l'enseignant
       </Text> */}
-      {task.utilisateur_id == userData.id && (
+      {task.utilisateur_id == userData.utilisateur_id && (
         <View style={styles.taskCTA}>
           <TouchableOpacity
             style={styles.taskCTADelete}

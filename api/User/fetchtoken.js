@@ -6,7 +6,10 @@ async function fetchToken(token) {
     return response.data;
   } catch (error) {
     console.error("Error while fetching token:", error);
-    return { status: "error", message: "Could not fetch the token" };
+    return {
+      status: "error",
+      message: "Impossible de vérifier votre connection !",
+    };
   }
 }
 

@@ -42,7 +42,7 @@ function Home() {
   const [user, setUser] = useState({});
   const today = moment();
   const dayIndex = today.format("ddd");
-  const formattedDate = today.format("ddd D MMMM");
+  const formattedDate = today.format("ddd D MMM");
   const { signOut } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const requestUserPermission = async () => {
@@ -51,9 +51,9 @@ function Home() {
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    if (enabled) {
-      console.log("Authorization status:", authStatus);
-    }
+    // if (enabled) {
+    //   console.log("Authorization status:", authStatus);
+    // }
   };
 
   useEffect(() => {
@@ -62,7 +62,7 @@ function Home() {
         .getToken()
         .then((token) => {
           saveNotifications(token);
-          console.log(token);
+          // console.log(token);
         });
     } else {
       console.log("Permission not granted", authStatus);

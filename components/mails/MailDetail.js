@@ -7,11 +7,28 @@ import {
   StyleSheet,
   Linking,
   ScrollView,
+  useWindowDimensions,
 } from "react-native";
 import { UserRound } from "../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
 import fetchMailFromId from "../../api/Mail/fetchMailDetail";
+
 import Autolink from "react-native-autolink";
+import { htmlToText } from "html-to-text";
+
+function decodeHTMLEntities(text) {
+  const entities = {
+    "&#39;": "'",
+    "&quot;": '"',
+    "&amp;": "&",
+    "&lt;": "<",
+    "&gt;": ">",
+    "&#43;": "+",
+    // Ajoutez d'autres entités si nécessaire
+  };
+
+  return text.replace(/&#?\w+;/g, (match) => entities[match] || match);
+}
 
 const extractData = (xml) => {
   // Extract content inside <fr> tags
@@ -41,17 +58,36 @@ const extractData = (xml) => {
 
   // Extract plain text content inside <content> tags within <mp>
   const plainTextContentMatch = xml.match(
-    /<mp ct="text\/plain"[\s\S]*?<content>([\s\S]*?)<\/content>/
+    /<mp[^>]*?ct="text\/plain"[^>]*?><content>([\s\S]*?)<\/content>/i
   );
   const plainTextContent = plainTextContentMatch
     ? plainTextContentMatch[1].trim()
     : "";
+
+  // Extract HTML content inside <content> tags within <mp>
+  const htmlContentMatch = xml.match(
+    /<mp[^>]*?ct="text\/html"[^>]*?><content>([\s\S]*?)<\/content>/i
+  );
+  let htmlContent = htmlContentMatch ? htmlContentMatch[1].trim() : "";
+  htmlContent = htmlContent.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ""); // Supprime les balises <style>
+  htmlContent = htmlContent.replace(/ style="[^"]*"/gi, ""); // Supprime les attributs style
+
+  htmlContent = decodeHTMLEntities(htmlContent);
+
+  htmlContent = htmlToText(htmlContent, {
+    wordwrap: 130,
+    selectors: [
+      { selector: "img", format: "skip" }, // Skip images
+      { selector: "a", options: { ignoreHref: true } }, // Ignore links' href attributes
+    ],
+  });
 
   return {
     content, // Body content inside <fr> tag
     su, // Subject inside <su> tag
     emailAddresses, // List of email addresses
     plainTextContent, // Plain text content from <content> tag
+    htmlContent, // HTML content from <content> tag
   };
 };
 
@@ -119,7 +155,7 @@ function MailDetail({ route }) {
   if (loading) {
     return (
       <View style={styles.container}>
-        <Text>Loading...</Text>
+        <Text>Chargement...</Text>
       </View>
     );
   }
@@ -132,7 +168,8 @@ function MailDetail({ route }) {
     );
   }
 
-  const { content, su, emailAddresses, plainTextContent } = extractData(mail); // Make sure mail.xmlData is correct
+  const { content, su, emailAddresses, plainTextContent, htmlContent } =
+    extractData(mail);
 
   return (
     <ScrollView
@@ -141,17 +178,17 @@ function MailDetail({ route }) {
     >
       <View style={styles.mailContent}>
         <Text style={styles.subject}>{su}</Text>
-        <Autolink
-          text={plainTextContent}
-          textProps={{ style: styles.body, selectable: true }}
-        />
-        {/* <Text
-          style={styles.body}
-          selectable={true}
-          selectionColor={colors.blue700}
-        >
-          {plainTextContent}
-        </Text> */}
+        {htmlContent ? (
+          <Autolink
+            text={htmlContent}
+            textProps={{ style: styles.body, selectable: true }}
+          />
+        ) : (
+          <Autolink
+            text={plainTextContent}
+            textProps={{ style: styles.body, selectable: true }}
+          />
+        )}
       </View>
       <View style={styles.mailSender}>
         <UserRound
@@ -160,7 +197,6 @@ function MailDetail({ route }) {
           width={18}
           height={18}
         />
-
         <Text style={styles.sender}>
           {emailAddresses[0]?.p || emailAddresses[0]?.a || "Expéditeur inconnu"}
         </Text>
