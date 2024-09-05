@@ -116,15 +116,6 @@ const AppStack = ({ navigation }) => {
       },
     },
     {
-      name: "CGU",
-      component: require("../views/Profile/CGU").default,
-      options: {
-        title: "Conditions Générales d'Utilisation",
-        headerShadowVisible: false,
-        presentation: "modal",
-      },
-    },
-    {
       name: "TutorialAgenda",
       component: require("../views/Tutorial/Agenda").default,
       options: {
@@ -153,6 +144,14 @@ const AppStack = ({ navigation }) => {
       component: require("../views/Profile/DeleteAccount").default,
       options: {
         title: "Supprimer le compte",
+        headerShadowVisible: false,
+      },
+    },
+    {
+      name: "TransferRole",
+      component: require("../views/Profile/TransferRole").default,
+      options: {
+        title: "Transférer mon rôle",
         headerShadowVisible: false,
       },
     },

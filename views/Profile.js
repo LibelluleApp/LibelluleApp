@@ -189,20 +189,9 @@ function Profile() {
   const [isEnabled, setIsEnabled] = useState(false);
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [isNotification, setIsNotification] = useState(false);
   const [fcmToken, setFcmToken] = useState("");
   const { signOut } = useAuth();
   const navigation = useNavigation();
-
-  const toggleNotification = async () => {
-    try {
-      // Récupère le token FCM
-      const token = await messaging().getToken();
-      setFcmToken(token);
-    } catch (error) {
-      console.error("Failed to toggle notifications", error);
-    }
-  };
 
   useEffect(() => {
     getProfileData().then((data) => {
@@ -319,26 +308,28 @@ function Profile() {
               height={18}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.profileButton, styles.disabled]}
-            disabled={true}
-          >
-            <View style={styles.CTAContent}>
-              <UserRoundPen
+          {userData.role === "Chef" && (
+            <TouchableOpacity
+              style={[styles.profileButton]}
+              onPress={() => navigation.navigate("TransferRole")}
+            >
+              <View style={styles.CTAContent}>
+                <UserRoundPen
+                  stroke={colors.black}
+                  strokeWidth={1.75}
+                  width={18}
+                  height={18}
+                />
+                <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
+              </View>
+              <ChevronRight
                 stroke={colors.black}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
               />
-              <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
-            </View>
-            <ChevronRight
-              stroke={colors.black}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-          </TouchableOpacity>
+            </TouchableOpacity>
+          )}
           <View style={styles.profileSwitcher}>
             <View style={styles.switcherToggle}>
               <View style={styles.switcherContent}>
