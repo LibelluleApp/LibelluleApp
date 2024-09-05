@@ -4,17 +4,8 @@ import { ThemeContext } from "../../utils/themeContext";
 import { Dropdown } from "react-native-element-dropdown";
 import { Info } from "../../assets/icons/Icons";
 import fetchTp from "../../api/Groupe/fetchTp";
-
-const data = [
-  { label: "Item 1", value: "1", search: "Item 1" },
-  { label: "Item 2", value: "2", search: "Item 2" },
-  { label: "Item 3", value: "3", search: "Item 3" },
-  { label: "Item 4", value: "4", search: "Item 4" },
-  { label: "Item 5", value: "5", search: "Item 5" },
-  { label: "Item 6", value: "6", search: "Item 6" },
-  { label: "Item 7", value: "7", search: "Item 7" },
-  { label: "Item 8", value: "8", search: "Item 8" },
-];
+import { showMessage } from "react-native-flash-message";
+import transferRole from "../../api/Groupe/transferRole";
 
 const TransferRole = () => {
   const [value, setValue] = React.useState();
@@ -109,6 +100,32 @@ const TransferRole = () => {
       console.log(data);
     });
   }, []);
+
+  const handleChange = async () => {
+    if (value) {
+      try {
+        const response = await transferRole(value.value);
+        if (response) {
+          showMessage({
+            message: "Le rôle a été transmis avec succès",
+            type: "success",
+          });
+        }
+      } catch (error) {
+        showMessage({
+          message:
+            error.response?.data?.message || error.message || "Erreur inconnue",
+          type: "danger",
+        });
+      }
+    } else {
+      showMessage({
+        message: "Veuillez sélectionner un étudiant",
+        type: "danger",
+      });
+    }
+  };
+
   return (
     <View style={styles.background}>
       <View style={styles.container}>
@@ -151,7 +168,7 @@ const TransferRole = () => {
           </View>
         </View>
         <View>
-          <TouchableOpacity style={styles.editBtn}>
+          <TouchableOpacity style={styles.editBtn} onPress={handleChange}>
             <Text style={styles.editBtnText}>Transmettre</Text>
           </TouchableOpacity>
           <Text style={styles.textDisclaimer}>

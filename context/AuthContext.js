@@ -6,9 +6,9 @@ import { useNavigation } from "@react-navigation/native";
 import login from "../api/User/login";
 import ApiManager, { setupInterceptor } from "../api/ApiManager";
 import fetchToken from "../api/User/fetchtoken";
-import NetInfo from "@react-native-community/netinfo";
+import NetInfo, { refresh } from "@react-native-community/netinfo";
 import { showMessage } from "react-native-flash-message";
-import { set } from "date-fns";
+import refreshData from "../api/User/refreshData";
 
 const TOKEN_KEY = "secure_user_token";
 const AuthContext = createContext();
