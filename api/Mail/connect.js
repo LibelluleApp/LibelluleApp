@@ -3,8 +3,6 @@ import { DOMParser, XMLSerializer } from "xmldom";
 
 async function connectZimbra(email_edu, mot_de_passe) {
   try {
-    await SecureStore.deleteItemAsync("authToken");
-
     // Créez le document XML pour la requête SOAP
     const doc = new DOMParser().parseFromString(
       `<?xml version="1.0" ?>
@@ -29,21 +27,29 @@ async function connectZimbra(email_edu, mot_de_passe) {
     const xmlSerializer = new XMLSerializer();
     const soapBody = xmlSerializer.serializeToString(doc);
 
-    console.log("Sending SOAP request with body:", soapBody);
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/xml");
+    myHeaders.append("User-Agent", "PostmanRuntime/7.41.2");
+    myHeaders.append("Accept", "*/*");
+    myHeaders.append("Cache-Control", "no-cache");
+    myHeaders.append("Connection", "keep-alive");
+    myHeaders.append("Pragma", "no-cache");
+    myHeaders.append("Expires", "0");
 
-    // Envoyer la requête
-    const response = await fetch(
-      "https://zimbra.univ-poitiers.fr/service/soap",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/xml",
-        },
-        body: soapBody,
-      }
-    );
+    try {
+      // Supprimez l'ancien token
+      await SecureStore.deleteItemAsync("authToken");
 
-    const data = await response.text();
+      const responseBis = await fetch(
+        "https://zimbra.univ-poitiers.fr/service/soap",
+        {
+          method: "POST",
+          headers: myHeaders,
+          body: soapBody,
+          credentials: "omit",
+        }
+      );
+      const data = await responseBis.text();
 
       const responseDoc = new DOMParser().parseFromString(
         data,
