@@ -144,7 +144,7 @@ function Task({ data }) {
                   <Text style={styles.taskDesc}>{item.titre}</Text>
                 </View>
                 <ChevronRight
-                  stroke={colors.black}
+                  stroke={colors.white}
                   strokeWidth={1.75}
                   width={18}
                   height={18}

@@ -21,39 +21,27 @@ function TaskHome({
 
   const styles = StyleSheet.create({
     evalTask: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       backgroundColor: colors.white_background,
       borderRadius: 10,
       marginBottom: 15,
       paddingHorizontal: 17,
       paddingVertical: 12,
     },
-    taskTop: {
+    taskLeft: {
       flexDirection: "row",
       alignItems: "center",
       marginBottom: 5,
     },
-    taskTopContent: {
+    taskLeftContent: {
       gap: 3,
     },
     taskTitle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 16,
       color: colors.black,
-    },
-    taskBottom: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginTop: 10,
-    },
-    taskBottomLeft: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 7,
-    },
-    taskBottomRight: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 5,
     },
     taskContentDate: {
       fontFamily: "Ubuntu_400Regular",
@@ -99,14 +87,14 @@ function TaskHome({
       style={styles.evalTask}
       onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
     >
-      <View style={styles.taskTop}>
+      <View style={styles.taskLeft}>
         <BouncyCheckbox
           fillColor={colors.blue_variable}
           unfillColor={colors.white}
           isChecked={isChecked}
           onPress={handleCheckboxPress}
         />
-        <View style={styles.taskTopContent}>
+        <View style={styles.taskLeftContent}>
           <Text style={[styles.taskTitle, isChecked && styles.strikethrough]}>
             {matiere || "Matière indisponible"}
           </Text>
@@ -117,27 +105,13 @@ function TaskHome({
           </Text>
         </View>
       </View>
-      <View style={styles.taskBottom}>
-        <View style={styles.taskBottomLeft}>
-          <Calendar
-            stroke={colors.black}
-            width={15}
-            height={15}
-            strokeWidth={1.75}
-          />
-          <Text style={styles.taskContentDate}>
-            {dates || "Date indisponible"}
-          </Text>
-        </View>
-        <View style={styles.taskBottomRight}>
-          <Text style={styles.taskContentMore}>Voir plus</Text>
-          <ChevronRight
-            stroke={colors.black}
-            strokeWidth={1.75}
-            width={18}
-            height={18}
-          />
-        </View>
+      <View style={styles.taskRight}>
+        <ChevronRight
+          stroke={colors.black}
+          strokeWidth={1.75}
+          width={18}
+          height={18}
+        />
       </View>
     </TouchableOpacity>
   );
