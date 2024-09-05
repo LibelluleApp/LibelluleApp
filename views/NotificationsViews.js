@@ -20,6 +20,13 @@ function Notifications() {
       backgroundColor: colors.background,
       flex: 1,
     },
+    textNoNotifs: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 15,
+      color: colors.grey_variable,
+      textAlign: "center",
+      marginTop: 20,
+    },
   });
 
   const [refreshing, setRefreshing] = React.useState(false);
@@ -36,7 +43,9 @@ function Notifications() {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
-    ></ScrollView>
+    >
+      <Text style={styles.textNoNotifs}>Pas de nouvelles notifications</Text>
+    </ScrollView>
   );
 }
 
