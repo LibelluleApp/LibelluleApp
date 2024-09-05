@@ -262,6 +262,9 @@ function Profile() {
           >
             <Text style={styles.profileEmail}>{userData.email_edu}</Text>
           </TouchableOpacity>
+          <Text style={styles.profileEmail}>
+            Mon groupe : {userData.groupe_id}
+          </Text>
         </View>
       </View>
       <View style={styles.containerCTA}>

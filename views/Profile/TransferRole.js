@@ -1,11 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
 import { Dropdown } from "react-native-element-dropdown";
 import { Info } from "../../assets/icons/Icons";
 import fetchTp from "../../api/Groupe/fetchTp";
 import { showMessage } from "react-native-flash-message";
 import transferRole from "../../api/Groupe/transferRole";
+import { useAuth } from "../../context/AuthContext";
 
 const TransferRole = () => {
   const [value, setValue] = React.useState();
@@ -13,6 +14,7 @@ const TransferRole = () => {
   const [tp, setTp] = React.useState([]);
 
   const { colors } = React.useContext(ThemeContext);
+  const { signOut } = useAuth();
   const styles = StyleSheet.create({
     background: {
       flex: 1,
@@ -97,33 +99,49 @@ const TransferRole = () => {
   React.useEffect(() => {
     fetchTp().then((data) => {
       setTp(data);
-      console.log(data);
     });
   }, []);
 
   const handleChange = async () => {
-    if (value) {
-      try {
-        const response = await transferRole(value.value);
-        if (response) {
-          showMessage({
-            message: "Le rôle a été transmis avec succès",
-            type: "success",
-          });
-        }
-      } catch (error) {
-        showMessage({
-          message:
-            error.response?.data?.message || error.message || "Erreur inconnue",
-          type: "danger",
-        });
-      }
-    } else {
+    if (!value) {
       showMessage({
         message: "Veuillez sélectionner un étudiant",
         type: "danger",
       });
+      return;
     }
+
+    Alert.alert(
+      "Transfert de rôle",
+      `Voulez-vous vraiment transmettre votre rôle à ${value.label} ? \n Cette action vous déconnectera de l'application.`,
+      [
+        { text: "Annuler", style: "cancel" },
+        {
+          text: "Confirmer",
+          onPress: async () => {
+            try {
+              const response = await transferRole(value.value);
+              if (response) {
+                showMessage({
+                  message: "Le rôle a été transmis avec succès",
+                  type: "success",
+                });
+
+                signOut();
+              }
+            } catch (error) {
+              showMessage({
+                message:
+                  error.response?.data?.message ||
+                  error.message ||
+                  "Erreur inconnue",
+                type: "danger",
+              });
+            }
+          },
+        },
+      ]
+    );
   };
 
   return (

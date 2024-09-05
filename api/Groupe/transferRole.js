@@ -15,7 +15,6 @@ async function transferRole(other_id) {
     });
 
     if (response.status === 200) {
-      await refreshData();
       return response.data;
     } else {
       throw new Error(response);

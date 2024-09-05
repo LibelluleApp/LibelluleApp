@@ -27,6 +27,7 @@ async function refreshData() {
     if (response.status === 200) {
       const userData = { ...response.data };
       await storeUserData(userData);
+      console.log("refreshData", response.data);
       return response.data;
     } else {
       throw new Error(response.message);
