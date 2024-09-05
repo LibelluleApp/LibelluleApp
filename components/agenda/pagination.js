@@ -27,6 +27,7 @@ const PaginationHeader = ({
     container: {
       flexDirection: "column",
       width: "100%",
+      marginBottom: 15,
     },
     responsableContainer: {
       flexDirection: "row",
@@ -91,7 +92,6 @@ const PaginationHeader = ({
     },
     counts: {
       width: "100%",
-      paddingVertical: 5,
       paddingHorizontal: 20,
       borderBottomLeftRadius: 10,
       borderBottomRightRadius: 10,
