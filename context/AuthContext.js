@@ -4,10 +4,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Text, ActivityIndicator, StyleSheet, View, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import login from "../api/User/login";
-import { setupInterceptor } from "../api/ApiManager";
+import ApiManager, { setupInterceptor } from "../api/ApiManager";
 import fetchToken from "../api/User/fetchtoken";
 import NetInfo from "@react-native-community/netinfo";
 import { showMessage } from "react-native-flash-message";
+import { set } from "date-fns";
+
 const TOKEN_KEY = "secure_user_token";
 const AuthContext = createContext();
 
@@ -33,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     try {
       if (userToken) {
         const state = await NetInfo.fetch();
-        if (state.isConnected === false) {
+        if (!state.isConnected) {
           showMessage({
             message:
               "Vous êtes hors ligne. Certaines fonctionnalités peuvent ne pas être disponibles.",
