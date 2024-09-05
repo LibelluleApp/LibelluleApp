@@ -304,7 +304,7 @@ function Mails() {
                 En vous connectant, vous autorisez la sauvegarde de vos
                 identifiants encrypté sur votre appareil. {"\n"}
                 {"\n"}Pour en savoir plus sur la sécurité des vos identifiants,
-                nous vous invitons à relire les CGU ( Article 2.1 ).
+                nous vous invitons à relire les CGU (Article 2.1).
               </Text>
             </View>
           </View>
