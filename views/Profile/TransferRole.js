@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+} from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
 import { Dropdown } from "react-native-element-dropdown";
 import { Info } from "../../assets/icons/Icons";
@@ -162,7 +169,7 @@ const TransferRole = () => {
               rôle.
             </Text>
             <Dropdown
-              mode="modal"
+              mode="default"
               style={[
                 styles.dropdown,
                 isFocus && { borderColor: colors.black },
@@ -170,7 +177,6 @@ const TransferRole = () => {
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               data={tp}
-              maxHeight={200}
               minHeight={100}
               labelField="label"
               valueField="value"
