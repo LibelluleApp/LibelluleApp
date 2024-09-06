@@ -155,6 +155,15 @@ const AppStack = ({ navigation }) => {
         headerShadowVisible: false,
       },
     },
+    {
+      name: "Offline",
+      component: require("../views/Offline/Offline").default,
+      options: {
+        title: "Hors ligne",
+        headerShadowVisible: false,
+        headerShown: false,
+      },
+    },
   ];
   const insets = useSafeAreaInsets();
   return (
