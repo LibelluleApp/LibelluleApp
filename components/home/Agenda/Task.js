@@ -121,7 +121,7 @@ function Task({ data }) {
           <View style={styles.progression}>
             <Text style={styles.progressText}>
               {checkedTask.length}/{data.length}{" "}
-              {data.length === 1 ? "tâche" : "tâches"}
+              {data.length <= 1 ? "tâche" : "tâches"}
             </Text>
             <Text style={styles.progressText}>{percentProgression}%</Text>
           </View>

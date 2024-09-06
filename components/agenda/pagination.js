@@ -203,14 +203,10 @@ const PaginationHeader = ({
       </View>
       <View style={styles.counts}>
         <View style={styles.progression}>
-          {totalTaskCount >= 1 && (
+          {totalTaskCount >= 0 && (
             <Text style={styles.progressTextTask}>
-              {taskCount}/{totalTaskCount} tâche
-            </Text>
-          )}
-          {totalTaskCount < 1 && (
-            <Text style={styles.progressTextTask}>
-              {taskCount}/{totalTaskCount} tâche
+              {taskCount}/{totalTaskCount}{" "}
+              {totalTaskCount <= 1 ? "tâche" : "tâches"}
             </Text>
           )}
           <Text style={styles.progressTextPourcent}>{percentProgression}%</Text>
