@@ -6,6 +6,7 @@ import {
   Hourglass,
   Clock2,
   Clock8,
+  UsersRound,
 } from "./../../assets/icons/Icons";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
@@ -109,6 +110,20 @@ const DetailEvent = ({ route }) => {
                 <Text style={styles.eventInfoTitle}>Enseignant</Text>
                 <Text style={styles.eventInfoDesc}>
                   {event.professor || event.description || "N/C"}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.eventInfoContent}>
+              <UsersRound
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.eventInfoTitle}>Groupe</Text>
+                <Text style={styles.eventInfoDesc}>
+                  {event.groupe || "N/C"}
                 </Text>
               </View>
             </View>
