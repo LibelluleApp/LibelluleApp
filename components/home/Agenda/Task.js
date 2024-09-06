@@ -120,7 +120,8 @@ function Task({ data }) {
         <View style={styles.bottomContainer}>
           <View style={styles.progression}>
             <Text style={styles.progressText}>
-              {checkedTask.length}/{data.length} tâches
+              {checkedTask.length}/{data.length}{" "}
+              {data.length === 1 ? "tâche" : "tâches"}
             </Text>
             <Text style={styles.progressText}>{percentProgression}%</Text>
           </View>
@@ -167,7 +168,8 @@ function Task({ data }) {
         <View style={styles.bottomContainer}>
           <View style={styles.progression}>
             <Text style={styles.progressText}>
-              {checkedTask.length}/{data.length} tâches
+              {checkedTask.length}/{data.length}{" "}
+              {data.length === 1 ? "tâche" : "tâches"}
             </Text>
             <Text style={styles.progressText}>{percentProgression}%</Text>
           </View>
