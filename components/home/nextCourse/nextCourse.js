@@ -94,8 +94,9 @@ function ItemCourse({ data, color }) {
     },
     teacher: {
       flexDirection: "row",
-      gap: 15,
       alignItems: "center",
+      width: "80%",
+      gap: 15,
     },
     textTeacher: {
       fontFamily: "Ubuntu_400Regular",
@@ -225,23 +226,33 @@ function ItemCourse({ data, color }) {
           </Text>
           <View style={styles.descriptionContainer}>
             <View style={styles.teacher}>
-              <View style={styles.content}>
+              <View style={[styles.content, { width: "40%" }]}>
                 <MapPin
                   stroke={colors.white}
                   width={14}
                   height={14}
                   strokeWidth={1.75}
                 />
-                <Text style={styles.textTeacher}>{data.lieu || "N/C"}</Text>
+                <Text
+                  style={styles.textTeacher}
+                  numberOfLines={1} // Limite le texte à une seule ligne
+                  ellipsizeMode="tail"
+                >
+                  {data.lieu || "N/C"}
+                </Text>
               </View>
-              <View style={styles.content}>
+              <View style={[styles.content, { width: "60%" }]}>
                 <UserRound
                   stroke={colors.white}
                   width={14}
                   height={14}
                   strokeWidth={1.75}
                 />
-                <Text style={styles.textTeacher}>
+                <Text
+                  style={styles.textTeacher}
+                  numberOfLines={1} // Limite le texte à une seule ligne
+                  ellipsizeMode="tail"
+                >
                   {formatProfessorName(data.description) || "N/C"}
                 </Text>
               </View>
