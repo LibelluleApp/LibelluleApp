@@ -61,6 +61,7 @@ const PaginationHeader = ({
       fontFamily: "Ubuntu_500Medium",
       fontSize: 14,
       color: colors.grey,
+      width: "49%",
     },
     content: {
       marginTop: 15,
@@ -138,8 +139,12 @@ const PaginationHeader = ({
         <Check stroke={colors.grey} strokeWidth={1.75} width={17} height={17} />
         <View style={styles.textResponsableContent}>
           <Text style={styles.textResponsable}>Responsable de l'agenda : </Text>
-          <Text style={styles.textResponsableName}>
-            {chef.nom + " " + chef.prenom || "N/C"}
+          <Text
+            style={styles.textResponsableName}
+            numberOfLines={1}
+            ellipsizeMode="tail"
+          >
+            {chef.prenom + " " + chef.nom || "N/C"}
           </Text>
         </View>
       </View>

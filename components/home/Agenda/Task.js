@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { ChevronRight } from "../../../assets/icons/Icons";
+import { ChevronRight, Check } from "../../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
 import * as Progress from "react-native-progress";
 import { ThemeContext } from "./../../../utils/themeContext";
@@ -107,6 +107,7 @@ function Task({ data }) {
         <View style={styles.topContainer}>
           <View style={styles.item}>
             <View style={styles.leftContainer}>
+              <Check />
               <Text style={styles.taskTitle}>
                 Bravo, vous avez terminé toutes vos tâches
               </Text>
