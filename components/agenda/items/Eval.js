@@ -25,10 +25,15 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
       paddingHorizontal: 17,
       paddingVertical: 12,
     },
+    evalRight: {
+      width: "15%",
+      alignItems: "flex-end",
+    },
     evalLeft: {
       flexDirection: "row",
       alignItems: "center",
       gap: 7,
+      width: "85%",
     },
     evalTitle: {
       fontFamily: "Ubuntu_500Medium",

@@ -30,10 +30,15 @@ function TaskHome({
       paddingHorizontal: 17,
       paddingVertical: 12,
     },
+    taskRight: {
+      width: "15%",
+      alignItems: "flex-end",
+    },
     taskLeft: {
       flexDirection: "row",
       alignItems: "center",
       marginBottom: 5,
+      width: "85%",
     },
     taskLeftContent: {
       gap: 3,
