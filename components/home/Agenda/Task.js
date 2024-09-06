@@ -59,6 +59,9 @@ function Task({ data }) {
       color: colors.white,
     },
     leftContainer: {
+      flexDirection: "row",
+      gap: 7,
+      alignItems: "center",
       width: "85%",
     },
     rightContainer: {
@@ -107,7 +110,7 @@ function Task({ data }) {
         <View style={styles.topContainer}>
           <View style={styles.item}>
             <View style={styles.leftContainer}>
-              <Check />
+              <Check stroke={colors.white} width={20} height={20} />
               <Text style={styles.taskTitle}>
                 Bravo, vous avez terminé toutes vos tâches
               </Text>
