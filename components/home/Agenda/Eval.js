@@ -33,6 +33,7 @@ function Eval({ data }) {
     rightContainer: {
       flexDirection: "column",
       gap: 8,
+      width: "85%",
     },
   });
 

@@ -58,6 +58,13 @@ function Task({ data }) {
       fontSize: 13,
       color: colors.white,
     },
+    leftContainer: {
+      width: "85%",
+    },
+    rightContainer: {
+      width: "15%",
+      alignItems: "flex-end",
+    },
   });
 
   const checkedTask = data.filter((item) => item.estFait === 1);
@@ -69,15 +76,13 @@ function Task({ data }) {
     return (
       <View style={styles.container}>
         <View style={styles.topContainer}>
-          <TouchableOpacity>
-            <View style={styles.item}>
-              <View style={styles.leftContainer}>
-                <Text style={styles.taskTitle}>
-                  Aucune tâche de prévu pour le moment
-                </Text>
-              </View>
+          <View style={styles.item}>
+            <View style={styles.leftContainer}>
+              <Text style={styles.taskTitle}>
+                Aucune tâche de prévu pour le moment
+              </Text>
             </View>
-          </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.bottomContainer}>
           <View style={styles.progression}>
@@ -143,12 +148,14 @@ function Task({ data }) {
                   </Text>
                   <Text style={styles.taskDesc}>{item.titre}</Text>
                 </View>
-                <ChevronRight
-                  stroke={colors.white}
-                  strokeWidth={1.75}
-                  width={18}
-                  height={18}
-                />
+                <View style={styles.rightContainer}>
+                  <ChevronRight
+                    stroke={colors.white}
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
+                  />
+                </View>
               </View>
             </TouchableOpacity>
           ))}
