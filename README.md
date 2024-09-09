@@ -128,8 +128,8 @@ Libellule s'engage à garantir la protection des données de ses utilisateurs, a
 
 ## 👀 Auteurs
 
-- Développeur : [@Raphitpt](https://www.github.com/ArnaudGct)
-- Designer : [@ArnaudGct](https://www.github.com/Raphitpt)
+- Développeur : [@Raphitpt](https://www.github.com/Raphitpt)
+- Designer : [@ArnaudGct](https://www.github.com/ArnaudGct)
 
 
 ## 💬 Feedback
