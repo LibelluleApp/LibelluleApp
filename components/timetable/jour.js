@@ -117,6 +117,25 @@ const Jour = () => {
       color: colors.white,
       maxWidth: "100%",
     },
+    eventTitleAlternance: {
+      fontFamily: "Ubuntu_500Medium",
+      includeFontPadding: false,
+      fontSize: 25,
+      color: colors.white,
+      maxWidth: "100%",
+      alignItems: "center",
+      justifyContent: "center",
+      transform: [{ rotate: "-90deg" }],
+    },
+    eventContainerAlternance: {
+      height: "100%",
+      paddingVertical: 10,
+      paddingHorizontal: 10,
+      borderRadius: 10,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: colors.orange,
+    },
   });
 
   if (!timetable) {
@@ -131,6 +150,7 @@ const Jour = () => {
     <View style={styles.container}>
       <TimelineCalendar
         minDate={"2024-09-02"}
+        timeZone="Europe/Paris"
         showWeekNumber={true}
         ref={calendarRef}
         start={8}
@@ -208,6 +228,21 @@ const Jour = () => {
                   >
                     {event.title} - {event.location || "N/C"} -{" "}
                     {formattedProfessor}
+                  </Text>
+                </View>
+              </View>
+            );
+          }
+          if (event.duration > 10) {
+            return (
+              <View style={styles.eventBack}>
+                <View style={styles.eventContainerAlternance}>
+                  <Text
+                    style={styles.eventTitleAlternance}
+                    numberOfLines={1} // Limite le texte à une seule ligne
+                    ellipsizeMode="tail"
+                  >
+                    {event.title}
                   </Text>
                 </View>
               </View>

@@ -23,6 +23,7 @@ import { Envelope, Lock } from "./../assets/icons/Icons";
 import { ThemeContext } from "./../utils/themeContext";
 import connectZimbra from "../api/Mail/connect";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { set } from "date-fns";
 // import * as Device from "expo-device";
 
 function Mails() {
@@ -32,6 +33,7 @@ function Mails() {
   const [emails, setEmails] = useState([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [messages, setMessages] = useState("");
   // const [rooted, setRooted] = useState(false);
 
   useEffect(() => {
@@ -86,8 +88,10 @@ function Mails() {
       const data = await fetchMailFromZimbra();
       if (data && data.m) {
         setEmails(data.m);
+        setMessages("");
       } else {
-        Alert.alert("Erreur", "Aucun e-mail trouvé.");
+        setEmails([]);
+        setMessages("Aucun mail à afficher.");
       }
     } catch (error) {
       console.error("Error fetching emails:", error);
@@ -329,6 +333,7 @@ function Mails() {
           </TouchableOpacity>
         </View>
         <View style={styles.listMails}>
+          <Text>{messages}</Text>
           {loading ? (
             <ActivityIndicator size="large" color={colors.primary} />
           ) : (

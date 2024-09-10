@@ -73,6 +73,24 @@ const Semaine = () => {
       borderRadius: 10,
       backgroundColor: colors.blue_variable,
     },
+    eventTitleAlternance: {
+      fontFamily: "Ubuntu_500Medium",
+      includeFontPadding: false,
+      fontSize: 15,
+      color: colors.white,
+      maxWidth: "100%",
+      alignItems: "center",
+      justifyContent: "center",
+      transform: [{ rotate: "-90deg" }],
+    },
+    eventContainerAlternance: {
+      height: "100%",
+
+      borderRadius: 10,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: colors.orange,
+    },
   });
 
   if (!timetable) {
@@ -101,6 +119,7 @@ const Semaine = () => {
         locale="fr"
         ref={calendarRef}
         initialTimeIntervalHeight={49}
+        timeZone="Europe/Paris"
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
@@ -148,6 +167,17 @@ const Semaine = () => {
           navigator.navigate("DetailEvent", { event });
         }}
         renderEventContent={(event) => {
+          if (event.duration > 10) {
+            return (
+              <View style={styles.eventBack}>
+                <View style={styles.eventContainerAlternance}>
+                  <Text style={styles.eventTitleAlternance} numberOfLines={1}>
+                    {event.title}
+                  </Text>
+                </View>
+              </View>
+            );
+          }
           return (
             <View style={styles.eventBack}>
               <View style={styles.eventContainer}>

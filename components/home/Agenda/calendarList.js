@@ -86,7 +86,6 @@ function CalendarList({ onDateSelect }) {
   setTimeout(() => {
     setIsLoading(false);
   }, 1000);
-
   return (
     <ShimmerPlaceHolder
       shimmerStyle={{
