@@ -21,6 +21,7 @@ function CalendarList({ onDateSelect }) {
       flexDirection: "row",
     },
     dateContainer: {
+      position: "relative",
       flex: 1,
       flexDirection: "column",
       alignItems: "center",
@@ -29,6 +30,25 @@ function CalendarList({ onDateSelect }) {
       paddingVertical: 10,
       paddingHorizontal: 13,
       borderRadius: 10,
+    },
+    container_notif: {
+      justifyContent: "center",
+      alignItems: "center",
+      position: "absolute",
+      top: -5,
+      right: -5,
+      backgroundColor: colors.background,
+      borderRadius: 100,
+      width: 17,
+      height: 17,
+      borderWidth: 0.5,
+      borderColor: colors.blue_variable,
+    },
+    notif_text: {
+      color: colors.blue_variable,
+      fontSize: 10,
+      fontFamily: "Ubuntu_500Medium",
+      textAlign: "center",
     },
     selected: {
       backgroundColor: colors.blue_variable,
@@ -132,6 +152,12 @@ function CalendarList({ onDateSelect }) {
             >
               {day.format("MMM")}
             </Text>
+            {/* Détails : Les notifications doivent afficher le nombre de tâches et d'évaluations, bisous ! */}
+            {index != selectedDay && (
+              <View style={styles.container_notif}>
+                <Text style={styles.notif_text}>1</Text>
+              </View>
+            )}
           </TouchableOpacity>
         ))}
       </View>
