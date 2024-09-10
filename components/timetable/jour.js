@@ -46,13 +46,13 @@ const Jour = () => {
         setTimetable(response);
       });
     }
-    if (isFocused) {
-      calendarRef.current?.goToDate({
-        hourScroll: true,
-        animatedHour: true,
-        animatedDate: true,
-      });
-    }
+    // if (isFocused) {
+    //   calendarRef.current?.goToDate({
+    //     hourScroll: true,
+    //     animatedHour: true,
+    //     animatedDate: true,
+    //   });
+    // }
   }, [isFocused]);
 
   const styles = StyleSheet.create({
@@ -89,6 +89,13 @@ const Jour = () => {
       justifyContent: "space-around",
       backgroundColor: colors.blue_variable,
     },
+    eventContainerLittle: {
+      height: "100%",
+      paddingHorizontal: 10,
+      borderRadius: 10,
+      justifyContent: "center",
+      backgroundColor: colors.blue_variable,
+    },
     eventTextContent: {
       fontFamily: "Ubuntu_400Regular",
       includeFontPadding: false,
@@ -100,6 +107,13 @@ const Jour = () => {
       fontFamily: "Ubuntu_500Medium",
       includeFontPadding: false,
       fontSize: 16,
+      color: colors.white,
+      maxWidth: "100%",
+    },
+    eventTitleLittle: {
+      fontFamily: "Ubuntu_500Medium",
+      includeFontPadding: false,
+      fontSize: 12,
       color: colors.white,
       maxWidth: "100%",
     },
@@ -126,6 +140,13 @@ const Jour = () => {
         showNowIndicator={true}
         spaceFromTop={4}
         locale="fr"
+        // renderDayBarItem={(day) => {
+        //   return (
+        //     <View style={styles.itemContainer}>
+        //       <Text style={styles.dayName}>{day.currentDate}</Text>
+        //     </View>
+        //   );
+        // }}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
@@ -176,7 +197,22 @@ const Jour = () => {
           const formattedProfessor = event.professor
             ? formatProfessorName(event.professor)
             : "N/C";
-
+          if (event.duration < 1) {
+            return (
+              <View style={styles.eventBack}>
+                <View style={styles.eventContainerLittle}>
+                  <Text
+                    style={styles.eventTitleLittle}
+                    numberOfLines={1} // Limite le texte à une seule ligne
+                    ellipsizeMode="tail"
+                  >
+                    {event.title} - {event.location || "N/C"} -{" "}
+                    {formattedProfessor}
+                  </Text>
+                </View>
+              </View>
+            );
+          }
           return (
             <View style={styles.eventBack}>
               <View style={styles.eventContainer}>

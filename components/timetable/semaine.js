@@ -36,16 +36,6 @@ const Semaine = () => {
       getTimetable().then((response) => {
         setTimetable(response);
       });
-
-      // Move to today's date when the screen is focused
-      if (calendarRef.current) {
-        calendarRef.current.goToDate({
-          date: new Date(),
-          hourScroll: true,
-          animatedHour: true,
-          animatedDate: true,
-        });
-      }
     }
   }, [isFocused]); // Dependency array includes isFocused
 
@@ -110,6 +100,7 @@ const Semaine = () => {
         spaceFromTop={4}
         locale="fr"
         ref={calendarRef}
+        initialTimeIntervalHeight={49}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
