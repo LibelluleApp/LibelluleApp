@@ -297,37 +297,22 @@ function CircleAlert(props) {
 }
 
 // ThumbsUp - Flaticon
-function BigPouce(props) {
+function ThumbsUp(props) {
   return (
     <Svg
-      width="31"
-      height="29"
-      viewBox="0 0 31 29"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-thumbs-up"
+      {...props}
     >
-      <G clip-path="url(#clip0_1239_3106)">
-        <Path
-          d="M28.8515 9.32947C28.2696 8.67649 27.5505 8.15289 26.7427 7.79411C25.9349 7.43532 25.0574 7.24974 24.1696 7.24993H19.2197L19.6366 4.78372C19.7841 3.91524 19.6062 3.02407 19.1351 2.27273C18.6641 1.52139 17.9314 0.959963 17.0707 0.690842C16.21 0.421721 15.2786 0.462841 14.4464 0.806701C13.6143 1.15056 12.9367 1.77425 12.5375 2.56401L10.5198 6.54547V25.3749H23.301C24.7943 25.369 26.2359 24.8412 27.3634 23.8877C28.4909 22.9341 29.2294 21.6181 29.4446 20.1791L30.3195 14.1374C30.4432 13.2804 30.3761 12.4075 30.1228 11.5779C29.8695 10.7483 29.4359 9.98149 28.8515 9.32947Z"
-          fill="#12841D"
-          {...props}
-        />
-        <Path
-          d="M0.592651 13.2917V19.3333C0.594622 20.9351 1.24894 22.4707 2.41207 23.6033C3.57521 24.7359 5.1522 25.3731 6.79712 25.375H8.03801V7.25H6.79712C5.1522 7.25192 3.57521 7.88907 2.41207 9.02168C1.24894 10.1543 0.594622 11.6899 0.592651 13.2917Z"
-          fill="#12841D"
-          {...props}
-        />
-      </G>
-      <Defs>
-        <ClipPath id="clip0_1239_3106">
-          <Rect
-            width="29.7814"
-            height="29"
-            fill="white"
-            transform="translate(0.592651)"
-          />
-        </ClipPath>
-      </Defs>
+      <Path d="M7 10v12M15 5.88L14 10h5.83a2 2 0 011.92 2.56l-2.33 8A2 2 0 0117.5 22H4a2 2 0 01-2-2v-8a2 2 0 012-2h2.76a2 2 0 001.79-1.11L12 2a3.13 3.13 0 013 3.88z" />
     </Svg>
   );
 }
@@ -1255,7 +1240,7 @@ export {
   ArrowLeft,
   ChevronUpDown,
   ChevronDown,
-  BigPouce,
+  ThumbsUp,
   LayoutList,
   DoorOpen,
   Hourglass,

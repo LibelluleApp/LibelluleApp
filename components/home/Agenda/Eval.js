@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { CircleAlert, BigPouce } from "../../../assets/icons/Icons";
+import { CircleAlert, ThumbsUp } from "../../../assets/icons/Icons";
 import { ThemeContext } from "./../../../utils/themeContext";
 
 function Eval({ data }) {
@@ -11,7 +11,7 @@ function Eval({ data }) {
       alignItems: "center",
       flexDirection: "row",
       backgroundColor: colors.green_variable,
-      gap: 20,
+      gap: 10,
       borderRadius: 10,
       height: 50,
       paddingHorizontal: 24,
@@ -50,7 +50,12 @@ function Eval({ data }) {
     return (
       <View style={[styles.containerTask, stylesNothing.container]}>
         <View style={styles.leftContainer}>
-          <BigPouce fill={colors.green900} />
+          <ThumbsUp
+            stroke={colors.green900}
+            strokeWidth={1.75}
+            width={20}
+            height={20}
+          />
         </View>
         <View style={styles.rightContainer}>
           <Text style={[styles.evalText, stylesNothing.evalText]}>

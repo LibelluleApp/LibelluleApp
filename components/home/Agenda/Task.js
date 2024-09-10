@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { ChevronRight, Check } from "../../../assets/icons/Icons";
+import { ChevronRight, Check, ThumbsUp } from "../../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
 import * as Progress from "react-native-progress";
 import { ThemeContext } from "./../../../utils/themeContext";
@@ -48,6 +48,11 @@ function Task({ data }) {
       justifyContent: "space-between",
       alignItems: "center",
     },
+    taskTitleNone: {
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 14,
+      color: colors.green900,
+    },
     taskTitle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 14,
@@ -60,7 +65,7 @@ function Task({ data }) {
     },
     leftContainer: {
       flexDirection: "row",
-      gap: 7,
+      gap: 10,
       alignItems: "center",
       width: "85%",
     },
@@ -78,16 +83,29 @@ function Task({ data }) {
   if (!data || (Array.isArray(data) && data.length === 0)) {
     return (
       <View style={styles.container}>
-        <View style={styles.topContainer}>
+        <View
+          style={[
+            styles.topContainer,
+            { backgroundColor: colors.green_variable, paddingHorizontal: 24 },
+          ]}
+        >
           <View style={styles.item}>
             <View style={styles.leftContainer}>
-              <Text style={styles.taskTitle}>
+              <ThumbsUp
+                stroke={colors.green900}
+                width={20}
+                height={20}
+                strokeWidth={1.75}
+              />
+              <Text style={styles.taskTitleNone}>
                 Aucune tâche de prévu pour le moment
               </Text>
             </View>
           </View>
         </View>
-        <View style={styles.bottomContainer}>
+        <View
+          style={[styles.bottomContainer, { backgroundColor: colors.green900 }]}
+        >
           <View style={styles.progression}>
             <Text style={styles.progressText}>0/0 tâche</Text>
             <Text style={styles.progressText}>100%</Text>
@@ -107,17 +125,29 @@ function Task({ data }) {
   } else if (progression === 1) {
     return (
       <View style={styles.container}>
-        <View style={styles.topContainer}>
+        <View
+          style={[
+            styles.topContainer,
+            { backgroundColor: colors.green_variable, paddingHorizontal: 24 },
+          ]}
+        >
           <View style={styles.item}>
             <View style={styles.leftContainer}>
-              <Check stroke={colors.white} width={20} height={20} />
-              <Text style={styles.taskTitle}>
+              <Check
+                stroke={colors.green900}
+                width={20}
+                height={20}
+                strokeWidth={1.75}
+              />
+              <Text style={styles.taskTitleNone}>
                 Bravo, vous avez terminé toutes vos tâches
               </Text>
             </View>
           </View>
         </View>
-        <View style={styles.bottomContainer}>
+        <View
+          style={[styles.bottomContainer, { backgroundColor: colors.green900 }]}
+        >
           <View style={styles.progression}>
             <Text style={styles.progressText}>
               {checkedTask.length}/{data.length}{" "}
@@ -147,7 +177,16 @@ function Task({ data }) {
               onPress={() => navigation.navigate("viewAgenda", item)}
             >
               <View style={styles.item}>
-                <View style={styles.leftContainer}>
+                <View
+                  style={[
+                    styles.leftContainer,
+                    {
+                      flexDirection: "column",
+                      gap: 0,
+                      alignItems: "flex-start",
+                    },
+                  ]}
+                >
                   <Text style={styles.taskTitle}>
                     {item.Ressource.nom_ressource}
                   </Text>
