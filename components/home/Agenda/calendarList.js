@@ -152,7 +152,7 @@ function CalendarList({ onDateSelect }) {
             >
               {day.format("MMM")}
             </Text>
-            {/* Détails : Les notifications doivent afficher le nombre de tâches et d'évaluations, bisous ! */}
+            {/* Détails : Les notifications doivent afficher le nombre de tâches et d'évaluations, bisous ! Quand il n'y a pas de tâches, on affiche 0 (on l'enlève pas je pense car ça peut faire bizarre sinon) */}
             {index != selectedDay && (
               <View style={styles.container_notif}>
                 <Text style={styles.notif_text}>1</Text>
