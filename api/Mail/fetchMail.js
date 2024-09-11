@@ -9,7 +9,7 @@ async function fetchMailFromZimbra() {
 
     let authToken = await SecureStore.getItemAsync("authToken");
     let response = await fetch(
-      `https://zimbra.univ-poitiers.fr/home/~/F.LOUET?fmt=json&auth=qp&zauthtoken=${authToken}&limit=15`,
+      `https://zimbra.univ-poitiers.fr/home/~/inbox?fmt=json&auth=qp&zauthtoken=${authToken}&limit=15`,
       {
         method: "GET",
       }
@@ -22,7 +22,7 @@ async function fetchMailFromZimbra() {
       }
 
       response = await fetch(
-        `https://zimbra.univ-poitiers.fr/home/~/F.LOUET?fmt=json&auth=qp&zauthtoken=${authToken}&limit=15`,
+        `https://zimbra.univ-poitiers.fr/home/~/inbox?fmt=json&auth=qp&zauthtoken=${authToken}&limit=15`,
         {
           method: "GET",
         }

@@ -25,11 +25,10 @@ const DeleteAccount = () => {
   const deleteAccountAction = async () => {
     try {
       await deleteAccount(mot_de_passe);
-      showMessage({
+      ({
         message: "Votre compte a bien été supprimé.",
         type: "success",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
       signOut();
       navigation.navigate("Login");
@@ -38,7 +37,6 @@ const DeleteAccount = () => {
         message: error.message,
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
     }
   };
@@ -49,7 +47,6 @@ const DeleteAccount = () => {
         message: "Veuillez renseigner votre mot de passe.",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
       return;
     }

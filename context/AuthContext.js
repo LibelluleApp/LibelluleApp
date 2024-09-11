@@ -41,7 +41,6 @@ export const AuthProvider = ({ children }) => {
               "Vous êtes hors ligne. Certaines fonctionnalités peuvent ne pas être disponibles.",
             type: "warning",
             titleStyle: { fontFamily: "Ubuntu_400Regular" },
-            statusBarHeight: 15,
           });
           return;
         }
@@ -52,7 +51,6 @@ export const AuthProvider = ({ children }) => {
             message: "Votre session a expiré. Veuillez vous reconnecter.",
             type: "warning",
             titleStyle: { fontFamily: "Ubuntu_400Regular" },
-            statusBarHeight: 15,
           });
           await signOut();
         }
@@ -62,7 +60,6 @@ export const AuthProvider = ({ children }) => {
         message: "Erreur lors de la vérification de votre session.",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
     }
   };

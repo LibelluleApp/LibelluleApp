@@ -26,7 +26,6 @@ const getLinks = async () => {
       description: "Impossible de charger les liens",
       type: "danger",
       titleStyle: { fontFamily: "Ubuntu_400Regular" },
-      statusBarHeight: 15,
     });
   }
 };

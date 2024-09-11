@@ -13,16 +13,16 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import SelectComponent from "./select";
 import ButtonAuth from "../../auth/buttonAuth";
-import saveAgenda from "../../../api/Agenda/save";
 import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment-timezone";
 import { ThemeContext } from "./../../../utils/themeContext";
+import saveEditAgenda from "../../../api/Agenda/edit";
 
 const Edit = ({ route }) => {
   const { colors } = useContext(ThemeContext);
   const navigation = useNavigation();
-  const { task } = route.params; // Assuming agendaItem contains existing data to edit
+  const { task } = route.params;
 
   const [dates, setDates] = useState(moment.tz(task.date_fin, "Europe/Paris"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -90,7 +90,6 @@ const Edit = ({ route }) => {
           message: "Veuillez remplir tous les champs obligatoires.",
           type: "danger",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
         });
         return;
       }
@@ -100,7 +99,6 @@ const Edit = ({ route }) => {
           message: "Veuillez remplir tous les champs obligatoires.",
           type: "danger",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
         });
         return;
       }
@@ -122,7 +120,6 @@ const Edit = ({ route }) => {
           message: "Tâche modifiée avec succès.",
           type: "success",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
         });
         navigation.navigate("Agenda");
       }
@@ -132,7 +129,6 @@ const Edit = ({ route }) => {
         message: error.message,
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
     } finally {
       setLoading(false);

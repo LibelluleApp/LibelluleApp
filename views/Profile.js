@@ -24,6 +24,7 @@ import {
   UserX,
   Envelope,
   LogOut,
+  Settings,
 } from "../assets/icons/Icons";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -189,7 +190,6 @@ function Profile() {
   const [isEnabled, setIsEnabled] = useState(false);
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [fcmToken, setFcmToken] = useState("");
   const { signOut } = useAuth();
   const navigation = useNavigation();
 
@@ -323,30 +323,27 @@ function Profile() {
               />
             </TouchableOpacity>
           )}
-          <View style={styles.profileSwitcher}>
-            <View style={styles.switcherToggle}>
-              <View style={styles.switcherContent}>
-                <Text style={styles.profileBtnSwitch}>Mode sombre</Text>
-                <Switch
-                  trackColor={{
-                    false: colors.grey,
-                    true: colors.blue_variable,
-                  }}
-                  thumbColor={isEnabled ? colors.white : colors.white}
-                  onValueChange={toggleTheme}
-                  value={isDarkMode}
-                ></Switch>
-              </View>
-              {/* <View style={styles.switcherContent}>
-              <Text style={styles.profileBtnSwitch}>Notifications</Text>
-              <Switch
-                trackColor={{ false: colors.grey, true: colors.blue_variable }}
-                thumbColor={isNotification ? colors.white : colors.white}
-                onValueChange={toggleNotification}
-                value={isNotification}
-              ></Switch>
-            </View> */}
+          <TouchableOpacity
+            style={[styles.profileButton]}
+            onPress={() => navigation.navigate("Settings")}
+          >
+            <View style={styles.CTAContent}>
+              <Settings
+                stroke={colors.black}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+              <Text style={styles.profileBtnText}>Paramètres</Text>
             </View>
+            <ChevronRight
+              stroke={colors.black}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
+          </TouchableOpacity>
+          <View style={styles.profileSwitcher}>
             <View style={styles.separatorStick}></View>
             <View style={styles.containerMediaLinks}>
               <TouchableOpacity

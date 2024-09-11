@@ -164,8 +164,24 @@ const AppStack = ({ navigation }) => {
         headerShown: false,
       },
     },
+    {
+      name: "Settings",
+      component: require("../views/Profile/Settings").default,
+      options: {
+        title: "Paramètres",
+        headerShadowVisible: false,
+      },
+    },
+    {
+      name: "TimetableSettings",
+      component: require("../views/Profile/Settings/Timetable").default,
+      options: {
+        title: "Paramètres",
+        headerShadowVisible: false,
+      },
+    },
   ];
-  const insets = useSafeAreaInsets();
+
   return (
     <View style={{ flex: 1 }}>
       <Stack.Navigator

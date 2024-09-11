@@ -119,7 +119,6 @@ function EventDay({ date }) {
         description: "Impossible de charger la météo",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
     }
   };
@@ -184,7 +183,6 @@ function EventDay({ date }) {
         description: "Impossible de charger l'agenda",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
     } finally {
       setLoading(false);
@@ -202,7 +200,6 @@ function EventDay({ date }) {
         description: "Impossible de charger les heures de cours",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
     }
   };

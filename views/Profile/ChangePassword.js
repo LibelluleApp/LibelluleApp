@@ -81,7 +81,6 @@ const ChangePassword = () => {
         message: "Toutes les étapes ne sont pas validées",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
       return;
     } else {
@@ -95,7 +94,6 @@ const ChangePassword = () => {
           message: response,
           type: "success",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
         });
         navigation.goBack();
       } catch (error) {
@@ -103,7 +101,6 @@ const ChangePassword = () => {
           message: error.message,
           type: "danger",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
         });
       }
     }
@@ -128,7 +125,6 @@ const ChangePassword = () => {
                   "Un mail de réinitialisation de mot de passe a été envoyé",
                 type: "success",
                 titleStyle: { fontFamily: "Ubuntu_400Regular" },
-                statusBarHeight: 15,
               });
               navigation.goBack();
             } catch (error) {
@@ -136,7 +132,6 @@ const ChangePassword = () => {
                 message: "Une erreur est survenue",
                 type: "danger",
                 titleStyle: { fontFamily: "Ubuntu_400Regular" },
-                statusBarHeight: 15,
               });
             }
           },

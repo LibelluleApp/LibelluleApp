@@ -91,17 +91,27 @@ function App() {
 
   return (
     <ThemeProvider>
-      <NavigationContainer>
-        <AuthProvider>
-          <AuthStackSwitcher />
-          <FlashMessage
-            position="top"
-            hideStatusBar={false}
-            statusBarHeight={StatusBar.currentHeight}
-          />
-        </AuthProvider>
-      </NavigationContainer>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <AuthProvider>
+            <AuthStackSwitcher />
+            <FlashMessageWithInsets />
+          </AuthProvider>
+        </NavigationContainer>
+      </SafeAreaProvider>
     </ThemeProvider>
+  );
+}
+
+function FlashMessageWithInsets() {
+  const insets = useSafeAreaInsets();
+
+  return (
+    <FlashMessage
+      position="top"
+      hideStatusBar={true}
+      statusBarHeight={insets.top}
+    />
   );
 }
 

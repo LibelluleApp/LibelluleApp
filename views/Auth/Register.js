@@ -86,7 +86,6 @@ const Register = () => {
         message: "Veuillez remplir tous les champs",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
       return;
     }
@@ -95,7 +94,6 @@ const Register = () => {
         message: "Les mots de passe ne correspondent pas",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
       return;
     }
@@ -111,7 +109,6 @@ const Register = () => {
           "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre, et un caractère spécial",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
       return;
     }
@@ -120,7 +117,6 @@ const Register = () => {
         message: "Veuillez rentrer une adresse mail universitaire valide",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
       return;
     }
@@ -147,7 +143,6 @@ const Register = () => {
           message: "Compte créé avec succès, un email vous a été envoyé",
           type: "success",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
         });
         navigator.navigate("Login");
       } else {
@@ -155,7 +150,6 @@ const Register = () => {
           message: "Erreur lors de la création du compte",
           type: "danger",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
         });
       }
     } catch (error) {
@@ -164,7 +158,6 @@ const Register = () => {
           error?.message || "Une erreur est survenue. Veuillez réessayer.",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
       setSecondePage(false);
     } finally {

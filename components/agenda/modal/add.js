@@ -91,7 +91,6 @@ const Add = ({ route }) => {
           message: "Veuillez remplir tous les champs obligatoires.",
           type: "danger",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
         });
         return;
       }
@@ -101,7 +100,6 @@ const Add = ({ route }) => {
           message: "Veuillez remplir tous les champs obligatoires.",
           type: "danger",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
         });
         return;
       }
@@ -122,7 +120,6 @@ const Add = ({ route }) => {
           message: "Tâche ajoutée avec succès.",
           type: "success",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          statusBarHeight: 15,
         });
         navigation.navigate("Agenda");
       }
@@ -132,7 +129,6 @@ const Add = ({ route }) => {
         message: error.message,
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        statusBarHeight: 15,
       });
     } finally {
       setLoading(false);
