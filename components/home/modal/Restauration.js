@@ -6,7 +6,7 @@ import fetchMenu from "../../../api/Menu/fetchMenu";
 import moment from "moment";
 
 function Restauration() {
-  const [menu, setMenu] = React.useState({});
+  const [menu, setMenu] = React.useState([]);
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -97,6 +97,16 @@ function Restauration() {
       console.log(data);
     });
   }, []);
+
+  if (!menu) {
+    return (
+      <View style={styles.modalBackground}>
+        <View style={styles.container}>
+          <Text>Chargement...</Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.modalBackground}>
