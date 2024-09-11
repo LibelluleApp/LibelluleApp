@@ -52,6 +52,14 @@ async function getProfileData() {
     console.error(e);
   }
 }
+async function getAlternant() {
+  try {
+    const isAlternant = await AsyncStorage.getItem("isAlternant");
+    return isAlternant;
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 function Profile() {
   const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
@@ -188,6 +196,7 @@ function Profile() {
   });
 
   const [isEnabled, setIsEnabled] = useState(false);
+  const [isAlternant, setIsAlternant] = useState(false);
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { signOut } = useAuth();
@@ -196,7 +205,11 @@ function Profile() {
   useEffect(() => {
     getProfileData().then((data) => {
       setUserData(data);
+
       setIsLoading(false);
+    });
+    getAlternant().then((data) => {
+      setIsAlternant(true);
     });
   }, []);
 
@@ -255,6 +268,9 @@ function Profile() {
           <Text style={styles.profileEmail}>
             Mon groupe : {userData.groupe_id}
           </Text>
+          {isAlternant === true && (
+            <Text style={styles.profileEmail}>Alternant</Text>
+          )}
         </View>
       </View>
       <View style={styles.containerCTA}>
