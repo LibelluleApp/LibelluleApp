@@ -84,8 +84,7 @@ function ParcourirHome() {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("Restauration")}
-          style={[styles.tile, styles.disabled]}
-          disabled={true}
+          style={[styles.tile]}
         >
           <Utensils
             stroke={colors.black}

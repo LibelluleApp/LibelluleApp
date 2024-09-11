@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Phone, Calendar } from "../../../assets/icons/Icons";
 import { ThemeContext } from "./../../../utils/themeContext";
+import fetchMenu from "../../../api/Menu/fetchMenu";
+import moment from "moment";
 
 function Restauration() {
+  const [menu, setMenu] = React.useState({});
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -84,8 +87,16 @@ function Restauration() {
       fontSize: 15,
       color: colors.black,
       marginLeft: 10,
+      textTransform: "capitalize",
     },
   });
+
+  useEffect(() => {
+    fetchMenu(moment().format("YYYY-MM-DD")).then((data) => {
+      setMenu(data);
+      console.log(data);
+    });
+  }, []);
 
   return (
     <View style={styles.modalBackground}>
@@ -120,51 +131,15 @@ function Restauration() {
         </View>
         <Text style={styles.titleContent}>Aujourd'hui</Text>
         <View style={styles.contentMeal}>
-          <Text style={styles.descriptionMeal}>Entrée</Text>
-          <View>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-          </View>
-          <Text style={styles.descriptionMeal}>Plat</Text>
-          <View>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-          </View>
-          <Text style={styles.descriptionMeal}>Dessert</Text>
-          <View>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-            <Text style={styles.descriptionPlat}>
-              {`\u2022`} Pannini raclette
-            </Text>
-          </View>
+          <Text style={styles.descriptionMeal}>Repas</Text>
+          {menu.map((meal, index) => (
+            <View key={index} style={styles.descriptionMeal}>
+              <Text style={styles.descriptionPlat}>
+                {"\u2022 "}
+                {meal}
+              </Text>
+            </View>
+          ))}
         </View>
       </View>
     </View>

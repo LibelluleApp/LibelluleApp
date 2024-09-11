@@ -3,15 +3,14 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
-import { is } from "date-fns/locale";
-import { isLoading } from "expo-font";
-import { set } from "date-fns";
+import countTaskWeek from "../../../api/Agenda/countTaskWeek";
 import { ThemeContext } from "././../../../utils/themeContext";
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 function CalendarList({ onDateSelect }) {
   const { colors } = useContext(ThemeContext);
+  const [dates, setDates] = useState([]);
 
   const styles = StyleSheet.create({
     container: {
@@ -75,8 +74,8 @@ function CalendarList({ onDateSelect }) {
     return date;
   }
 
-  const currentDate = moment();
-  const adjustedStartDate = getNextWeekday(currentDate.clone());
+  const currentDate = moment(); // Garde l'objet moment sans formatter immédiatement
+  const adjustedStartDate = getNextWeekday(currentDate.clone()); // Utilise clone pour éviter les modifications sur currentDate
 
   const weekDays = [];
 
@@ -88,6 +87,9 @@ function CalendarList({ onDateSelect }) {
       date.add(2, "days"); // Saute les weekends
     }
   }
+
+  // Formate les jours de la semaine en "YYYY-MM-DD"
+  const formattedWeekDays = weekDays.map((day) => day.format("YYYY-MM-DD"));
 
   // Calculer l'index du jour actuel ajusté
   const currentDayIndex = weekDays.findIndex((day) =>
@@ -106,6 +108,19 @@ function CalendarList({ onDateSelect }) {
   setTimeout(() => {
     setIsLoading(false);
   }, 1000);
+
+  useEffect(() => {
+    const fetchTaskCount = async () => {
+      try {
+        const taskCount = await countTaskWeek(formattedWeekDays);
+        setDates(taskCount);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchTaskCount();
+  }, []);
+
   return (
     <ShimmerPlaceHolder
       shimmerStyle={{
@@ -118,13 +133,13 @@ function CalendarList({ onDateSelect }) {
       visible={isLoading ? false : true}
     >
       <View style={styles.container}>
-        {weekDays.map((day, index) => (
+        {dates.map((day, index) => (
           <TouchableOpacity
             key={index}
             style={[
               styles.dateContainer,
               index === selectedDay && styles.selected,
-              index < weekDays.length - 1 && { marginRight: 10 },
+              index < dates.length - 1 && { marginRight: 10 },
             ]}
             onPress={() => handleDayPress(index)}
           >
@@ -134,7 +149,7 @@ function CalendarList({ onDateSelect }) {
                 index === selectedDay && styles.selectedText,
               ]}
             >
-              {day.format("ddd").replace(".", "")}
+              {moment(day.date).format("ddd").replace(".", "")}{" "}
             </Text>
             <Text
               style={[
@@ -142,7 +157,7 @@ function CalendarList({ onDateSelect }) {
                 index === selectedDay && styles.selectedText,
               ]}
             >
-              {day.format("DD")}
+              {moment(day.date).format("DD")}
             </Text>
             <Text
               style={[
@@ -150,12 +165,12 @@ function CalendarList({ onDateSelect }) {
                 index === selectedDay && styles.selectedText,
               ]}
             >
-              {day.format("MMM")}
+              {moment(day.date).format("MMM")}
             </Text>
-            {/* Détails : Les notifications doivent afficher le nombre de tâches et d'évaluations, bisous ! Quand il n'y a pas de tâches, on affiche 0 (on l'enlève pas je pense car ça peut faire bizarre sinon) */}
-            {index != selectedDay && (
+
+            {index !== selectedDay && day.count > 0 && (
               <View style={styles.container_notif}>
-                <Text style={styles.notif_text}>1</Text>
+                <Text style={styles.notif_text}>{day.count}</Text>
               </View>
             )}
           </TouchableOpacity>
