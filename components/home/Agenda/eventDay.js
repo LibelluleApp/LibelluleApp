@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
-import PropTypes from "prop-types";
-
 import {
   Thermometer,
   Clock,
@@ -25,7 +23,6 @@ import {
 } from "../../../assets/icons/Icons";
 
 import { useNavigation, useIsFocused } from "@react-navigation/native";
-import { Orage } from "../../../assets/icons/Weather";
 import Eval from "./Eval";
 import Task from "./Task";
 import moment from "moment";
@@ -243,7 +240,9 @@ function EventDay({ date }) {
               width={18}
               height={18}
             />
-            {hourOfDay.totalHours === "00:00" ? (
+            {hourOfDay.totalHours === "11:00" ? (
+              <Text style={styles.hourContent}>En alternance</Text>
+            ) : hourOfDay.totalHours === "00:00" ? (
               <Text style={styles.hourContent}>Aucun cours</Text>
             ) : (
               <Text style={styles.hourContent}>
