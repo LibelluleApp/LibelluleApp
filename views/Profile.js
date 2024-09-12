@@ -195,7 +195,6 @@ function Profile() {
     },
   });
 
-  const [isEnabled, setIsEnabled] = useState(false);
   const [isAlternant, setIsAlternant] = useState(false);
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);

@@ -220,10 +220,13 @@ function EventDay({ date }) {
     (item) => item.type === "devoir"
   );
 
-  const timeString = hourOfDay.totalHours; // "12:30"
-  const [hours, minutes] = timeString.split(":").map(Number);
+  let totalHours = 0;
+  if (hourOfDay.totalHours) {
+    const timeString = hourOfDay.totalHours; // "12:30"
+    const [hours, minutes] = timeString.split(":").map(Number);
 
-  const totalHours = hours + minutes / 60;
+    totalHours = hours + minutes / 60;
+  }
 
   return (
     <ShimmerPlaceholder
