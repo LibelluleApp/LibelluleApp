@@ -220,6 +220,11 @@ function EventDay({ date }) {
     (item) => item.type === "devoir"
   );
 
+  const timeString = hourOfDay.totalHours; // "12:30"
+  const [hours, minutes] = timeString.split(":").map(Number);
+
+  const totalHours = hours + minutes / 60;
+
   return (
     <ShimmerPlaceholder
       visible={loading ? false : true}
@@ -240,9 +245,9 @@ function EventDay({ date }) {
               width={18}
               height={18}
             />
-            {Number(hourOfDay.totalHours) >= 11 ? (
+            {totalHours >= 11 ? (
               <Text style={styles.hourContent}>En alternance</Text>
-            ) : Number(hourOfDay.totalHours) === 0 ? (
+            ) : hourOfDay.totalHours === "00:00" ? (
               <Text style={styles.hourContent}>Aucun cours</Text>
             ) : (
               <Text style={styles.hourContent}>
