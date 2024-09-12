@@ -61,19 +61,23 @@ const TransferRole = () => {
       borderRadius: 10,
       padding: 15,
       marginBottom: 10,
-      backgroundColor: colors.white,
+      borderColor: colors.input_border,
+      backgroundColor: colors.white_background,
     },
     placeholderStyle: {
-      color: colors.grey,
+      color: colors.grey_variable,
       fontFamily: "Ubuntu_400Regular",
     },
     selectedTextStyle: {
       color: colors.black,
       fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
     },
     dropdownContainer: {
-      borderRadius: 10,
-      marginBottom: 10,
+      // borderRadius: 10,
+      // marginBottom: 10,
+      backgroundColor: colors.white_background,
+      borderColor: colors.input_border,
     },
     topInformations: {
       marginBottom: 20,
@@ -174,13 +178,14 @@ const TransferRole = () => {
                 styles.dropdown,
                 isFocus && { borderColor: colors.black },
               ]}
+              activeColor={colors.white_background}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               data={tp}
               minHeight={100}
               labelField="label"
               valueField="value"
-              placeholder={"Séléctionner un étudiant"}
+              placeholder={"Sélectionner un étudiant"}
               value={value}
               onFocus={() => setIsFocus(true)}
               onBlur={() => setIsFocus(false)}
