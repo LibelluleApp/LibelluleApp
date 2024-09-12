@@ -5,6 +5,7 @@ import {
   Dimensions,
   ActivityIndicator,
   Text,
+  Platform,
 } from "react-native";
 import { TimelineCalendar, MomentConfig } from "@howljs/calendar-kit";
 import { ThemeContext } from "./../../utils/themeContext";
