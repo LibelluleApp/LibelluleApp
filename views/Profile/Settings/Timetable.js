@@ -32,7 +32,14 @@ const fetchStorageItem = async (key, defaultValue) => {
   }
 };
 
-const ColorModal = ({ visible, onClose, color, onColorSelect, onSave }) => {
+const ColorModal = ({
+  visible,
+  onClose,
+  color,
+  onColorSelect,
+  onSave,
+  currentColorType,
+}) => {
   const { colors } = useContext(ThemeContext);
   const opacity = useSharedValue(0);
   const modalAnimatedStyle = useAnimatedStyle(() => ({
@@ -69,18 +76,41 @@ const ColorModal = ({ visible, onClose, color, onColorSelect, onSave }) => {
             boundedThumb
           >
             <Panel2 style={styles.panelStyle} />
-            <Swatches
-              style={styles.swatchesContainer}
-              swatchStyle={styles.swatchStyle}
-              colors={["#0000FF", "#FF00FF", "#FF0000", "#D4C91D", "#4CAF50"]}
-            />
+            {currentColorType === "alternant" ? (
+              <Swatches
+                style={styles.swatchesContainer}
+                swatchStyle={styles.swatchStyle}
+                colors={["#9AA5B3", "#FF00FF", "#FF0000", "#D4C91D", "#4CAF50"]}
+              />
+            ) : (
+              <Swatches
+                style={styles.swatchesContainer}
+                swatchStyle={styles.swatchStyle}
+                colors={[
+                  colors.blue_variable,
+                  "#FF00FF",
+                  "#FF0000",
+                  "#D4C91D",
+                  "#4CAF50",
+                ]}
+              />
+            )}
+
             <PreviewText style={styles.previewText} />
           </ColorPicker>
           <Pressable
-            style={[styles.closeButton, { backgroundColor: colors.blue700 }]}
+            style={[
+              styles.closeButton,
+              { backgroundColor: colors.colors.blue_variable },
+            ]}
             onPress={handleSave}
           >
-            <Text style={[styles.closeButtonText, { color: colors.black }]}>
+            <Text
+              style={[
+                styles.closeButtonText,
+                { color: colors.white, fontFamily: "Ubuntu_500Medium" },
+              ]}
+            >
               Fermer
             </Text>
           </Pressable>
@@ -93,8 +123,8 @@ const ColorModal = ({ visible, onClose, color, onColorSelect, onSave }) => {
 function TimetableSettings() {
   const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
   const [isWeekDefault, setIsWeekDefault] = useState(false);
-  const [colorAlternant, setColorAlternant] = useState("#0000FF");
-  const [colorTimetable, setColorTimetable] = useState("#0000FF");
+  const [colorAlternant, setColorAlternant] = useState("#9AA5B3");
+  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentColorType, setCurrentColorType] = useState(null);
   const [isAlternant, setIsAlternant] = useState(false);
@@ -103,8 +133,8 @@ function TimetableSettings() {
     const initializeSettings = async () => {
       const [weekDefault, colorAlt, colorTime, Alternant] = await Promise.all([
         fetchStorageItem("week_default", false),
-        fetchStorageItem("color_alternant", "#0000FF"),
-        fetchStorageItem("color_timetable", "#0000FF"),
+        fetchStorageItem("color_alternant", "#9AA5B3"),
+        fetchStorageItem("color_timetable", colors.blue_variable),
         fetchStorageItem("isAlternant", false),
       ]);
       setIsWeekDefault(weekDefault);
@@ -173,7 +203,7 @@ function TimetableSettings() {
             value={isWeekDefault}
           />
         </View>
-        <View style={styles.switcherContent}>
+        {/* <View style={styles.switcherContent}>
           <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
             Couleurs aléatoires des évènements
           </Text>
@@ -194,11 +224,20 @@ function TimetableSettings() {
               disabled
             />
           </TouchableOpacity>
+        </View> */}
+        <View style={styles.switcherContent}>
+          <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
+            Couleur des évènements par défaut
+          </Text>
+          <TouchableOpacity
+            style={[styles.colorBox, { backgroundColor: colorTimetable }]}
+            onPress={() => openColorModal("timetable")}
+          />
         </View>
         {isAlternant && (
           <View style={styles.switcherContent}>
             <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
-              Couleur Alternant
+              Couleur des évènements d'alternance
             </Text>
             <TouchableOpacity
               style={[styles.colorBox, { backgroundColor: colorAlternant }]}
@@ -206,15 +245,6 @@ function TimetableSettings() {
             />
           </View>
         )}
-        <View style={styles.switcherContent}>
-          <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
-            Couleur de l'emploi du temps / Accueil
-          </Text>
-          <TouchableOpacity
-            style={[styles.colorBox, { backgroundColor: colorTimetable }]}
-            onPress={() => openColorModal("timetable")}
-          />
-        </View>
 
         <ColorModal
           visible={isModalVisible}
@@ -224,6 +254,7 @@ function TimetableSettings() {
           }
           onColorSelect={handleColorSelect}
           onSave={handleSaveColor}
+          currentColorType={currentColorType}
         />
       </View>
     </View>
