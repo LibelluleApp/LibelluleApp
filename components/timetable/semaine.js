@@ -144,7 +144,7 @@ const Semaine = () => {
   }
 
   let height = Dimensions.get("screen").height / 17.7;
-  height = Platform.OS === "ios" ? height : height + 1;
+  height = Platform.OS === "ios" ? height : height + 2;
 
   return (
     <View style={styles.container}>
