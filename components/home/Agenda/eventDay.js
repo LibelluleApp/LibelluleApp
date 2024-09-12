@@ -240,9 +240,9 @@ function EventDay({ date }) {
               width={18}
               height={18}
             />
-            {hourOfDay.totalHours >= "11:00" ? (
+            {Number(hourOfDay.totalHours) >= 11 ? (
               <Text style={styles.hourContent}>En alternance</Text>
-            ) : hourOfDay.totalHours === "00:00" ? (
+            ) : Number(hourOfDay.totalHours) === 0 ? (
               <Text style={styles.hourContent}>Aucun cours</Text>
             ) : (
               <Text style={styles.hourContent}>
