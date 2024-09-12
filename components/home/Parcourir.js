@@ -29,8 +29,8 @@ function ParcourirHome() {
     container: {
       fontFamily: "Ubuntu_400Regular",
       alignSelf: "center",
-      width: "100%",
-      paddingLeft: "5%",
+      width: "90%",
+      marginHorizontal: "auto",
       marginTop: 22,
       marginBottom: 15,
     },
@@ -42,14 +42,13 @@ function ParcourirHome() {
     },
     tile: {
       backgroundColor: colors.white_background,
-      width: 100,
+      width: "47%",
       borderRadius: 10,
       paddingHorizontal: 17,
       paddingVertical: 10,
       alignItems: "center",
       justifyContent: "center",
       gap: 10,
-      marginRight: 10,
     },
     tileText: {
       fontFamily: "Ubuntu_500Medium",
@@ -65,10 +64,10 @@ function ParcourirHome() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Parcourir</Text>
-      <ScrollView
+      {/* <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        style={styles.tilesContainer}
+        style={{ alignSelf: "center" }}
       >
         <TouchableOpacity
           onPress={() => navigation.navigate("liensExterne")}
@@ -84,7 +83,7 @@ function ParcourirHome() {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate("Restauration")}
-          style={[styles.tile]}
+          style={styles.tile}
         >
           <Utensils
             stroke={colors.black}
@@ -122,7 +121,68 @@ function ParcourirHome() {
           />
           <Text style={styles.tileText}>Ma Promo</Text>
         </TouchableOpacity>
-      </ScrollView>
+      </ScrollView> */}
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 15,
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.navigate("liensExterne")}
+          style={styles.tile}
+        >
+          <Link
+            stroke={colors.black}
+            width={20}
+            height={20}
+            strokeWidth={1.75}
+          />
+          <Text style={styles.tileText}>Liens</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Restauration")}
+          style={styles.tile}
+        >
+          <Utensils
+            stroke={colors.black}
+            width={20}
+            height={20}
+            strokeWidth={1.75}
+          />
+          <Text style={styles.tileText}>Menu</Text>
+        </TouchableOpacity>
+        {/* {user?.groupe_id?.includes("UI") && (
+          <TouchableOpacity
+            style={[styles.tile, styles.disabled]}
+            onPress={() => navigation.navigate("Scolarite")}
+            disabled={true}
+          >
+            <BookOpen
+              stroke={colors.black}
+              width={20}
+              height={20}
+              strokeWidth={1.75}
+            />
+            <Text style={styles.tileText}>Scolarité</Text>
+          </TouchableOpacity>
+        )}
+
+        <TouchableOpacity
+          style={[styles.tile, styles.disabled]}
+          disabled={true}
+        >
+          <Student
+            color={colors.black}
+            width={20}
+            height={20}
+            strokeWidth={1.75}
+          />
+          <Text style={styles.tileText}>Ma Promo</Text>
+        </TouchableOpacity> */}
+      </View>
     </View>
   );
 }
