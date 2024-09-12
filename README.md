@@ -68,7 +68,7 @@
 - Liste des mails de l'étudiant
   - Lecture uniquement, pas de réponse ni de suppression
 
-### Menu du restaurant universitaire (Le Crousty) (en cours de développement)
+### Menu du restaurant universitaire (Le Crousty)
 - Accessible depuis l'accueil
 - Informations pratiques sur le restaurant universitaire
 - Menu par jour
@@ -83,6 +83,7 @@
   - Site de l'IUT d'Angoulême
   - Site du Concours 48h
 
+<!-- 
 ### Scolarité (MMI uniquement)
 - Notes
   - Moyenne des 5 compétences pour l'étudiant et la promo
@@ -91,6 +92,7 @@
 - Absences
   - Nombre d'absences sur le semestre actuel
   - Lien vers MMI Dashboard
+-->
 
 ### Profil
 - Informations personnelles (en cours de développement)
@@ -99,8 +101,8 @@
   - Date de naissance, numéro de téléphone, site internet, comptes de réseaux sociaux (Instagram, Discord, etc.)
 - Options
   - Modification du mot de passe
-  - Transmission du rôle de responsable de l'agenda (en cours de développement)
-  - Activation/Désactivation du mode sombre et des notifications
+  - Transmission du rôle de responsable de l'agenda
+  - Activation/Désactivation du mode sombre
   - Déconnexion
   - Supression de son compte
 - Informations Libellule
