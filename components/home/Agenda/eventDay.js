@@ -104,7 +104,6 @@ function EventDay({ date }) {
 
   const currentDate = moment(date).format("YYYY-MM-DD");
 
-  // Weather
   const fetchWeatherData = async () => {
     try {
       const response = await fetchWeather(currentDate);
@@ -123,7 +122,6 @@ function EventDay({ date }) {
   const WeatherIcon = ({ iconName }) => {
     let IconComponent;
 
-    // Mappez les noms des icônes de Lucide aux icônes OpenWeatherMap
     switch (iconName) {
       case "01d":
         IconComponent = Sun;
@@ -153,9 +151,8 @@ function EventDay({ date }) {
         IconComponent = Waves;
         break;
 
-      // Ajoutez d'autres cas pour les autres icônes
       default:
-        IconComponent = Thermometer; // Icône par défaut
+        IconComponent = Thermometer;
         break;
     }
 
@@ -208,10 +205,10 @@ function EventDay({ date }) {
   useEffect(() => {
     if (isFocused) {
       fetchAgenda();
-      fetchWeatherData(); // Fetch weather whenever the screen is focused
-      fetchHour(); // Fetch hour whenever the screen is focused
+      fetchWeatherData();
+      fetchHour();
     }
-  }, [isFocused, currentDate]); // Also refetch weather whenever the date changes
+  }, [isFocused, currentDate]);
 
   const dayAgendaEval = (agenda[currentDate] || []).filter(
     (item) => item.type === "eval"
@@ -222,7 +219,7 @@ function EventDay({ date }) {
 
   let totalHours = 0;
   if (hourOfDay.totalHours) {
-    const timeString = hourOfDay.totalHours; // "12:30"
+    const timeString = hourOfDay.totalHours;
     const [hours, minutes] = timeString.split(":").map(Number);
 
     totalHours = hours + minutes / 60;
