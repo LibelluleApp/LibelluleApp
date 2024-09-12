@@ -2,12 +2,11 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
-  Dimensions,
   ActivityIndicator,
   Text,
   TouchableOpacity,
-  Platform,
 } from "react-native";
+import { Dimensions, Platform } from "react-native";
 import { TimelineCalendar } from "@howljs/calendar-kit";
 import { MapPin, UserRound, Clock, ResetList } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
@@ -167,8 +166,8 @@ const Jour = () => {
       </View>
     );
   }
-  const height = Dimensions.get("screen").height / 17.7;
-  Platform.OS === "ios" ? height : height + 10;
+  let height = Dimensions.get("screen").height / 17.7;
+  height = Platform.OS === "ios" ? height : height + 100;
 
   return (
     <View style={styles.container}>
