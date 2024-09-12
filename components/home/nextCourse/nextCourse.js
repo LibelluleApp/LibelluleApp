@@ -15,6 +15,7 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ThemeContext } from "./../../../utils/themeContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
@@ -45,6 +46,18 @@ const fetchCourse = async () => {
 function ItemCourse({ data, color }) {
   const { colors } = useContext(ThemeContext);
   const [remainingTime, setRemainingTime] = useState("");
+  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+  const getColorTimetable = async () => {
+    try {
+      let storedColor = await AsyncStorage.getItem("color_timetable");
+      if (storedColor) {
+        storedColor = storedColor.replace(/['"]+/g, "");
+        setColorTimetable(storedColor);
+      }
+    } catch (error) {
+      console.error("Failed to fetch color from storage:", error);
+    }
+  };
   const navigator = useNavigation();
 
   const styles = StyleSheet.create({
@@ -54,7 +67,7 @@ function ItemCourse({ data, color }) {
       gap: 10,
     },
     container: {
-      backgroundColor: "#5088F3",
+      backgroundColor: colorTimetable,
       fontFamily: "Ubuntu_400Regular",
       includeFontPadding: false,
       borderRadius: 10,
@@ -144,6 +157,7 @@ function ItemCourse({ data, color }) {
     },
   });
   useEffect(() => {
+    getColorTimetable();
     if (!data) return; // Exit early if there's no data
 
     const calculateTimeRemaining = () => {

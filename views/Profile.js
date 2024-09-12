@@ -209,7 +209,7 @@ function Profile() {
       setIsLoading(false);
     });
     getAlternant().then((data) => {
-      setIsAlternant(true);
+      setIsAlternant(data === "true");
     });
   }, []);
 

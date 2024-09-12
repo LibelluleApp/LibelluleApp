@@ -12,6 +12,7 @@ import { MapPin, UserRound, Clock, ResetList } from "../../assets/icons/Icons";
 import fetchTimetable from "../../api/Timetable/timetable";
 import { ThemeContext } from "./../../utils/themeContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const getTimetable = async () => {
   try {
@@ -39,20 +40,41 @@ const Jour = () => {
   const calendarRef = useRef(null);
   const isFocused = useIsFocused();
   const [timetable, setTimetable] = useState(null);
+  const [colorAlternant, setColorAlternant] = useState(colors.orange);
+  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+
+  const getColorAlternant = async () => {
+    try {
+      let storedColor = await AsyncStorage.getItem("color_alternant");
+      if (storedColor) {
+        storedColor = storedColor.replace(/['"]+/g, "");
+        setColorAlternant(storedColor);
+      }
+    } catch (error) {
+      console.error("Failed to fetch color from storage:", error);
+    }
+  };
+
+  const getColorTimetable = async () => {
+    try {
+      let storedColor = await AsyncStorage.getItem("color_timetable");
+      if (storedColor) {
+        storedColor = storedColor.replace(/['"]+/g, "");
+        setColorTimetable(storedColor);
+      }
+    } catch (error) {
+      console.error("Failed to fetch color from storage:", error);
+    }
+  };
 
   useEffect(() => {
     if (isFocused) {
       getTimetable().then((response) => {
         setTimetable(response);
       });
+      getColorAlternant();
+      getColorTimetable();
     }
-    // if (isFocused) {
-    //   calendarRef.current?.goToDate({
-    //     hourScroll: true,
-    //     animatedHour: true,
-    //     animatedDate: true,
-    //   });
-    // }
   }, [isFocused]);
 
   const styles = StyleSheet.create({
@@ -87,14 +109,14 @@ const Jour = () => {
       paddingHorizontal: 10,
       borderRadius: 10,
       justifyContent: "space-around",
-      backgroundColor: colors.blue_variable,
+      backgroundColor: colorTimetable,
     },
     eventContainerLittle: {
       height: "100%",
       paddingHorizontal: 10,
       borderRadius: 10,
       justifyContent: "center",
-      backgroundColor: colors.blue_variable,
+      backgroundColor: colorTimetable,
     },
     eventTextContent: {
       fontFamily: "Ubuntu_400Regular",
@@ -134,7 +156,6 @@ const Jour = () => {
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: colors.orange,
     },
   });
 
@@ -240,7 +261,12 @@ const Jour = () => {
           if (event.duration > 10) {
             return (
               <View style={styles.eventBack}>
-                <View style={styles.eventContainerAlternance}>
+                <View
+                  style={[
+                    { backgroundColor: colorAlternant },
+                    styles.eventContainerAlternance,
+                  ]}
+                >
                   <Text
                     style={styles.eventTitleAlternance}
                     numberOfLines={1}

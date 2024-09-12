@@ -10,6 +10,7 @@ import { TimelineCalendar, MomentConfig } from "@howljs/calendar-kit";
 import { ThemeContext } from "./../../utils/themeContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import fetchTimetable from "../../api/Timetable/timetable";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const getTimetable = async () => {
   try {
@@ -29,6 +30,32 @@ const Semaine = () => {
   const isFocused = useIsFocused(); // Hook to check if the screen is focused
   const calendarRef = useRef(null); // Ref for TimelineCalendar
   const [timetable, setTimetable] = useState(null);
+  const [colorAlternant, setColorAlternant] = useState(colors.orange);
+  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+
+  const getColorAlternant = async () => {
+    try {
+      let storedColor = await AsyncStorage.getItem("color_alternant");
+      if (storedColor) {
+        storedColor = storedColor.replace(/['"]+/g, "");
+        setColorAlternant(storedColor);
+      }
+    } catch (error) {
+      console.error("Failed to fetch color from storage:", error);
+    }
+  };
+
+  const getColorTimetable = async () => {
+    try {
+      let storedColor = await AsyncStorage.getItem("color_timetable");
+      if (storedColor) {
+        storedColor = storedColor.replace(/['"]+/g, "");
+        setColorTimetable(storedColor);
+      }
+    } catch (error) {
+      console.error("Failed to fetch color from storage:", error);
+    }
+  };
 
   useEffect(() => {
     // Fetch timetable data when the screen is focused
@@ -36,6 +63,8 @@ const Semaine = () => {
       getTimetable().then((response) => {
         setTimetable(response);
       });
+      getColorAlternant();
+      getColorTimetable();
     }
   }, [isFocused]); // Dependency array includes isFocused
 
@@ -71,7 +100,7 @@ const Semaine = () => {
       paddingVertical: 10,
       paddingHorizontal: 10,
       borderRadius: 10,
-      backgroundColor: colors.blue_variable,
+      backgroundColor: colorTimetable,
     },
     eventTitleAlternance: {
       fontFamily: "Ubuntu_500Medium",
@@ -89,7 +118,7 @@ const Semaine = () => {
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: colors.orange,
+      backgroundColor: colorAlternant,
     },
   });
 
