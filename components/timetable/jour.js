@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Text,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { TimelineCalendar } from "@howljs/calendar-kit";
 import { MapPin, UserRound, Clock, ResetList } from "../../assets/icons/Icons";
@@ -166,6 +167,8 @@ const Jour = () => {
       </View>
     );
   }
+  const height = Dimensions.get("screen").height / 17.7;
+  Platform.OS === "ios" ? height : height + 10;
 
   return (
     <View style={styles.container}>
@@ -180,9 +183,8 @@ const Jour = () => {
         events={timetable}
         showNowIndicator={true}
         allowPinchToZoom
-        minTimeIntervalHeight={Dimensions.get("window").height / 17.7}
-        initialTimeIntervalHeight={Dimensions.get("window").height / 17.7}
-        bouncd
+        minTimeIntervalHeight={height}
+        initialTimeIntervalHeight={height}
         spaceFromTop={4}
         locale="fr"
         // renderDayBarItem={(day) => {
