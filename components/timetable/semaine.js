@@ -135,6 +135,9 @@ const Semaine = () => {
     );
   }
 
+  let height = Dimensions.get("screen").height / 17.7;
+  height = Platform.OS === "ios" ? height : height + 2;
+
   return (
     <View style={styles.container}>
       <TimelineCalendar
@@ -149,8 +152,8 @@ const Semaine = () => {
         locale="fr"
         ref={calendarRef}
         allowPinchToZoom
-        minTimeIntervalHeight={Dimensions.get("window").height / 17.7}
-        initialTimeIntervalHeight={Dimensions.get("window").height / 17.7}
+        minTimeIntervalHeight={height}
+        initialTimeIntervalHeight={height}
         timeZone="Europe/Paris"
         theme={{
           backgroundColor: colors.background,
