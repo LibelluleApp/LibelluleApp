@@ -97,16 +97,19 @@ function TimetableSettings() {
   const [colorTimetable, setColorTimetable] = useState("#0000FF");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentColorType, setCurrentColorType] = useState(null);
+  const [isAlternant, setIsAlternant] = useState(false);
 
   useEffect(() => {
     const initializeSettings = async () => {
-      const [weekDefault, colorAlt, colorTime] = await Promise.all([
+      const [weekDefault, colorAlt, colorTime, Alternant] = await Promise.all([
         fetchStorageItem("week_default", false),
         fetchStorageItem("color_alternant", "#0000FF"),
         fetchStorageItem("color_timetable", "#0000FF"),
+        fetchStorageItem("isAlternant", false),
       ]);
       setIsWeekDefault(weekDefault);
       setColorAlternant(colorAlt);
+      setIsAlternant(Alternant);
       setColorTimetable(colorTime);
     };
     initializeSettings();
@@ -192,15 +195,17 @@ function TimetableSettings() {
             />
           </TouchableOpacity>
         </View>
-        <View style={styles.switcherContent}>
-          <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
-            Couleur Alternant
-          </Text>
-          <TouchableOpacity
-            style={[styles.colorBox, { backgroundColor: colorAlternant }]}
-            onPress={() => openColorModal("alternant")}
-          />
-        </View>
+        {isAlternant && (
+          <View style={styles.switcherContent}>
+            <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
+              Couleur Alternant
+            </Text>
+            <TouchableOpacity
+              style={[styles.colorBox, { backgroundColor: colorAlternant }]}
+              onPress={() => openColorModal("alternant")}
+            />
+          </View>
+        )}
         <View style={styles.switcherContent}>
           <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
             Couleur de l'emploi du temps / Accueil
@@ -256,7 +261,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Use a semi-transparent black background
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   pickerContainer: {
     width: 300,
