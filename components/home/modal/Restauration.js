@@ -1,5 +1,11 @@
 import React, { useContext, useEffect } from "react";
-import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { Phone, Calendar } from "../../../assets/icons/Icons";
 import { ThemeContext } from "./../../../utils/themeContext";
 import fetchMenu from "../../../api/Menu/fetchMenu";
@@ -7,6 +13,7 @@ import moment from "moment";
 
 function Restauration() {
   const [menu, setMenu] = React.useState([]);
+  const [selectedDay, setSelectedDay] = React.useState("today"); // État pour le jour sélectionné
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -62,6 +69,26 @@ function Restauration() {
       fontSize: 15,
       color: colors.black,
     },
+    button: {
+      paddingHorizontal: 15,
+      paddingVertical: 10,
+      borderRadius: 10,
+      backgroundColor: colors.background,
+      borderColor: colors.blue_variable,
+      borderWidth: 0.5,
+    },
+    buttonToday: {
+      backgroundColor: colors.blue_variable,
+      borderWidth: 0,
+    },
+    buttonText: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.blue_variable,
+    },
+    buttonTextToday: {
+      color: colors.white,
+    },
     titleContent: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 17,
@@ -91,22 +118,39 @@ function Restauration() {
     },
   });
 
+  // Fonction pour récupérer les dates tout en sautant les week-ends
+  const getValidDate = (daysToAdd) => {
+    let date = moment().add(daysToAdd, "days");
+    while (date.day() === 6 || date.day() === 0) {
+      date = date.add(1, "days");
+    }
+    return date.format("YYYY-MM-DD");
+  };
+
+  // Fonction pour obtenir les dates formatées
+  const getFormattedDate = (daysToAdd) => {
+    let date = moment().add(daysToAdd, "days");
+    while (date.day() === 6 || date.day() === 0) {
+      date = date.add(1, "days");
+    }
+    if (daysToAdd === 0) return "Aujourd'hui";
+    return date.format("ddd D MMM"); // Format "mar 4 sep"
+  };
+
   useEffect(() => {
-    fetchMenu(moment().format("YYYY-MM-DD")).then((data) => {
+    let dayOffset = 0;
+    if (selectedDay === "tomorrow") {
+      dayOffset = 1;
+    } else if (selectedDay === "dayAfterTomorrow") {
+      dayOffset = 2;
+    }
+
+    const validDate = getValidDate(dayOffset);
+    fetchMenu(validDate).then((data) => {
       setMenu(data);
       console.log(data);
     });
-  }, []);
-
-  if (!menu) {
-    return (
-      <View style={styles.modalBackground}>
-        <View style={styles.container}>
-          <Text>Chargement...</Text>
-        </View>
-      </View>
-    );
-  }
+  }, [selectedDay]);
 
   return (
     <View style={styles.modalBackground}>
@@ -139,9 +183,78 @@ function Restauration() {
             </View>
           </View>
         </View>
-        <Text style={styles.titleContent}>Aujourd'hui</Text>
+
+        {/* Boutons pour changer de jour */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            flexDirection: "row",
+            gap: 15,
+            marginVertical: 15,
+          }}
+        >
+          <TouchableOpacity
+            style={[
+              styles.button,
+              selectedDay === "today" && styles.buttonToday,
+            ]}
+            onPress={() => setSelectedDay("today")}
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                selectedDay === "today" && styles.buttonTextToday,
+              ]}
+            >
+              {getFormattedDate(0)}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              selectedDay === "tomorrow" && styles.buttonToday,
+            ]}
+            onPress={() => setSelectedDay("tomorrow")}
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                selectedDay === "tomorrow" && styles.buttonTextToday,
+              ]}
+            >
+              {getFormattedDate(1)}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              selectedDay === "dayAfterTomorrow" && styles.buttonToday,
+            ]}
+            onPress={() => setSelectedDay("dayAfterTomorrow")}
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                selectedDay === "dayAfterTomorrow" && styles.buttonTextToday,
+              ]}
+            >
+              {getFormattedDate(2)}
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
+
+        {/* <Text style={styles.titleContent}>
+          {selectedDay === "today"
+            ? "Aujourd'hui"
+            : selectedDay === "tomorrow"
+            ? "Demain"
+            : "Après-demain"}
+        </Text> */}
+
+        {/* Affichage du menu */}
         <View style={styles.contentMeal}>
-          <Text style={styles.descriptionMeal}>Repas</Text>
+          <Text style={styles.descriptionMeal}>Menu</Text>
           {menu.map((meal, index) => (
             <View key={index} style={styles.descriptionMeal}>
               <Text style={styles.descriptionPlat}>
