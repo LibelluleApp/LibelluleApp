@@ -29,7 +29,7 @@ import {
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../context/AuthContext";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "./../utils/themeContext";
 
 const isExpoGo = Constants.appOwnership === "expo";
@@ -201,6 +201,7 @@ function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   const { signOut } = useAuth();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     getProfileData().then((data) => {
@@ -212,6 +213,17 @@ function Profile() {
       setIsAlternant(data === "true");
     });
   }, []);
+
+  useEffect(() => {
+    if (isFocused) {
+      getProfileData().then((data) => {
+        setUserData(data);
+      });
+      getAlternant().then((data) => {
+        setIsAlternant(data === "true");
+      });
+    }
+  }, [isFocused]);
 
   if (isLoading) {
     return (

@@ -8,6 +8,11 @@ async function fetchHourOfDay(date) {
       throw new Error("Le groupe_id n'est pas défini dans AsyncStorage.");
     }
 
+    let isAlternant = await AsyncStorage.getItem("isAlternant");
+    if (isAlternant === "true") {
+      user_data.groupe_id = user_data.groupe_id + "A";
+    }
+
     const response = await ApiManager.post("/timetable/findtotalhourofday", {
       groupe_id: user_data.groupe_id,
       day: date,

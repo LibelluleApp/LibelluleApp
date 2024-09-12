@@ -101,7 +101,7 @@ const ColorModal = ({
           <Pressable
             style={[
               styles.closeButton,
-              { backgroundColor: colors.colors.blue_variable },
+              { backgroundColor: colors.blue_variable },
             ]}
             onPress={handleSave}
           >
