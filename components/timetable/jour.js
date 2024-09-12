@@ -45,14 +45,18 @@ const Jour = () => {
   const calendarRef = useRef(null);
   const isFocused = useIsFocused();
   const [timetable, setTimetable] = useState(null);
-  const [colorAlternant, setColorAlternant] = useState(colors.orange);
+  const [colorAlternant, setColorAlternant] = useState(colors.grey);
   const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
 
   const getColorAlternant = async () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_alternant");
       if (storedColor) {
+        storedColor = storedColor?.replace(/['"]+/g, "");
         setColorAlternant(JSON.parse(storedColor));
+      }
+      if (storedColor === null) {
+        setColorAlternant(colors.grey);
       }
     } catch (error) {
       console.error("Failed to fetch color from storage:", error);
@@ -63,7 +67,11 @@ const Jour = () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_timetable");
       if (storedColor) {
+        storedColor = storedColor?.replace(/['"]+/g, "");
         setColorTimetable(JSON.parse(storedColor));
+      }
+      if (storedColor === null) {
+        setColorAlternant(colors.blue_variable);
       }
     } catch (error) {
       console.error("Failed to fetch color from storage:", error);
