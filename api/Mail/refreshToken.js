@@ -1,4 +1,5 @@
 import * as SecureStore from "expo-secure-store";
+import { DOMParser, XMLSerializer } from "xmldom";
 
 async function refreshAuthToken(email_edu, mot_de_passe) {
   try {

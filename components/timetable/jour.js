@@ -158,6 +158,8 @@ const Jour = () => {
         viewMode="day"
         events={timetable}
         showNowIndicator={true}
+        initialTimeIntervalHeight={Dimensions.get("window").height / 17.5}
+        bouncd
         spaceFromTop={4}
         locale="fr"
         // renderDayBarItem={(day) => {
@@ -223,7 +225,7 @@ const Jour = () => {
                 <View style={styles.eventContainerLittle}>
                   <Text
                     style={styles.eventTitleLittle}
-                    numberOfLines={1} // Limite le texte à une seule ligne
+                    numberOfLines={1}
                     ellipsizeMode="tail"
                   >
                     {event.title} - {event.location || "N/C"} -{" "}
@@ -239,7 +241,7 @@ const Jour = () => {
                 <View style={styles.eventContainerAlternance}>
                   <Text
                     style={styles.eventTitleAlternance}
-                    numberOfLines={1} // Limite le texte à une seule ligne
+                    numberOfLines={1}
                     ellipsizeMode="tail"
                   >
                     {event.title}
@@ -253,7 +255,7 @@ const Jour = () => {
               <View style={styles.eventContainer}>
                 <Text
                   style={styles.eventTitle}
-                  numberOfLines={1} // Limite le texte à une seule ligne
+                  numberOfLines={1}
                   ellipsizeMode="tail"
                 >
                   {event.title}

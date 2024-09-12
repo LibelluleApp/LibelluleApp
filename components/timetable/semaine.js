@@ -118,7 +118,7 @@ const Semaine = () => {
         spaceFromTop={4}
         locale="fr"
         ref={calendarRef}
-        initialTimeIntervalHeight={49}
+        initialTimeIntervalHeight={Dimensions.get("window").height / 17.5}
         timeZone="Europe/Paris"
         theme={{
           backgroundColor: colors.background,
