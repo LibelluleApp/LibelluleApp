@@ -1,38 +1,43 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import {
   View,
   StyleSheet,
   ActivityIndicator,
   Text,
-  TouchableOpacity,
+  Dimensions,
+  Platform,
 } from "react-native";
-import { Dimensions, Platform } from "react-native";
 import { TimelineCalendar } from "@howljs/calendar-kit";
-import { MapPin, UserRound, Clock, ResetList } from "../../assets/icons/Icons";
-import fetchTimetable from "../../api/Timetable/timetable";
 import { ThemeContext } from "./../../utils/themeContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import fetchTimetable from "../../api/Timetable/timetable";
+import { UserRound, MapPin } from "./../../assets/icons/Icons";
 
 const getTimetable = async () => {
   try {
     const response = await fetchTimetable();
-    if (response) {
-      return response;
-    }
+    return response || null;
   } catch (error) {
     console.error("Error fetching timetable:", error);
     return null;
   }
 };
 
-function formatProfessorName(professor) {
+const formatProfessorName = (professor) => {
   const parts = professor?.split(" ");
   if (parts.length < 2) return professor;
   const initial = parts[1][0];
   const nom = parts[0];
   return `${initial}. ${nom}`;
-}
+};
 
 const Jour = () => {
   const navigator = useNavigation();
@@ -47,8 +52,7 @@ const Jour = () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_alternant");
       if (storedColor) {
-        storedColor = storedColor.replace(/['"]+/g, "");
-        setColorAlternant(storedColor);
+        setColorAlternant(JSON.parse(storedColor));
       }
     } catch (error) {
       console.error("Failed to fetch color from storage:", error);
@@ -59,8 +63,7 @@ const Jour = () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_timetable");
       if (storedColor) {
-        storedColor = storedColor.replace(/['"]+/g, "");
-        setColorTimetable(storedColor);
+        setColorTimetable(JSON.parse(storedColor));
       }
     } catch (error) {
       console.error("Failed to fetch color from storage:", error);
@@ -120,28 +123,24 @@ const Jour = () => {
     },
     eventTextContent: {
       fontFamily: "Ubuntu_400Regular",
-      includeFontPadding: false,
       fontSize: 13,
       color: colors.white,
       gap: 10,
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
-      includeFontPadding: false,
       fontSize: 16,
       color: colors.white,
       maxWidth: "100%",
     },
     eventTitleLittle: {
       fontFamily: "Ubuntu_500Medium",
-      includeFontPadding: false,
       fontSize: 12,
       color: colors.white,
       maxWidth: "100%",
     },
     eventTitleAlternance: {
       fontFamily: "Ubuntu_500Medium",
-      includeFontPadding: false,
       fontSize: 25,
       color: colors.white,
       maxWidth: "100%",
@@ -167,8 +166,9 @@ const Jour = () => {
     );
   }
 
-  let height = Dimensions.get("screen").height / 17.7;
-  height = Platform.OS === "ios" ? height : height + 1;
+  const height =
+    Dimensions.get("screen").height / 17.7 +
+    (Platform.OS === "android" ? 1 : 0);
 
   return (
     <View style={styles.container}>
@@ -187,13 +187,6 @@ const Jour = () => {
         initialTimeIntervalHeight={height}
         spaceFromTop={4}
         locale="fr"
-        // renderDayBarItem={(day) => {
-        //   return (
-        //     <View style={styles.itemContainer}>
-        //       <Text style={styles.dayName}>{day.currentDate}</Text>
-        //     </View>
-        //   );
-        // }}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
