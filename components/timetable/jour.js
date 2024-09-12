@@ -52,8 +52,9 @@ const Jour = () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_alternant");
       if (storedColor) {
+        console.log(storedColor);
         storedColor = storedColor?.replace(/['"]+/g, "");
-        setColorAlternant(JSON.parse(storedColor));
+        setColorAlternant(storedColor);
       }
       if (storedColor === null) {
         setColorAlternant(colors.grey);
@@ -68,7 +69,7 @@ const Jour = () => {
       let storedColor = await AsyncStorage.getItem("color_timetable");
       if (storedColor) {
         storedColor = storedColor?.replace(/['"]+/g, "");
-        setColorTimetable(JSON.parse(storedColor));
+        setColorTimetable(storedColor);
       }
       if (storedColor === null) {
         setColorAlternant(colors.blue_variable);
