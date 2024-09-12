@@ -166,8 +166,9 @@ const Jour = () => {
       </View>
     );
   }
+
   let height = Dimensions.get("screen").height / 17.7;
-  height = Platform.OS === "ios" ? height : height + 100;
+  height = Platform.OS === "ios" ? height : height + 2;
 
   return (
     <View style={styles.container}>
