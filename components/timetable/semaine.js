@@ -30,7 +30,7 @@ const Semaine = () => {
   const isFocused = useIsFocused(); // Hook to check if the screen is focused
   const calendarRef = useRef(null); // Ref for TimelineCalendar
   const [timetable, setTimetable] = useState(null);
-  const [colorAlternant, setColorAlternant] = useState(colors.orange);
+  const [colorAlternant, setColorAlternant] = useState(colors.grey);
   const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
 
   const getColorAlternant = async () => {
@@ -106,14 +106,15 @@ const Semaine = () => {
       fontFamily: "Ubuntu_500Medium",
       includeFontPadding: false,
       fontSize: 15,
+      width: 85,
       color: colors.white,
-      maxWidth: "100%",
       alignItems: "center",
       justifyContent: "center",
       transform: [{ rotate: "-90deg" }],
     },
     eventContainerAlternance: {
       height: "100%",
+      width: "100%",
 
       borderRadius: 10,
       justifyContent: "center",

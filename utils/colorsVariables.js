@@ -28,8 +28,6 @@ export const lightModeColors = {
   red_background: "#f5dee2",
   red700: "#E80D0D",
   red900: "#BB0000",
-
-  orange: "#BB9200",
 };
 
 export const darkModeColors = {
@@ -62,6 +60,4 @@ export const darkModeColors = {
   red_background: "#271527",
   red700: "#E80D0D",
   red900: "#BB0000",
-
-  orange: "#BB9200",
 };
