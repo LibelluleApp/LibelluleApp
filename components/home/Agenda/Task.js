@@ -140,7 +140,7 @@ function Task({ data }) {
                 strokeWidth={1.75}
               />
               <Text style={styles.taskTitleNone}>
-                Bravo, vous avez terminé toutes vos tâches
+                Bravo, toutes les tâches sont cochées
               </Text>
             </View>
           </View>

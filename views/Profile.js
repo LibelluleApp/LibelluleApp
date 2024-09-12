@@ -261,9 +261,9 @@ function Profile() {
           text: "Modifier",
           onPress: () => {
             Alert.alert(
-              "PRANKKKK",
-              "C'est pas pour le moment, laisses moi dormir un petit peu 😭",
-              [{ text: "Pas de soucis !" }]
+              "Aïe, aïe, aïe ! 😭",
+              "La fonctionnalité arrive bientôt, pas de panique !",
+              [{ text: "Compris !" }]
             );
           },
         },
