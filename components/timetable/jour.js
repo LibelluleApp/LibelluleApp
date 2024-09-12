@@ -69,7 +69,7 @@ const Jour = () => {
       paddingHorizontal: "5%",
     },
     eventBack: {
-      paddingVertical: 2,
+      paddingVertical: 1,
     },
     eventBottom: {
       flexDirection: "row",
@@ -158,7 +158,9 @@ const Jour = () => {
         viewMode="day"
         events={timetable}
         showNowIndicator={true}
-        initialTimeIntervalHeight={Dimensions.get("window").height / 17.5}
+        allowPinchToZoom
+        minTimeIntervalHeight={Dimensions.get("window").height / 17.7}
+        initialTimeIntervalHeight={Dimensions.get("window").height / 17.7}
         bouncd
         spaceFromTop={4}
         locale="fr"

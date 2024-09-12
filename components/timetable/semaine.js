@@ -64,7 +64,7 @@ const Semaine = () => {
       alignItems: "start",
     },
     eventBack: {
-      paddingVertical: 2,
+      paddingVertical: 1,
     },
     eventContainer: {
       height: "100%",
@@ -118,7 +118,9 @@ const Semaine = () => {
         spaceFromTop={4}
         locale="fr"
         ref={calendarRef}
-        initialTimeIntervalHeight={Dimensions.get("window").height / 17.5}
+        allowPinchToZoom
+        minTimeIntervalHeight={Dimensions.get("window").height / 17.7}
+        initialTimeIntervalHeight={Dimensions.get("window").height / 17.7}
         timeZone="Europe/Paris"
         theme={{
           backgroundColor: colors.background,
