@@ -236,10 +236,36 @@ function Profile() {
     ]);
   };
 
+  const handlePressPrank = () => {
+    Alert.alert(
+      "Modifier la photo de profil",
+      "Voulez-vous vraiment modifier votre photo de profil ?",
+      [
+        {
+          text: "Annuler",
+          style: "cancel",
+        },
+        {
+          text: "Modifier",
+          onPress: () => {
+            Alert.alert(
+              "PRANKKKK",
+              "C'est pas pour le moment, laisses moi dormir un petit peu 😭",
+              [{ text: "Pas de soucis !" }]
+            );
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.topProfile}>
-        <TouchableOpacity style={styles.changePicture}>
+        <TouchableOpacity
+          style={styles.changePicture}
+          onPress={handlePressPrank}
+        >
           <Image
             source={{ uri: userData.lien_photo_profil }}
             style={styles.image}
