@@ -121,6 +121,17 @@ function Restauration() {
   // Fonction pour récupérer les dates tout en sautant les week-ends
   const getValidDate = (daysToAdd) => {
     let date = moment().add(daysToAdd, "days");
+
+    // Si on est vendredi, on saute directement au lundi suivant
+    if (moment().day() === 5) {
+      if (daysToAdd === 1) {
+        return moment().add(3, "days").format("YYYY-MM-DD"); // Lundi
+      } else if (daysToAdd === 2) {
+        return moment().add(4, "days").format("YYYY-MM-DD"); // Mardi
+      }
+    }
+
+    // Saute les weekends
     while (date.day() === 6 || date.day() === 0) {
       date = date.add(1, "days");
     }
@@ -130,11 +141,23 @@ function Restauration() {
   // Fonction pour obtenir les dates formatées
   const getFormattedDate = (daysToAdd) => {
     let date = moment().add(daysToAdd, "days");
+
+    // Si on est vendredi, on saute directement au lundi et mardi suivant
+    if (moment().day() === 5) {
+      if (daysToAdd === 1) {
+        return moment().add(3, "days").format("ddd D MMM"); // Lundi
+      } else if (daysToAdd === 2) {
+        return moment().add(4, "days").format("ddd D MMM"); // Mardi
+      }
+    }
+
+    // Saute les weekends
     while (date.day() === 6 || date.day() === 0) {
       date = date.add(1, "days");
     }
+
     if (daysToAdd === 0) return "Aujourd'hui";
-    return date.format("ddd D MMM"); // Format "mar 4 sep"
+    return date.format("ddd D MMM");
   };
 
   useEffect(() => {
@@ -151,6 +174,13 @@ function Restauration() {
       console.log(data);
     });
   }, [selectedDay]);
+
+  // Calcul des jours à afficher
+  const daysToDisplay = [
+    { key: "today", label: getFormattedDate(0) },
+    { key: "tomorrow", label: getFormattedDate(1) },
+    { key: "dayAfterTomorrow", label: getFormattedDate(2) },
+  ];
 
   return (
     <View style={styles.modalBackground}>
@@ -194,63 +224,23 @@ function Restauration() {
             marginVertical: 15,
           }}
         >
-          <TouchableOpacity
-            style={[
-              styles.button,
-              selectedDay === "today" && styles.buttonToday,
-            ]}
-            onPress={() => setSelectedDay("today")}
-          >
-            <Text
-              style={[
-                styles.buttonText,
-                selectedDay === "today" && styles.buttonTextToday,
-              ]}
+          {daysToDisplay.map(({ key, label }) => (
+            <TouchableOpacity
+              key={key}
+              style={[styles.button, selectedDay === key && styles.buttonToday]}
+              onPress={() => setSelectedDay(key)}
             >
-              {getFormattedDate(0)}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.button,
-              selectedDay === "tomorrow" && styles.buttonToday,
-            ]}
-            onPress={() => setSelectedDay("tomorrow")}
-          >
-            <Text
-              style={[
-                styles.buttonText,
-                selectedDay === "tomorrow" && styles.buttonTextToday,
-              ]}
-            >
-              {getFormattedDate(1)}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[
-              styles.button,
-              selectedDay === "dayAfterTomorrow" && styles.buttonToday,
-            ]}
-            onPress={() => setSelectedDay("dayAfterTomorrow")}
-          >
-            <Text
-              style={[
-                styles.buttonText,
-                selectedDay === "dayAfterTomorrow" && styles.buttonTextToday,
-              ]}
-            >
-              {getFormattedDate(2)}
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={[
+                  styles.buttonText,
+                  selectedDay === key && styles.buttonTextToday,
+                ]}
+              >
+                {label}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
-
-        {/* <Text style={styles.titleContent}>
-          {selectedDay === "today"
-            ? "Aujourd'hui"
-            : selectedDay === "tomorrow"
-            ? "Demain"
-            : "Après-demain"}
-        </Text> */}
 
         {/* Affichage du menu */}
         <View style={styles.contentMeal}>
