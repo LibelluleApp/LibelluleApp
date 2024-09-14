@@ -122,7 +122,20 @@ function Restauration() {
   const getValidDate = (daysToAdd) => {
     let date = moment().add(daysToAdd, "days");
 
-    // Si on est vendredi, on saute directement au lundi suivant
+    // Si on est samedi ou dimanche, on commence directement au lundi
+    if (moment().day() === 6) {
+      // Si c'est samedi
+      return moment()
+        .add(daysToAdd + 2, "days")
+        .format("YYYY-MM-DD"); // Lundi, Mardi, Mercredi
+    } else if (moment().day() === 0) {
+      // Si c'est dimanche
+      return moment()
+        .add(daysToAdd + 1, "days")
+        .format("YYYY-MM-DD"); // Lundi, Mardi, Mercredi
+    }
+
+    // Si on est vendredi, on saute le week-end pour afficher lundi et mardi
     if (moment().day() === 5) {
       if (daysToAdd === 1) {
         return moment().add(3, "days").format("YYYY-MM-DD"); // Lundi
@@ -131,10 +144,11 @@ function Restauration() {
       }
     }
 
-    // Saute les weekends
+    // Saute les week-ends pour les autres jours de la semaine
     while (date.day() === 6 || date.day() === 0) {
       date = date.add(1, "days");
     }
+
     return date.format("YYYY-MM-DD");
   };
 
@@ -142,7 +156,20 @@ function Restauration() {
   const getFormattedDate = (daysToAdd) => {
     let date = moment().add(daysToAdd, "days");
 
-    // Si on est vendredi, on saute directement au lundi et mardi suivant
+    // Si on est samedi, le premier bouton est lundi, ensuite mardi, mercredi
+    if (moment().day() === 6) {
+      return moment()
+        .add(daysToAdd + 2, "days")
+        .format("ddd D MMM");
+    }
+    // Si on est dimanche, le premier bouton est lundi, ensuite mardi, mercredi
+    if (moment().day() === 0) {
+      return moment()
+        .add(daysToAdd + 1, "days")
+        .format("ddd D MMM");
+    }
+
+    // Si on est vendredi, afficher lundi et mardi après aujourd'hui
     if (moment().day() === 5) {
       if (daysToAdd === 1) {
         return moment().add(3, "days").format("ddd D MMM"); // Lundi
@@ -151,12 +178,16 @@ function Restauration() {
       }
     }
 
-    // Saute les weekends
+    // Saute les week-ends pour les jours de la semaine
     while (date.day() === 6 || date.day() === 0) {
       date = date.add(1, "days");
     }
 
-    if (daysToAdd === 0) return "Aujourd'hui";
+    // Si on est un jour de semaine (lundi à jeudi), afficher "Aujourd'hui"
+    if (daysToAdd === 0 && moment().day() !== 6 && moment().day() !== 0) {
+      return "Aujourd'hui";
+    }
+
     return date.format("ddd D MMM");
   };
 
