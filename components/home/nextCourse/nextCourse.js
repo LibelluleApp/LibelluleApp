@@ -208,7 +208,7 @@ function ItemCourse({ data, color }) {
           ]}
         >
           <Text
-            style={styles.textSubject}
+            style={[styles.textSubject, { maxWidth: "100%" }]}
             numberOfLines={1} // Limite le texte à une seule ligne
             ellipsizeMode="tail"
           >
@@ -232,45 +232,49 @@ function ItemCourse({ data, color }) {
         <View style={styles.stick}></View>
         <View style={styles.contentLeft}>
           <Text
-            style={styles.textSubject}
+            style={[styles.textSubject, { maxWidth: "100%" }]}
             numberOfLines={1} // Limite le texte à une seule ligne
             ellipsizeMode="tail"
           >
             {data.title || "Matière indisponible"}
           </Text>
+
           <View style={styles.descriptionContainer}>
-            <View style={styles.teacher}>
-              <View style={[styles.content, { width: "40%" }]}>
-                <MapPin
-                  stroke={colors.white}
-                  width={14}
-                  height={14}
-                  strokeWidth={1.75}
-                />
-                <Text
-                  style={styles.textTeacher}
-                  numberOfLines={1} // Limite le texte à une seule ligne
-                  ellipsizeMode="tail"
-                >
-                  {data.lieu || "N/C"}
-                </Text>
+            {data.title !== "Alternance" && (
+              <View style={styles.teacher}>
+                <View style={[styles.content, { width: "40%" }]}>
+                  <MapPin
+                    stroke={colors.white}
+                    width={14}
+                    height={14}
+                    strokeWidth={1.75}
+                  />
+                  <Text
+                    style={styles.textTeacher}
+                    numberOfLines={1} // Limite le texte à une seule ligne
+                    ellipsizeMode="tail"
+                  >
+                    {data.lieu || "N/C"}
+                  </Text>
+                </View>
+                <View style={[styles.content, { width: "60%" }]}>
+                  <UserRound
+                    stroke={colors.white}
+                    width={14}
+                    height={14}
+                    strokeWidth={1.75}
+                  />
+                  <Text
+                    style={styles.textTeacher}
+                    numberOfLines={1} // Limite le texte à une seule ligne
+                    ellipsizeMode="tail"
+                  >
+                    {formatProfessorName(data.description) || "N/C"}
+                  </Text>
+                </View>
               </View>
-              <View style={[styles.content, { width: "60%" }]}>
-                <UserRound
-                  stroke={colors.white}
-                  width={14}
-                  height={14}
-                  strokeWidth={1.75}
-                />
-                <Text
-                  style={styles.textTeacher}
-                  numberOfLines={1} // Limite le texte à une seule ligne
-                  ellipsizeMode="tail"
-                >
-                  {formatProfessorName(data.description) || "N/C"}
-                </Text>
-              </View>
-            </View>
+            )}
+
             <View style={styles.content}>
               <Clock
                 stroke={colors.white}
