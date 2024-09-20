@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Jour from "../components/timetable/jour";
@@ -13,7 +13,6 @@ function Timetable() {
   const { colors } = useContext(ThemeContext);
   const [isWeekDefault, setIsWeekDefault] = useState(false);
   const isFocused = useIsFocused();
-  const calendarRef = useRef(null);
 
   const styles = StyleSheet.create({
     modalBackground: {
@@ -63,8 +62,17 @@ function Timetable() {
           },
         }}
       >
-        <Tab.Screen name="Jour" component={Jour} />
-        <Tab.Screen name="Semaine" component={Semaine} />
+        {!isWeekDefault ? (
+          <>
+            <Tab.Screen name="Jour" component={Jour} />
+            <Tab.Screen name="Semaine" component={Semaine} />
+          </>
+        ) : (
+          <>
+            <Tab.Screen name="Semaine" component={Semaine} />
+            <Tab.Screen name="Jour" component={Jour} />
+          </>
+        )}
       </Tab.Navigator>
     </View>
   );
