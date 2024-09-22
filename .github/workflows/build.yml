@@ -46,9 +46,6 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
@@ -105,9 +102,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
 
       - name: Log in to EAS
         uses: expo/expo-github-action@v8
