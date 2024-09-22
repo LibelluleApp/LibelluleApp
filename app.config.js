@@ -7,11 +7,6 @@ export default {
   orientation: "portrait",
   icon: IS_DEV ? "./assets/dev-icon.png" : "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
-  splash: {
-    image: "./assets/splash.png",
-    resizeMode: "contain",
-    backgroundColor: "#ffffff",
-  },
   androidStatusBar: {
     translucent: true,
   },
@@ -41,7 +36,7 @@ export default {
     entitlements: {
       "aps-environment": "production",
     },
-    buildNumber: "1.12",
+    buildNumber: "1.13",
   },
   android: {
     adaptiveIcon: {
