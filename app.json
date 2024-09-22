@@ -18,7 +18,9 @@
       "visible": "immersive"
     },
     "owner": "libellule",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": false,
       "config": {
@@ -33,7 +35,7 @@
       "entitlements": {
         "aps-environment": "production"
       },
-      "buildNumber": "1.7"
+      "buildNumber": "1.12"
     },
     "android": {
       "adaptiveIcon": {

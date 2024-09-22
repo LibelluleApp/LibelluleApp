@@ -39,3 +39,6 @@ yarn-error.*
 
 # GoogleService-Info.plist
 # google-services.json
+
+*.ipa
+*.tar.gz
