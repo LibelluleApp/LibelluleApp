@@ -1,12 +1,12 @@
 name: Build Expo App
 
 on:
-  workflow_dispatch:  
+  workflow_dispatch:
     inputs:
       platform:
         type: choice
         description: 'Build sur quelle plateforme ?'
-        options: 
+        options:
           - ios
           - android
           - les_deux
@@ -27,9 +27,9 @@ jobs:
         with:
           path: |
             ~/.npm
-            ~/.cache/yarn
+            ~/.cache
             node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
@@ -46,8 +46,24 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm i
+      - name: Install dependencies with npm
+        run: npm ci
+
+      - name: Cache Expo CLI
+        uses: actions/cache@v3
+        with:
+          path: ~/.expo
+          key: expo-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            expo-${{ runner.os }}-
+
+      - name: Cache EAS CLI
+        uses: actions/cache@v3
+        with:
+          path: ~/.eas
+          key: eas-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            eas-${{ runner.os }}-
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -84,9 +100,9 @@ jobs:
         with:
           path: |
             ~/.npm
-            ~/.cache/yarn
+            ~/.cache
             node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
@@ -105,6 +121,25 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
+      - name: Install dependencies with npm
+        run: npm ci
+
+      - name: Cache Expo CLI
+        uses: actions/cache@v3
+        with:
+          path: ~/.expo
+          key: expo-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            expo-${{ runner.os }}-
+
+      - name: Cache EAS CLI
+        uses: actions/cache@v3
+        with:
+          path: ~/.eas
+          key: eas-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            eas-${{ runner.os }}-
 
       - name: Log in to EAS
         uses: expo/expo-github-action@v8
