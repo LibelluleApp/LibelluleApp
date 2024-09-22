@@ -33,6 +33,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: Cache Android Gradle
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -82,6 +90,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - name: Cache CocoaPods
+        uses: actions/cache@v3
+        with:
+          path: |
+            Pods
+            ~/.cocoapods
+            ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -107,3 +126,10 @@ jobs:
         with:
           name: ios-app
           path: /Users/runner/work/LibelluleApp/LibelluleApp/*.ipa
+
+      - name: Upload iOS app to App Store
+        run: |
+          xcrun altool --upload-app --type ios --file /Users/runner/work/LibelluleApp/LibelluleApp/*.ipa --username $APPLE_ID --password $APPLE_APP_SPECIFIC_PASSWORD
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
