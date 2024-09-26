@@ -37,9 +37,6 @@ async function connectZimbra(email_edu, mot_de_passe) {
     myHeaders.append("Expires", "0");
 
     try {
-      // Supprimez l'ancien token
-      await SecureStore.deleteItemAsync("authToken");
-
       const responseBis = await fetch(
         "https://zimbra.univ-poitiers.fr/service/soap",
         {
@@ -55,11 +52,7 @@ async function connectZimbra(email_edu, mot_de_passe) {
         data,
         "application/xml"
       );
-      // Envoyer la requête
 
-      // Utiliser DOMParser pour analyser la réponse XML
-
-      // Extraire le token d'authentification
       const authTokenNode = responseDoc.getElementsByTagName("authToken")[0];
       const authToken = authTokenNode ? authTokenNode.textContent : null;
 
