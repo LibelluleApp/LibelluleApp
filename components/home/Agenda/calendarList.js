@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
+import {useIsFocused} from "@react-navigation/native";
 import moment from "moment";
 import countTaskWeek from "../../../api/Agenda/countTaskWeek";
 import { ThemeContext } from "././../../../utils/themeContext";
@@ -10,6 +11,7 @@ const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 function CalendarList({ onDateSelect }) {
   const { colors } = useContext(ThemeContext);
+  const isFocused = useIsFocused();
   const [dates, setDates] = useState([]);
 
   const styles = StyleSheet.create({
@@ -119,8 +121,11 @@ function CalendarList({ onDateSelect }) {
       }
     };
     fetchTaskCount();
-  }, []);
 
+    if (isFocused) {
+      fetchTaskCount();
+    }
+  }, [isFocused]);
   return (
     <ShimmerPlaceHolder
       shimmerStyle={{
