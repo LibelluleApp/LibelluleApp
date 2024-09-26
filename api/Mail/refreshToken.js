@@ -1,15 +1,13 @@
 import * as SecureStore from "expo-secure-store";
 import { DOMParser } from "xmldom";
 
-const MAX_RETRIES = 2; // Nombre maximum de tentatives
+const MAX_RETRIES = 2;
 
 async function refreshAuthToken(email_edu, mot_de_passe) {
   let attempts = 0;
 
   while (attempts < MAX_RETRIES) {
     try {
-      await SecureStore.deleteItemAsync("authToken");
-
       const xmlString = `<?xml version="1.0" ?>
         <soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
             <soap:Header>
