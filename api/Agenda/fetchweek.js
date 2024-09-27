@@ -23,7 +23,7 @@ function adjustWeekendDates(startDate, endDate) {
 async function fetchWeekAgenda() {
   try {
     let startDate = new Date();
-    let endDate = new Date(new Date().setDate(new Date().getDate() + 5));
+    let endDate = new Date(new Date().setDate(new Date().getDate() + 7));
 
     let adjustedDates = adjustWeekendDates(startDate, endDate);
     startDate = adjustedDates.startDate;
