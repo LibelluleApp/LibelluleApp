@@ -130,7 +130,7 @@ function Settings() {
             value={isDarkMode}
           />
         </View>
-        {userDatas.groupe_id?.includes("Y3") && (
+        {userDatas.groupe_id?.includes("Y3UI") && (
           <View style={styles.switcherContent}>
             <Text style={styles.profileBtnSwitch}>Mode alternant</Text>
             <Switch
