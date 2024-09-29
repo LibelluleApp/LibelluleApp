@@ -85,6 +85,7 @@ function Absence() {
   React.useEffect(() => {
     try {
       fetchAbsence().then((data) => {
+        console.log(data);
         setAbsence(data.absences);
       });
     } catch (error) {
