@@ -199,14 +199,14 @@ function EventDay({ date }) {
   };
 
   useEffect(() => {
-    fetchAgenda();
-  }, []);
+    const fetchData = async () => {
+      await fetchAgenda();
+      await fetchWeatherData();
+      await fetchHour();
+    };
 
-  useEffect(() => {
     if (isFocused) {
-      fetchAgenda();
-      fetchWeatherData();
-      fetchHour();
+      fetchData();
     }
   }, [isFocused, currentDate]);
 

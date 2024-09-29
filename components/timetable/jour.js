@@ -2,9 +2,7 @@ import React, {
   useContext,
   useEffect,
   useState,
-  useRef,
-  forwardRef,
-  useImperativeHandle,
+  useRef
 } from "react";
 import {
   View,
@@ -15,11 +13,11 @@ import {
   Platform,
 } from "react-native";
 import { TimelineCalendar } from "@howljs/calendar-kit";
-import { ThemeContext } from "./../../utils/themeContext";
+import { ThemeContext } from "../../utils/themeContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import fetchTimetable from "../../api/Timetable/timetable";
-import { UserRound, MapPin } from "./../../assets/icons/Icons";
+import { UserRound, MapPin } from "../../assets/icons/Icons";
 
 const getTimetable = async () => {
   try {
@@ -52,18 +50,15 @@ const Jour = () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_alternant");
       if (storedColor) {
-        console.log(storedColor);
-        storedColor = storedColor?.replace(/['"]+/g, "");
+        storedColor = storedColor.replace(/['"]+/g, "");
         setColorAlternant(storedColor);
-      }
-      if (storedColor === null) {
+      }else{
         setColorAlternant(colors.grey);
       }
     } catch (error) {
       console.error("Failed to fetch color from storage:", error);
     }
   };
-
   const getColorTimetable = async () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_timetable");
@@ -72,7 +67,7 @@ const Jour = () => {
         setColorTimetable(storedColor);
       }
       if (storedColor === null) {
-        setColorAlternant(colors.blue_variable);
+        setColorTimetable(colors.blue_variable);
       }
     } catch (error) {
       console.error("Failed to fetch color from storage:", error);
@@ -164,6 +159,7 @@ const Jour = () => {
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
+      backgroundColor: colorAlternant,
     },
   });
 
@@ -266,10 +262,9 @@ const Jour = () => {
             return (
               <View style={styles.eventBack}>
                 <View
-                  style={[
-                    { backgroundColor: colorAlternant },
-                    styles.eventContainerAlternance,
-                  ]}
+                  style={
+                    styles.eventContainerAlternance
+                  }
                 >
                   <Text
                     style={styles.eventTitleAlternance}

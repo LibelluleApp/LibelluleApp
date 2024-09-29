@@ -26,7 +26,7 @@ import { useNavigation } from "@react-navigation/native";
 // Options statiques pour le BUT et l'année
 const butOptions = [
   { label: "TC", value: "CL" },
-  { label: "GMP", value: "GM" },
+  //{ label: "GMP", value: "GM" },
   { label: "QLIO", value: "QL" },
   { label: "GEII", value: "GI" },
 ];
@@ -71,9 +71,11 @@ const Register = () => {
   // Fonction pour filtrer dynamiquement les groupes TP en fonction du BUT sélectionné
   const filteredGroupeTPOptions = useMemo(() => {
     if (formData.but === "CL") {
-      return groupeTPOptions; // Toutes les options pour "TC"
+      return groupeTPOptions;
+    } else if (formData.but === "QL") {
+      return groupeTPOptions.slice(0, 2);
     } else {
-      return groupeTPOptions.slice(0, 4); // Seulement TP1 à TP4 pour les autres BUT
+      return groupeTPOptions.slice(0, 4);
     }
   }, [formData.but]);
 
@@ -262,6 +264,7 @@ const Register = () => {
           fontFamily: "Ubuntu_400Regular",
           fontSize: 14,
           color: colors.grey,
+          marginTop: 5,
         },
         accountButton: {
           fontFamily: "Ubuntu_500Medium",
@@ -385,7 +388,9 @@ const Register = () => {
                   onPress={handleRegister}
                   loading={loading}
                 />
+
               </View>
+
             </>
           ) : (
             <>
@@ -400,6 +405,7 @@ const Register = () => {
                     secureTextEntry={false}
                     autoComplete="given-name"
                     keyboardType="default"
+                    value={formData.prenom}
                   />
                   <Input
                     label="Nom"
@@ -410,6 +416,7 @@ const Register = () => {
                     secureTextEntry={false}
                     autoComplete="family-name"
                     keyboardType="default"
+                    value={formData.nom}
                   />
                 </View>
                 <Input
@@ -423,6 +430,7 @@ const Register = () => {
                   keyboardType="email-address"
                   onChangeText={(text) => handleInputChange("email", text)}
                   autoCapitalize="none"
+                  value={formData.email}
                 />
                 <Input
                   label="Mot de passe"
@@ -432,6 +440,7 @@ const Register = () => {
                   autoComplete="password"
                   secureTextEntry
                   onChangeText={(text) => handleInputChange("password", text)}
+                  value={formData.password}
                 />
                 <Input
                   label="Confirmer mot de passe"
@@ -443,6 +452,7 @@ const Register = () => {
                   onChangeText={(text) =>
                     handleInputChange("confirmPassword", text)
                   }
+                  value={formData.confirmPassword}
                 />
               </View>
               <View style={styles.buttonContent}>
@@ -451,7 +461,11 @@ const Register = () => {
                   onPress={handleSecondePage}
                   loading={loading}
                 />
+                <Text style={styles.accountText}>
+                  * La création de compte pour GMP arrive bientôt.
+                </Text>
               </View>
+
             </>
           )}
           <View style={styles.accountContainer}>

@@ -3,8 +3,6 @@ import React, {
   useEffect,
   useState,
   useRef,
-  forwardRef,
-  useImperativeHandle,
 } from "react";
 import {
   View,
@@ -15,7 +13,7 @@ import {
   Platform,
 } from "react-native";
 import { TimelineCalendar, MomentConfig } from "@howljs/calendar-kit";
-import { ThemeContext } from "./../../utils/themeContext";
+import { ThemeContext } from "../../utils/themeContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import fetchTimetable from "../../api/Timetable/timetable";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -44,7 +42,9 @@ const Semaine = () => {
   const getColorAlternant = async () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_alternant");
+
       if (storedColor) {
+        console.log(storedColor);
         storedColor = storedColor.replace(/['"]+/g, "");
         setColorAlternant(storedColor);
       }
