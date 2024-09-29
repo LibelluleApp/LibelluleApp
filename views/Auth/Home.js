@@ -20,7 +20,7 @@ function AuthStack() {
       flexDirection: "row",
       gap: 10,
       position: "absolute",
-      top: 40,
+      top: 60,
       alignItems: "center",
     },
     imageLogoLibellule: {
