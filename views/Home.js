@@ -42,7 +42,6 @@ function Home() {
   const [user, setUser] = useState({});
   const today = moment();
   const dayIndex = today.format("ddd");
-  const formattedDate = today.format("ddd D MMM");
   const { signOut } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const requestUserPermission = async () => {
@@ -55,6 +54,12 @@ function Home() {
     //   console.log("Authorization status:", authStatus);
     // }
   };
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  const formattedDate = capitalizeFirstLetter(today.format("ddd D MMM"));
 
   useEffect(() => {
     if (requestUserPermission()) {
