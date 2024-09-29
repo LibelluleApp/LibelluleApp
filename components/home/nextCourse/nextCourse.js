@@ -232,7 +232,7 @@ function ItemCourse({ data, color }) {
         <View style={styles.stick}></View>
         <View style={styles.contentLeft}>
           <Text
-            style={[styles.textSubject, { maxWidth: "100%" }]}
+            style={[styles.textSubject, { maxWidth: "90%" }]}
             numberOfLines={1} // Limite le texte à une seule ligne
             ellipsizeMode="tail"
           >
