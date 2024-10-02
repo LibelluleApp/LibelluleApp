@@ -534,9 +534,6 @@ const Register = () => {
                   onPress={handleSecondePage}
                   loading={loading}
                 />
-                <Text style={styles.accountText}>
-                  * La création de compte pour GMP arrive bientôt.
-                </Text>
               </View>
 
             </>
