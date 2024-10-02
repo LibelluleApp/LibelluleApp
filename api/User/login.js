@@ -64,13 +64,19 @@ async function login(email_edu, mot_de_passe) {
         message: "Identifiants et/ou mot de passe incorrect",
       };
     }
-  } catch (error) {
-    console.error("Login error:", error);
+  } catch (err) {
     await deleteToken();
+    if(err.response.status === 402){
+      return {
+        status: "warning",
+        message:
+        err.response.data.message,
+      };
+    }
     return {
       status: "error",
       message:
-        "Une erreur s'est produite lors de la connexion. Veuillez réessayer.",
+        err.response.data.message,
     };
   }
 }

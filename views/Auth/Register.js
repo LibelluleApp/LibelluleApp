@@ -26,7 +26,7 @@ import { useNavigation } from "@react-navigation/native";
 // Options statiques pour le BUT et l'année
 const butOptions = [
   { label: "TC", value: "CL" },
-  //{ label: "GMP", value: "GM" },
+  { label: "GMP", value: "GM" },
   { label: "QLIO", value: "QL" },
   { label: "GEII", value: "GI" },
 ];
@@ -47,6 +47,28 @@ const groupeTPOptions = [
   { label: "TP6", value: "TP6" },
 ];
 
+const groupeTPOptionsGMP = [
+  { label: "TPS1 TPA1", value: "TPS1_TPA1" },
+  { label: "TPS1 TPA2", value: "TPS1_TPA2" },
+  { label: "TPS2 TPA2", value: "TPS2_TPA2" },
+  { label: "TPS2 TPA3", value: "TPS2_TPA3" },
+  { label: "TPS3 TPA4", value: "TPS3_TPA4" },
+  { label: "TPS3 TPA5", value: "TPS3_TPA5" },
+  { label: "TPS4 TPA5", value: "TPS4_TPA5" },
+  { label: "TPS4 TPA6", value: "TPS4_TPA6" },
+];
+const groupeTPOptionsGMPY3 = [
+  { label: "TPS1 TPA1", value: "TPS1_TPA1" },
+  { label: "TPS2 TPA2", value: "TPS2_TPA2" },
+  { label: "TPS3 TPA3", value: "TPS3_TPA3" },
+  { label: "TPS3 TPA4", value: "TPS3_TPA4" },
+];
+const parcoursTCY2 = [
+  { label: "BI.", value: "BI" },
+  { label: "BDMRC.", value: "BDMRC" },
+  { label: "SME.", value: "SME" },
+];
+
 const Register = () => {
   const { colors } = useContext(ThemeContext);
   const navigator = useNavigation();
@@ -61,6 +83,7 @@ const Register = () => {
     but: butOptions[0].value,
     anneeBut: anneeOptions[0].value,
     groupeTP: groupeTPOptions[0].value,
+    parcours: null,
   });
 
   // Fonction pour gérer les changements dans le formulaire
@@ -70,14 +93,41 @@ const Register = () => {
 
   // Fonction pour filtrer dynamiquement les groupes TP en fonction du BUT sélectionné
   const filteredGroupeTPOptions = useMemo(() => {
-    if (formData.but === "CL") {
-      return groupeTPOptions;
-    } else if (formData.but === "QL") {
-      return groupeTPOptions.slice(0, 2);
-    } else {
-      return groupeTPOptions.slice(0, 4);
+    let options;
+
+    switch (formData.but) {
+      case "CL":
+        options = [...groupeTPOptions];
+        if (formData.anneeBut === "Y2") {
+          options = options.slice(0, 4);
+          options.push({ label: "TPA", value: "TPA" });
+        } else if (formData.anneeBut === "Y3") {
+          options = options.slice(0, 5);
+        }
+        break;
+
+      case "QL":
+        options = groupeTPOptions.slice(0, 2);
+        break;
+
+      case "GM":
+        if (formData.anneeBut === "Y2") {
+          options = groupeTPOptionsGMP.filter(
+            (_, index) => index !== 5 && index !== groupeTPOptionsGMP.length - 1
+          );
+        } else if (formData.anneeBut === "Y3") {
+          options = groupeTPOptionsGMPY3;
+        } else {
+          options = groupeTPOptionsGMP;
+        }
+        break;
+
+      default:
+        options = groupeTPOptions.slice(0, 4);
     }
-  }, [formData.but]);
+
+    return options;
+  }, [formData.but, formData.anneeBut]);
 
   // Fonction pour gérer le passage à la deuxième page du formulaire
   const handleSecondePage = useCallback(() => {
@@ -129,7 +179,12 @@ const Register = () => {
   const handleRegister = useCallback(async () => {
     try {
       setLoading(true);
-      const groupe_id = `${formData.anneeBut}${formData.but}-${formData.groupeTP}`;
+      let groupe_id = `${formData.anneeBut}${formData.but}-${formData.groupeTP}`;
+      let parcours_id = null;
+
+      if (formData.parcours) {
+        groupe_id = `${formData.anneeBut}${formData.but}-${formData.groupeTP}.${formData.parcours}`;
+      }
 
       const response = await register(
         formData.email,
@@ -381,16 +436,34 @@ const Register = () => {
                     )}
                   </ScrollView>
                 </View>
+                {formData.but === "CL" &&
+                  formData.anneeBut === "Y2" &&
+                  formData.groupeTP !== "TPA" && (
+                    <View style={styles.itemInputContainer}>
+                      <Text style={styles.titleItemInputContainer}>
+                        Parcours
+                      </Text>
+                      <ScrollView
+                        horizontal
+                        style={styles.inputScrollView}
+                        bounces={false}
+                      >
+                        {renderOptions(
+                          parcoursTCY2,
+                          formData.parcours,
+                          (value) => handleInputChange("parcours", value)
+                        )}
+                      </ScrollView>
+                    </View>
+                  )}
               </View>
               <View style={styles.buttonContent}>
                 <ButtonAuth
-                  title="Suivant"
+                  title="Créer le compte"
                   onPress={handleRegister}
                   loading={loading}
                 />
-
               </View>
-
             </>
           ) : (
             <>
@@ -461,11 +534,7 @@ const Register = () => {
                   onPress={handleSecondePage}
                   loading={loading}
                 />
-                <Text style={styles.accountText}>
-                  * La création de compte pour GMP arrive bientôt.
-                </Text>
               </View>
-
             </>
           )}
           <View style={styles.accountContainer}>

@@ -43,16 +43,16 @@ export const AuthProvider = ({ children }) => {
             titleStyle: { fontFamily: "Ubuntu_400Regular" },
           });
           return;
-        }
-
-        const response = await fetchToken(userToken);
-        if (response.status !== "success") {
-          showMessage({
-            message: "Votre session a expiré. Veuillez vous reconnecter.",
-            type: "warning",
-            titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          });
-          await signOut();
+        } else {
+          const response = await fetchToken(userToken);
+          if (response.status !== "success") {
+            showMessage({
+              message: response.message,
+              type: "warning",
+              titleStyle: { fontFamily: "Ubuntu_400Regular" },
+            });
+            await signOut();
+          }
         }
       }
     } catch (error) {
