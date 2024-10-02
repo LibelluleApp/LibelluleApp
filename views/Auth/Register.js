@@ -73,7 +73,7 @@ const Register = () => {
   const { colors } = useContext(ThemeContext);
   const navigator = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [secondePage, setSecondePage] = useState(true);
+  const [secondePage, setSecondePage] = useState(false);
   const [formData, setFormData] = useState({
     prenom: "",
     nom: "",
