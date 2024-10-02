@@ -436,7 +436,7 @@ const Register = () => {
                     )}
                   </ScrollView>
                 </View>
-                {formData.but === "CL" && formData.anneeBut === "Y2" && (
+                {formData.but === "CL" && formData.anneeBut === "Y2" && formData.parcours !== "TPA" && (
                 <View style={styles.itemInputContainer}>
                   <Text style={styles.titleItemInputContainer}>
                     Parcours
