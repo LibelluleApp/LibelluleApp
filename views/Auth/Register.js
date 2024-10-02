@@ -56,18 +56,18 @@ const groupeTPOptionsGMP = [
   { label: "TPS3 TPA5", value: "TPS3_TPA5" },
   { label: "TPS4 TPA5", value: "TPS4_TPA5" },
   { label: "TPS4 TPA6", value: "TPS4_TPA6" },
-]
+];
 const groupeTPOptionsGMPY3 = [
   { label: "TPS1 TPA1", value: "TPS1_TPA1" },
   { label: "TPS2 TPA2", value: "TPS2_TPA2" },
   { label: "TPS3 TPA3", value: "TPS3_TPA3" },
   { label: "TPS3 TPA4", value: "TPS3_TPA4" },
-]
+];
 const parcoursTCY2 = [
   { label: "BI.", value: "BI" },
   { label: "BDMRC.", value: "BDMRC" },
   { label: "SME.", value: "SME" },
-]
+];
 
 const Register = () => {
   const { colors } = useContext(ThemeContext);
@@ -112,7 +112,9 @@ const Register = () => {
 
       case "GM":
         if (formData.anneeBut === "Y2") {
-          options = groupeTPOptionsGMP.filter((_, index) => index !== 5 && index !== groupeTPOptionsGMP.length - 1);
+          options = groupeTPOptionsGMP.filter(
+            (_, index) => index !== 5 && index !== groupeTPOptionsGMP.length - 1
+          );
         } else if (formData.anneeBut === "Y3") {
           options = groupeTPOptionsGMPY3;
         } else {
@@ -126,8 +128,6 @@ const Register = () => {
 
     return options;
   }, [formData.but, formData.anneeBut]);
-
-
 
   // Fonction pour gérer le passage à la deuxième page du formulaire
   const handleSecondePage = useCallback(() => {
@@ -187,12 +187,12 @@ const Register = () => {
       }
 
       const response = await register(
-          formData.email,
-          formData.password,
-          formData.confirmPassword,
-          formData.prenom,
-          formData.nom,
-          groupe_id,
+        formData.email,
+        formData.password,
+        formData.confirmPassword,
+        formData.prenom,
+        formData.nom,
+        groupe_id
       );
 
       if (response && response.status === 200) {
@@ -436,34 +436,34 @@ const Register = () => {
                     )}
                   </ScrollView>
                 </View>
-                {formData.but === "CL" && formData.anneeBut === "Y2" && formData.groupeTP !== "TPA" && (
-                <View style={styles.itemInputContainer}>
-                  <Text style={styles.titleItemInputContainer}>
-                    Parcours
-                  </Text>
-                  <ScrollView
-                      horizontal
-                      style={styles.inputScrollView}
-                      bounces={false}
-                  >
-                    {renderOptions(
-                        parcoursTCY2,
-                        formData.parcours,
-                        (value) => handleInputChange("parcours", value)
-                    )}
-                  </ScrollView>
-                </View>
-                )}
+                {formData.but === "CL" &&
+                  formData.anneeBut === "Y2" &&
+                  formData.groupeTP !== "TPA" && (
+                    <View style={styles.itemInputContainer}>
+                      <Text style={styles.titleItemInputContainer}>
+                        Parcours
+                      </Text>
+                      <ScrollView
+                        horizontal
+                        style={styles.inputScrollView}
+                        bounces={false}
+                      >
+                        {renderOptions(
+                          parcoursTCY2,
+                          formData.parcours,
+                          (value) => handleInputChange("parcours", value)
+                        )}
+                      </ScrollView>
+                    </View>
+                  )}
               </View>
               <View style={styles.buttonContent}>
                 <ButtonAuth
-                  title="Suivant"
+                  title="Créer le compte"
                   onPress={handleRegister}
                   loading={loading}
                 />
-
               </View>
-
             </>
           ) : (
             <>
@@ -535,7 +535,6 @@ const Register = () => {
                   loading={loading}
                 />
               </View>
-
             </>
           )}
           <View style={styles.accountContainer}>
