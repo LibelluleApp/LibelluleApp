@@ -73,7 +73,7 @@ const Register = () => {
   const { colors } = useContext(ThemeContext);
   const navigator = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [secondePage, setSecondePage] = useState(false);
+  const [secondePage, setSecondePage] = useState(true);
   const [formData, setFormData] = useState({
     prenom: "",
     nom: "",
@@ -436,7 +436,7 @@ const Register = () => {
                     )}
                   </ScrollView>
                 </View>
-                {formData.but === "CL" && formData.anneeBut === "Y2" && formData.parcours !== "TPA" && (
+                {formData.but === "CL" && formData.anneeBut === "Y2" && formData.groupeTP !== "TPA" && (
                 <View style={styles.itemInputContainer}>
                   <Text style={styles.titleItemInputContainer}>
                     Parcours

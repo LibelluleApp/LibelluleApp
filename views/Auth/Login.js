@@ -115,8 +115,12 @@ function Login({ navigation }) {
           type: "danger",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
         });
-      } else {
-        // Gérer la redirection après une connexion réussie
+      } else if(result.status === "warning"){
+        showMessage({
+          message: result.message,
+          type: "warning",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        });
       }
     } catch (error) {
       showMessage({
