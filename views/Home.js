@@ -20,8 +20,7 @@ import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
 import { ThemeContext } from "./../utils/themeContext";
-import Timetable from "./Timetable";
-import Profile from "./Profile";
+
 import messaging from "@react-native-firebase/messaging";
 import saveNotifications from "../api/Notifications/saveNotifications";
 

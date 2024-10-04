@@ -90,7 +90,7 @@ const TabsStack = () => {
     },
     {
       name: "Emploi du temps",
-      component: require("../views/Timetable").default,
+      component: require("../views/TimetableView").default,
       options: {
         tabBarLabel: "Cours",
         tabBarIcon: ({ color, size, focused }) =>

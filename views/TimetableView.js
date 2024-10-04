@@ -6,10 +6,11 @@ import Semaine from "../components/timetable/semaine";
 import { ThemeContext } from "../utils/themeContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
+import Timetable from  "../components/timetable/Timetable"
 
 const Tab = createMaterialTopTabNavigator();
 
-function Timetable() {
+function TimetableView() {
   const { colors } = useContext(ThemeContext);
   const [isWeekDefault, setIsWeekDefault] = useState(false);
   const isFocused = useIsFocused();
@@ -41,41 +42,9 @@ function Timetable() {
 
   return (
     <View style={styles.modalBackground}>
-      <Tab.Navigator
-        key={isWeekDefault ? "week-first" : "day-first"}
-        screenOptions={{
-          tabBarStyle: {
-            backgroundColor: colors.background,
-            elevation: 0,
-            shadowOffset: { width: 0, height: 0 },
-          },
-          swipeEnabled: false,
-          tabBarActiveTintColor: colors.black,
-          tabBarInactiveTintColor: colors.grey,
-          tabBarLabelStyle: {
-            fontFamily: "Ubuntu_400Regular",
-            fontSize: 17,
-            textTransform: "none",
-          },
-          tabBarIndicatorStyle: {
-            backgroundColor: colors.black,
-          },
-        }}
-      >
-        {!isWeekDefault ? (
-          <>
-            <Tab.Screen name="Jour" component={Jour} />
-            <Tab.Screen name="Semaine" component={Semaine} />
-          </>
-        ) : (
-          <>
-            <Tab.Screen name="Semaine" component={Semaine} />
-            <Tab.Screen name="Jour" component={Jour} />
-          </>
-        )}
-      </Tab.Navigator>
+      <Timetable />
     </View>
   );
 }
 
-export default Timetable;
+export default TimetableView;
