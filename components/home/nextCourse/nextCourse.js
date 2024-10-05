@@ -28,6 +28,7 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
+  Easing,
 } from "react-native-reanimated";
 
 const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
@@ -182,21 +183,30 @@ function ItemCourse({ data, color }) {
   // Animation pour la hauteur de la carte
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      height: withTiming(isExpanded ? 25 : 0, { duration: 300 }), // Ajuste la hauteur pour pliage/dépliage
+      height: withTiming(isExpanded ? 25 : 0, {
+        duration: 300,
+        easing: Easing.inOut(Easing.circle),
+      }), // Ajuste la hauteur pour pliage/dépliage
     };
   });
 
   // Animation pour le gap entre les éléments
   const animatedGapStyle = useAnimatedStyle(() => {
     return {
-      gap: withTiming(isExpanded ? 8 : 4, { duration: 300 }), // Ajuste le gap pour pliage/dépliage
+      gap: withTiming(isExpanded ? 7 : 4, {
+        duration: 300,
+        easing: Easing.inOut(Easing.circle),
+      }), // Ajuste le gap pour pliage/dépliage
     };
   });
 
   // Animation pour l'opacité des éléments à masquer
   const animatedOpacityStyle = useAnimatedStyle(() => {
     return {
-      opacity: withTiming(isExpanded ? 1 : 0, { duration: 300 }), // Ajuste l'opacité pour masquer les icônes et texte
+      opacity: withTiming(isExpanded ? 1 : 0, {
+        duration: 300,
+        easing: Easing.inOut(Easing.circle),
+      }), // Ajuste l'opacité pour masquer les icônes et texte
     };
   });
 
@@ -210,8 +220,9 @@ function ItemCourse({ data, color }) {
   // Fonction pour gérer le clic et changer l'état
   const toggleCard = () => {
     setIsExpanded(!isExpanded);
-    animationHeight.value = isExpanded ? 25 : 0; // Ajuste la hauteur à une valeur plus petite
-    animationOpacity.value = isExpanded ? 1 : 0; // Gère l'opacité en fonction de l'état
+    animationHeight;
+    animationOpacity;
+    animatedGapStyle;
     rotation.value = withTiming(isExpanded ? 0 : 180, { duration: 300 }); // Animation de rotation
   };
 
