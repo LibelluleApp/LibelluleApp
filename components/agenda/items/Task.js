@@ -26,7 +26,6 @@ function TaskHome({
       alignItems: "center",
       backgroundColor: colors.white_background,
       borderRadius: 10,
-      marginBottom: 15,
       paddingHorizontal: 17,
       paddingVertical: 12,
     },
@@ -37,7 +36,6 @@ function TaskHome({
     taskLeft: {
       flexDirection: "row",
       alignItems: "center",
-      marginBottom: 5,
       width: "85%",
     },
     taskLeftContent: {
@@ -60,7 +58,7 @@ function TaskHome({
     },
     taskDescription: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.blue950,
+      color: colors.blue800,
     },
     strikethrough: {
       textDecorationLine: "line-through",
@@ -70,7 +68,7 @@ function TaskHome({
 
   const navigation = useNavigation();
   const [isChecked, setIsChecked] = useState(checked);
-  const dates = moment(date).format("ddd D MMMM");
+
   const handleCheckboxPress = () => {
     setIsChecked(!isChecked);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -112,7 +110,7 @@ function TaskHome({
       </View>
       <View style={styles.taskRight}>
         <ChevronRight
-          stroke={colors.blue950}
+          stroke={colors.blue700}
           strokeWidth={1.75}
           width={18}
           height={18}

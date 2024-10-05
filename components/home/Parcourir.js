@@ -37,7 +37,7 @@ function ParcourirHome() {
     title: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.grey,
+      color: colors.blue950,
       marginBottom: 14,
     },
     tile: {
@@ -46,6 +46,7 @@ function ParcourirHome() {
       borderRadius: 10,
       paddingHorizontal: 17,
       paddingVertical: 10,
+      flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
       gap: 10,
@@ -53,7 +54,7 @@ function ParcourirHome() {
     tileText: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
-      color: colors.blue950,
+      color: colors.blue800,
     },
     disabled: {
       opacity: 0.4,
@@ -135,7 +136,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Link
-            stroke={colors.blue950}
+            stroke={colors.blue800}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -147,7 +148,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Utensils
-            stroke={colors.blue950}
+            stroke={colors.blue800}
             width={20}
             height={20}
             strokeWidth={1.75}
