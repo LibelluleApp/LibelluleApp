@@ -897,6 +897,27 @@ function Plus(props) {
   );
 }
 
+// Minus - Lucide
+function Minus(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-minus"
+      {...props}
+    >
+      <Path d="M5 12h14" />
+    </Svg>
+  );
+}
+
 // ResetList - Lucide
 function ResetList(props) {
   return (
@@ -1278,6 +1299,7 @@ export {
   NotepadText,
   Landmark,
   Plus,
+  Minus,
   ResetList,
   LogOut,
   UserX,

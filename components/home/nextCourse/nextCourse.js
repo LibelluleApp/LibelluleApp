@@ -1,14 +1,21 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import {
-  Text,
   View,
+  Text,
   TouchableOpacity,
+  LayoutAnimation,
+  Platform,
+  UIManager,
   StyleSheet,
-  Dimensions,
 } from "react-native";
-import { MapPin, UserRound, Clock } from "../../../assets/icons/Icons";
+import {
+  MapPin,
+  UserRound,
+  Clock,
+  Minus,
+  Plus,
+} from "../../../assets/icons/Icons";
 import Carousel, { Pagination } from "react-native-reanimated-carousel";
-import { useSharedValue } from "react-native-reanimated";
 import fetchNextCourse from "../../../api/Timetable/nextcourse";
 import { getRessourceColor } from "../../../utils/ressources/colorsRessources";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
@@ -17,11 +24,13 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ThemeContext } from "./../../../utils/themeContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated";
 
-const { width } = Dimensions.get("window");
-const slideWidth = width * 0.9;
-const slideHeight = 95;
+const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient);
 
 const fetchCourse = async () => {
   try {
@@ -46,7 +55,7 @@ const fetchCourse = async () => {
 function ItemCourse({ data, color }) {
   const { colors } = useContext(ThemeContext);
   const [remainingTime, setRemainingTime] = useState("");
-  const [colorTimetable, setColorTimetable] = useState(colors.blue700);
+  const [colorTimetable, setColorTimetable] = useState(colors.blue200);
   const getColorTimetable = async () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_timetable");
@@ -61,101 +70,63 @@ function ItemCourse({ data, color }) {
   const navigator = useNavigation();
 
   const styles = StyleSheet.create({
-    slide: {
-      height: slideHeight,
-      alignSelf: "center",
-      gap: 10,
-    },
     container: {
-      backgroundColor: colorTimetable,
+      backgroundColor: colors.blue200,
       fontFamily: "Ubuntu_400Regular",
       includeFontPadding: false,
       borderRadius: 10,
-      width: slideWidth,
-      height: "100%",
-      paddingHorizontal: 17,
+      width: "100%",
+      paddingHorizontal: 20,
       paddingVertical: 15,
-      alignItems: "center",
-      flexDirection: "row",
-    },
-    hour: {
+      alignItems: "start",
+      flexDirection: "column",
       gap: 8,
-      justifyContent: "center",
+      position: "relative",
+      overflow: "hidden",
     },
-    textHour: {
+    beforeElement: {
+      width: 7,
+      height: 400,
+      backgroundColor: colors.blue600,
+      position: "absolute",
+      left: 0,
+      top: 0,
+    },
+    subjectContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "100%",
+    },
+    subjectText: {
       fontFamily: "Ubuntu_500Medium",
       includeFontPadding: false,
-      fontSize: 17,
-      color: colors.white,
-    },
-    stick: {
-      backgroundColor: colors.white,
-      height: "90%",
-      width: 1,
-      marginHorizontal: 14,
-    },
-    textSubject: {
-      fontFamily: "Ubuntu_500Medium",
-      includeFontPadding: false,
-      fontSize: 17,
-      color: colors.white,
-      maxWidth: "88%",
+      fontSize: 16,
+      color: colors.blue950,
+      Width: "90%",
     },
     descriptionContainer: {
-      flexDirection: "column",
-      gap: 5,
+      flexDirection: "row",
+      width: "100%",
+      justifyContent: "space-between",
     },
-    teacher: {
+    descriptionContent: {
       flexDirection: "row",
       alignItems: "center",
-      width: "80%",
-      gap: 15,
+      gap: 7,
     },
-    textTeacher: {
+    descriptionText: {
       fontFamily: "Ubuntu_400Regular",
       includeFontPadding: false,
-      fontSize: 14,
-      color: colors.white,
-      gap: 7,
-    },
-    contentLeft: {
-      justifyContent: "center",
-      gap: 7,
-    },
-    hourClock: {
-      fontFamily: "Ubuntu_500Medium",
-      includeFontPadding: false,
-      fontSize: 14,
-      color: colors.white,
-    },
-    placeholder: {
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    placeholderText: {
-      color: colors.text_placeholder,
-      fontSize: 16,
-    },
-    slide: {
-      height: slideHeight,
-      backgroundColor: colors.white_background,
-      borderRadius: 10,
-    },
-    title: {
-      fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
-      color: colors.blue950,
+      color: colors.blue800,
     },
-    content: {
+    hourContainer: {
       flexDirection: "row",
-      gap: 7,
-    },
-    textContent: {
-      fontFamily: "Ubuntu_400Regular",
-      fontSize: 13,
-      color: colors.blue95050,
+      justifyContent: "space-between",
+      width: "100%",
     },
   });
+
   useEffect(() => {
     getColorTimetable();
     if (!data) return; // Exit early if there's no data
@@ -198,97 +169,163 @@ function ItemCourse({ data, color }) {
     return `${initial}. ${nom}`;
   }
 
+  // Animation de la card
+
+  // État pour savoir si la carte est ouverte ou non
+  const [isExpanded, setIsExpanded] = useState(true);
+
+  // Valeur partagée pour l'animation de hauteur et d'opacité
+  const animationHeight = useSharedValue(0); // Hauteur minimale ajustée
+  const animationOpacity = useSharedValue(0);
+  const rotation = useSharedValue(0); // Valeur de rotation
+
+  // Animation pour la hauteur de la carte
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      height: withTiming(isExpanded ? 25 : 0, { duration: 300 }), // Ajuste la hauteur pour pliage/dépliage
+    };
+  });
+
+  // Animation pour le gap entre les éléments
+  const animatedGapStyle = useAnimatedStyle(() => {
+    return {
+      gap: withTiming(isExpanded ? 8 : 4, { duration: 300 }), // Ajuste le gap pour pliage/dépliage
+    };
+  });
+
+  // Animation pour l'opacité des éléments à masquer
+  const animatedOpacityStyle = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(isExpanded ? 1 : 0, { duration: 300 }), // Ajuste l'opacité pour masquer les icônes et texte
+    };
+  });
+
+  // Animation pour la rotation de l'icône
+  const animatedRotationStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${rotation.value}deg` }],
+    };
+  });
+
+  // Fonction pour gérer le clic et changer l'état
+  const toggleCard = () => {
+    setIsExpanded(!isExpanded);
+    animationHeight.value = isExpanded ? 25 : 0; // Ajuste la hauteur à une valeur plus petite
+    animationOpacity.value = isExpanded ? 1 : 0; // Gère l'opacité en fonction de l'état
+    rotation.value = withTiming(isExpanded ? 0 : 180, { duration: 300 }); // Animation de rotation
+  };
+
   if (!data) {
     return (
-      <TouchableOpacity style={[styles.slide]}>
-        <View
-          style={[
-            styles.container,
-            { backgroundColor: colors.white_background },
-          ]}
-        >
-          <Text
-            style={[styles.textSubject, { maxWidth: "100%" }]}
-            numberOfLines={1} // Limite le texte à une seule ligne
-            ellipsizeMode="tail"
-          >
-            Aucun cours à venir
-          </Text>
+      <TouchableOpacity>
+        <View style={[styles.container]}>
+          <View style={styles.beforeElement} />
+          <View style={styles.subjectContainer}>
+            <Text style={styles.subjectText}>Aucun cours à venir.</Text>
+          </View>
         </View>
       </TouchableOpacity>
     );
   }
 
   return (
-    <TouchableOpacity
-      style={[styles.slide]}
-      onPress={() => navigator.navigate("DetailEvent", { data })}
-    >
-      <View style={[styles.container, color]}>
-        <View style={styles.hour}>
-          <Text style={styles.textHour}>{data.debut || "--:--"}</Text>
-          <Text style={styles.textHour}>{data.fin || "--:--"}</Text>
-        </View>
-        <View style={styles.stick}></View>
-        <View style={styles.contentLeft}>
-          <Text
-            style={[styles.textSubject, { maxWidth: "90%" }]}
-            numberOfLines={1} // Limite le texte à une seule ligne
-            ellipsizeMode="tail"
-          >
+    <TouchableOpacity onPress={toggleCard}>
+      <Animated.View style={[styles.container, animatedGapStyle]}>
+        <View style={styles.beforeElement} />
+        <View style={styles.subjectContainer}>
+          <Text style={styles.subjectText}>
             {data.title || "Matière indisponible"}
           </Text>
-
-          <View style={styles.descriptionContainer}>
-            {data.title !== "Alternance" && (
-              <View style={styles.teacher}>
-                <View style={[styles.content, { width: "40%" }]}>
-                  <MapPin
-                    stroke={colors.white}
-                    width={14}
-                    height={14}
-                    strokeWidth={1.75}
-                  />
-                  <Text
-                    style={styles.textTeacher}
-                    numberOfLines={1} // Limite le texte à une seule ligne
-                    ellipsizeMode="tail"
-                  >
-                    {data.lieu || "N/C"}
-                  </Text>
-                </View>
-                <View style={[styles.content, { width: "60%" }]}>
-                  <UserRound
-                    stroke={colors.white}
-                    width={14}
-                    height={14}
-                    strokeWidth={1.75}
-                  />
-                  <Text
-                    style={styles.textTeacher}
-                    numberOfLines={1} // Limite le texte à une seule ligne
-                    ellipsizeMode="tail"
-                  >
-                    {formatProfessorName(data.description) || "N/C"}
-                  </Text>
-                </View>
-              </View>
-            )}
-
-            <View style={styles.content}>
-              <Clock
-                stroke={colors.white}
-                width={14}
-                height={14}
+          <Animated.View style={animatedRotationStyle}>
+            {isExpanded ? (
+              <Minus
+                stroke={colors.blue700}
                 strokeWidth={1.75}
+                width={15}
+                height={15}
               />
-              <Text style={styles.textTeacher}>
-                Dans <Text style={styles.hourClock}>{remainingTime}</Text>
-              </Text>
-            </View>
-          </View>
+            ) : (
+              <Plus
+                stroke={colors.blue700}
+                strokeWidth={1.75}
+                width={15}
+                height={15}
+              />
+            )}
+          </Animated.View>
         </View>
-      </View>
+
+        {/* Description container avec animation de hauteur et opacité */}
+        <Animated.View style={[styles.descriptionContainer, animatedStyle]}>
+          <Animated.View
+            style={[
+              styles.descriptionContent,
+              { width: "35%" },
+              animatedOpacityStyle,
+            ]}
+          >
+            <MapPin
+              stroke={colors.blue800}
+              width={14}
+              height={14}
+              strokeWidth={1.75}
+            />
+            <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              style={styles.descriptionText}
+            >
+              {data.lieu || "N/C"}
+            </Text>
+          </Animated.View>
+          <Animated.View
+            style={[
+              styles.descriptionContent,
+              { width: "55%" },
+              animatedOpacityStyle,
+            ]}
+          >
+            <UserRound
+              stroke={colors.blue800}
+              width={14}
+              height={14}
+              strokeWidth={1.75}
+            />
+            <Text
+              numberOfLines={1}
+              ellipsizeMode="tail"
+              style={styles.descriptionText}
+            >
+              {formatProfessorName(data.description) || "N/C"}
+            </Text>
+          </Animated.View>
+        </Animated.View>
+
+        {/* Affichage de l'heure */}
+        <View style={styles.hourContainer}>
+          <View style={styles.descriptionContent}>
+            <Clock
+              stroke={colors.blue800}
+              width={14}
+              height={14}
+              strokeWidth={1.75}
+            />
+            <Text style={styles.descriptionText}>
+              De{" "}
+              <Text style={{ fontWeight: "bold" }}>
+                {data.debut || "--:--"}
+              </Text>{" "}
+              à{" "}
+              <Text style={{ fontWeight: "bold" }}>{data.fin || "--:--"}</Text>
+            </Text>
+          </View>
+          <Animated.View style={animatedOpacityStyle}>
+            <Text style={styles.descriptionText}>
+              Dans <Text style={{ fontWeight: "bold" }}>{remainingTime}</Text>
+            </Text>
+          </Animated.View>
+        </View>
+      </Animated.View>
     </TouchableOpacity>
   );
 }
@@ -312,7 +349,7 @@ function NextCourse() {
   const ref = useRef(null);
   const progress = useSharedValue(0);
   const [nextCourse, setNextCourse] = useState(null);
-  const [color, setColor] = useState("#5088F3");
+  const [color, setColor] = useState("#b7e1ff");
   const navigation = useNavigation();
   const isFocused = useIsFocused();
   const [isLoading, setIsLoading] = useState(true);
@@ -362,8 +399,8 @@ function NextCourse() {
     <View style={styles.swiper}>
       <ShimmerPlaceholder
         shimmerStyle={{ borderRadius: 10 }}
-        width={slideWidth}
-        height={slideHeight}
+        // width={slideWidth}
+        // height={slideHeight}
         visible={isLoading ? false : true}
       >
         <ItemCourse data={nextCourse} color={color} />
