@@ -45,7 +45,7 @@ function ParcourirHome() {
       width: "47%",
       borderRadius: 10,
       paddingHorizontal: 17,
-      paddingVertical: 10,
+      paddingVertical: 13,
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",

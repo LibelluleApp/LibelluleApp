@@ -6,15 +6,23 @@ import React, {
   Suspense,
   useContext,
 } from "react";
-import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
 import moment from "moment";
 import { useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "./../../../utils/themeContext";
 import fetchAgenda from "../../../api/Agenda/fetch";
 import EvalHome from "./../../agenda/items/Eval";
 import TaskHome from "./../../agenda/items/Task";
+import { CircleCheckBig } from "./../../../assets/icons/Icons";
 
-function EventDay({ date }) {
+function EventDay({ date, onAgendaContentChange }) {
   const { colors } = useContext(ThemeContext);
   const isFocused = useIsFocused();
   const [agenda, setAgenda] = useState([]);
@@ -24,6 +32,8 @@ function EventDay({ date }) {
     container: {
       width: "90%",
       alignSelf: "center",
+    },
+    containerAgenda: {
       flexDirection: "column",
       gap: 10,
     },
@@ -35,11 +45,35 @@ function EventDay({ date }) {
     noItemContainer: {
       justifyContent: "center",
       alignItems: "center",
+      gap: 20,
+    },
+    noItemContent: {
+      justifyContent: "center",
+      alignItems: "center",
+      gap: 7,
+      width: "100%",
     },
     textNone: {
-      color: colors.grey_variable,
+      fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       textAlign: "center",
+      color: colors.blue800,
+      width: "50%",
+    },
+    btnOutline: {
+      color: colors.blue700,
+      fontSize: 16,
+      paddingHorizontal: 20,
+      paddingVertical: 7,
+      borderRadius: 50,
+      borderWidth: 0.5,
+      borderColor: colors.blue700,
+      textAlign: "center",
+    },
+    btnOutlineText: {
+      color: colors.blue700,
+      fontSize: 13,
+      fontFamily: "Ubuntu_500Medium",
     },
     items: {},
   });
@@ -90,19 +124,20 @@ function EventDay({ date }) {
         moment(item.date_fin).isSame(date, "day")
       );
 
-      // Si aucun événement, ajouter un événement par défaut
-      if (eventsForTomorrow.length === 0) {
-        eventsForTomorrow.push({
-          agenda_id: 0,
-          date_fin: date, // Utiliser directement la date passée en paramètre
-          titre: "Aucun élément à afficher",
-          type: "none",
-          Ressource: { nom_ressource: "Aucune matière" },
-        });
-      }
+      // // Si aucun événement, ajouter un événement par défaut
+      // if (eventsForTomorrow.length === 0) {
+      //   eventsForTomorrow.push({
+      //     agenda_id: 0,
+      //     date_fin: date, // Utiliser directement la date passée en paramètre
+      //     titre: "Aucun élément à afficher",
+      //     type: "none",
+      //     Ressource: { nom_ressource: "Aucune matière" },
+      //   });
+      // }
 
       // Mettre à jour l'état avec les événements de demain
       setAgenda(eventsForTomorrow);
+      onAgendaContentChange(eventsForTomorrow.length !== 0);
       setIsLoading(false);
     } catch (error) {
       console.error("Erreur lors du chargement de l'agenda.", error);
@@ -126,9 +161,30 @@ function EventDay({ date }) {
 
   return (
     <View style={styles.container}>
-      {agenda.map((agendaItem) => (
-        <Item key={agendaItem.agenda_id} item={agendaItem} />
-      ))}
+      {agenda.length === 0 ? (
+        <View style={styles.noItemContainer}>
+          <View style={styles.noItemContent}>
+            <CircleCheckBig
+              stroke={colors.blue800}
+              strokeWidth={1.75}
+              width={30}
+              height={30}
+            />
+            <Text style={styles.textNone}>
+              Aucun élément à afficher pour cette journée
+            </Text>
+          </View>
+          <TouchableOpacity style={styles.btnOutline}>
+            <Text style={styles.btnOutlineText}>Voir tous les devoirs</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.containerAgenda}>
+          {agenda.map((agendaItem) => (
+            <Item key={agendaItem.agenda_id} item={agendaItem} />
+          ))}
+        </View>
+      )}
     </View>
   );
 }

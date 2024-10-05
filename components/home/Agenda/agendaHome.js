@@ -8,6 +8,8 @@ import "moment/locale/fr"; // Assurez-vous que la langue est correctement défin
 
 function AgendaHome() {
   const { colors } = useContext(ThemeContext);
+  const [agendaContent, setAgendaContent] = useState(true);
+  console.log("agendaContent", agendaContent);
 
   const todayDate = moment();
 
@@ -30,8 +32,6 @@ function AgendaHome() {
 
   // Formate la date pour obtenir "Mar. 02. oct"
   const formattedDate = tomorrowDate.format("ddd DD MMM");
-
-  const [selectedDate, setSelectedDate] = useState(todayDate);
 
   const styles = StyleSheet.create({
     agendaContainer: {},
@@ -81,11 +81,17 @@ function AgendaHome() {
           <Text style={styles.nextTasksTitle}>{message}</Text>
           <Text style={styles.nextTasksSubtitle}>{formattedDate}</Text>
         </View>
-        <TouchableOpacity style={styles.btnOutline}>
-          <Text style={styles.btnOutlineText}>Voir plus</Text>
-        </TouchableOpacity>
+        {/* Utilisation de l'opérateur && pour afficher un bouton conditionnel */}
+        {agendaContent === "true" && (
+          <TouchableOpacity style={styles.btnOutline}>
+            <Text style={styles.btnOutlineText}>Voir plus</Text>
+          </TouchableOpacity>
+        )}
       </View>
-      <EventDay date={tomorrowDate.format("YYYY-MM-DD")} />
+      <EventDay
+        onAgendaContentChange={setAgendaContent}
+        date={tomorrowDate.format("YYYY-MM-DD")}
+      />
     </View>
   );
 }
