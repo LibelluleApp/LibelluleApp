@@ -104,6 +104,11 @@ function Restauration() {
       paddingHorizontal: 26,
       paddingVertical: 15,
     },
+    noneDescriptionPlat: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.blue800,
+    },
     descriptionMeal: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
@@ -276,14 +281,21 @@ function Restauration() {
         {/* Affichage du menu */}
         <View style={styles.contentMeal}>
           <Text style={styles.descriptionMeal}>Menu</Text>
-          {menu.map((meal, index) => (
-            <View key={index} style={styles.descriptionMeal}>
-              <Text style={styles.descriptionPlat}>
-                {"\u2022 "}
-                {meal}
-              </Text>
-            </View>
-          ))}
+
+          {menu.length === 0 ? (
+            <Text style={styles.noneDescriptionPlat}>
+              Aucun menu n'est disponible pour le moment
+            </Text>
+          ) : (
+            menu.map((meal, index) => (
+              <View key={index} style={styles.descriptionMeal}>
+                <Text style={styles.descriptionPlat}>
+                  {"\u2022 "}
+                  {meal}
+                </Text>
+              </View>
+            ))
+          )}
         </View>
       </View>
     </View>

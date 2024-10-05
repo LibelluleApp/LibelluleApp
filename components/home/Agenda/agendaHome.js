@@ -4,6 +4,7 @@ import CalendarList from "./calendarList";
 import EventDay from "./eventDay";
 import moment from "moment";
 import { ThemeContext } from "./../../../utils/themeContext";
+import { useNavigation } from "@react-navigation/native";
 import "moment/locale/fr"; // Assurez-vous que la langue est correctement définie si vous utilisez des formats localisés
 
 function AgendaHome() {
@@ -73,6 +74,8 @@ function AgendaHome() {
     },
   });
 
+  const navigation = useNavigation();
+
   return (
     <View style={styles.agendaContainer}>
       {/* <CalendarList onDateSelect={handleDateSelect} /> */}
@@ -82,8 +85,11 @@ function AgendaHome() {
           <Text style={styles.nextTasksSubtitle}>{formattedDate}</Text>
         </View>
         {/* Utilisation de l'opérateur && pour afficher un bouton conditionnel */}
-        {agendaContent === "true" && (
-          <TouchableOpacity style={styles.btnOutline}>
+        {agendaContent === true && (
+          <TouchableOpacity
+            style={styles.btnOutline}
+            onPress={() => navigation.navigate("Agenda")}
+          >
             <Text style={styles.btnOutlineText}>Voir plus</Text>
           </TouchableOpacity>
         )}

@@ -21,12 +21,14 @@ import fetchAgenda from "../../../api/Agenda/fetch";
 import EvalHome from "./../../agenda/items/Eval";
 import TaskHome from "./../../agenda/items/Task";
 import { CircleCheckBig } from "./../../../assets/icons/Icons";
+import { useNavigation } from "@react-navigation/native";
 
 function EventDay({ date, onAgendaContentChange }) {
   const { colors } = useContext(ThemeContext);
   const isFocused = useIsFocused();
   const [agenda, setAgenda] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigation();
 
   const styles = StyleSheet.create({
     container: {
@@ -174,7 +176,10 @@ function EventDay({ date, onAgendaContentChange }) {
               Aucun élément à afficher pour cette journée
             </Text>
           </View>
-          <TouchableOpacity style={styles.btnOutline}>
+          <TouchableOpacity
+            style={styles.btnOutline}
+            onPress={() => navigation.navigate("Agenda")}
+          >
             <Text style={styles.btnOutlineText}>Voir tous les devoirs</Text>
           </TouchableOpacity>
         </View>
