@@ -6,24 +6,19 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  Button,
-  Platform,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
-import NextCourse from "../components/home/nextCourse/nextCourse";
-import AgendaHome from "../components/home/Agenda/agendaHome";
-import ParcourirHome from "../components/home/Parcourir";
-import { useAuth } from "../context/AuthContext";
+import NextCourse from "/components/home/nextCourse/nextCourse";
+import AgendaHome from "/components/home/Agenda/agendaHome";
+import ParcourirHome from "/components/home/Parcourir";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
-import { ThemeContext } from "./../utils/themeContext";
-import Timetable from "./Timetable";
-import Profile from "./Profile";
+import { ThemeContext } from "/utils/themeContext";
 import messaging from "@react-native-firebase/messaging";
-import saveNotifications from "../api/Notifications/saveNotifications";
+import saveNotifications from "/api/Notifications/saveNotifications";
+import {router} from "expo-router";
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -41,8 +36,6 @@ function Home() {
   const { colors } = useContext(ThemeContext);
   const [user, setUser] = useState({});
   const today = moment();
-  const dayIndex = today.format("ddd");
-  const { signOut } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const requestUserPermission = async () => {
     const authStatus = await messaging().requestPermission();
@@ -50,9 +43,6 @@ function Home() {
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    // if (enabled) {
-    //   console.log("Authorization status:", authStatus);
-    // }
   };
 
   const capitalizeFirstLetter = (string) => {
@@ -113,13 +103,12 @@ function Home() {
     },
   });
 
-  const navigation = useNavigation();
 
   return (
     <GestureHandlerRootView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.topContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("Profil")}>
+          <TouchableOpacity>
             <ShimmerPlaceHolder
               width={50}
               height={50}
@@ -167,7 +156,7 @@ function Home() {
             </View>
             <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
               <TouchableOpacity
-                onPress={() => navigation.navigate("Emploi du temps")}
+                onPress={() => router.navigate("/timetable")}
               >
                 <Text
                   style={{

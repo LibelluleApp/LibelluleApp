@@ -7,6 +7,7 @@ export default {
   orientation: "portrait",
   icon: IS_DEV ? "./assets/dev-icon.png" : "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
+  scheme: "libellule",
   androidStatusBar: {
     translucent: true,
   },
@@ -60,6 +61,7 @@ export default {
     favicon: "./assets/favicon.png",
   },
   plugins: [
+      "expo-router",
     "expo-font",
     "expo-secure-store",
     "@react-native-firebase/app",

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2039" height="1998" viewBox="0 0 2039 1998">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #0760fb;
+      }
+
+      .cls-3 {
+        fill: none;
+        opacity: .53;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <g id="Calque_1">
+    <rect class="cls-2" width="2039" height="1998"/>
+  </g>
+  <g id="Calque_4">
+    <path class="cls-3" d="M539.24,1551.72c195.75,95.85,700.7-966.06,521.61-1054.64s-717.36,958.79-521.61,1054.64Z"/>
+    <path class="cls-1" d="M1214.77,202.39c-135.58-65.76-728.07,1163.8-604.19,1224.9,123.88,61.1,739.77-1159.14,604.19-1224.9Z"/>
+  </g>
+  <g id="Calque_3">
+    <path class="cls-3" d="M1585.03,1413.57c-47.19-212.51-801.26,12.92-758.5,207.87,42.75,194.94,805.7,4.65,758.5-207.87Z"/>
+    <path class="cls-1" d="M610.68,1673.02c32.99,146.82,909.83-107.97,880.18-242.72-29.65-134.75-913.17,95.9-880.18,242.72Z"/>
+  </g>
+  <g id="Calque_5">
+    <circle class="cls-3" cx="1318.25" cy="990.75" r="197.25"/>
+    <circle class="cls-1" cx="1368" cy="957" r="137"/>
+  </g>
+</svg>

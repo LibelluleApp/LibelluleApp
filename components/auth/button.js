@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import {router} from "expo-router";
 import { ThemeContext } from "./../../utils/themeContext";
 
 function Button({ title, onPress }) {
@@ -27,11 +27,10 @@ function Button({ title, onPress }) {
     },
   });
 
-  const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate(onPress)}
+      onPress={() => router.navigate(onPress)}
     >
       <View style={styles.button}>
         <Text style={styles.buttonText}>{title}</Text>

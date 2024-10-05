@@ -26,7 +26,6 @@ async function storeUserData(data) {
   try {
     const jsonValue = JSON.stringify(data);
     await AsyncStorage.setItem(USER_DATA_KEY, jsonValue);
-    await associateRessourceColor(data.groupe_id);
   } catch (error) {
     throw new Error("Could not save user data");
   }
@@ -46,9 +45,6 @@ async function login(email_edu, mot_de_passe) {
       mot_de_passe,
     });
     if (response.data.status === "success") {
-      // const token = response.data.token;
-      // await saveToken(token);
-
       const userData = { ...response.data };
       delete userData.token;
       delete userData.status;
