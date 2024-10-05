@@ -1,5 +1,5 @@
 export const lightModeColors = {
-  background: "#F7FAFF",
+  background: "#F3F8FF",
   white_background: "#FFFFFF",
 
   grey: "#9AA5B3",
