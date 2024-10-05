@@ -222,7 +222,7 @@ function TimetableSettings() {
             />
           </TouchableOpacity>
         </View> */}
-        <View style={styles.switcherContent}>
+        {/* <View style={styles.switcherContent}>
           <Text style={[styles.profileBtnSwitch, { color: colors.blue950 }]}>
             Couleur des évènements par défaut
           </Text>
@@ -230,7 +230,7 @@ function TimetableSettings() {
             style={[styles.colorBox, { backgroundColor: colorTimetable }]}
             onPress={() => openColorModal("timetable")}
           />
-        </View>
+        </View> */}
         {isAlternant && (
           <View style={styles.switcherContent}>
             <Text style={[styles.profileBtnSwitch, { color: colors.blue950 }]}>
