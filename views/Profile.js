@@ -93,7 +93,7 @@ function Profile() {
       position: "absolute",
       bottom: -2,
       right: -2,
-      backgroundColor: colors.blue_variable,
+      backgroundColor: colors.blue700,
       borderRadius: 50,
       padding: 5,
     },
@@ -104,7 +104,7 @@ function Profile() {
     profileName: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 17,
-      color: colors.black,
+      color: colors.blue950,
     },
     profileEmail: {
       fontFamily: "Ubuntu_400Regular",
@@ -133,7 +133,7 @@ function Profile() {
     profileBtnText: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
     },
     profileBtnUnderText: {
       fontFamily: "Ubuntu_400Regular",
@@ -171,7 +171,7 @@ function Profile() {
     profileBtnSwitch: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 16,
-      color: colors.black,
+      color: colors.blue950,
     },
     separatorStick: {
       marginVertical: 20,
@@ -187,7 +187,7 @@ function Profile() {
     profileMediaMail: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 16,
-      color: colors.blue_variable,
+      color: colors.blue700,
       paddingBottom: 5,
     },
     disabled: {
@@ -318,7 +318,7 @@ function Profile() {
           >
             <View style={styles.CTAContent}>
               <IdCard
-                stroke={colors.black}
+                stroke={colors.blue950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -326,7 +326,7 @@ function Profile() {
               <Text style={styles.profileBtnText}>Mes informations</Text>
             </View>
             <ChevronRight
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -338,7 +338,7 @@ function Profile() {
           >
             <View style={styles.CTAContent}>
               <Lock
-                stroke={colors.black}
+                stroke={colors.blue950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -348,7 +348,7 @@ function Profile() {
               </Text>
             </View>
             <ChevronRight
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -361,7 +361,7 @@ function Profile() {
             >
               <View style={styles.CTAContent}>
                 <UserRoundPen
-                  stroke={colors.black}
+                  stroke={colors.blue950}
                   strokeWidth={1.75}
                   width={18}
                   height={18}
@@ -369,7 +369,7 @@ function Profile() {
                 <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
               </View>
               <ChevronRight
-                stroke={colors.black}
+                stroke={colors.blue950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -382,7 +382,7 @@ function Profile() {
           >
             <View style={styles.CTAContent}>
               <Settings
-                stroke={colors.black}
+                stroke={colors.blue950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -390,7 +390,7 @@ function Profile() {
               <Text style={styles.profileBtnText}>Paramètres</Text>
             </View>
             <ChevronRight
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -421,7 +421,7 @@ function Profile() {
               >
                 <View style={styles.mediaLinks}>
                   <Envelope
-                    stroke={colors.blue_variable}
+                    stroke={colors.blue700}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -441,7 +441,7 @@ function Profile() {
           >
             <View style={styles.CTAContent}>
               <NotepadText
-                stroke={colors.black}
+                stroke={colors.blue950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -451,7 +451,7 @@ function Profile() {
               </Text>
             </View>
             <ChevronRight
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -465,7 +465,7 @@ function Profile() {
           >
             <View style={styles.CTAContent}>
               <Landmark
-                stroke={colors.black}
+                stroke={colors.blue950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -478,7 +478,7 @@ function Profile() {
               </View>
             </View>
             <ChevronRight
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={18}
               height={18}

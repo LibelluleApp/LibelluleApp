@@ -27,7 +27,7 @@ function Mail({ email }) {
     subject: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
     },
     bottom: {
       flexDirection: "row",
@@ -47,12 +47,12 @@ function Mail({ email }) {
     date: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 13,
-      color: colors.black,
+      color: colors.blue950,
     },
     action: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
-      color: colors.black,
+      color: colors.blue950,
     },
   });
 
@@ -72,7 +72,7 @@ function Mail({ email }) {
       <View style={styles.bottom}>
         <View style={styles.bottomLeft}>
           <Calendar
-            stroke={colors.black}
+            stroke={colors.blue950}
             strokeWidth={1.75}
             width={15}
             height={15}
@@ -82,7 +82,7 @@ function Mail({ email }) {
         <View style={styles.bottomRight}>
           <Text style={styles.action}>Ouvrir</Text>
           <ChevronRight
-            stroke={colors.black}
+            stroke={colors.blue950}
             strokeWidth={1.75}
             width={18}
             height={18}

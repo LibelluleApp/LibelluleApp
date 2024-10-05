@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  useRef,
-} from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -37,7 +32,7 @@ const Semaine = () => {
   const calendarRef = useRef(null); // Ref for TimelineCalendar
   const [timetable, setTimetable] = useState(null);
   const [colorAlternant, setColorAlternant] = useState(colors.grey);
-  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+  const [colorTimetable, setColorTimetable] = useState(colors.blue700);
 
   const getColorAlternant = async () => {
     try {
@@ -136,7 +131,7 @@ const Semaine = () => {
       <View style={styles.container}>
         <ActivityIndicator
           size="large"
-          color={colors.blue_variable}
+          color={colors.blue700}
           style={{ alignItems: "center" }}
         />
       </View>
@@ -171,19 +166,19 @@ const Semaine = () => {
           colors: {
             background: colors.background,
             border: colors.grey,
-            text: colors.black,
+            text: colors.blue950,
           },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
           },
           todayNumberContainer: {
-            backgroundColor: colors.blue_variable,
+            backgroundColor: colors.blue700,
           },
           todayNumber: {
             color: colors.white,
           },
           todayName: {
-            color: colors.blue_variable,
+            color: colors.blue700,
           },
           dayName: {
             color: colors.grey,
@@ -195,7 +190,7 @@ const Semaine = () => {
           },
           leftBarText: {
             fontFamily: "Ubuntu_500Medium",
-            color: colors.black,
+            color: colors.blue950,
             textTransform: "capitalize",
             fontSize: 12,
           },

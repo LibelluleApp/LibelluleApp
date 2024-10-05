@@ -46,7 +46,7 @@ const fetchCourse = async () => {
 function ItemCourse({ data, color }) {
   const { colors } = useContext(ThemeContext);
   const [remainingTime, setRemainingTime] = useState("");
-  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+  const [colorTimetable, setColorTimetable] = useState(colors.blue700);
   const getColorTimetable = async () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_timetable");
@@ -144,7 +144,7 @@ function ItemCourse({ data, color }) {
     title: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
-      color: colors.black,
+      color: colors.blue950,
     },
     content: {
       flexDirection: "row",
@@ -153,7 +153,7 @@ function ItemCourse({ data, color }) {
     textContent: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 13,
-      color: colors.black50,
+      color: colors.blue95050,
     },
   });
   useEffect(() => {

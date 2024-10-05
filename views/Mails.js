@@ -147,7 +147,7 @@ function Mails() {
       alignSelf: "flex-start",
       fontSize: 27,
       letterSpacing: -1,
-      color: colors.black,
+      color: colors.blue950,
     },
     titleDescriptionLogin: {
       fontFamily: "Ubuntu_400Regular",
@@ -182,7 +182,7 @@ function Mails() {
     //   borderRadius: 10,
     //   borderWidth: 0.5,
     //   borderColor: colors.input_border,
-    //   color: colors.black,
+    //   color: colors.blue950,
     //   fontFamily: "Ubuntu_400Regular",
     // },
     // button: {

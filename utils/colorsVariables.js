@@ -11,12 +11,12 @@ export const lightModeColors = {
   text_placeholder: "#9AA5B3",
   text_value: "#18313F",
 
-  blue_variable: "#0760FB",
+  // blue_variable: "#0760FB",
   blue100_variable: "#DDE7FA",
   blue400: "#619AFE",
-  blue700: "#0760FB",
+  // blue700: "#0760FB",
   blue70050: "#619AFE",
-  blue900: "#0F4199",
+  // blue900: "#0F4199",
   blue90075: "#345496",
 
   green_variable: "#52BB00",
@@ -26,8 +26,8 @@ export const lightModeColors = {
   red_variable: "#E80D0D",
   red_background_variable: "#FFD8D8",
   red_background: "#f5dee2",
-  red700: "#E80D0D",
-  red900: "#BB0000",
+  // red700: "#E80D0D",
+  // red900: "#BB0000",
 
   // Blue Ribbon
   blue50: "#EDF8FF",
@@ -69,10 +69,10 @@ export const darkModeColors = {
   text_placeholder: "#9AA5B3",
   text_value: "#18313F",
 
-  blue_variable: "#68AEFF",
+  // blue_variable: "#68AEFF",
   blue100_variable: "#101D47",
   blue400: "#619AFE",
-  blue700: "#0760FB",
+  // blue700: "#0760FB",
   blue70050: "#619AFE",
   blue900: "#0F4199",
   blue90075: "#345496",
@@ -84,8 +84,8 @@ export const darkModeColors = {
   red_variable: "#FF9D9D",
   red_background_variable: "#3A0000",
   red_background: "#271527",
-  red700: "#E80D0D",
-  red900: "#BB0000",
+  // red700: "#E80D0D",
+  // red900: "#BB0000",
 
   // Blue Ribbon
   blue50: "#1E5780",

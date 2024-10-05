@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  useRef
-} from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -44,7 +39,7 @@ const Jour = () => {
   const isFocused = useIsFocused();
   const [timetable, setTimetable] = useState(null);
   const [colorAlternant, setColorAlternant] = useState(colors.grey);
-  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+  const [colorTimetable, setColorTimetable] = useState(colors.blue700);
 
   const getColorAlternant = async () => {
     try {
@@ -52,7 +47,7 @@ const Jour = () => {
       if (storedColor) {
         storedColor = storedColor.replace(/['"]+/g, "");
         setColorAlternant(storedColor);
-      }else{
+      } else {
         setColorAlternant(colors.grey);
       }
     } catch (error) {
@@ -67,7 +62,7 @@ const Jour = () => {
         setColorTimetable(storedColor);
       }
       if (storedColor === null) {
-        setColorTimetable(colors.blue_variable);
+        setColorTimetable(colors.blue700);
       }
     } catch (error) {
       console.error("Failed to fetch color from storage:", error);
@@ -166,7 +161,7 @@ const Jour = () => {
   if (!timetable) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color={colors.blue_variable} />
+        <ActivityIndicator size="large" color={colors.blue700} />
       </View>
     );
   }
@@ -200,19 +195,19 @@ const Jour = () => {
           colors: {
             background: colors.background,
             border: colors.grey,
-            text: colors.black,
+            text: colors.blue950,
           },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
           },
           todayNumberContainer: {
-            backgroundColor: colors.blue_variable,
+            backgroundColor: colors.blue700,
           },
           todayNumber: {
             color: colors.white,
           },
           todayName: {
-            color: colors.blue_variable,
+            color: colors.blue700,
           },
           dayName: {
             color: colors.grey,
@@ -224,7 +219,7 @@ const Jour = () => {
           },
           leftBarText: {
             fontFamily: "Ubuntu_500Medium",
-            color: colors.black,
+            color: colors.blue950,
             textTransform: "capitalize",
             fontSize: 12,
           },
@@ -261,11 +256,7 @@ const Jour = () => {
           if (event.duration > 10) {
             return (
               <View style={styles.eventBack}>
-                <View
-                  style={
-                    styles.eventContainerAlternance
-                  }
-                >
+                <View style={styles.eventContainerAlternance}>
                   <Text
                     style={styles.eventTitleAlternance}
                     numberOfLines={1}

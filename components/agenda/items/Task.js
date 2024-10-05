@@ -46,21 +46,21 @@ function TaskHome({
     taskTitle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 16,
-      color: colors.black,
+      color: colors.blue950,
     },
     taskContentDate: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      color: colors.blue950,
       fontSize: 13,
     },
     taskContentMore: {
       fontFamily: "Ubuntu_500Medium",
-      color: colors.black,
+      color: colors.blue950,
       fontSize: 13,
     },
     taskDescription: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      color: colors.blue950,
     },
     strikethrough: {
       textDecorationLine: "line-through",
@@ -94,7 +94,7 @@ function TaskHome({
     >
       <View style={styles.taskLeft}>
         <BouncyCheckbox
-          fillColor={colors.blue_variable}
+          fillColor={colors.blue700}
           unfillColor={colors.white}
           isChecked={isChecked}
           onPress={handleCheckboxPress}
@@ -112,7 +112,7 @@ function TaskHome({
       </View>
       <View style={styles.taskRight}>
         <ChevronRight
-          stroke={colors.black}
+          stroke={colors.blue950}
           strokeWidth={1.75}
           width={18}
           height={18}

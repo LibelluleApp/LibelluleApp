@@ -69,7 +69,7 @@ function LiensExterne() {
     titleText: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
     },
     descriptionText: {
       fontFamily: "Ubuntu_400Regular",

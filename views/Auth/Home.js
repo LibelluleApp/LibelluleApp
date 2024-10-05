@@ -32,7 +32,7 @@ function AuthStack() {
       fontFamily: "Ubuntu_700Bold",
       fontSize: 30,
       letterSpacing: -1,
-      color: colors.blue_variable,
+      color: colors.blue700,
     },
     textContainer: {
       position: "absolute",
@@ -53,7 +53,7 @@ function AuthStack() {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 22,
       letterSpacing: -0.5,
-      color: colors.black,
+      color: colors.blue950,
     },
     textDescription: {
       fontFamily: "Ubuntu_400Regular",

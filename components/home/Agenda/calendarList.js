@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
-import {useIsFocused} from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import moment from "moment";
 import countTaskWeek from "../../../api/Agenda/countTaskWeek";
 import { ThemeContext } from "././../../../utils/themeContext";
@@ -27,7 +27,7 @@ function CalendarList({ onDateSelect }) {
       flexDirection: "column",
       alignItems: "center",
       borderWidth: 0.5,
-      borderColor: colors.blue_variable,
+      borderColor: colors.blue700,
       paddingVertical: 10,
       paddingHorizontal: 13,
       borderRadius: 10,
@@ -43,21 +43,21 @@ function CalendarList({ onDateSelect }) {
       width: 17,
       height: 17,
       borderWidth: 0.5,
-      borderColor: colors.blue_variable,
+      borderColor: colors.blue700,
     },
     notif_text: {
-      color: colors.blue_variable,
+      color: colors.blue700,
       fontSize: 10,
       fontFamily: "Ubuntu_500Medium",
       textAlign: "center",
     },
     selected: {
-      backgroundColor: colors.blue_variable,
+      backgroundColor: colors.blue700,
     },
     dateText: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
-      color: colors.blue_variable,
+      color: colors.blue700,
     },
     selectedText: {
       color: colors.white,

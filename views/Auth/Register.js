@@ -262,7 +262,7 @@ const Register = () => {
         titleItemInputContainer: {
           fontFamily: "Ubuntu_500Medium",
           fontSize: 15,
-          color: colors.black,
+          color: colors.blue950,
         },
         inputScrollView: {
           paddingVertical: 15,
@@ -277,7 +277,7 @@ const Register = () => {
           alignSelf: "flex-start",
           fontSize: 27,
           letterSpacing: -1,
-          color: colors.black,
+          color: colors.blue950,
         },
         inputList: {
           backgroundColor: colors.white_background,
@@ -296,12 +296,12 @@ const Register = () => {
         inputListTitle: {
           fontFamily: "Ubuntu_400Regular",
           fontSize: 15,
-          color: colors.black,
+          color: colors.blue950,
         },
         inputListTitleSelected: {
           fontFamily: "Ubuntu_400Regular",
           fontSize: 15,
-          color: colors.blue_variable,
+          color: colors.blue700,
         },
         buttonContent: {
           paddingBottom: 75,
@@ -338,7 +338,7 @@ const Register = () => {
         titleBackButton: {
           fontFamily: "Ubuntu_500Medium",
           fontSize: 16,
-          color: colors.black,
+          color: colors.blue950,
         },
       }),
     [colors]
@@ -379,7 +379,7 @@ const Register = () => {
               style={styles.backButton}
             >
               <ArrowLeft
-                stroke={colors.black}
+                stroke={colors.blue950}
                 strokeWidth={1.75}
                 width={20}
                 height={20}

@@ -56,7 +56,7 @@ function Login({ navigation }) {
       alignSelf: "flex-start",
       fontSize: 27,
       letterSpacing: -1,
-      color: colors.black,
+      color: colors.blue950,
     },
     forgotpass: {
       fontFamily: "Ubuntu_400Regular",
@@ -115,7 +115,7 @@ function Login({ navigation }) {
           type: "danger",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
         });
-      } else if(result.status === "warning"){
+      } else if (result.status === "warning") {
         showMessage({
           message: result.message,
           type: "warning",

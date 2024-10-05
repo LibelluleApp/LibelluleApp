@@ -143,7 +143,7 @@ function Home() {
                   style={{
                     fontFamily: "Ubuntu_400Regular",
                     fontSize: 13,
-                    color: colors.black,
+                    color: colors.blue950,
                   }}
                 >
                   Bonne journée,
@@ -158,7 +158,7 @@ function Home() {
                   style={{
                     fontFamily: "Ubuntu_500Medium",
                     fontSize: 17,
-                    color: colors.black,
+                    color: colors.blue950,
                   }}
                 >
                   {user.prenom}
@@ -172,7 +172,7 @@ function Home() {
                 <Text
                   style={{
                     fontFamily: "Ubuntu_500Medium",
-                    color: colors.blue_variable,
+                    color: colors.blue700,
                     fontSize: 15,
                   }}
                 >{`${formattedDate}`}</Text>

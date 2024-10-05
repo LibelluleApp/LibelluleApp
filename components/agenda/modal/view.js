@@ -61,12 +61,12 @@ const ViewTask = ({ route }) => {
     taskInfoTitle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
     },
     taskInfoDesc: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
     },
     taskState: {
       fontFamily: "Ubuntu_400Regular",
@@ -202,7 +202,7 @@ const ViewTask = ({ route }) => {
         <View style={styles.taskInfo}>
           <View style={styles.taskInfoContent}>
             <Calendar
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={20}
               height={20}
@@ -216,7 +216,7 @@ const ViewTask = ({ route }) => {
           </View>
           <View style={styles.taskInfoContent}>
             <Student
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={20}
               height={20}
@@ -230,7 +230,7 @@ const ViewTask = ({ route }) => {
           </View>
           <View style={styles.taskInfoContent}>
             <LayoutList
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={20}
               height={20}
@@ -263,7 +263,7 @@ const ViewTask = ({ route }) => {
         {task.type == "devoir" && (
           <View style={styles.taskFooter}>
             <BouncyCheckbox
-              fillColor={colors.blue_variable}
+              fillColor={colors.blue700}
               unfillColor={colors.white}
               onPress={handleCheckboxPress}
               isChecked={isChecked}

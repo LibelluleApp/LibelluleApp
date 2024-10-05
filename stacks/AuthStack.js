@@ -52,11 +52,11 @@ const AuthStack = ({ navigation }) => {
             height: 0,
           },
         },
-        headerTintColor: colors.black,
+        headerTintColor: colors.blue950,
         headerTitleStyle: {
           fontFamily: "Ubuntu_500Medium",
           fontSize: 18,
-          color: colors.black,
+          color: colors.blue950,
         },
         headerBackTitle: "Retour",
         headerBackTitleStyle: {

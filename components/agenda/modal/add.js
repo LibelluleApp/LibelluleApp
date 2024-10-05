@@ -35,7 +35,7 @@ const Add = ({ route }) => {
     title: {
       fontSize: 15,
       fontFamily: "Ubuntu_500Medium",
-      color: colors.black,
+      color: colors.blue950,
       marginBottom: 10,
     },
     input: {
@@ -43,7 +43,7 @@ const Add = ({ route }) => {
       borderColor: colors.input_border,
       paddingHorizontal: 20,
       height: 58,
-      color: colors.black,
+      color: colors.blue950,
       borderWidth: 0.5,
       marginBottom: 20,
       justifyContent: "center",
@@ -63,7 +63,7 @@ const Add = ({ route }) => {
       paddingVertical: 10,
     },
     textDate: {
-      color: colors.black,
+      color: colors.blue950,
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       textTransform: "capitalize",
@@ -176,7 +176,7 @@ const Add = ({ route }) => {
                 {dates.format("dddd DD MMMM")}
               </Text>
               <Calendar
-                stroke={colors.black}
+                stroke={colors.blue950}
                 strokeWidth={1.75}
                 width={16}
                 height={16}

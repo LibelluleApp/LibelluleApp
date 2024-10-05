@@ -29,7 +29,7 @@ function Scolarite() {
             },
           },
 
-          tabBarActiveTintColor: colors.black,
+          tabBarActiveTintColor: colors.blue950,
           tabBarInactiveTintColor: colors.grey,
           tabBarLabelStyle: {
             fontFamily: "Ubuntu_400Regular",
@@ -38,7 +38,7 @@ function Scolarite() {
           },
 
           tabBarIndicatorStyle: {
-            backgroundColor: colors.black,
+            backgroundColor: colors.blue950,
           },
         }}
       >

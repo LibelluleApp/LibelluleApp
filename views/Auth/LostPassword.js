@@ -57,7 +57,7 @@ function LostPassword({ navigation }) {
       alignSelf: "flex-start",
       fontSize: 27,
       letterSpacing: -1,
-      color: colors.black,
+      color: colors.blue950,
     },
     forgotpass: {
       fontFamily: "Ubuntu_400Regular",

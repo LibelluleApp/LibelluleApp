@@ -39,7 +39,7 @@ const TabsStack = () => {
   const insets = useSafeAreaInsets();
 
   const getIcon = (Icon, color, size, focused) => {
-    const fillColor = focused ? colors.blue_variable : color; // Change icon color to blue when focused
+    const fillColor = focused ? colors.blue700 : color; // Change icon color to blue when focused
 
     return <Icon stroke={fillColor} />;
   };
@@ -63,7 +63,7 @@ const TabsStack = () => {
     headerTitleStyle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 18,
-      color: colors.black,
+      color: colors.blue950,
       allowFontScaling: false,
     },
     headerTitleAlign: "center",
@@ -140,7 +140,7 @@ const TabsStack = () => {
         screenOptions={{
           headerShown: false,
           lazy: false,
-          tabBarActiveTintColor: colors.blue_variable, // Active text color
+          tabBarActiveTintColor: colors.blue700, // Active text color
           tabBarInactiveTintColor: colors.grey, // Inactive text color
           tabBarLabelStyle: {
             bottom: 12,

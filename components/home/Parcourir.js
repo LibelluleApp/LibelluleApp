@@ -53,7 +53,7 @@ function ParcourirHome() {
     tileText: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
-      color: colors.black,
+      color: colors.blue950,
     },
     disabled: {
       opacity: 0.4,
@@ -74,7 +74,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Link
-            stroke={colors.black}
+            stroke={colors.blue950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -86,7 +86,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Utensils
-            stroke={colors.black}
+            stroke={colors.blue950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -100,7 +100,7 @@ function ParcourirHome() {
             disabled={true}
           >
             <BookOpen
-              stroke={colors.black}
+              stroke={colors.blue950}
               width={20}
               height={20}
               strokeWidth={1.75}
@@ -114,7 +114,7 @@ function ParcourirHome() {
           disabled={true}
         >
           <Student
-            color={colors.black}
+            color={colors.blue950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -135,7 +135,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Link
-            stroke={colors.black}
+            stroke={colors.blue950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -147,7 +147,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Utensils
-            stroke={colors.black}
+            stroke={colors.blue950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -161,7 +161,7 @@ function ParcourirHome() {
             disabled={true}
           >
             <BookOpen
-              stroke={colors.black}
+              stroke={colors.blue950}
               width={20}
               height={20}
               strokeWidth={1.75}
@@ -175,7 +175,7 @@ function ParcourirHome() {
           disabled={true}
         >
           <Student
-            color={colors.black}
+            color={colors.blue950}
             width={20}
             height={20}
             strokeWidth={1.75}
