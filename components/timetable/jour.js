@@ -109,33 +109,47 @@ const Jour = () => {
       height: "100%",
       paddingVertical: 10,
       paddingHorizontal: 10,
+      paddingLeft: 20,
       borderRadius: 10,
       justifyContent: "space-around",
-      backgroundColor: colorTimetable,
+      // backgroundColor: colorTimetable,
+      backgroundColor: colors.blue200,
+      position: "relative",
+      overflow: "hidden",
     },
+
     eventContainerLittle: {
       height: "100%",
       paddingHorizontal: 10,
       borderRadius: 10,
       justifyContent: "center",
-      backgroundColor: colorTimetable,
+      // backgroundColor: colorTimetable,
+      backgroundColor: colors.blue200,
+    },
+    beforeElement: {
+      width: 7,
+      height: 400,
+      backgroundColor: colors.blue500,
+      position: "absolute",
+      left: 0,
+      top: 0,
     },
     eventTextContent: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 13,
-      color: colors.white,
+      color: colors.blue800,
       gap: 10,
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 16,
-      color: colors.white,
+      color: colors.blue950,
       maxWidth: "100%",
     },
     eventTitleLittle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 12,
-      color: colors.white,
+      color: colors.blue950,
       maxWidth: "100%",
     },
     eventTitleAlternance: {
@@ -271,6 +285,7 @@ const Jour = () => {
           return (
             <View style={styles.eventBack}>
               <View style={styles.eventContainer}>
+                <View style={styles.beforeElement} />
                 <Text
                   style={styles.eventTitle}
                   numberOfLines={1}
@@ -281,7 +296,7 @@ const Jour = () => {
                 <View style={styles.eventBottom}>
                   <View style={styles.eventContent}>
                     <MapPin
-                      stroke={colors.white}
+                      stroke={colors.blue800}
                       width={14}
                       height={14}
                       strokeWidth={1.75}
@@ -292,7 +307,7 @@ const Jour = () => {
                   </View>
                   <View style={styles.eventContent}>
                     <UserRound
-                      stroke={colors.white}
+                      stroke={colors.blue800}
                       width={14}
                       height={14}
                       strokeWidth={1.75}

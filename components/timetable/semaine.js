@@ -90,7 +90,7 @@ const Semaine = () => {
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
-      color: colors.white,
+      color: colors.blue950,
       fontSize: 11,
       maxWidth: "100%",
       alignItems: "start",
@@ -101,9 +101,21 @@ const Semaine = () => {
     eventContainer: {
       height: "100%",
       paddingVertical: 10,
-      paddingHorizontal: 10,
+      paddingLeft: 12,
+      paddingRight: 7,
       borderRadius: 10,
-      backgroundColor: colorTimetable,
+      // backgroundColor: colorTimetable,
+      backgroundColor: colors.blue200,
+      position: "relative",
+      overflow: "hidden",
+    },
+    beforeElement: {
+      width: 5,
+      height: 400,
+      backgroundColor: colors.blue500,
+      position: "absolute",
+      left: 0,
+      top: 0,
     },
     eventTitleAlternance: {
       fontFamily: "Ubuntu_500Medium",
@@ -219,6 +231,7 @@ const Semaine = () => {
           return (
             <View style={styles.eventBack}>
               <View style={styles.eventContainer}>
+                <View style={styles.beforeElement} />
                 <Text
                   style={styles.eventTitle}
                   numberOfLines={4}
