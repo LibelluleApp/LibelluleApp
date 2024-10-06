@@ -5,6 +5,7 @@ export default {
   slug: "libellule",
   version: IS_DEV ? "1.0.1" : "1.0.8",
   orientation: "portrait",
+  scheme: "libellule",
   icon: IS_DEV ? "./assets/dev-icon.png" : "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
   androidStatusBar: {

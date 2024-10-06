@@ -38,6 +38,7 @@ export const SessionProvider = ({ children }) => {
           type: "warning",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
         })}
+      setupInterceptor(() => data.token);
       await SecureStore.setItemAsync('secure_user_token', data.token);
       setSession(data.token);
     } catch (error) {
@@ -57,6 +58,11 @@ export const SessionProvider = ({ children }) => {
 
 
   const checkToken = async () => {
+    const user_data = await AsyncStorage.getItem('user_data');
+    if(!user_data){
+      await SecureStore.deleteItemAsync('secure_user_token');
+      setSession(null);
+    }
     const token = await SecureStore.getItemAsync('secure_user_token');
     if (token) {
       setupInterceptor(() => token);
