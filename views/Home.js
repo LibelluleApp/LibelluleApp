@@ -26,14 +26,11 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import NextCourse from "../components/home/nextCourse/nextCourse";
 import AgendaHome from "../components/home/Agenda/agendaHome";
 import ParcourirHome from "../components/home/Parcourir";
-import { useAuth } from "../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
 import { ThemeContext } from "./../utils/themeContext";
-import Timetable from "./Timetable";
-import Profile from "./Profile";
 import messaging from "@react-native-firebase/messaging";
 import saveNotifications from "../api/Notifications/saveNotifications";
 import fetchWeather from "./../api/Weather/fetchWeather";
@@ -55,11 +52,17 @@ function Home() {
   const [user, setUser] = useState({});
   const isFocused = useIsFocused();
   const today = moment();
-  const dayIndex = today.format("ddd");
-  const { signOut } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  };
   const [weather, setWeather] = useState({});
   const [weatherMessage, setWeatherMessage] = useState("");
+
 
   const requestUserPermission = async () => {
     try {

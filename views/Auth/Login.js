@@ -5,13 +5,12 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
-  Platform,
   TouchableOpacity,
 } from "react-native";
 import ButtonAuth from "../../components/auth/buttonAuth";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Input from "../../components/auth/input";
-import { useAuth } from "../../context/AuthContext";
+import { useSession } from "../../context/AuthContext";
 import { showMessage } from "react-native-flash-message";
 import { ThemeContext } from "./../../utils/themeContext";
 import { Envelope, Lock } from "./../../assets/icons/Icons";
@@ -93,7 +92,7 @@ function Login({ navigation }) {
   const [email_edu, setEmail] = useState("");
   const [mot_de_passe, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signIn } = useAuth();
+  const { signIn } = useSession();
 
   const handleLogin = async () => {
     if (!email_edu || !mot_de_passe) {
@@ -104,24 +103,9 @@ function Login({ navigation }) {
       });
       return;
     }
-
     setLoading(true);
-
     try {
-      const result = await signIn(email_edu, mot_de_passe);
-      if (result.status === "error") {
-        showMessage({
-          message: result.message,
-          type: "danger",
-          titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        });
-      } else if (result.status === "warning") {
-        showMessage({
-          message: result.message,
-          type: "warning",
-          titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        });
-      }
+      await signIn(email_edu, mot_de_passe);
     } catch (error) {
       showMessage({
         message:

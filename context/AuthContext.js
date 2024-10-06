@@ -1,188 +1,80 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import * as SecureStore from "expo-secure-store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Text, ActivityIndicator, StyleSheet, View, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import * as SecureStore from 'expo-secure-store';
 import login from "../api/User/login";
-import ApiManager, { setupInterceptor } from "../api/ApiManager";
-import fetchToken from "../api/User/fetchtoken";
-import NetInfo from "@react-native-community/netinfo";
-import { showMessage } from "react-native-flash-message";
-import { set } from "date-fns";
+import {setupInterceptor} from "../api/ApiManager";
 
-const TOKEN_KEY = "secure_user_token";
+// Créez le contexte
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userToken, setUserToken] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const navigation = useNavigation();
-
-  const clearAllData = async () => {
-    try {
-      await SecureStore.deleteItemAsync(TOKEN_KEY);
-      await SecureStore.deleteItemAsync("email_edu");
-      await SecureStore.deleteItemAsync("mdpMail");
-      await SecureStore.deleteItemAsync("authToken");
-      await AsyncStorage.removeItem("user_data");
-    } catch (error) {
-      console.error("Erreur lors du nettoyage des données.", error);
+export function useSession() {
+  const value = useContext(AuthContext);
+  if (process.env.NODE_ENV !== 'production') {
+    if (!value) {
+      throw new Error('useSession must be wrapped in a <SessionProvider />');
     }
-  };
+  }
+  return value;
+}
 
-  const checkTokenValidity = async () => {
+export const SessionProvider = ({ children }) => {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const signIn = async (username, password) => {
     try {
-      if (userToken) {
-        const state = await NetInfo.fetch();
-        if (!state.isConnected) {
-          showMessage({
-            message:
-              "Vous êtes hors ligne. Certaines fonctionnalités peuvent ne pas être disponibles.",
-            type: "warning",
-            titleStyle: { fontFamily: "Ubuntu_400Regular" },
-          });
-          return;
-        } else {
-          const response = await fetchToken(userToken);
-          if (response.status !== "success") {
-            showMessage({
-              message: response.message,
-              type: "warning",
-              titleStyle: { fontFamily: "Ubuntu_400Regular" },
-            });
-            await signOut();
-          }
-        }
-      }
+      const data = await login(username, password);
+      if (data.status === "error") {
+        showMessage({
+          message: data.message,
+          type: "danger",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        });
+      } else if(data.status === "warning"){
+        showMessage({
+          message: data.message,
+          type: "warning",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        })}
+      await SecureStore.setItemAsync('secure_user_token', data.token);
+      setSession(data.token);
     } catch (error) {
       showMessage({
-        message: "Erreur lors de la vérification de votre session.",
+        message: error.message,
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
       });
     }
   };
 
+  const signOut = async () => {
+    await SecureStore.deleteItemAsync('secure_user_token');
+    setSession(null);
+
+  };
+
+
+  const checkToken = async () => {
+    const token = await SecureStore.getItemAsync('secure_user_token');
+    if (token) {
+      setSession(token);
+      setupInterceptor(() => token)
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const initializeAuth = async () => {
-      // Supprimer cet appel pour éviter de supprimer les données sauvegardées
-      // await clearAllData();
-
-      try {
-        const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);
-        console.log(storedToken);
-        if (storedToken) {
-          const response = await fetchToken(storedToken);
-          if (response.status === "success") {
-            setUserToken(storedToken);
-            setIsAuthenticated(true);
-          } else {
-            await signOut();
-          }
-        }
-      } catch (error) {
-        console.error("Erreur lors du chargement du token.", error);
-      }
-      setIsLoading(false);
-    };
-
-    initializeAuth();
+    checkToken();
   }, []);
 
-  useEffect(() => {
-    setupInterceptor(() => userToken);
-    checkTokenValidity();
-  }, [userToken]);
-
-  const signIn = async (email_edu, mot_de_passe) => {
-    try {
-      const result = await login(email_edu, mot_de_passe);
-      if (result.status === "success") {
-        const token = result.token; // Supposant que vous recevez le token ici
-        await SecureStore.setItemAsync(TOKEN_KEY, token);
-        setUserToken(token);
-        setIsAuthenticated(true);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "AppStack" }],
-        });
-      }
-      return result;
-    } catch (error) {
-      console.error("Connexion échouée. Veuillez réessayer.", error);
-      throw new Error("Connexion échouée. Veuillez réessayer.");
-    }
-  };
-
-  const signOut = async () => {
-    try {
-      await clearAllData();
-      setUserToken(null);
-      setIsAuthenticated(false);
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "AuthStack" }],
-      });
-    } catch (error) {
-      console.error(
-        "Erreur lors de la déconnexion. Veuillez réessayer.",
-        error
-      );
-      throw new Error("Erreur lors de la déconnexion. Veuillez réessayer.");
-    }
-  };
-
-  const styles = StyleSheet.create({
-    backLoading: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#0760FB",
-    },
-    imgContainer: {
-      marginBottom: 20,
-    },
-    img: {
-      width: 350,
-      height: 350,
-    },
-  });
-
-  if (isLoading) {
-    return (
-      <View style={styles.backLoading}>
-        <View style={styles.imgContainer}>
-          <Image
-            source={require("../assets/adaptive-icon.png")}
-            style={styles.img}
-          />
-          <Text
-            style={{
-              color: "#fff",
-              fontSize: 20,
-              fontFamily: "Ubuntu_500Medium",
-              alignSelf: "center",
-              marginBottom: 20,
-            }}
-          >
-            Chargement...
-          </Text>
-        </View>
-        <ActivityIndicator size="large" color={"#fff"} />
-      </View>
-    );
-  }
-
   return (
-    <AuthContext.Provider
-      value={{ isAuthenticated, signIn, signOut, userToken }}
-    >
-      {children}
-    </AuthContext.Provider>
+      <AuthContext.Provider value={{ session, signIn, signOut, loading, error }}>
+        {children}
+      </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
 
-export default AuthContext;
+export const useAuth = () => {
+  return useContext(AuthContext);
+};

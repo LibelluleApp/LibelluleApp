@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ApiManager from "../ApiManager";
+import {err} from "react-native-svg";
 
 const USER_DATA_KEY = "user_data";
 
@@ -8,7 +9,7 @@ async function storeUserData(data) {
     const jsonValue = JSON.stringify(data);
     await AsyncStorage.removeItem(USER_DATA_KEY);
     await AsyncStorage.setItem(USER_DATA_KEY, jsonValue);
-    await associateRessourceColor(data.groupe_id);
+
   } catch (error) {
     throw new Error("Could not save user data");
   }
@@ -16,7 +17,6 @@ async function storeUserData(data) {
 
 async function refreshData() {
   try {
-    console.log("refreshData");
     const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
     if (!user_data.utilisateur_id) {
       throw new Error("L'adresse mail n'est pas définie dans AsyncStorage.");
@@ -27,7 +27,6 @@ async function refreshData() {
     if (response.status === 200) {
       const userData = { ...response.data };
       await storeUserData(userData);
-      console.log("refreshData", response.data);
       return response.data;
     } else {
       throw new Error(response.message);

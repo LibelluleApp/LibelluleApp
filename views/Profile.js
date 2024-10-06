@@ -4,10 +4,8 @@ import {
   ScrollView,
   Text,
   StyleSheet,
-  Switch,
   Image,
   TouchableOpacity,
-  Button,
   Linking,
   Alert,
   Platform,
@@ -28,7 +26,7 @@ import {
 } from "../assets/icons/Icons";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useAuth } from "../context/AuthContext";
+import { useSession } from "../context/AuthContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "./../utils/themeContext";
 
@@ -198,7 +196,7 @@ function Profile() {
   const [isAlternant, setIsAlternant] = useState(false);
   const [userData, setUserData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { signOut } = useAuth();
+  const { signOut } = useSession();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
 
