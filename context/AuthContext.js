@@ -2,6 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import login from "../api/User/login";
 import {setupInterceptor} from "../api/ApiManager";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import refreshData from "../api/User/refreshData";
 
 // Créez le contexte
 const AuthContext = createContext();
@@ -57,8 +59,9 @@ export const SessionProvider = ({ children }) => {
   const checkToken = async () => {
     const token = await SecureStore.getItemAsync('secure_user_token');
     if (token) {
+      setupInterceptor(() => token);
+      refreshData(token);
       setSession(token);
-      setupInterceptor(() => token)
     }
     setLoading(false);
   };

@@ -101,7 +101,7 @@ const TutorialAgenda = () => {
     setLoading(true);
     try {
       await AsyncStorage.setItem("isFirstVisitAgenda", "false");
-      navigation.navigate("Agenda");
+      navigation.goBack();
     } catch (e) {
       console.log(e);
     }

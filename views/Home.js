@@ -54,28 +54,23 @@ function Home() {
   const today = moment();
   const [isLoading, setIsLoading] = useState(true);
   const requestUserPermission = async () => {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-  };
-  const [weather, setWeather] = useState({});
-  const [weatherMessage, setWeatherMessage] = useState("");
-
-
-  const requestUserPermission = async () => {
     try {
       const authStatus = await messaging().requestPermission();
       return (
-        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-        authStatus === messaging.AuthorizationStatus.PROVISIONAL
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL
       );
     } catch (error) {
       console.error("Permission request failed:", error);
       return false;
     }
   };
+
+  const [weather, setWeather] = useState({});
+  const [weatherMessage, setWeatherMessage] = useState("");
+
+
+
 
   const styles = StyleSheet.create({
     container: {

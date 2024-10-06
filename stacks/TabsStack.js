@@ -43,7 +43,7 @@ const TabsStack = () => {
       },
     },
     {
-      name: "Devoirs",
+      name: "Agenda",
       component: require("../views/Agenda").default,
       options: {
         headerShown: false,
