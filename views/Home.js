@@ -119,7 +119,7 @@ function Home() {
   };
 
   const formattedDate = capitalizeFirstLetter(today.format("ddd D MMM"));
-  const generateWeatherMessage = (temp, icon) => {
+  const generateWeatherMessage = (temp, conditionsType) => {
     // Messages pour les étudiants
     const studentMessages = [
       "N'oubliez pas de faire des pauses !",
@@ -135,55 +135,82 @@ function Home() {
       "Chaque effort compte, continuez comme ça !",
     ];
 
-    // Messages météorologiques
+    // Messages météorologiques drôles et courts
     let weatherMessage = "";
 
-    if (icon.includes("01")) {
-      // Ensoleillé
-      weatherMessage =
-        temp > 25
-          ? "Il fait chaud ! Profitez du soleil !"
-          : "Une belle journée ensoleillée !";
-    } else if (icon.includes("02")) {
-      // Partiellement nuageux
-      weatherMessage = "Un temps agréable avec quelques nuages !";
-    } else if (icon.includes("03") || icon.includes("04")) {
-      // Nuageux
-      weatherMessage = "Un peu nuageux aujourd'hui !";
-    } else if (icon.includes("09") || icon.includes("10")) {
-      // Pluvieux
-      weatherMessage = "Petit parapluie pour aujourd'hui ! ☔️";
-    } else if (icon.includes("11")) {
-      // Orageux
-      weatherMessage = "Un temps orageux ! Faites attention ! ⚡️";
-    } else if (icon.includes("13")) {
-      // Neigeux
-      weatherMessage =
-        temp < 0
-          ? "Il neige ! N'oubliez pas votre manteau !"
-          : "Il fait frais ! Un chocolat chaud serait parfait !";
-    } else if (icon.includes("50")) {
-      // Brouillard
-      weatherMessage = "Visibilité réduite, conduisez prudemment !";
-    } else {
-      weatherMessage = "Passez une excellente journée !";
+    switch (conditionsType) {
+      case "Clear":
+        weatherMessage = temp > 25
+            ? "Trop chaud pour travailler, profitez ! ☀️"
+            : "Parfait pour un barbecue ! 🍖";
+        break;
+      case "MostlyClear":
+      case "PartlyCloudy":
+        weatherMessage = "Pas mal, mais pas parfait ! ☁️";
+        break;
+      case "Cloudy":
+        weatherMessage = "Il y a des nuages... comme mes pensées ! ☁️";
+        break;
+      case "ScatteredThunderstorms":
+      case "Thunderstorm":
+        weatherMessage = "Des éclairs ! Préparez les parapluies ! ⚡️";
+        break;
+      case "HeavyRain":
+      case "Rain":
+      case "Showers":
+        weatherMessage = "Pluie, pluie, va-t'en ! ☔️";
+        break;
+      case "Drizzle":
+        weatherMessage = "Juste une petite pluie, pas de panique ! 🌧️";
+        break;
+      case "Snow":
+      case "Flurries":
+        weatherMessage = temp < 0
+            ? "Il neige, le bonhomme de neige arrive ! ⛄️"
+            : "Il fait frais, faites un bon chocolat chaud ! ☕️";
+        break;
+      case "Fog":
+      case "Haze":
+        weatherMessage = "Brouillard, jouons à cache-cache ! 👻";
+        break;
+      case "Dust":
+      case "Smoke":
+        weatherMessage = "Respirez à fond... ou pas ! 🌫️";
+        break;
+      case "Breezy":
+        weatherMessage = "C'est une journée pour le cerf-volant ! 🪁";
+        break;
+      case "Windy":
+        weatherMessage = "On dirait que le vent veut s'amuser ! 💨";
+        break;
+      case "Hurricane":
+      case "Tornado":
+      case "SevereThunderstorm":
+        weatherMessage = "C'est l'heure de rester au chaud ! 🏠";
+        break;
+      case "Blizzard":
+        weatherMessage = "Blizzard ! C'est l'heure du chocolat chaud ! ☕️❄️";
+        break;
+      default:
+        weatherMessage = "Passez une journée aussi incroyable que vous ! 🎉";
+        break;
     }
 
     // Choisir aléatoirement entre message étudiant et message météo
     const showStudentMessage = Math.random() < 0.5; // 50% de chance
 
     return showStudentMessage
-      ? studentMessages[Math.floor(Math.random() * studentMessages.length)]
-      : weatherMessage; // Retourne soit un message étudiant soit un message météo
+        ? studentMessages[Math.floor(Math.random() * studentMessages.length)]
+        : weatherMessage; // Retourne soit un message étudiant soit un message météo
   };
 
   const fetchWeatherData = async () => {
     try {
-      const response = await fetchWeather(today.format("YYYY-MM-DD"));
-      setWeather(response.weather);
+      const response = await fetchWeather();
+      setWeather(response.currentWeather);
       const message = generateWeatherMessage(
-        response.weather.temp,
-        response.weather.icon
+        response.currentWeather.temperature,
+        response.currentWeather.conditionCode
       );
       setWeatherMessage(message);
     } catch (error) {
@@ -196,35 +223,128 @@ function Home() {
     let IconComponent;
 
     switch (iconName) {
-      case "01d":
-        IconComponent = Sun;
+      case "Clear":
+        IconComponent = Sun; // Icône pour le temps clair
         break;
-      case "02d":
-        IconComponent = CloudSun;
+      case "Cloudy":
+        IconComponent = Cloud; // Icône pour le temps nuageux
         break;
-      case "03d":
-        IconComponent = Cloud;
+      case "Dust":
+        IconComponent = Cloud; // Remplace par l'icône de nuage (ou l'icône de votre choix)
         break;
-      case "04d":
-        IconComponent = Cloudy;
+      case "Fog":
+        IconComponent = Cloud; // Remplace par l'icône de nuage
         break;
-      case "09d":
-        IconComponent = CloudRain;
+      case "Haze":
+        IconComponent = Cloud; // Remplace par l'icône de nuage
         break;
-      case "10d":
-        IconComponent = CloudSunRain;
+      case "MostlyClear":
+        IconComponent = CloudSun; // Icône pour en grande partie clair
         break;
-      case "11d":
-        IconComponent = CloudLightning;
+      case "MostlyCloudy":
+        IconComponent = Cloud; // Icône pour en grande partie nuageux
         break;
-      case "13d":
-        IconComponent = SnowFlake;
+      case "PartlyCloudy":
+        IconComponent = CloudSun; // Icône pour partiellement nuageux
         break;
-      case "50d":
-        IconComponent = Waves;
+      case "ScatteredThunderstorms":
+        IconComponent = CloudLightning; // Icône pour orages éparpillés
+        break;
+      case "Smoke":
+        IconComponent = Waves; // Remplace par l'icône de nuage
+        break;
+      case "Breezy":
+        IconComponent = WindyIcon; // Icône pour une brise
+        break;
+      case "Windy":
+        IconComponent = WindyIcon; // Icône pour le temps venteux
+        break;
+      case "Drizzle":
+        IconComponent = CloudRain; // Icône pour la bruine
+        break;
+      case "HeavyRain":
+        IconComponent = CloudRain; // Icône pour des pluies fortes
+        break;
+      case "Rain":
+        IconComponent = CloudRain; // Icône pour la pluie
+        break;
+      case "Showers":
+        IconComponent = CloudRain; // Icône pour les averses
+        break;
+      case "Flurries":
+        IconComponent = SnowFlake; // Icône pour les flocons
+        break;
+      case "HeavySnow":
+        IconComponent = SnowFlake; // Icône pour la forte neige
+        break;
+      case "MixedRainAndSleet":
+        IconComponent = CloudRain; // Icône pour pluie et verglas mélangés
+        break;
+      case "MixedRainAndSnow":
+        IconComponent = CloudRain; // Icône pour pluie et neige mélangées
+        break;
+      case "MixedRainfall":
+        IconComponent = CloudRain; // Icône pour des précipitations mixtes
+        break;
+      case "MixedSnowAndSleet":
+        IconComponent = Cloud; // Remplace par l'icône de nuage
+        break;
+      case "ScatteredShowers":
+        IconComponent = CloudRain; // Icône pour les averses éparpillées
+        break;
+      case "ScatteredSnowShowers":
+        IconComponent = SnowFlake; // Icône pour les averses de neige éparpillées
+        break;
+      case "Sleet":
+        IconComponent = CloudRain; // Icône pour le verglas
+        break;
+      case "Snow":
+        IconComponent = SnowFlake; // Icône pour la neige
+        break;
+      case "SnowShowers":
+        IconComponent = SnowFlake; // Icône pour les averses de neige
+        break;
+      case "Blizzard":
+        IconComponent = SnowFlake; // Icône pour blizzard
+        break;
+      case "BlowingSnow":
+        IconComponent = SnowFlake; // Icône pour neige soufflante
+        break;
+      case "FreezingDrizzle":
+        IconComponent = CloudRain; // Icône pour la bruine gelée
+        break;
+      case "FreezingRain":
+        IconComponent = CloudRain; // Icône pour la pluie verglaçante
+        break;
+      case "Frigid":
+        IconComponent = SnowFlake; // Icône pour temps glacial
+        break;
+      case "Hail":
+        IconComponent = Cloud; // Remplace par l'icône de nuage
+        break;
+      case "Hot":
+        IconComponent = Sun; // Icône pour temps chaud
+        break;
+      case "Hurricane":
+        IconComponent = Cloud; // Remplace par l'icône de nuage
+        break;
+      case "IsolatedThunderstorms":
+        IconComponent = CloudLightning; // Icône pour orages isolés
+        break;
+      case "SevereThunderstorm":
+        IconComponent = CloudLightning; // Icône pour orage violent
+        break;
+      case "Thunderstorm":
+        IconComponent = CloudLightning; // Icône pour orage
+        break;
+      case "Tornado":
+        IconComponent = Cloud; // Remplace par l'icône de nuage
+        break;
+      case "TropicalStorm":
+        IconComponent = Cloud; // Remplace par l'icône de nuage
         break;
       default:
-        IconComponent = Thermometer;
+        IconComponent = Thermometer; // Icône par défaut
         break;
     }
 
@@ -276,8 +396,8 @@ function Home() {
                   }}
                   style={styles.weatherContent}
                 >
-                  <WeatherIcon iconName={weather.icon} />
-                  <Text style={styles.weatherTitle}>{weather.temp}°C</Text>
+                  <WeatherIcon iconName={weather.conditionCode} />
+                  <Text style={styles.weatherTitle}>{Math.round(weather.temperature)}°C</Text>
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity onPress={() => navigation.navigate("Profil")}>

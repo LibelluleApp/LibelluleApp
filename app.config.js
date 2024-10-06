@@ -8,10 +8,7 @@ export default {
   icon: IS_DEV ? "./assets/dev-icon.png" : "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
   androidStatusBar: {
-    translucent: true,
-  },
-  androidNavigationBar: {
-    visible: "immersive",
+    hidden: true,
   },
   owner: "libellule",
   assetBundlePatterns: ["**/*"],
@@ -71,6 +68,21 @@ export default {
         },
       },
     ],
+    [
+      "expo-location",
+      {
+        locationAlwaysAndWhenInUsePermission: "Allow $(PRODUCT_NAME) to use your location.",
+        isAndroidBackgroundLocationEnabled: true
+      }
+    ],
+    [
+      "expo-navigation-bar",
+      {
+        position: "relative",
+        visibility: "hidden",
+        behavior: "inset-swipe"
+      }
+    ]
   ],
   extra: {
     eas: {

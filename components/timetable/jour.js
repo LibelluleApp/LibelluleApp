@@ -13,6 +13,7 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import fetchTimetable from "../../api/Timetable/timetable";
 import { UserRound, MapPin } from "../../assets/icons/Icons";
+import moment from "moment";
 
 const getTimetable = async () => {
   try {
@@ -183,6 +184,17 @@ const Jour = () => {
   const height =
     Dimensions.get("screen").height / 17.7 +
     (Platform.OS === "android" ? 1 : 0);
+  const getFormattedDate = () => {
+    const today = moment();
+
+    // Si c'est le weekend, on reporte au lundi
+    if (today.day() === 0 || today.day() === 6) { // 0 = dimanche, 6 = samedi
+      today.day(1); // Réglez la date au lundi
+    }
+
+    // Formatage de la date en YYYY-MM-DD
+    return today.format('YYYY-MM-DD');
+  };
 
   return (
     <View style={styles.container}>
@@ -191,6 +203,7 @@ const Jour = () => {
         timeZone="Europe/Paris"
         showWeekNumber={true}
         ref={calendarRef}
+        initialDate={getFormattedDate()}
         start={8}
         end={18.5}
         viewMode="day"

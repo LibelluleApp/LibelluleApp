@@ -71,6 +71,7 @@ export const AuthProvider = ({ children }) => {
 
       try {
         const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);
+        console.log(storedToken);
         if (storedToken) {
           const response = await fetchToken(storedToken);
           if (response.status === "success") {

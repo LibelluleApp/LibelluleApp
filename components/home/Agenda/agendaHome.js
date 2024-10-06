@@ -10,7 +10,6 @@ import "moment/locale/fr"; // Assurez-vous que la langue est correctement défin
 function AgendaHome() {
   const { colors } = useContext(ThemeContext);
   const [agendaContent, setAgendaContent] = useState(true);
-  console.log("agendaContent", agendaContent);
 
   const todayDate = moment();
 

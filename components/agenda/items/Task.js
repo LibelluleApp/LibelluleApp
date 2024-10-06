@@ -28,6 +28,7 @@ function TaskHome({
       borderRadius: 10,
       paddingHorizontal: 17,
       paddingVertical: 12,
+      marginTop: 10,
     },
     taskRight: {
       width: "15%",
