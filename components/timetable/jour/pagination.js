@@ -20,7 +20,7 @@ const PaginationHeader = ({
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
             <ArrowLeft
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -49,7 +49,7 @@ const PaginationHeader = ({
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
           <ArrowRight
-            stroke={colors.black}
+            stroke={colors.blue950}
             strokeWidth={1.75}
             width={18}
             height={18}

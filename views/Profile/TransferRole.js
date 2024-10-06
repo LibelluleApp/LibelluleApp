@@ -69,7 +69,7 @@ const TransferRole = () => {
       fontFamily: "Ubuntu_400Regular",
     },
     selectedTextStyle: {
-      color: colors.black,
+      color: colors.blue950,
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
     },
@@ -88,7 +88,7 @@ const TransferRole = () => {
     textInformations: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
     },
     bold: {
       fontFamily: "Ubuntu_500Medium",
@@ -96,7 +96,7 @@ const TransferRole = () => {
     labelDropdown: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
       marginBottom: 10,
     },
     textDisclaimer: {
@@ -160,7 +160,7 @@ const TransferRole = () => {
       <View style={styles.container}>
         <View>
           <View style={styles.topInformations}>
-            <Info width={16} heigh={16} stroke={colors.black} />
+            <Info width={16} heigh={16} stroke={colors.blue950} />
             <Text style={styles.textInformations}>
               Vous êtes <Text style={styles.bold}>responsable de l’agenda</Text>{" "}
               de votre groupe de classe. Avec l’accord d’un autre étudiant, le
@@ -176,7 +176,7 @@ const TransferRole = () => {
               mode="default"
               style={[
                 styles.dropdown,
-                isFocus && { borderColor: colors.black },
+                isFocus && { borderColor: colors.blue950 },
               ]}
               activeColor={colors.white_background}
               placeholderStyle={styles.placeholderStyle}

@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  useRef,
-} from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -37,7 +32,7 @@ const Semaine = () => {
   const calendarRef = useRef(null); // Ref for TimelineCalendar
   const [timetable, setTimetable] = useState(null);
   const [colorAlternant, setColorAlternant] = useState(colors.grey);
-  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+  const [colorTimetable, setColorTimetable] = useState(colors.blue700);
 
   const getColorAlternant = async () => {
     try {
@@ -95,7 +90,7 @@ const Semaine = () => {
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
-      color: colors.white,
+      color: colors.blue950,
       fontSize: 11,
       maxWidth: "100%",
       alignItems: "start",
@@ -106,9 +101,21 @@ const Semaine = () => {
     eventContainer: {
       height: "100%",
       paddingVertical: 10,
-      paddingHorizontal: 10,
+      paddingLeft: 12,
+      paddingRight: 7,
       borderRadius: 10,
-      backgroundColor: colorTimetable,
+      // backgroundColor: colorTimetable,
+      backgroundColor: colors.blue200,
+      position: "relative",
+      overflow: "hidden",
+    },
+    beforeElement: {
+      width: 5,
+      height: 400,
+      backgroundColor: colors.blue500,
+      position: "absolute",
+      left: 0,
+      top: 0,
     },
     eventTitleAlternance: {
       fontFamily: "Ubuntu_500Medium",
@@ -136,7 +143,7 @@ const Semaine = () => {
       <View style={styles.container}>
         <ActivityIndicator
           size="large"
-          color={colors.blue_variable}
+          color={colors.blue700}
           style={{ alignItems: "center" }}
         />
       </View>
@@ -171,19 +178,19 @@ const Semaine = () => {
           colors: {
             background: colors.background,
             border: colors.grey,
-            text: colors.black,
+            text: colors.blue950,
           },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
           },
           todayNumberContainer: {
-            backgroundColor: colors.blue_variable,
+            backgroundColor: colors.blue700,
           },
           todayNumber: {
             color: colors.white,
           },
           todayName: {
-            color: colors.blue_variable,
+            color: colors.blue700,
           },
           dayName: {
             color: colors.grey,
@@ -195,7 +202,7 @@ const Semaine = () => {
           },
           leftBarText: {
             fontFamily: "Ubuntu_500Medium",
-            color: colors.black,
+            color: colors.blue950,
             textTransform: "capitalize",
             fontSize: 12,
           },
@@ -224,6 +231,7 @@ const Semaine = () => {
           return (
             <View style={styles.eventBack}>
               <View style={styles.eventContainer}>
+                <View style={styles.beforeElement} />
                 <Text
                   style={styles.eventTitle}
                   numberOfLines={4}

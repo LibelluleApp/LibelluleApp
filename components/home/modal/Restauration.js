@@ -42,10 +42,10 @@ function Restauration() {
     hour: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 20,
-      color: colors.black,
+      color: colors.blue950,
     },
     stick: {
-      backgroundColor: colors.black,
+      backgroundColor: colors.blue950,
       height: "90%",
       width: 1,
       marginHorizontal: 15,
@@ -57,7 +57,7 @@ function Restauration() {
     title: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 20,
-      color: colors.black,
+      color: colors.blue950,
     },
     content: {
       flexDirection: "row",
@@ -67,24 +67,24 @@ function Restauration() {
     description: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
     },
     button: {
       paddingHorizontal: 15,
       paddingVertical: 10,
       borderRadius: 10,
       backgroundColor: colors.background,
-      borderColor: colors.blue_variable,
+      borderColor: colors.blue700,
       borderWidth: 0.5,
     },
     buttonToday: {
-      backgroundColor: colors.blue_variable,
+      backgroundColor: colors.blue700,
       borderWidth: 0,
     },
     buttonText: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.blue_variable,
+      color: colors.blue700,
     },
     buttonTextToday: {
       color: colors.white,
@@ -104,15 +104,20 @@ function Restauration() {
       paddingHorizontal: 26,
       paddingVertical: 15,
     },
+    noneDescriptionPlat: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.blue800,
+    },
     descriptionMeal: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
     },
     descriptionPlat: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
       marginLeft: 10,
       textTransform: "capitalize",
     },
@@ -226,7 +231,7 @@ function Restauration() {
             <Text style={styles.title}>RU Le Crousty</Text>
             <View style={styles.content}>
               <Phone
-                stroke={colors.black}
+                stroke={colors.blue950}
                 strokeWidth={1.75}
                 width={16}
                 height={16}
@@ -235,7 +240,7 @@ function Restauration() {
             </View>
             <View style={styles.content}>
               <Calendar
-                stroke={colors.black}
+                stroke={colors.blue950}
                 strokeWidth={1.75}
                 width={16}
                 height={16}
@@ -276,14 +281,21 @@ function Restauration() {
         {/* Affichage du menu */}
         <View style={styles.contentMeal}>
           <Text style={styles.descriptionMeal}>Menu</Text>
-          {menu.map((meal, index) => (
-            <View key={index} style={styles.descriptionMeal}>
-              <Text style={styles.descriptionPlat}>
-                {"\u2022 "}
-                {meal}
-              </Text>
-            </View>
-          ))}
+
+          {menu.length === 0 ? (
+            <Text style={styles.noneDescriptionPlat}>
+              Aucun menu n'est disponible pour le moment
+            </Text>
+          ) : (
+            menu.map((meal, index) => (
+              <View key={index} style={styles.descriptionMeal}>
+                <Text style={styles.descriptionPlat}>
+                  {"\u2022 "}
+                  {meal}
+                </Text>
+              </View>
+            ))
+          )}
         </View>
       </View>
     </View>

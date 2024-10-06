@@ -23,7 +23,7 @@ function Input({
   placeholderTextColor,
   icon: IconComponent,
   autoCapitalize,
-    value
+  value,
 }) {
   const { colors } = useContext(ThemeContext);
 
@@ -36,7 +36,7 @@ function Input({
     inputLabel: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
     },
     input: {
       backgroundColor: colors.white_background,
@@ -46,7 +46,7 @@ function Input({
       height: 58,
       fontFamily: "Ubuntu_400Regular",
       paddingHorizontal: 45,
-      color: colors.black,
+      color: colors.blue950,
     },
 
     iconRight: {
@@ -73,7 +73,7 @@ function Input({
         {IconComponent && (
           <IconComponent
             style={styles.iconLeft}
-            stroke={colors.black}
+            stroke={colors.blue950}
             strokeWidth={1.75}
             width={18}
             height={18}
@@ -89,7 +89,7 @@ function Input({
           onChangeText={onChangeText}
           placeholderTextColor={placeholderTextColor}
           autoCapitalize={autoCapitalize}
-            value={value}
+          value={value}
         />
         {autoComplete === "password" && (
           <TouchableOpacity

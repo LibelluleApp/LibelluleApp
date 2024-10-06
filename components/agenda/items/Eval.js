@@ -15,57 +15,56 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
-    evalTask: {
+    containerEval: {
+      alignItems: "center",
       flexDirection: "row",
       justifyContent: "space-between",
-      alignItems: "center",
-      backgroundColor: colors.red700,
+      alignContent: "center",
+      backgroundColor: colors.red50,
+      gap: 10,
       borderRadius: 10,
-      marginBottom: 15,
-      paddingHorizontal: 17,
-      paddingVertical: 12,
+      paddingVertical: 15,
+      paddingHorizontal: 20,
+      borderWidth: 0.5,
+      borderColor: colors.red300,
     },
-    evalRight: {
-      width: "15%",
-      alignItems: "flex-end",
+    evalText: {
+      color: colors.red500,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 14,
     },
-    evalLeft: {
+    leftContainer: {
       flexDirection: "row",
       alignItems: "center",
       gap: 7,
-      width: "85%",
     },
-    evalTitle: {
-      fontFamily: "Ubuntu_500Medium",
-      fontSize: 16,
-      color: colors.white,
-    },
+    rightContainer: {},
   });
 
-  const [dates, setDates] = useState(moment(date).format("ddd D MMMM"));
   return (
     <TouchableOpacity
-      style={styles.evalTask}
+      style={styles.containerEval}
       onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
     >
-      <View style={styles.evalLeft}>
+      <View style={styles.leftContainer}>
         <CircleAlert
-          stroke={colors.white}
+          stroke={colors.red500}
           width={20}
           height={20}
           strokeWidth={1.75}
         />
-        <Text style={styles.evalTitle}>
-          [Évaluation] {matiere || "Titre non disponible"}
+        <Text style={styles.evalText}>
+          <Text style={{ fontWeight: "bold" }}>[Évaluation]</Text>{" "}
+          {matiere || "Titre non disponible"}
         </Text>
       </View>
-      <View style={styles.evalRight}>
+      <View style={styles.rightContainer}>
         <ChevronRight
-          stroke={colors.white}
+          stroke={colors.red500}
           strokeWidth={1.75}
           width={18}
           height={18}
-        />
+        ></ChevronRight>
       </View>
     </TouchableOpacity>
   );

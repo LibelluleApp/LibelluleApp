@@ -50,7 +50,7 @@ function Timetable() {
             shadowOffset: { width: 0, height: 0 },
           },
           swipeEnabled: false,
-          tabBarActiveTintColor: colors.black,
+          tabBarActiveTintColor: colors.blue950,
           tabBarInactiveTintColor: colors.grey,
           tabBarLabelStyle: {
             fontFamily: "Ubuntu_400Regular",
@@ -58,7 +58,7 @@ function Timetable() {
             textTransform: "none",
           },
           tabBarIndicatorStyle: {
-            backgroundColor: colors.black,
+            backgroundColor: colors.blue950,
           },
         }}
       >

@@ -37,7 +37,7 @@ function ParcourirHome() {
     title: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.grey,
+      color: colors.blue950,
       marginBottom: 14,
     },
     tile: {
@@ -45,7 +45,8 @@ function ParcourirHome() {
       width: "47%",
       borderRadius: 10,
       paddingHorizontal: 17,
-      paddingVertical: 10,
+      paddingVertical: 13,
+      flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
       gap: 10,
@@ -53,7 +54,7 @@ function ParcourirHome() {
     tileText: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
-      color: colors.black,
+      color: colors.blue800,
     },
     disabled: {
       opacity: 0.4,
@@ -74,7 +75,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Link
-            stroke={colors.black}
+            stroke={colors.blue950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -86,7 +87,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Utensils
-            stroke={colors.black}
+            stroke={colors.blue950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -100,7 +101,7 @@ function ParcourirHome() {
             disabled={true}
           >
             <BookOpen
-              stroke={colors.black}
+              stroke={colors.blue950}
               width={20}
               height={20}
               strokeWidth={1.75}
@@ -114,7 +115,7 @@ function ParcourirHome() {
           disabled={true}
         >
           <Student
-            color={colors.black}
+            color={colors.blue950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -135,7 +136,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Link
-            stroke={colors.black}
+            stroke={colors.blue800}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -147,7 +148,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Utensils
-            stroke={colors.black}
+            stroke={colors.blue800}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -161,7 +162,7 @@ function ParcourirHome() {
             disabled={true}
           >
             <BookOpen
-              stroke={colors.black}
+              stroke={colors.blue950}
               width={20}
               height={20}
               strokeWidth={1.75}
@@ -175,7 +176,7 @@ function ParcourirHome() {
           disabled={true}
         >
           <Student
-            color={colors.black}
+            color={colors.blue950}
             width={20}
             height={20}
             strokeWidth={1.75}

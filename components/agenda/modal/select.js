@@ -23,12 +23,12 @@ const SelectComponent = ({ onChange, data, value }) => {
     placeholderStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      color: colors.blue950,
     },
     selectedTextStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      color: colors.blue950,
     },
     iconStyle: {
       width: 20,
@@ -64,7 +64,7 @@ const SelectComponent = ({ onChange, data, value }) => {
       onChange={onChange}
       renderRightIcon={() => (
         <ChevronDown
-          stroke={colors.black}
+          stroke={colors.blue950}
           strokeWidth={1.75}
           width={18}
           height={18}

@@ -26,9 +26,9 @@ function TaskHome({
       alignItems: "center",
       backgroundColor: colors.white_background,
       borderRadius: 10,
-      marginBottom: 15,
       paddingHorizontal: 17,
       paddingVertical: 12,
+      marginTop: 10,
     },
     taskRight: {
       width: "15%",
@@ -37,7 +37,6 @@ function TaskHome({
     taskLeft: {
       flexDirection: "row",
       alignItems: "center",
-      marginBottom: 5,
       width: "85%",
     },
     taskLeftContent: {
@@ -46,21 +45,21 @@ function TaskHome({
     taskTitle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 16,
-      color: colors.black,
+      color: colors.blue950,
     },
     taskContentDate: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      color: colors.blue950,
       fontSize: 13,
     },
     taskContentMore: {
       fontFamily: "Ubuntu_500Medium",
-      color: colors.black,
+      color: colors.blue950,
       fontSize: 13,
     },
     taskDescription: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      color: colors.blue800,
     },
     strikethrough: {
       textDecorationLine: "line-through",
@@ -70,7 +69,7 @@ function TaskHome({
 
   const navigation = useNavigation();
   const [isChecked, setIsChecked] = useState(checked);
-  const dates = moment(date).format("ddd D MMMM");
+
   const handleCheckboxPress = () => {
     setIsChecked(!isChecked);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
@@ -94,7 +93,7 @@ function TaskHome({
     >
       <View style={styles.taskLeft}>
         <BouncyCheckbox
-          fillColor={colors.blue_variable}
+          fillColor={colors.blue700}
           unfillColor={colors.white}
           isChecked={isChecked}
           onPress={handleCheckboxPress}
@@ -112,7 +111,7 @@ function TaskHome({
       </View>
       <View style={styles.taskRight}>
         <ChevronRight
-          stroke={colors.black}
+          stroke={colors.blue700}
           strokeWidth={1.75}
           width={18}
           height={18}

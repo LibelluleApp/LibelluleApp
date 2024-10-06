@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  useRef
-} from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -18,6 +13,7 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import fetchTimetable from "../../api/Timetable/timetable";
 import { UserRound, MapPin } from "../../assets/icons/Icons";
+import moment from "moment";
 
 const getTimetable = async () => {
   try {
@@ -44,7 +40,7 @@ const Jour = () => {
   const isFocused = useIsFocused();
   const [timetable, setTimetable] = useState(null);
   const [colorAlternant, setColorAlternant] = useState(colors.grey);
-  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+  const [colorTimetable, setColorTimetable] = useState(colors.blue700);
 
   const getColorAlternant = async () => {
     try {
@@ -52,7 +48,7 @@ const Jour = () => {
       if (storedColor) {
         storedColor = storedColor.replace(/['"]+/g, "");
         setColorAlternant(storedColor);
-      }else{
+      } else {
         setColorAlternant(colors.grey);
       }
     } catch (error) {
@@ -67,7 +63,7 @@ const Jour = () => {
         setColorTimetable(storedColor);
       }
       if (storedColor === null) {
-        setColorTimetable(colors.blue_variable);
+        setColorTimetable(colors.blue700);
       }
     } catch (error) {
       console.error("Failed to fetch color from storage:", error);
@@ -114,33 +110,47 @@ const Jour = () => {
       height: "100%",
       paddingVertical: 10,
       paddingHorizontal: 10,
+      paddingLeft: 20,
       borderRadius: 10,
       justifyContent: "space-around",
-      backgroundColor: colorTimetable,
+      // backgroundColor: colorTimetable,
+      backgroundColor: colors.blue200,
+      position: "relative",
+      overflow: "hidden",
     },
+
     eventContainerLittle: {
       height: "100%",
       paddingHorizontal: 10,
       borderRadius: 10,
       justifyContent: "center",
-      backgroundColor: colorTimetable,
+      // backgroundColor: colorTimetable,
+      backgroundColor: colors.blue200,
+    },
+    beforeElement: {
+      width: 7,
+      height: 400,
+      backgroundColor: colors.blue500,
+      position: "absolute",
+      left: 0,
+      top: 0,
     },
     eventTextContent: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 13,
-      color: colors.white,
+      color: colors.blue800,
       gap: 10,
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 16,
-      color: colors.white,
+      color: colors.blue950,
       maxWidth: "100%",
     },
     eventTitleLittle: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 12,
-      color: colors.white,
+      color: colors.blue950,
       maxWidth: "100%",
     },
     eventTitleAlternance: {
@@ -166,7 +176,7 @@ const Jour = () => {
   if (!timetable) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color={colors.blue_variable} />
+        <ActivityIndicator size="large" color={colors.blue700} />
       </View>
     );
   }
@@ -174,6 +184,17 @@ const Jour = () => {
   const height =
     Dimensions.get("screen").height / 17.7 +
     (Platform.OS === "android" ? 1 : 0);
+  const getFormattedDate = () => {
+    const today = moment();
+
+    // Si c'est le weekend, on reporte au lundi
+    if (today.day() === 0 || today.day() === 6) { // 0 = dimanche, 6 = samedi
+      today.day(1); // Réglez la date au lundi
+    }
+
+    // Formatage de la date en YYYY-MM-DD
+    return today.format('YYYY-MM-DD');
+  };
 
   return (
     <View style={styles.container}>
@@ -182,6 +203,7 @@ const Jour = () => {
         timeZone="Europe/Paris"
         showWeekNumber={true}
         ref={calendarRef}
+        initialDate={getFormattedDate()}
         start={8}
         end={18.5}
         viewMode="day"
@@ -200,19 +222,19 @@ const Jour = () => {
           colors: {
             background: colors.background,
             border: colors.grey,
-            text: colors.black,
+            text: colors.blue950,
           },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
           },
           todayNumberContainer: {
-            backgroundColor: colors.blue_variable,
+            backgroundColor: colors.blue700,
           },
           todayNumber: {
             color: colors.white,
           },
           todayName: {
-            color: colors.blue_variable,
+            color: colors.blue700,
           },
           dayName: {
             color: colors.grey,
@@ -224,7 +246,7 @@ const Jour = () => {
           },
           leftBarText: {
             fontFamily: "Ubuntu_500Medium",
-            color: colors.black,
+            color: colors.blue950,
             textTransform: "capitalize",
             fontSize: 12,
           },
@@ -261,11 +283,7 @@ const Jour = () => {
           if (event.duration > 10) {
             return (
               <View style={styles.eventBack}>
-                <View
-                  style={
-                    styles.eventContainerAlternance
-                  }
-                >
+                <View style={styles.eventContainerAlternance}>
                   <Text
                     style={styles.eventTitleAlternance}
                     numberOfLines={1}
@@ -280,6 +298,7 @@ const Jour = () => {
           return (
             <View style={styles.eventBack}>
               <View style={styles.eventContainer}>
+                <View style={styles.beforeElement} />
                 <Text
                   style={styles.eventTitle}
                   numberOfLines={1}
@@ -290,7 +309,7 @@ const Jour = () => {
                 <View style={styles.eventBottom}>
                   <View style={styles.eventContent}>
                     <MapPin
-                      stroke={colors.white}
+                      stroke={colors.blue800}
                       width={14}
                       height={14}
                       strokeWidth={1.75}
@@ -301,7 +320,7 @@ const Jour = () => {
                   </View>
                   <View style={styles.eventContent}>
                     <UserRound
-                      stroke={colors.white}
+                      stroke={colors.blue800}
                       width={14}
                       height={14}
                       strokeWidth={1.75}

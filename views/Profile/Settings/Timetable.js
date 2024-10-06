@@ -87,7 +87,7 @@ const ColorModal = ({
                 style={styles.swatchesContainer}
                 swatchStyle={styles.swatchStyle}
                 colors={[
-                  colors.blue_variable,
+                  colors.blue700,
                   "#FF00FF",
                   "#FF0000",
                   "#D4C91D",
@@ -99,10 +99,7 @@ const ColorModal = ({
             <PreviewText style={styles.previewText} />
           </ColorPicker>
           <Pressable
-            style={[
-              styles.closeButton,
-              { backgroundColor: colors.blue_variable },
-            ]}
+            style={[styles.closeButton, { backgroundColor: colors.blue700 }]}
             onPress={handleSave}
           >
             <Text
@@ -124,7 +121,7 @@ function TimetableSettings() {
   const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
   const [isWeekDefault, setIsWeekDefault] = useState(false);
   const [colorAlternant, setColorAlternant] = useState("#9AA5B3");
-  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+  const [colorTimetable, setColorTimetable] = useState(colors.blue700);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentColorType, setCurrentColorType] = useState(null);
   const [isAlternant, setIsAlternant] = useState(false);
@@ -134,7 +131,7 @@ function TimetableSettings() {
       const [weekDefault, colorAlt, colorTime, Alternant] = await Promise.all([
         fetchStorageItem("week_default", false),
         fetchStorageItem("color_alternant", "#9AA5B3"),
-        fetchStorageItem("color_timetable", colors.blue_variable),
+        fetchStorageItem("color_timetable", colors.blue700),
         fetchStorageItem("isAlternant", false),
       ]);
       setIsWeekDefault(weekDefault);
@@ -193,18 +190,18 @@ function TimetableSettings() {
     <View style={[styles.background, { backgroundColor: colors.background }]}>
       <View style={styles.container}>
         <View style={styles.switcherContent}>
-          <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
+          <Text style={[styles.profileBtnSwitch, { color: colors.blue950 }]}>
             Vue semaine par défaut
           </Text>
           <Switch
-            trackColor={{ false: colors.grey, true: colors.blue_variable }}
+            trackColor={{ false: colors.grey, true: colors.blue700 }}
             thumbColor={isDarkMode ? colors.white : colors.white}
             onValueChange={handleWeekDefault}
             value={isWeekDefault}
           />
         </View>
         {/* <View style={styles.switcherContent}>
-          <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
+          <Text style={[styles.profileBtnSwitch, { color: colors.blue950 }]}>
             Couleurs aléatoires des évènements
           </Text>
           <TouchableOpacity
@@ -217,7 +214,7 @@ function TimetableSettings() {
             }
           >
             <Switch
-              trackColor={{ false: colors.grey, true: colors.blue_variable }}
+              trackColor={{ false: colors.grey, true: colors.blue700 }}
               thumbColor={isDarkMode ? colors.white : colors.white}
               onValueChange={toggleTheme}
               value={isDarkMode}
@@ -225,18 +222,18 @@ function TimetableSettings() {
             />
           </TouchableOpacity>
         </View> */}
-        <View style={styles.switcherContent}>
-          <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
+        {/* <View style={styles.switcherContent}>
+          <Text style={[styles.profileBtnSwitch, { color: colors.blue950 }]}>
             Couleur des évènements par défaut
           </Text>
           <TouchableOpacity
             style={[styles.colorBox, { backgroundColor: colorTimetable }]}
             onPress={() => openColorModal("timetable")}
           />
-        </View>
+        </View> */}
         {isAlternant && (
           <View style={styles.switcherContent}>
-            <Text style={[styles.profileBtnSwitch, { color: colors.black }]}>
+            <Text style={[styles.profileBtnSwitch, { color: colors.blue950 }]}>
               Couleur des évènements d'alternance
             </Text>
             <TouchableOpacity

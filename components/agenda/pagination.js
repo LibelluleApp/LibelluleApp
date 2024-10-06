@@ -78,7 +78,7 @@ const PaginationHeader = ({
     day: {
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
-      color: colors.black,
+      color: colors.blue950,
     },
     week: {
       fontSize: 14,
@@ -112,7 +112,7 @@ const PaginationHeader = ({
       gap: 5,
     },
     progressTextTask: {
-      color: colors.blue_variable,
+      color: colors.blue700,
       fontFamily: "Ubuntu_500Medium",
       fontSize: 14,
     },
@@ -156,7 +156,7 @@ const PaginationHeader = ({
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
             <ArrowLeft
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={20}
               height={20}
@@ -170,7 +170,7 @@ const PaginationHeader = ({
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
             <ArrowLeft
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={20}
               height={20}
@@ -193,7 +193,7 @@ const PaginationHeader = ({
             hitSlop={{ top: 20, bottom: 20, right: 20 }}
           >
             <ArrowRight
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={20}
               height={20}
@@ -218,7 +218,7 @@ const PaginationHeader = ({
           animated={true}
           unfilledColor={colors.grey}
           borderWidth={0}
-          color={colors.blue_variable}
+          color={colors.blue700}
         />
       </View>
     </View>

@@ -230,7 +230,7 @@ const ChangePassword = () => {
               Error: {
                 fontFamily: "Ubuntu_400Regular",
                 fontSize: 12,
-                color: colors.black,
+                color: colors.blue950,
               },
             }}
           />

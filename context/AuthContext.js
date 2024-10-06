@@ -50,6 +50,7 @@ export const SessionProvider = ({ children }) => {
   const signOut = async () => {
     await SecureStore.deleteItemAsync('secure_user_token');
     setSession(null);
+
   };
 
 

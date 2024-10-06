@@ -60,7 +60,7 @@ const TutorialAgenda = () => {
     titleText: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 17,
-      color: colors.black,
+      color: colors.blue950,
     },
     textContentContainer: {
       flexDirection: "column",
@@ -69,7 +69,7 @@ const TutorialAgenda = () => {
     itemTextContentContainer: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.black50,
+      color: colors.blue95050,
     },
     responsableContainer: {
       flexDirection: "row",
@@ -86,12 +86,12 @@ const TutorialAgenda = () => {
     textResponsable: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.black,
+      color: colors.blue950,
     },
     textResponsableName: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.blue_variable,
+      color: colors.blue700,
     },
   });
 
@@ -120,7 +120,7 @@ const TutorialAgenda = () => {
         <View style={styles.containerContent}>
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              <Check stroke={colors.black} width={20} height={20} />
+              <Check stroke={colors.blue950} width={20} height={20} />
               <Text style={styles.titleText}>
                 Comment fonctionne l’agenda ?
               </Text>
@@ -149,7 +149,7 @@ const TutorialAgenda = () => {
           </View>
           <View style={styles.responsableContainer}>
             <Check
-              stroke={colors.black}
+              stroke={colors.blue950}
               strokeWidth={1.75}
               width={18}
               height={18}
