@@ -181,6 +181,14 @@ const AppStack = ({ navigation }) => {
         headerShadowVisible: false,
       },
     },
+    {
+      name: "Profile",
+      component: require("../views/Profile").default,
+      options: {
+        title: "Profil",
+        headerShadowVisible: false,
+      },
+    },
   ];
 
   return (

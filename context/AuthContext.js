@@ -59,21 +59,23 @@ export const SessionProvider = ({ children }) => {
 
   const checkToken = async () => {
     const user_data = await AsyncStorage.getItem('user_data');
-    if(!user_data){
+    if (!user_data) {
       await SecureStore.deleteItemAsync('secure_user_token');
       setSession(null);
     }
+
     const token = await SecureStore.getItemAsync('secure_user_token');
     if (token) {
       setupInterceptor(() => token);
-      refreshData(token);
       setSession(token);
     }
     setLoading(false);
   };
 
+
   useEffect(() => {
     checkToken();
+
   }, []);
 
   return (

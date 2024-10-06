@@ -31,11 +31,6 @@ const AuthStackSwitcher = () => {
         return <Text>Chargement...</Text>;
     }
 
-    if (session) {
-        if (typeof refreshData === 'function') {
-            refreshData();
-        }
-    }
 
     return (
         <Stack.Navigator
