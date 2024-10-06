@@ -6,12 +6,13 @@ import FlashMessage from "react-native-flash-message";
 import * as NavigationBar from "expo-navigation-bar";
 import { ThemeProvider } from "./utils/themeContext";
 import messaging from "@react-native-firebase/messaging";
+import {SessionProvider, useSession} from './context/AuthContext';
 
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { AuthProvider } from "./context/AuthContext";
+
 import AuthStackSwitcher from "./context/AuthStackSwitcher"; // Import the AuthStackSwitcher
 import moment from "moment";
 import { useFonts } from "expo-font";
@@ -93,10 +94,10 @@ function App() {
     <ThemeProvider>
       <SafeAreaProvider>
         <NavigationContainer>
-          <AuthProvider>
+          <SessionProvider>
             <AuthStackSwitcher />
             <FlashMessageWithInsets />
-          </AuthProvider>
+          </SessionProvider>
         </NavigationContainer>
       </SafeAreaProvider>
     </ThemeProvider>
