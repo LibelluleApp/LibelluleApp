@@ -58,18 +58,28 @@ export const SessionProvider = ({ children }) => {
 
 
   const checkToken = async () => {
+    setLoading(true); // Commencer le chargement
     const user_data = await AsyncStorage.getItem('user_data');
+
     if (!user_data) {
-      await SecureStore.deleteItemAsync('secure_user_token');
-      setSession(null);
+      SecureStore.deleteItemAsync('secure_user_token')
+          .then(() => {
+            setSession(null);
+          })
+          .catch((error) => console.error('Error deleting secure token:', error));
     }
 
-    const token = await SecureStore.getItemAsync('secure_user_token');
-    if (token) {
-      setupInterceptor(() => token);
-      setSession(token);
-    }
-    setLoading(false);
+    SecureStore.getItemAsync('secure_user_token')
+        .then((token) => {
+          if (token) {
+            setupInterceptor(() => token);
+            setSession(token);
+          } else {
+            setSession(null); // Si pas de token, assurez-vous de mettre à jour l'état
+          }
+        })
+        .catch((error) => console.error('Error getting secure token:', error))
+        .finally(() => setLoading(false)); // Mettre fin au chargement
   };
 
 

@@ -68,6 +68,7 @@ const TabsStack = () => {
       <Tab.Navigator
         screenOptions={{
           animation: "shift",
+          lazy: false,
           headerShown: false,
           tabBarShowLabel: true,
           tabBarStyle: {
