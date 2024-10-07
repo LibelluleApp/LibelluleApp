@@ -20,7 +20,7 @@ function Mail({ email }) {
     sender: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 13,
-      color: colors.grey,
+      color: colors.blue800,
       marginBottom: 5,
       textTransform: "capitalize",
     },
@@ -47,12 +47,12 @@ function Mail({ email }) {
     date: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 13,
-      color: colors.blue950,
+      color: colors.blue800,
     },
     action: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
-      color: colors.blue950,
+      color: colors.blue700,
     },
   });
 
@@ -72,7 +72,7 @@ function Mail({ email }) {
       <View style={styles.bottom}>
         <View style={styles.bottomLeft}>
           <Calendar
-            stroke={colors.blue950}
+            stroke={colors.blue800}
             strokeWidth={1.75}
             width={15}
             height={15}
@@ -82,7 +82,7 @@ function Mail({ email }) {
         <View style={styles.bottomRight}>
           <Text style={styles.action}>Ouvrir</Text>
           <ChevronRight
-            stroke={colors.blue950}
+            stroke={colors.blue700}
             strokeWidth={1.75}
             width={18}
             height={18}

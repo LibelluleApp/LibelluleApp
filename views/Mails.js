@@ -19,7 +19,7 @@ import fetchMailFromZimbra from "../api/Mail/fetchMail";
 import Mail from "../components/mails/Mail";
 import ButtonAuth from "../components/auth/buttonAuth";
 import Input from "./../components/auth/input";
-import { Envelope, Lock } from "./../assets/icons/Icons";
+import { Envelope, Lock, MailSearch } from "./../assets/icons/Icons";
 import { ThemeContext } from "./../utils/themeContext";
 import connectZimbra from "../api/Mail/connect";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -152,7 +152,7 @@ function Mails() {
     titleDescriptionLogin: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.grey,
+      color: colors.blue800,
       alignSelf: "flex-start",
     },
     titleWarningLogin: {
@@ -206,12 +206,12 @@ function Mails() {
     textDescriptionMails: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 14,
-      color: colors.grey,
+      color: colors.blue800,
     },
     linkDescriptionMails: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 14,
-      color: colors.grey,
+      color: colors.blue800,
       textDecorationLine: "underline",
     },
     emailItem: {
@@ -233,7 +233,20 @@ function Mails() {
       marginTop: 5,
     },
     listMails: {
+      alignItems: "center",
+      justifyContent: "center",
       paddingBottom: 65,
+    },
+    noMessageContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 5,
+    },
+    noMailText: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      color: colors.blue950,
+      textAlign: "center",
     },
   });
 
@@ -333,7 +346,17 @@ function Mails() {
           </TouchableOpacity>
         </View>
         <View style={styles.listMails}>
-          <Text>{messages}</Text>
+          {messages && (
+            <View style={styles.noMessageContainer}>
+              <MailSearch
+                stroke={colors.blue950}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+              <Text style={styles.noMailText}>{messages}</Text>
+            </View>
+          )}
           {loading ? (
             <ActivityIndicator size="large" color={colors.primary} />
           ) : (
