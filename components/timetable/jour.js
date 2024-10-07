@@ -87,6 +87,7 @@ const Jour = () => {
     if (isFocused) {
       getTimetable().then((response) => {
         setTimetable(response);
+
       });
       getColorAlternant();
       getColorTimetable();
