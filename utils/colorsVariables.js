@@ -4,6 +4,7 @@ export const lightModeColors = {
 
   grey: "#9AA5B3",
   grey_variable: "#9AA5B3",
+  grey_clear: "rgba(154,165,179,0.35)",
   white: "#FFFFFF",
   black50: "#385768",
   black: "#18313F",

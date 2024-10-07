@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LogoTitle from "../components/logo";
 import HeaderBar from "./HeaderBar";
@@ -14,10 +13,10 @@ const TabsStack = () => {
   const { colors } = useContext(ThemeContext);
   const insets = useSafeAreaInsets();
   const [headerTitle, setHeaderTitle] = useState("Vue d'ensemble");
-  const getIcon = (Icon, color, size, focused) => {
+  const getIcon = (Icon, color, strokeWidth, focused) => {
     const fillColor = focused ? colors.blue700 : color;
 
-    return <Icon stroke={fillColor} />;
+    return <Icon stroke={fillColor} strokeWidth={strokeWidth} />;
   };
   const changeHeaderTitle = (name) => {
     setHeaderTitle(name);
@@ -30,7 +29,7 @@ const TabsStack = () => {
       options: {
         headerShown: false,
         tabBarLabel: "Accueil",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Home, color, size, focused),
+        tabBarIcon: ({ color, size, focused }) => getIcon(Home, color, 1.75, focused),
       },
     },
     {
@@ -38,8 +37,8 @@ const TabsStack = () => {
       component: require("../views/Timetable").default,
       options: {
         headerShown: false,
-        tabBarLabel: "EdT",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Calendar, color, size, focused),
+        tabBarLabel: "EDT",
+        tabBarIcon: ({ color, size, focused }) => getIcon(Calendar, color, 1.75, focused),
       },
     },
     {
@@ -48,7 +47,7 @@ const TabsStack = () => {
       options: {
         headerShown: false,
         tabBarLabel: "Devoirs",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Check, color, size, focused),
+        tabBarIcon: ({ color, size, focused }) => getIcon(Check, color, 1.75, focused),
       },
     },
     {
@@ -56,9 +55,8 @@ const TabsStack = () => {
       component: require("../views/Mails").default,
       options: {
         headerShown: false,
-        tabBarBadge: 3,
         tabBarLabel: "Mails",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Envelope, color, size, focused),
+        tabBarIcon: ({ color, size, focused }) => getIcon(Envelope, color, 1.75, focused),
       },
     }
   ];
@@ -75,6 +73,7 @@ const TabsStack = () => {
                 paddingHorizontal: 8,
                 backgroundColor: colors.white_background,
                 borderTopWidth: 0,
+                  height: 80,
               },
               tabBarActiveTintColor: colors.blue700,
               tabBarInactiveTintColor: colors.grey,
