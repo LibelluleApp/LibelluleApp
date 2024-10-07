@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Text} from 'react-native';
+import {ActivityIndicator, Text, View, StyleSheet, Image} from 'react-native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useSession } from "./AuthContext";
 import AppStack from "../stacks/AppStack";
@@ -26,9 +26,44 @@ const AuthStackSwitcher = () => {
     if (!isOnline) {
         return <OfflineScreen />;
     }
-
+    const styles = StyleSheet.create({
+        backLoading: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#0760FB",
+        },
+        imgContainer: {
+            marginBottom: 20,
+        },
+        img: {
+            width: 350,
+            height: 350,
+        },
+    });
     if (loading) {
-        return <Text>Chargement...</Text>;
+        return (
+            <View style={styles.backLoading}>
+                <View style={styles.imgContainer}>
+                    <Image
+                        source={require("../assets/adaptive-icon.png")}
+                        style={styles.img}
+                    />
+                    <Text
+                        style={{
+                            color: "#fff",
+                            fontSize: 20,
+                            fontFamily: "Ubuntu_500Medium",
+                            alignSelf: "center",
+                            marginBottom: 20,
+                        }}
+                    >
+                        Chargement...
+                    </Text>
+                </View>
+                <ActivityIndicator size="large" color={"#fff"} />
+            </View>
+        );
     }
 
 
