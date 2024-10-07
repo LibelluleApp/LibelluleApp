@@ -117,7 +117,7 @@ const Dropdown = ({ options, onSelect }) => {
         <Text style={styles.buttonText}>{selectedLabel}</Text>
         <Animated.View style={chevronStyle}>
           <ChevronDown
-            stroke={colors.blue800}
+            stroke={colors.blue700}
             width={14}
             height={14}
             strokeWidth={1.75}
