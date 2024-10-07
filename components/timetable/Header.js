@@ -18,6 +18,7 @@ const CustomHeaderItem = ({ startUnix }) => {
       justifyContent: "space-between",
       alignItems: "center",
       paddingHorizontal: 10,
+      paddingTop: 3,
       width: "100%", // Assurez-vous que le conteneur prend toute la largeur
     },
     leftContent: {
@@ -54,14 +55,22 @@ const CustomHeaderItem = ({ startUnix }) => {
       textTransform: "capitalize",
     },
     dateNumberText: {
-      fontSize: 14,
-      fontFamily: "Ubuntu_400Regular",
+      fontSize: 16,
+      fontFamily: "Ubuntu_500Medium",
       color: colors.blue900,
       textTransform: "capitalize",
     },
-    todayDate: {
-      color: colors.blue800,
-      fontFamily: "Ubuntu_500Medium",
+    dayTextToday: {
+      color: colors.blue700,
+    },
+    dateNumberTextToday: {
+      color: colors.white,
+      backgroundColor: colors.blue700,
+      borderRadius: 50,
+      aspectRatio: 1,
+      textAlign: "center",
+      textAlignVertical: "center",
+      padding: 3,
     },
   });
 
@@ -75,10 +84,15 @@ const CustomHeaderItem = ({ startUnix }) => {
       </View>
       <View style={styles.centerContent}>
         <View style={styles.centerContentText}>
-          <Text style={[styles.dayText, isToday && styles.todayDate]}>
+          <Text style={[styles.dayText, isToday && styles.dayTextToday]}>
             {dayOfWeek}
           </Text>
-          <Text style={[styles.dateNumberText, isToday && styles.todayDate]}>
+          <Text
+            style={[
+              styles.dateNumberText,
+              isToday && styles.dateNumberTextToday,
+            ]}
+          >
             {day}
           </Text>
         </View>
