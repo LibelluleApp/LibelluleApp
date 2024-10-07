@@ -165,8 +165,8 @@ const Jour = () => {
     },
     eventTitleAlternance: {
       fontFamily: "Ubuntu_500Medium",
-      fontSize: 25,
-      color: colors.white,
+      fontSize: 20,
+      color: colors.blue950,
       maxWidth: "100%",
       alignItems: "center",
       justifyContent: "center",
@@ -179,7 +179,7 @@ const Jour = () => {
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: colorAlternant,
+      backgroundColor: colors.blue200,
     },
   });
 
@@ -259,7 +259,7 @@ const Jour = () => {
             const formattedProfessor = event.professor
               ? formatProfessorName(event.professor)
               : "N/C";
-            if (event.duration < 1) {
+            if (event._internal.duration < 60) {
               return (
                 <View style={styles.eventBack}>
                   <View style={styles.eventContainerLittle}>
@@ -275,7 +275,7 @@ const Jour = () => {
                 </View>
               );
             }
-            if (event.duration > 10) {
+            if (event._internal.duration > 600) {
               return (
                 <View style={styles.eventBack}>
                   <View style={styles.eventContainerAlternance}>

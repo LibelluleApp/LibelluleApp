@@ -134,7 +134,7 @@ const Semaine = () => {
       includeFontPadding: false,
       fontSize: 15,
       width: 85,
-      color: colors.white,
+      color: colors.blue950,
       alignItems: "center",
       justifyContent: "center",
       transform: [{ rotate: "-90deg" }],
@@ -146,7 +146,7 @@ const Semaine = () => {
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: colorAlternant,
+      backgroundColor: colors.blue200,
     },
   });
 
@@ -219,7 +219,7 @@ const Semaine = () => {
         <CalendarHeader />
         <CalendarBody
           renderEvent={(event) => {
-            if (event.duration > 10) {
+            if (event._internal.duration > 600) {
               return (
                 <View style={styles.eventBack}>
                   <View style={styles.eventContainerAlternance}>
