@@ -19,7 +19,7 @@ function Tag({ title, color }) {
     buttonText: {
       fontFamily: "Ubuntu_400Regular",
       color: colors.white,
-      fontSize: 11,
+      fontSize: 12,
     },
   });
 

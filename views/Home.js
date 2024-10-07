@@ -57,8 +57,8 @@ function Home() {
     try {
       const authStatus = await messaging().requestPermission();
       return (
-          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-          authStatus === messaging.AuthorizationStatus.PROVISIONAL
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL
       );
     } catch (error) {
       console.error("Permission request failed:", error);
@@ -68,9 +68,6 @@ function Home() {
 
   const [weather, setWeather] = useState({});
   const [weatherMessage, setWeatherMessage] = useState("");
-
-
-
 
   const styles = StyleSheet.create({
     container: {
@@ -138,7 +135,8 @@ function Home() {
 
     switch (conditionsType) {
       case "Clear":
-        weatherMessage = temp > 25
+        weatherMessage =
+          temp > 25
             ? "Trop chaud pour travailler, profitez ! ☀️"
             : "Parfait pour un barbecue ! 🍖";
         break;
@@ -147,7 +145,7 @@ function Home() {
         weatherMessage = "Pas mal, mais pas parfait ! ☁️";
         break;
       case "Cloudy":
-        weatherMessage = "Il y a des nuages... comme mes pensées ! ☁️";
+        weatherMessage = "Il y a des nuages... comme mes pensées !";
         break;
       case "ScatteredThunderstorms":
       case "Thunderstorm":
@@ -163,7 +161,8 @@ function Home() {
         break;
       case "Snow":
       case "Flurries":
-        weatherMessage = temp < 0
+        weatherMessage =
+          temp < 0
             ? "Il neige, le bonhomme de neige arrive ! ⛄️"
             : "Il fait frais, faites un bon chocolat chaud ! ☕️";
         break;
@@ -187,7 +186,7 @@ function Home() {
         weatherMessage = "C'est l'heure de rester au chaud ! 🏠";
         break;
       case "Blizzard":
-        weatherMessage = "Blizzard ! C'est l'heure du chocolat chaud ! ☕️❄️";
+        weatherMessage = "Oula, c'est l'heure du chocolat chaud ! ☕️";
         break;
       default:
         weatherMessage = "Passez une journée aussi incroyable que vous ! 🎉";
@@ -198,8 +197,8 @@ function Home() {
     const showStudentMessage = Math.random() < 0.5; // 50% de chance
 
     return showStudentMessage
-        ? studentMessages[Math.floor(Math.random() * studentMessages.length)]
-        : weatherMessage; // Retourne soit un message étudiant soit un message météo
+      ? studentMessages[Math.floor(Math.random() * studentMessages.length)]
+      : weatherMessage; // Retourne soit un message étudiant soit un message météo
   };
 
   const fetchWeatherData = async () => {
@@ -390,12 +389,16 @@ function Home() {
               {weather ? (
                 <TouchableOpacity
                   onPress={() => {
-                    Linking.openURL("https://openweathermap.org/city/3037598");
+                    Linking.openURL(
+                      "https://meteofrance.com/previsions-meteo-france/angouleme/16000"
+                    );
                   }}
                   style={styles.weatherContent}
                 >
                   <WeatherIcon iconName={weather.conditionCode} />
-                  <Text style={styles.weatherTitle}>{Math.round(weather.temperature)}°C</Text>
+                  <Text style={styles.weatherTitle}>
+                    {Math.round(weather.temperature)}°C
+                  </Text>
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity onPress={() => navigation.navigate("Profil")}>
