@@ -4,6 +4,7 @@ import { Text, View, StatusBar, TextInput, Platform } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
 import * as NavigationBar from "expo-navigation-bar";
+import { setStatusBarHidden } from "expo-status-bar";
 import { ThemeProvider } from "./utils/themeContext";
 import messaging from "@react-native-firebase/messaging";
 import {SessionProvider, useSession} from './context/AuthContext';
@@ -50,7 +51,11 @@ function App() {
   }, []);
 
   if (Platform.OS === "android") {
-    NavigationBar.setVisibilityAsync("hidden");
+    NavigationBar.setPositionAsync("absolute");
+    NavigationBar.setBackgroundColorAsync('#ffffff00');
+    NavigationBar.setVisibilityAsync("visible");
+    NavigationBar.setBehaviorAsync("inset-touch");
+    setStatusBarHidden(true, "none");
   }
 
   useEffect(() => {
