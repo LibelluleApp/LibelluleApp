@@ -120,11 +120,10 @@ const Jour = () => {
     },
     eventContainer: {
       height: "100%",
-      paddingVertical: 10,
-      paddingHorizontal: 10,
-      paddingLeft: 20,
+      paddingHorizontal: 15,
       borderRadius: 10,
-      justifyContent: "space-around",
+      gap: 7,
+      justifyContent: "center",
       // backgroundColor: colorTimetable,
       backgroundColor: colors.blue200,
       position: "relative",
@@ -137,7 +136,7 @@ const Jour = () => {
       borderRadius: 10,
       justifyContent: "center",
       // backgroundColor: colorTimetable,
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.blue600,
     },
     beforeElement: {
       width: 7,
@@ -155,7 +154,7 @@ const Jour = () => {
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
-      fontSize: 16,
+      fontSize: 15,
       color: colors.blue950,
       maxWidth: "100%",
     },
@@ -167,8 +166,8 @@ const Jour = () => {
     },
     eventTitleAlternance: {
       fontFamily: "Ubuntu_500Medium",
-      fontSize: 25,
-      color: colors.white,
+      fontSize: 20,
+      color: colors.blue950,
       maxWidth: "100%",
       alignItems: "center",
       justifyContent: "center",
@@ -181,7 +180,7 @@ const Jour = () => {
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: colorAlternant,
+      backgroundColor: colors.blue200,
     },
   });
 
@@ -261,7 +260,7 @@ const Jour = () => {
             const formattedProfessor = event.professor
               ? formatProfessorName(event.professor)
               : "N/C";
-            if (event.duration < 1) {
+            if (event._internal.duration < 60) {
               return (
                 <View style={styles.eventBack}>
                   <View style={styles.eventContainerLittle}>
@@ -277,7 +276,7 @@ const Jour = () => {
                 </View>
               );
             }
-            if (event.duration > 10) {
+            if (event._internal.duration > 600) {
               return (
                 <View style={styles.eventBack}>
                   <View style={styles.eventContainerAlternance}>
@@ -295,7 +294,7 @@ const Jour = () => {
             return (
               <View style={styles.eventBack}>
                 <View style={styles.eventContainer}>
-                  <View style={styles.beforeElement} />
+                  {/* <View style={styles.beforeElement} /> */}
                   <Text
                     style={styles.eventTitle}
                     numberOfLines={1}

@@ -63,14 +63,16 @@ const CustomHeaderItem = ({ startUnix }) => {
     dayTextToday: {
       color: colors.blue700,
     },
-    dateNumberTextToday: {
-      color: colors.white,
+    dateNumberContainer: {
       backgroundColor: colors.blue700,
       borderRadius: 50,
+      paddingHorizontal: 3,
+      paddingVertical: 3,
       aspectRatio: 1,
+    },
+    dateNumberTextToday: {
+      color: colors.white,
       textAlign: "center",
-      textAlignVertical: "center",
-      padding: 3,
     },
   });
 
@@ -87,14 +89,16 @@ const CustomHeaderItem = ({ startUnix }) => {
           <Text style={[styles.dayText, isToday && styles.dayTextToday]}>
             {dayOfWeek}
           </Text>
-          <Text
-            style={[
-              styles.dateNumberText,
-              isToday && styles.dateNumberTextToday,
-            ]}
-          >
-            {day}
-          </Text>
+          <View style={isToday && styles.dateNumberContainer}>
+            <Text
+              style={[
+                styles.dateNumberText,
+                isToday && styles.dateNumberTextToday,
+              ]}
+            >
+              {day}
+            </Text>
+          </View>
         </View>
       </View>
     </View>

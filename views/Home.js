@@ -424,7 +424,7 @@ function Home() {
               >
                 <Text
                   style={{
-                    fontFamily: "Ubuntu_400Regular",
+                    fontFamily: "Ubuntu_500Medium",
                     fontSize: 15,
                     color: colors.blue950,
                   }}
