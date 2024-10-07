@@ -121,7 +121,7 @@ const Edit = ({ route }) => {
           type: "success",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
         });
-        navigation.navigate("Agenda");
+        navigation.goBack();
       }
     } catch (error) {
       setError(error.message);

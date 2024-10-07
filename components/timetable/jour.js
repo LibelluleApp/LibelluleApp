@@ -214,6 +214,7 @@ const Jour = () => {
         initialTimeIntervalHeight={height}
         spaceFromTop={4}
         locale="fr"
+        isShowHalfLine={false}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {

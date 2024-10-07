@@ -33,29 +33,9 @@ const CustomHeader = ({ title }) => {
                 alignItems: 'center',
                 paddingHorizontal: 21,
             }}>
-                <DropdownMenu.Root>
-                    <DropdownMenu.Trigger>
-                        <TouchableOpacity>
-                            <SettingsWheel stroke={colors.grey} />
-                        </TouchableOpacity>
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content>
-                        <DropdownMenu.Item
-                            key="profile"
-                            onSelect={() => navigation.navigate("Profile")}>
-                            <DropdownMenu.ItemTitle>
-                                Voir mon profil
-                            </DropdownMenu.ItemTitle>
-                        </DropdownMenu.Item>
-                        <DropdownMenu.Item
-                            key="settings"
-                            onSelect={() => navigation.navigate("Profile")}>
-                            <DropdownMenu.ItemTitle>
-                                Accéder aux paramètres
-                            </DropdownMenu.ItemTitle>
-                        </DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                </DropdownMenu.Root>
+                <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                    <SettingsWheel stroke={colors.grey} />
+                </TouchableOpacity>
 
                 <Text style={{
                     fontFamily: "Ubuntu_500Medium",

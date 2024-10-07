@@ -170,6 +170,7 @@ const Semaine = () => {
         minTimeIntervalHeight={height}
         initialTimeIntervalHeight={height}
         timeZone="Europe/Paris"
+        isShowHalfLine={false}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {

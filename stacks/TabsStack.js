@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LogoTitle from "../components/logo";
 import HeaderBar from "./HeaderBar";
@@ -38,7 +37,7 @@ const TabsStack = () => {
       component: require("../views/Timetable").default,
       options: {
         headerShown: false,
-        tabBarLabel: "EdT",
+        tabBarLabel: "EDT",
         tabBarIcon: ({ color, size, focused }) => getIcon(Calendar, color, size, focused),
       },
     },
@@ -56,7 +55,6 @@ const TabsStack = () => {
       component: require("../views/Mails").default,
       options: {
         headerShown: false,
-        tabBarBadge: 3,
         tabBarLabel: "Mails",
         tabBarIcon: ({ color, size, focused }) => getIcon(Envelope, color, size, focused),
       },
@@ -75,6 +73,7 @@ const TabsStack = () => {
                 paddingHorizontal: 8,
                 backgroundColor: colors.white_background,
                 borderTopWidth: 0,
+                  height: 80,
               },
               tabBarActiveTintColor: colors.blue700,
               tabBarInactiveTintColor: colors.grey,
