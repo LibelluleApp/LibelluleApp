@@ -28,7 +28,6 @@ const AppStack = ({ navigation }) => {
       component: require("./TabsStack").default,
       options: {
         headerShown: false,
-        animation: 'shift',
       },
     },
     {
