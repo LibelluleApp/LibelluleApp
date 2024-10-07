@@ -346,16 +346,18 @@ function Mails() {
           </TouchableOpacity>
         </View>
         <View style={styles.listMails}>
-          <View style={styles.noMessageContainer}>
-            <MailSearch
-              stroke={colors.blue950}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-            <Text style={styles.noMailText}>{messages}</Text>
-          </View>
-          {/* {loading ? (
+          {messages && (
+            <View style={styles.noMessageContainer}>
+              <MailSearch
+                stroke={colors.blue950}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+              <Text style={styles.noMailText}>{messages}</Text>
+            </View>
+          )}
+          {loading ? (
             <ActivityIndicator size="large" color={colors.primary} />
           ) : (
             <FlatList
@@ -367,7 +369,7 @@ function Mails() {
                 <RefreshControl refreshing={loading} onRefresh={fetchEmails} />
               }
             />
-          )} */}
+          )}
         </View>
       </View>
     </View>
