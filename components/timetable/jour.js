@@ -120,8 +120,7 @@ const Jour = () => {
     eventContainer: {
       height: "100%",
       paddingVertical: 10,
-      paddingHorizontal: 10,
-      paddingLeft: 20,
+      paddingHorizontal: 15,
       borderRadius: 10,
       justifyContent: "space-around",
       // backgroundColor: colorTimetable,
@@ -136,7 +135,7 @@ const Jour = () => {
       borderRadius: 10,
       justifyContent: "center",
       // backgroundColor: colorTimetable,
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.blue600,
     },
     beforeElement: {
       width: 7,
@@ -294,7 +293,7 @@ const Jour = () => {
             return (
               <View style={styles.eventBack}>
                 <View style={styles.eventContainer}>
-                  <View style={styles.beforeElement} />
+                  {/* <View style={styles.beforeElement} /> */}
                   <Text
                     style={styles.eventTitle}
                     numberOfLines={1}
