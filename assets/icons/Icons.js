@@ -625,22 +625,22 @@ function ChevronDown(props) {
 // ChevronUp - Lucide
 function ChevronUp(props) {
   return (
-      <Svg
-          xmlns="http://www.w3.org/2000/svg"
-          width={24}
-          height={24}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1.5}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="lucide lucide-chevron-up"
-          {...props}
-      >
-        <Path d="M18 15l-6-6-6 6" />
-      </Svg>
-  )
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-chevron-up"
+      {...props}
+    >
+      <Path d="M18 15l-6-6-6 6" />
+    </Svg>
+  );
 }
 
 // LayoutList - Lucide
@@ -1370,7 +1370,7 @@ export {
   ArrowRight,
   ArrowLeft,
   ChevronUpDown,
-    ChevronUp,
+  ChevronUp,
   ChevronDown,
   ThumbsUp,
   LayoutList,
