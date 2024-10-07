@@ -91,7 +91,7 @@ export const darkModeColors = {
 
   // Blue Ribbon
   blue50: "#1E5780",
-  blue100: "#D6EDFF",
+  blue100: "#1E5780",
   blue200: "#0F295C",
   blue300: "#85D1FF",
   blue400: "#4BB5FF",

@@ -214,6 +214,14 @@ const Semaine = () => {
             fontSize: 12,
             color: colors.grey,
           },
+          // Week number
+          weekNumber: {
+            color: colors.blue950,
+            fontFamily: "Ubuntu_500Medium",
+          },
+          weekNumberContainer: {
+            backgroundColor: colors.blue100,
+          },
         }}
       >
         <CalendarHeader />
