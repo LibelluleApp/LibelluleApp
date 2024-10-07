@@ -1,47 +1,68 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useRef
+} from "react";
 import {
   View,
   StyleSheet,
-  Dimensions,
   ActivityIndicator,
   Text,
+  Dimensions,
   Platform,
 } from "react-native";
-import { TimelineCalendar, MomentConfig } from "@howljs/calendar-kit";
+import {
+  CalendarBody,
+  CalendarContainer,
+  CalendarHeader,
+} from '@howljs/calendar-kit';
 import { ThemeContext } from "../../utils/themeContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
-import fetchTimetable from "../../api/Timetable/timetable";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import fetchTimetable from "../../api/Timetable/timetable";
 
 const getTimetable = async () => {
   try {
     const response = await fetchTimetable();
-    if (response) {
-      return response;
-    }
+    return response || null;
   } catch (error) {
     console.error("Error fetching timetable:", error);
     return null;
   }
 };
 
+const formatProfessorName = (professor) => {
+  const parts = professor?.split(" ");
+  if (parts.length < 2) return professor;
+  const initial = parts[1][0];
+  const nom = parts[0];
+  return `${initial}. ${nom}`;
+};
+
+const INITIAL_DATE = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    new Date().getDate()
+).toISOString();
+
 const Semaine = () => {
-  const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
-  const isFocused = useIsFocused(); // Hook to check if the screen is focused
-  const calendarRef = useRef(null); // Ref for TimelineCalendar
+  const calendarRef = useRef(null);
+  const isFocused = useIsFocused();
   const [timetable, setTimetable] = useState(null);
   const [colorAlternant, setColorAlternant] = useState(colors.grey);
-  const [colorTimetable, setColorTimetable] = useState(colors.blue700);
+  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+
 
   const getColorAlternant = async () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_alternant");
-
       if (storedColor) {
-        console.log(storedColor);
         storedColor = storedColor.replace(/['"]+/g, "");
         setColorAlternant(storedColor);
+      }else{
+        setColorAlternant(colors.grey);
       }
     } catch (error) {
       console.error("Failed to fetch color from storage:", error);
@@ -52,8 +73,11 @@ const Semaine = () => {
     try {
       let storedColor = await AsyncStorage.getItem("color_timetable");
       if (storedColor) {
-        storedColor = storedColor.replace(/['"]+/g, "");
+        storedColor = storedColor?.replace(/['"]+/g, "");
         setColorTimetable(storedColor);
+      }
+      if (storedColor === null) {
+        setColorTimetable(colors.blue_variable);
       }
     } catch (error) {
       console.error("Failed to fetch color from storage:", error);
@@ -61,19 +85,16 @@ const Semaine = () => {
   };
 
   useEffect(() => {
-    // Fetch timetable data when the screen is focused
     if (isFocused) {
       getTimetable().then((response) => {
         setTimetable(response);
+
       });
       getColorAlternant();
       getColorTimetable();
     }
-  }, [isFocused]); // Dependency array includes isFocused
+  }, [isFocused]);
 
-  MomentConfig.updateLocale("fr", {
-    weekdaysShort: "Dim_Lun_Mar_Mer_Jeu_Ven_Sam".split("_"),
-  });
 
   const styles = StyleSheet.create({
     container: {
@@ -140,112 +161,102 @@ const Semaine = () => {
 
   if (!timetable) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator
-          size="large"
-          color={colors.blue700}
-          style={{ alignItems: "center" }}
-        />
-      </View>
+        <View style={styles.container}>
+          <ActivityIndicator size="large" color={colors.blue_variable} />
+        </View>
     );
   }
 
-  let height = Dimensions.get("screen").height / 17.7;
-  height = Platform.OS === "ios" ? height : height + 2;
-
   return (
-    <View style={styles.container}>
-      <TimelineCalendar
-        minDate={"2024-09-02"}
-        showWeekNumber={true}
-        start={8}
-        end={18.5}
-        viewMode="workWeek"
-        events={timetable}
-        showNowIndicator={true}
-        spaceFromTop={4}
-        locale="fr"
-        ref={calendarRef}
-        allowPinchToZoom
-        minTimeIntervalHeight={height}
-        initialTimeIntervalHeight={height}
-        timeZone="Europe/Paris"
-        isShowHalfLine={false}
-        theme={{
-          backgroundColor: colors.background,
-          dayNumberContainer: {
-            backgroundColor: colors.background,
-          },
-          colors: {
-            background: colors.background,
-            border: colors.grey,
-            text: colors.blue950,
-          },
-          textStyle: {
-            fontFamily: "Ubuntu_500Medium",
-          },
-          todayNumberContainer: {
-            backgroundColor: colors.blue700,
-          },
-          todayNumber: {
-            color: colors.white,
-          },
-          todayName: {
-            color: colors.blue700,
-          },
-          dayName: {
-            color: colors.grey,
-            fontFamily: "Ubuntu_400Regular",
-          },
-          dayNumber: {
-            color: colors.grey,
-            fontFamily: "Ubuntu_400Regular",
-          },
-          leftBarText: {
-            fontFamily: "Ubuntu_500Medium",
-            color: colors.blue950,
-            textTransform: "capitalize",
-            fontSize: 12,
-          },
-          hourText: {
-            fontFamily: "Ubuntu_400Regular",
-            fontSize: 12,
-            color: colors.grey,
-          },
-          cellBorderColor: colors.grey_clear,
-        }}
-        onPressEvent={(event) => {
-          navigator.navigate("DetailEvent", { event });
-        }}
-        renderEventContent={(event) => {
-          if (event.duration > 10) {
-            return (
-              <View style={styles.eventBack}>
-                <View style={styles.eventContainerAlternance}>
-                  <Text style={styles.eventTitleAlternance} numberOfLines={1}>
-                    {event.title}
-                  </Text>
-                </View>
-              </View>
-            );
-          }
-          return (
-            <View style={styles.eventBack}>
-              <View style={styles.eventContainer}>
-                <View style={styles.beforeElement} />
-                <Text
-                  style={styles.eventTitle}
-                  numberOfLines={4}
-                  ellipsizeMode="tail"
-                >
-                  {event.title}
-                </Text>
-              </View>
-            </View>
-          );
-        }}
-      />
-    </View>
+      <View style={styles.container}>
+        <CalendarContainer
+            viewMode={"week"}
+            minDate={"2024-09-02"}
+            timeZone="Europe/Paris"
+            showWeekNumber={true}
+            ref={calendarRef}
+            numberOfDays={5}
+            start={8*60}
+            end={18.5*60}
+            hideWeekDays={[6,7]}
+            events={timetable}
+            initialDate={INITIAL_DATE}
+            isShowHalfLine={false}
+            theme={{
+              backgroundColor: colors.background,
+              dayNumberContainer: {
+                backgroundColor: colors.background,
+              },
+              colors: {
+                background: colors.background,
+                border: colors.gray_clear,
+                text: colors.blue950,
+              },
+              textStyle: {
+                fontFamily: "Ubuntu_500Medium",
+              },
+              todayNumberContainer: {
+                backgroundColor: colors.blue700,
+              },
+              todayNumber: {
+                color: colors.white,
+              },
+              todayName: {
+                color: colors.blue700,
+              },
+              dayName: {
+                color: colors.grey,
+                fontFamily: "Ubuntu_400Regular",
+              },
+              dayNumber: {
+                color: colors.grey,
+                fontFamily: "Ubuntu_400Regular",
+              },
+              leftBarText: {
+                fontFamily: "Ubuntu_500Medium",
+                color: colors.blue950,
+                textTransform: "capitalize",
+                fontSize: 12,
+              },
+              hourTextStyle: {
+                fontFamily: "Ubuntu_400Regular",
+                fontSize: 12,
+                color: colors.grey,
+
+              },
+            }}
+        >
+          <CalendarHeader/>
+          <CalendarBody
+              renderEvent={(event) => {if (event.duration > 10) {
+                return (
+                    <View style={styles.eventBack}>
+                      <View style={styles.eventContainerAlternance}>
+                        <Text style={styles.eventTitleAlternance} numberOfLines={1}>
+                          {event.title}
+                        </Text>
+                      </View>
+                    </View>
+                );
+              }
+                return (
+                    <View style={styles.eventBack}>
+                      <View style={styles.eventContainer}>
+                        <View style={styles.beforeElement} />
+                        <Text
+                            style={styles.eventTitle}
+                            numberOfLines={4}
+                            ellipsizeMode="tail"
+                        >
+                          {event.title}
+                        </Text>
+                      </View>
+                    </View>
+                );
+              }}
+          />
+        </CalendarContainer>
+      </View>
   );
 };
 

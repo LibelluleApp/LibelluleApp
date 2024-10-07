@@ -63,6 +63,7 @@ export const darkModeColors = {
 
   grey: "#9AA5B3",
   grey_variable: "#FFFFFF",
+  grey_clear: "rgba(155,155,155,0.8)",
   white: "#FFFFFF",
   black50: "#E2E2E2",
   black: "#F6F6F6",

@@ -8,16 +8,23 @@ async function fetchTimetable() {
     if (!user_data.groupe_id) {
       throw new Error("Le groupe_id n'est pas défini dans AsyncStorage.");
     }
+
     let isAlternant = await AsyncStorage.getItem("isAlternant");
     if (isAlternant === "true") {
       user_data.groupe_id = user_data.groupe_id + "A";
     }
+
     const response = await ApiManager.post("/timetable/gettimetable", {
       groupe_id: user_data.groupe_id,
     });
 
     if (response.data.status === "success") {
-      return response.data.events;
+      const transformedEvents = response.data.events.map(event => ({
+        ...event,
+        start: { dateTime: new Date(event.start) },
+        end: { dateTime: new Date(event.end) }
+      }));
+      return transformedEvents;
     } else {
       throw new Error(response.data.message);
     }
