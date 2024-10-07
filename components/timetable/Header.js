@@ -67,10 +67,10 @@ const CustomHeaderItem = ({ startUnix }) => {
       color: colors.white,
       backgroundColor: colors.blue700,
       borderRadius: 50,
+      paddingHorizontal: 3,
+      paddingVertical: 3,
       aspectRatio: 1,
       textAlign: "center",
-      textAlignVertical: "center",
-      padding: 3,
     },
   });
 

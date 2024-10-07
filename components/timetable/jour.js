@@ -119,10 +119,10 @@ const Jour = () => {
     },
     eventContainer: {
       height: "100%",
-      paddingVertical: 10,
       paddingHorizontal: 15,
       borderRadius: 10,
-      justifyContent: "space-around",
+      gap: 7,
+      justifyContent: "center",
       // backgroundColor: colorTimetable,
       backgroundColor: colors.blue200,
       position: "relative",
@@ -153,7 +153,7 @@ const Jour = () => {
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
-      fontSize: 16,
+      fontSize: 15,
       color: colors.blue950,
       maxWidth: "100%",
     },
