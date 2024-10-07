@@ -12,7 +12,7 @@ function Button({ title, onPress, style }) {
       backgroundColor: colors.blue700,
       width: 50,
       height: 50,
-      borderRadius: 10,
+      borderRadius: 50,
       marginTop: 10,
       alignSelf: "center",
       alignItems: "center",

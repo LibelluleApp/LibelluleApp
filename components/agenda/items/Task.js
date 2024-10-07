@@ -38,6 +38,7 @@ function TaskHome({
       flexDirection: "row",
       alignItems: "center",
       width: "85%",
+      gap: 10,
     },
     taskLeftContent: {
       gap: 3,
@@ -97,6 +98,7 @@ function TaskHome({
           unfillColor={colors.white}
           isChecked={isChecked}
           onPress={handleCheckboxPress}
+          disableText={true}
         />
         <View style={styles.taskLeftContent}>
           <Text style={[styles.taskTitle, isChecked && styles.strikethrough]}>
