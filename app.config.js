@@ -8,9 +8,6 @@ export default {
   scheme: "libellule",
   icon: IS_DEV ? "./assets/dev-icon.png" : "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
-  androidStatusBar: {
-    hidden: true,
-  },
   owner: "libellule",
   assetBundlePatterns: ["**/*"],
   splash: {
@@ -76,14 +73,6 @@ export default {
         isAndroidBackgroundLocationEnabled: true
       }
     ],
-    [
-      "expo-navigation-bar",
-      {
-        position: "relative",
-        visibility: "hidden",
-        behavior: "inset-swipe"
-      }
-    ]
   ],
   extra: {
     eas: {
