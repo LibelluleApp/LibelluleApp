@@ -212,7 +212,7 @@ const Semaine = () => {
             fontSize: 12,
             color: colors.grey,
           },
-          cellBorderColor: colors.grey,
+          cellBorderColor: colors.grey_clear,
         }}
         onPressEvent={(event) => {
           navigator.navigate("DetailEvent", { event });

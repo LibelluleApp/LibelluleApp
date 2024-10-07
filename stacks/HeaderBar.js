@@ -34,7 +34,7 @@ const CustomHeader = ({ title }) => {
                 paddingHorizontal: 21,
             }}>
                 <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-                    <SettingsWheel stroke={colors.grey} />
+                    <SettingsWheel stroke={colors.grey} strokeWidth={1.75} />
                 </TouchableOpacity>
 
                 <Text style={{

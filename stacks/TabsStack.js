@@ -13,10 +13,10 @@ const TabsStack = () => {
   const { colors } = useContext(ThemeContext);
   const insets = useSafeAreaInsets();
   const [headerTitle, setHeaderTitle] = useState("Vue d'ensemble");
-  const getIcon = (Icon, color, size, focused) => {
+  const getIcon = (Icon, color, strokeWidth, focused) => {
     const fillColor = focused ? colors.blue700 : color;
 
-    return <Icon stroke={fillColor} />;
+    return <Icon stroke={fillColor} strokeWidth={strokeWidth} />;
   };
   const changeHeaderTitle = (name) => {
     setHeaderTitle(name);
@@ -29,7 +29,7 @@ const TabsStack = () => {
       options: {
         headerShown: false,
         tabBarLabel: "Accueil",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Home, color, size, focused),
+        tabBarIcon: ({ color, size, focused }) => getIcon(Home, color, 1.75, focused),
       },
     },
     {
@@ -38,7 +38,7 @@ const TabsStack = () => {
       options: {
         headerShown: false,
         tabBarLabel: "EDT",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Calendar, color, size, focused),
+        tabBarIcon: ({ color, size, focused }) => getIcon(Calendar, color, 1.75, focused),
       },
     },
     {
@@ -47,7 +47,7 @@ const TabsStack = () => {
       options: {
         headerShown: false,
         tabBarLabel: "Devoirs",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Check, color, size, focused),
+        tabBarIcon: ({ color, size, focused }) => getIcon(Check, color, 1.75, focused),
       },
     },
     {
@@ -56,7 +56,7 @@ const TabsStack = () => {
       options: {
         headerShown: false,
         tabBarLabel: "Mails",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Envelope, color, size, focused),
+        tabBarIcon: ({ color, size, focused }) => getIcon(Envelope, color, 1.75, focused),
       },
     }
   ];
