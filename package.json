@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/ubuntu": "^0.2.3",
-    "@howljs/calendar-kit": "^2.0.2",
+    "@howljs/calendar-kit": "github:LibelluleApp/calendar-kit",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-community/netinfo": "11.3.1",

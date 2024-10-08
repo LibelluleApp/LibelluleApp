@@ -37,6 +37,7 @@ const Semaine = forwardRef((props, ref) => {
     const calendarRef = useRef(null);
     const isFocused = useIsFocused();
     const [timetable, setTimetable] = useState([]);
+    const navigator = useNavigation();
 
     useEffect(() => {
         if (isFocused) {
@@ -44,16 +45,14 @@ const Semaine = forwardRef((props, ref) => {
         }
     }, [isFocused]);
 
-    // Define the function to go to today's date
     const localHandleGoToToday = () => {
         calendarRef.current?.goToDate({
-            date: INITIAL_DATE, // Assurez-vous que INITIAL_DATE est défini
+            date: INITIAL_DATE,
             animatedDate: true,
             animatedHour: true,
         });
     };
 
-    // Allow the parent to call localHandleGoToToday via ref
     useImperativeHandle(ref, () => ({
         goToToday: localHandleGoToToday,
     }));
@@ -159,6 +158,22 @@ const Semaine = forwardRef((props, ref) => {
         locale={"fr"}
         isShowHalfLine={false}
         initialTimeIntervalHeight={height}
+        onPressEvent={(event) => {
+            const eventWithSerializedDate = {
+                ...event,
+                start: {
+                    ...event.start,
+                    dateTime: event.start.dateTime.toISOString(),
+                },
+                end: {
+                    ...event.end,
+                    dateTime: event.end.dateTime.toISOString(),
+                },
+            };
+
+            navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
+        }}
+
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {

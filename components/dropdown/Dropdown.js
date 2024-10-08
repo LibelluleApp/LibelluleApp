@@ -20,7 +20,7 @@ const Dropdown = ({ options, onSelect }) => {
 
   useEffect(() => {
     // Animation de la hauteur et de l'opacité
-    dropdownHeight.value = withTiming(isOpen ? 83 : 0, {
+    dropdownHeight.value = withTiming(isOpen ? 80 : 0, {
       duration: 250,
       easing: Easing.inOut(Easing.circle),
     });

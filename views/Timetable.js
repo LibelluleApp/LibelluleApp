@@ -16,7 +16,8 @@ function Timetable() {
   const [isWeekDefault, setIsWeekDefault] = useState(false);
   const [selectedView, setSelectedView] = useState("day"); // Par défaut à "day"
   const isFocused = useIsFocused();
-  const [scrollToDateFunc, setScrollToDateFunc] = useState(null);
+  const semaineRef = useRef(null);
+  const jourRef = useRef(null);
 
   const options = [
     { label: "Vue journée", value: "day" },
@@ -62,11 +63,14 @@ function Timetable() {
     setSelectedView(value); // Met à jour la vue sélectionnée
   };
 
-  const semaineRef = useRef(null); // Create a ref for the Semaine component
+
 
   const handleGoToToday = () => {
-    if (semaineRef.current) {
-      semaineRef.current.goToToday(); // Call the goToToday method in Semaine
+    if (semaineRef.current && selectedView === "week") {
+      semaineRef.current.goToToday();
+    }
+    if(jourRef.current && selectedView === "day"){
+      jourRef.current.goToToday();
     }
   };
 
@@ -78,7 +82,7 @@ function Timetable() {
           <ResetList stroke={colors.blue800} />
         </TouchableOpacity>
       </View>
-      {selectedView === "day" && <Jour />}
+      {selectedView === "day" && <Jour ref={jourRef}/>}
       {selectedView === "week" && <Semaine ref={semaineRef}/>}
     </View>
   );

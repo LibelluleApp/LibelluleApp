@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, {useContext, useEffect, useState, useRef, forwardRef, useImperativeHandle} from "react";
 import {
   View,
   StyleSheet,
@@ -41,7 +41,7 @@ const formatProfessorName = (professor) => {
 
 
 
-const Jour = () => {
+const Jour = forwardRef((props, ref) => {
   const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
   const calendarRef = useRef(null);
@@ -71,6 +71,19 @@ const Jour = () => {
       getTimetable().then(data => setTimetable(data));
     }
   }, [isFocused]);
+
+  const localHandleGoToToday = () => {
+    calendarRef.current?.goToDate({
+      date: INITIAL_DATE,
+      animatedDate: true,
+      animatedHour: true,
+    });
+  };
+
+  useImperativeHandle(ref, () => ({
+    goToToday: localHandleGoToToday,
+  }));
+
 
   const styles = StyleSheet.create({
     container: {
@@ -179,6 +192,7 @@ const Jour = () => {
     <View style={styles.container}>
       <CalendarContainer
           initialDate={INITIAL_DATE}
+          timeZone="Europe/Paris"
         minDate={MIN_DATE}
         maxDate={MAX_DATE}
         showWeekNumber={true}
@@ -192,6 +206,20 @@ const Jour = () => {
         scrollToNow={true}
         isShowHalfLine={false}
         initialTimeIntervalHeight={height}
+          onPressEvent={(event) => {
+            const eventWithSerializedDate = {
+              ...event,
+              start: {
+                ...event.start,
+                dateTime: event.start.dateTime.toISOString(),
+              },
+              end: {
+                ...event.end,
+                dateTime: event.end.dateTime.toISOString(),
+              },
+            };
+            navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
+          }}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
@@ -317,6 +345,6 @@ const Jour = () => {
       </CalendarContainer>
     </View>
   );
-};
+});
 
 export default Jour;
