@@ -23,6 +23,7 @@ import Header from "./Header";
 const getTimetable = async () => {
   try {
     const response = await fetchTimetable();
+
     return response || null;
   } catch (error) {
     console.error("Error fetching timetable:", error);
@@ -277,7 +278,6 @@ const Jour = () => {
             return (
               <View style={styles.eventBack}>
                 <View style={styles.eventContainer}>
-                  {/* <View style={styles.beforeElement} /> */}
                   <Text
                     style={styles.eventTitle}
                     numberOfLines={1}

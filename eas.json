@@ -34,7 +34,6 @@
       }
     },
     "production": {
-      "autoIncrement": true,
       "ios": {
         "credentialsSource": "remote"
       }

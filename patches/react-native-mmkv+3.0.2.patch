@@ -1,0 +1,736 @@
+diff --git a/node_modules/react-native-mmkv/.vscode/settings.json b/node_modules/react-native-mmkv/.vscode/settings.json
+new file mode 100644
+index 0000000..fd21f9b
+--- /dev/null
++++ b/node_modules/react-native-mmkv/.vscode/settings.json
+@@ -0,0 +1,60 @@
++{
++  "files.associations": {
++    "__bit_reference": "cpp",
++    "__locale": "cpp",
++    "__split_buffer": "cpp",
++    "__threading_support": "cpp",
++    "__verbose_abort": "cpp",
++    "array": "cpp",
++    "cctype": "cpp",
++    "charconv": "cpp",
++    "clocale": "cpp",
++    "cmath": "cpp",
++    "cstdarg": "cpp",
++    "cstddef": "cpp",
++    "cstdint": "cpp",
++    "cstdio": "cpp",
++    "cstdlib": "cpp",
++    "cstring": "cpp",
++    "ctime": "cpp",
++    "cwchar": "cpp",
++    "cwctype": "cpp",
++    "execution": "cpp",
++    "memory": "cpp",
++    "initializer_list": "cpp",
++    "ios": "cpp",
++    "iosfwd": "cpp",
++    "limits": "cpp",
++    "locale": "cpp",
++    "mutex": "cpp",
++    "new": "cpp",
++    "numbers": "cpp",
++    "optional": "cpp",
++    "ostream": "cpp",
++    "ratio": "cpp",
++    "stdexcept": "cpp",
++    "streambuf": "cpp",
++    "string": "cpp",
++    "string_view": "cpp",
++    "tuple": "cpp",
++    "typeinfo": "cpp",
++    "unordered_map": "cpp",
++    "variant": "cpp",
++    "vector": "cpp",
++    "algorithm": "cpp",
++    "atomic": "cpp",
++    "bit": "cpp",
++    "*.tcc": "cpp",
++    "compare": "cpp",
++    "concepts": "cpp",
++    "exception": "cpp",
++    "functional": "cpp",
++    "iterator": "cpp",
++    "memory_resource": "cpp",
++    "numeric": "cpp",
++    "random": "cpp",
++    "system_error": "cpp",
++    "type_traits": "cpp",
++    "utility": "cpp"
++  }
++}
+diff --git a/node_modules/react-native-mmkv/android/.project b/node_modules/react-native-mmkv/android/.project
+new file mode 100644
+index 0000000..78a0e60
+--- /dev/null
++++ b/node_modules/react-native-mmkv/android/.project
+@@ -0,0 +1,34 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<projectDescription>
++	<name>react-native-mmkv</name>
++	<comment>Project react-native-mmkv created by Buildship.</comment>
++	<projects>
++	</projects>
++	<buildSpec>
++		<buildCommand>
++			<name>org.eclipse.jdt.core.javabuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++		<buildCommand>
++			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++	</buildSpec>
++	<natures>
++		<nature>org.eclipse.jdt.core.javanature</nature>
++		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
++	</natures>
++	<filteredResources>
++		<filter>
++			<id>1728124450663</id>
++			<name></name>
++			<type>30</type>
++			<matcher>
++				<id>org.eclipse.core.resources.regexFilterMatcher</id>
++				<arguments>node_modules|\.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
++			</matcher>
++		</filter>
++	</filteredResources>
++</projectDescription>
+diff --git a/node_modules/react-native-mmkv/android/bin/src/main/java/com/mrousavy/mmkv/MmkvPackage.class b/node_modules/react-native-mmkv/android/bin/src/main/java/com/mrousavy/mmkv/MmkvPackage.class
+new file mode 100644
+index 0000000..61a4a03
+Binary files /dev/null and b/node_modules/react-native-mmkv/android/bin/src/main/java/com/mrousavy/mmkv/MmkvPackage.class differ
+diff --git a/node_modules/react-native-mmkv/android/bin/src/main/java/com/mrousavy/mmkv/MmkvPlatformContextModule.class b/node_modules/react-native-mmkv/android/bin/src/main/java/com/mrousavy/mmkv/MmkvPlatformContextModule.class
+new file mode 100644
+index 0000000..50d805c
+Binary files /dev/null and b/node_modules/react-native-mmkv/android/bin/src/main/java/com/mrousavy/mmkv/MmkvPlatformContextModule.class differ
+diff --git a/node_modules/react-native-mmkv/cpp/MmkvHostObject.cpp b/node_modules/react-native-mmkv/cpp/MmkvHostObject.cpp
+index 6a41796..132988e 100644
+--- a/node_modules/react-native-mmkv/cpp/MmkvHostObject.cpp
++++ b/node_modules/react-native-mmkv/cpp/MmkvHostObject.cpp
+@@ -16,15 +16,16 @@
+ using namespace mmkv;
+ using namespace facebook;
+ 
+-MmkvHostObject::MmkvHostObject(const facebook::react::MMKVConfig& config) {
++MmkvHostObject::MmkvHostObject(const facebook::react::MMKVConfig &config)
++{
+   std::string path = config.path.has_value() ? config.path.value() : "";
+   std::string encryptionKey = config.encryptionKey.has_value() ? config.encryptionKey.value() : "";
+   bool hasEncryptionKey = encryptionKey.size() > 0;
+   MmkvLogger::log("RNMMKV", "Creating MMKV instance \"%s\"... (Path: %s, Encrypted: %s)",
+                   config.id.c_str(), path.c_str(), hasEncryptionKey ? "true" : "false");
+ 
+-  std::string* pathPtr = path.size() > 0 ? &path : nullptr;
+-  std::string* encryptionKeyPtr = encryptionKey.size() > 0 ? &encryptionKey : nullptr;
++  std::string *pathPtr = path.size() > 0 ? &path : nullptr;
++  std::string *encryptionKeyPtr = encryptionKey.size() > 0 ? &encryptionKey : nullptr;
+   MMKVMode mode = getMMKVMode(config);
+ 
+ #ifdef __APPLE__
+@@ -33,14 +34,17 @@ MmkvHostObject::MmkvHostObject(const facebook::react::MMKVConfig& config) {
+   instance = MMKV::mmkvWithID(config.id, DEFAULT_MMAP_SIZE, mode, encryptionKeyPtr, pathPtr);
+ #endif
+ 
+-  if (instance == nullptr) [[unlikely]] {
++  if (instance == nullptr) [[unlikely]]
++  {
+     // Check if instanceId is invalid
+-    if (config.id.empty()) [[unlikely]] {
++    if (config.id.empty()) [[unlikely]]
++    {
+       throw std::runtime_error("Failed to create MMKV instance! `id` cannot be empty!");
+     }
+ 
+     // Check if encryptionKey is invalid
+-    if (encryptionKey.size() > 16) [[unlikely]] {
++    if (encryptionKey.size() > 16) [[unlikely]]
++    {
+       throw std::runtime_error(
+           "Failed to create MMKV instance! `encryptionKey` cannot be longer than 16 bytes!");
+     }
+@@ -49,8 +53,10 @@ MmkvHostObject::MmkvHostObject(const facebook::react::MMKVConfig& config) {
+   }
+ }
+ 
+-MmkvHostObject::~MmkvHostObject() {
+-  if (instance != nullptr) {
++MmkvHostObject::~MmkvHostObject()
++{
++  if (instance != nullptr)
++  {
+     std::string instanceId = instance->mmapID();
+     MmkvLogger::log("RNMMKV", "Destroying MMKV instance \"%s\"...", instanceId.c_str());
+     instance->sync();
+@@ -59,38 +65,46 @@ MmkvHostObject::~MmkvHostObject() {
+   instance = nullptr;
+ }
+ 
+-std::vector<jsi::PropNameID> MmkvHostObject::getPropertyNames(jsi::Runtime& rt) {
++std::vector<jsi::PropNameID> MmkvHostObject::getPropertyNames(jsi::Runtime &rt)
++{
+   return jsi::PropNameID::names(rt, "set", "getBoolean", "getBuffer", "getString", "getNumber",
+                                 "contains", "delete", "getAllKeys", "deleteAll", "recrypt", "trim",
+                                 "size");
+ }
+ 
+-MMKVMode MmkvHostObject::getMMKVMode(const facebook::react::MMKVConfig& config) {
+-  if (!config.mode.has_value()) {
++MMKVMode MmkvHostObject::getMMKVMode(const facebook::react::MMKVConfig &config)
++{
++  if (!config.mode.has_value())
++  {
+     return MMKVMode::MMKV_SINGLE_PROCESS;
+   }
+   react::NativeMmkvMode mode = config.mode.value();
+-  switch (mode) {
+-    case react::NativeMmkvMode::SINGLE_PROCESS:
+-      return MMKVMode::MMKV_SINGLE_PROCESS;
+-    case react::NativeMmkvMode::MULTI_PROCESS:
+-      return MMKVMode::MMKV_MULTI_PROCESS;
+-    default:
+-      [[unlikely]] throw std::runtime_error("Invalid MMKV Mode value!");
++  switch (mode)
++  {
++  case react::NativeMmkvMode::SINGLE_PROCESS:
++    return MMKVMode::MMKV_SINGLE_PROCESS;
++  case react::NativeMmkvMode::MULTI_PROCESS:
++    return MMKVMode::MMKV_MULTI_PROCESS;
++  default:
++    [[unlikely]] throw std::runtime_error("Invalid MMKV Mode value!");
+   }
+ }
+ 
+-jsi::Value MmkvHostObject::get(jsi::Runtime& runtime, const jsi::PropNameID& propNameId) {
++jsi::Value MmkvHostObject::get(jsi::Runtime &runtime, const jsi::PropNameID &propNameId)
++{
+   std::string propName = propNameId.utf8(runtime);
+ 
+-  if (propName == "set") {
++  if (propName == "set")
++  {
+     // MMKV.set(key: string, value: string | number | bool | ArrayBuffer)
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName),
+         2, // key, value
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
+-          if (count != 2 || !arguments[0].isString()) [[unlikely]] {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
++          if (count != 2 || !arguments[0].isString()) [[unlikely]]
++          {
+             throw jsi::JSError(runtime,
+                                "MMKV::set: First argument ('key') has to be of type string!");
+           }
+@@ -98,38 +112,51 @@ jsi::Value MmkvHostObject::get(jsi::Runtime& runtime, const jsi::PropNameID& pro
+           std::string keyName = arguments[0].asString(runtime).utf8(runtime);
+ 
+           bool successful = false;
+-          if (arguments[1].isBool()) {
++          if (arguments[1].isBool())
++          {
+             // bool
+             successful = instance->set(arguments[1].getBool(), keyName);
+-          } else if (arguments[1].isNumber()) {
++          }
++          else if (arguments[1].isNumber())
++          {
+             // number
+             successful = instance->set(arguments[1].getNumber(), keyName);
+-          } else if (arguments[1].isString()) {
++          }
++          else if (arguments[1].isString())
++          {
+             // string
+             std::string stringValue = arguments[1].asString(runtime).utf8(runtime);
+             successful = instance->set(stringValue, keyName);
+-          } else if (arguments[1].isObject()) {
++          }
++          else if (arguments[1].isObject())
++          {
+             // object
+             jsi::Object object = arguments[1].asObject(runtime);
+-            if (object.isArrayBuffer(runtime)) {
++            if (object.isArrayBuffer(runtime))
++            {
+               // ArrayBuffer
+               jsi::ArrayBuffer arrayBuffer = object.getArrayBuffer(runtime);
+               MMBuffer data(arrayBuffer.data(runtime), arrayBuffer.size(runtime), MMBufferNoCopy);
+               successful = instance->set(data, keyName);
+-            } else [[unlikely]] {
++            }
++            else [[unlikely]]
++            {
+               // unknown object
+               throw jsi::JSError(
+                   runtime,
+                   "MMKV::set: 'value' argument is an object, but not of type ArrayBuffer!");
+             }
+-          } else [[unlikely]] {
++          }
++          else [[unlikely]]
++          {
+             // unknown type
+             throw jsi::JSError(
+                 runtime,
+                 "MMKV::set: 'value' argument is not of type bool, number, string or buffer!");
+           }
+ 
+-          if (!successful) [[unlikely]] {
++          if (!successful) [[unlikely]]
++          {
+             throw std::runtime_error("Failed to set " + keyName + "!");
+           }
+ 
+@@ -137,84 +164,100 @@ jsi::Value MmkvHostObject::get(jsi::Runtime& runtime, const jsi::PropNameID& pro
+         });
+   }
+ 
+-  if (propName == "getBoolean") {
++  if (propName == "getBoolean")
++  {
+     // MMKV.getBoolean(key: string)
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName),
+         1, // key
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
+-          if (count != 1 || !arguments[0].isString()) [[unlikely]] {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
++          if (count != 1 || !arguments[0].isString()) [[unlikely]]
++          {
+             throw jsi::JSError(runtime, "First argument ('key') has to be of type string!");
+           }
+ 
+           std::string keyName = arguments[0].asString(runtime).utf8(runtime);
+           bool hasValue;
+           bool value = instance->getBool(keyName, false, &hasValue);
+-          if (!hasValue) [[unlikely]] {
++          if (!hasValue) [[unlikely]]
++          {
+             return jsi::Value::undefined();
+           }
+           return jsi::Value(value);
+         });
+   }
+ 
+-  if (propName == "getNumber") {
++  if (propName == "getNumber")
++  {
+     // MMKV.getNumber(key: string)
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName),
+         1, // key
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
+-          if (count != 1 || !arguments[0].isString()) [[unlikely]] {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
++          if (count != 1 || !arguments[0].isString()) [[unlikely]]
++          {
+             throw jsi::JSError(runtime, "First argument ('key') has to be of type string!");
+           }
+ 
+           std::string keyName = arguments[0].asString(runtime).utf8(runtime);
+           bool hasValue;
+           double value = instance->getDouble(keyName, 0.0, &hasValue);
+-          if (!hasValue) [[unlikely]] {
++          if (!hasValue) [[unlikely]]
++          {
+             return jsi::Value::undefined();
+           }
+           return jsi::Value(value);
+         });
+   }
+ 
+-  if (propName == "getString") {
++  if (propName == "getString")
++  {
+     // MMKV.getString(key: string)
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName),
+         1, // key
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
+-          if (count != 1 || !arguments[0].isString()) [[unlikely]] {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
++          if (count != 1 || !arguments[0].isString()) [[unlikely]]
++          {
+             throw jsi::JSError(runtime, "First argument ('key') has to be of type string!");
+           }
+ 
+           std::string keyName = arguments[0].asString(runtime).utf8(runtime);
+           std::string result;
+           bool hasValue = instance->getString(keyName, result);
+-          if (!hasValue) [[unlikely]] {
++          if (!hasValue) [[unlikely]]
++          {
+             return jsi::Value::undefined();
+           }
+           return jsi::Value(runtime, jsi::String::createFromUtf8(runtime, result));
+         });
+   }
+ 
+-  if (propName == "getBuffer") {
++  if (propName == "getBuffer")
++  {
+     // MMKV.getBuffer(key: string)
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName),
+         1, // key
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
+-          if (count != 1 || !arguments[0].isString()) [[unlikely]] {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
++          if (count != 1 || !arguments[0].isString()) [[unlikely]]
++          {
+             throw jsi::JSError(runtime, "First argument ('key') has to be of type string!");
+           }
+ 
+           std::string keyName = arguments[0].asString(runtime).utf8(runtime);
+           mmkv::MMBuffer buffer;
+           bool hasValue = instance->getBytes(keyName, buffer);
+-          if (!hasValue) [[unlikely]] {
++          if (!hasValue) [[unlikely]]
++          {
+             return jsi::Value::undefined();
+           }
+           auto mutableData = std::make_shared<MMKVManagedBuffer>(std::move(buffer));
+@@ -222,14 +265,17 @@ jsi::Value MmkvHostObject::get(jsi::Runtime& runtime, const jsi::PropNameID& pro
+         });
+   }
+ 
+-  if (propName == "contains") {
++  if (propName == "contains")
++  {
+     // MMKV.contains(key: string)
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName),
+         1, // key
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
+-          if (count != 1 || !arguments[0].isString()) [[unlikely]] {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
++          if (count != 1 || !arguments[0].isString()) [[unlikely]]
++          {
+             throw jsi::JSError(runtime, "First argument ('key') has to be of type string!");
+           }
+ 
+@@ -239,14 +285,17 @@ jsi::Value MmkvHostObject::get(jsi::Runtime& runtime, const jsi::PropNameID& pro
+         });
+   }
+ 
+-  if (propName == "delete") {
++  if (propName == "delete")
++  {
+     // MMKV.delete(key: string)
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName),
+         1, // key
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
+-          if (count != 1 || !arguments[0].isString()) [[unlikely]] {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
++          if (count != 1 || !arguments[0].isString()) [[unlikely]]
++          {
+             throw jsi::JSError(runtime, "First argument ('key') has to be of type string!");
+           }
+ 
+@@ -256,60 +305,74 @@ jsi::Value MmkvHostObject::get(jsi::Runtime& runtime, const jsi::PropNameID& pro
+         });
+   }
+ 
+-  if (propName == "getAllKeys") {
++  if (propName == "getAllKeys")
++  {
+     // MMKV.getAllKeys()
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName), 0,
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
+           std::vector<std::string> keys = instance->allKeys();
+           jsi::Array array(runtime, keys.size());
+-          for (int i = 0; i < keys.size(); i++) {
++          for (int i = 0; i < keys.size(); i++)
++          {
+             array.setValueAtIndex(runtime, i, keys[i]);
+           }
+           return array;
+         });
+   }
+ 
+-  if (propName == "clearAll") {
++  if (propName == "clearAll")
++  {
+     // MMKV.clearAll()
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName), 0,
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
+           instance->clearAll();
+           return jsi::Value::undefined();
+         });
+   }
+ 
+-  if (propName == "recrypt") {
++  if (propName == "recrypt")
++  {
+     // MMKV.recrypt(encryptionKey)
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName),
+         1, // encryptionKey
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
+-          if (count != 1) [[unlikely]] {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
++          if (count != 1) [[unlikely]]
++          {
+             throw jsi::JSError(runtime, "Expected 1 argument (encryptionKey), but received " +
+                                             std::to_string(count) + "!");
+           }
+ 
+           bool successful = false;
+-          if (arguments[0].isUndefined()) {
++          if (arguments[0].isUndefined())
++          {
+             // reset encryption key to "no encryption"
+             successful = instance->reKey(std::string());
+-          } else if (arguments[0].isString()) {
++          }
++          else if (arguments[0].isString())
++          {
+             // reKey(..) with new encryption-key
+             std::string encryptionKey = arguments[0].getString(runtime).utf8(runtime);
+             successful = instance->reKey(encryptionKey);
+-          } else [[unlikely]] {
++          }
++          else [[unlikely]]
++          {
+             // Invalid argument (maybe object?)
+             throw jsi::JSError(
+                 runtime,
+                 "First argument ('encryptionKey') has to be of type string (or undefined)!");
+           }
+ 
+-          if (!successful) [[unlikely]] {
++          if (!successful) [[unlikely]]
++          {
+             throw std::runtime_error("Failed to recrypt MMKV instance!");
+           }
+ 
+@@ -317,12 +380,14 @@ jsi::Value MmkvHostObject::get(jsi::Runtime& runtime, const jsi::PropNameID& pro
+         });
+   }
+ 
+-  if (propName == "trim") {
++  if (propName == "trim")
++  {
+     // MMKV.trim()
+     return jsi::Function::createFromHostFunction(
+         runtime, jsi::PropNameID::forAscii(runtime, propName), 0,
+-        [this](jsi::Runtime& runtime, const jsi::Value& thisValue, const jsi::Value* arguments,
+-               size_t count) -> jsi::Value {
++        [this](jsi::Runtime &runtime, const jsi::Value &thisValue, const jsi::Value *arguments,
++               size_t count) -> jsi::Value
++        {
+           instance->clearMemoryCache();
+           instance->trim();
+ 
+@@ -330,7 +395,8 @@ jsi::Value MmkvHostObject::get(jsi::Runtime& runtime, const jsi::PropNameID& pro
+         });
+   }
+ 
+-  if (propName == "size") {
++  if (propName == "size")
++  {
+     // MMKV.size
+     size_t size = instance->actualSize();
+     return jsi::Value(static_cast<int>(size));
+diff --git a/node_modules/react-native-mmkv/cpp/NativeMmkvModule.cpp b/node_modules/react-native-mmkv/cpp/NativeMmkvModule.cpp
+index 3d7f585..8f26f2b 100644
+--- a/node_modules/react-native-mmkv/cpp/NativeMmkvModule.cpp
++++ b/node_modules/react-native-mmkv/cpp/NativeMmkvModule.cpp
+@@ -10,34 +10,38 @@
+ #include "MmkvHostObject.h"
+ #include "MmkvLogger.h"
+ 
+-namespace facebook::react {
++namespace facebook::react
++{
+ 
+-NativeMmkvModule::NativeMmkvModule(std::shared_ptr<CallInvoker> jsInvoker)
+-    : NativeMmkvCxxSpec(jsInvoker) {}
++  NativeMmkvModule::NativeMmkvModule(std::shared_ptr<CallInvoker> jsInvoker)
++      : NativeMmkvCxxSpec(jsInvoker) {}
+ 
+-bool NativeMmkvModule::initialize(jsi::Runtime& runtime, std::string basePath) {
+-  if (basePath.empty()) {
+-    throw jsi::JSError(runtime, "Path cannot be empty!");
+-  }
++  bool NativeMmkvModule::initialize(jsi::Runtime &runtime, std::string basePath)
++  {
++    if (basePath.empty())
++    {
++      throw jsi::JSError(runtime, "Path cannot be empty!");
++    }
+ 
+-  MmkvLogger::log("RNMMKV", "Initializing MMKV at %s...", basePath.c_str());
++    MmkvLogger::log("RNMMKV", "Initializing MMKV at %s...", basePath.c_str());
+ 
+ #ifdef DEBUG
+-  MMKVLogLevel logLevel = MMKVLogDebug;
++    MMKVLogLevel logLevel = MMKVLogDebug;
+ #else
+-  MMKVLogLevel logLevel = MMKVLogWarning;
++    MMKVLogLevel logLevel = MMKVLogWarning;
+ #endif
+ 
+-  MMKV::initializeMMKV(basePath, logLevel);
++    MMKV::initializeMMKV(basePath, logLevel);
+ 
+-  return true;
+-}
++    return true;
++  }
+ 
+-NativeMmkvModule::~NativeMmkvModule() {}
++  NativeMmkvModule::~NativeMmkvModule() {}
+ 
+-jsi::Object NativeMmkvModule::createMMKV(jsi::Runtime& runtime, MMKVConfig config) {
+-  auto instance = std::make_shared<MmkvHostObject>(config);
+-  return jsi::Object::createFromHostObject(runtime, instance);
+-}
++  jsi::Object NativeMmkvModule::createMMKV(jsi::Runtime &runtime, MMKVConfig config)
++  {
++    auto instance = std::make_shared<MmkvHostObject>(config);
++    return jsi::Object::createFromHostObject(runtime, instance);
++  }
+ 
+ } // namespace facebook::react
+diff --git a/node_modules/react-native-mmkv/cpp/NativeMmkvModule.h b/node_modules/react-native-mmkv/cpp/NativeMmkvModule.h
+index 43711a8..4466ec9 100644
+--- a/node_modules/react-native-mmkv/cpp/NativeMmkvModule.h
++++ b/node_modules/react-native-mmkv/cpp/NativeMmkvModule.h
+@@ -17,22 +17,76 @@
+ #error Cannot find react-native-mmkv spec! Try cleaning your cache and re-running CodeGen!
+ #endif
+ 
+-namespace facebook::react {
+-
+-// The MMKVConfiguration type from JS
+-using MMKVConfig =
+-    NativeMmkvConfiguration<std::string, std::optional<std::string>, std::optional<std::string>,
+-                            std::optional<NativeMmkvMode>>;
+-template <> struct Bridging<MMKVConfig> : NativeMmkvConfigurationBridging<MMKVConfig> {};
+-
+-// The TurboModule itself
+-class NativeMmkvModule : public NativeMmkvCxxSpec<NativeMmkvModule> {
+-public:
+-  NativeMmkvModule(std::shared_ptr<CallInvoker> jsInvoker);
+-  ~NativeMmkvModule();
+-
+-  bool initialize(jsi::Runtime& runtime, std::string basePath);
+-  jsi::Object createMMKV(jsi::Runtime& runtime, MMKVConfig config);
+-};
++namespace facebook::react
++{
++
++  // Define the NativeMmkvMode enum
++  enum class NativeMmkvMode
++  {
++    SINGLE_PROCESS = 1,
++    MULTI_PROCESS = 2
++  };
++
++  // Define the NativeMmkvConfiguration struct
++  struct NativeMmkvConfiguration
++  {
++    std::string id;
++    std::optional<std::string> path;
++    std::optional<std::string> encryptionKey;
++    std::optional<NativeMmkvMode> mode;
++
++    NativeMmkvConfiguration(
++        std::string id,
++        std::optional<std::string> path,
++        std::optional<std::string> encryptionKey,
++        std::optional<NativeMmkvMode> mode) : id(std::move(id)), path(std::move(path)), encryptionKey(std::move(encryptionKey)), mode(mode) {}
++  };
++
++  // Update the MMKVConfig type alias
++  using MMKVConfig = NativeMmkvConfiguration;
++
++  // Implement the Bridging specialization for MMKVConfig
++  template <>
++  struct Bridging<MMKVConfig>
++  {
++    static MMKVConfig fromJs(jsi::Runtime &runtime, const jsi::Object &value)
++    {
++      return MMKVConfig(
++          value.getProperty(runtime, "id").asString(runtime).utf8(runtime),
++          value.hasProperty(runtime, "path") ? std::optional<std::string>(value.getProperty(runtime, "path").asString(runtime).utf8(runtime)) : std::nullopt,
++          value.hasProperty(runtime, "encryptionKey") ? std::optional<std::string>(value.getProperty(runtime, "encryptionKey").asString(runtime).utf8(runtime)) : std::nullopt,
++          value.hasProperty(runtime, "mode") ? std::optional<NativeMmkvMode>(static_cast<NativeMmkvMode>(value.getProperty(runtime, "mode").asNumber())) : std::nullopt);
++    }
++
++    static jsi::Value toJs(jsi::Runtime &runtime, const MMKVConfig &config)
++    {
++      auto object = jsi::Object(runtime);
++      object.setProperty(runtime, "id", jsi::String::createFromUtf8(runtime, config.id));
++      if (config.path)
++      {
++        object.setProperty(runtime, "path", jsi::String::createFromUtf8(runtime, *config.path));
++      }
++      if (config.encryptionKey)
++      {
++        object.setProperty(runtime, "encryptionKey", jsi::String::createFromUtf8(runtime, *config.encryptionKey));
++      }
++      if (config.mode)
++      {
++        object.setProperty(runtime, "mode", jsi::Value(static_cast<double>(*config.mode)));
++      }
++      return object;
++    }
++  };
++
++  // The TurboModule itself
++  class NativeMmkvModule : public NativeMmkvCxxSpec<NativeMmkvModule>
++  {
++  public:
++    NativeMmkvModule(std::shared_ptr<CallInvoker> jsInvoker);
++    ~NativeMmkvModule();
++
++    bool initialize(jsi::Runtime &runtime, std::string basePath);
++    jsi::Object createMMKV(jsi::Runtime &runtime, MMKVConfig config);
++  };
+ 
+ } // namespace facebook::react
