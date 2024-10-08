@@ -3,9 +3,8 @@ const IS_DEV = process.env.APP_VARIANT === "development";
 export default {
   name: IS_DEV ? "Libellule Dev" : "Libellule",
   slug: "libellule",
-  version: IS_DEV ? "1.0.1" : "1.0.8",
+  version: IS_DEV ? "1.0.1" : "1.0.9",
   orientation: "portrait",
-  scheme: "libellule",
   icon: IS_DEV ? "./assets/dev-icon.png" : "./assets/ios/logo@3x.png",
   userInterfaceStyle: "automatic",
   owner: "libellule",
@@ -31,7 +30,7 @@ export default {
     entitlements: {
       "aps-environment": "production",
     },
-    buildNumber: "1.15",
+    buildNumber: "1.16",
   },
   android: {
     adaptiveIcon: {
@@ -63,7 +62,11 @@ export default {
       {
         ios: {
           useFrameworks: "static",
+          newArchEnabled: true
         },
+        android: {
+          newArchEnabled: true
+        }
       },
     ],
     [
