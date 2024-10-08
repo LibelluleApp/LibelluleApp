@@ -153,10 +153,11 @@ const Semaine = forwardRef((props, ref) => {
         events={timetable}
         isLoading={!timetable}
         scrollToNow
+        scrollByDay={false}
         initialDate={INITIAL_DATE}
         initialLocales={initialesLocale}
         locale={"fr"}
-        isShowHalfLine={false}
+        isShowHalfLine={true}
         initialTimeIntervalHeight={height}
         onPressEvent={(event) => {
             const eventWithSerializedDate = {
