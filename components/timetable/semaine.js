@@ -132,6 +132,14 @@ const Semaine = forwardRef((props, ref) => {
       Dimensions.get("screen").height / 17.7 +
       (Platform.OS === "android" ? 1 : 0);
 
+  const initialesLocale = {
+      fr: {
+       weekDayShort: 'Dim._Lun._Mar._Mer._Jeu._Ven._Sam.'.split('_'),
+          meridiem: { ante: "AM", post: "PM" }
+        },
+
+  }
+
   return (
     <View style={styles.container}>
       <CalendarContainer
@@ -147,6 +155,8 @@ const Semaine = forwardRef((props, ref) => {
         isLoading={!timetable}
         scrollToNow
         initialDate={INITIAL_DATE}
+        initialLocales={initialesLocale}
+        locale={"fr"}
         isShowHalfLine={false}
         initialTimeIntervalHeight={height}
         theme={{
