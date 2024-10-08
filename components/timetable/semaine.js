@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, {useContext, useEffect, useState, useRef, forwardRef, useImperativeHandle} from "react";
 import {
   View,
   StyleSheet,
   ActivityIndicator,
   Text,
-  Dimensions,
-  Platform,
+  Dimensions, Platform,
 } from "react-native";
 import {
   CalendarBody,
@@ -14,7 +13,6 @@ import {
 } from "@howljs/calendar-kit";
 import { ThemeContext } from "../../utils/themeContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import fetchTimetable from "../../api/Timetable/timetable";
 
 const getTimetable = async () => {
@@ -27,13 +25,6 @@ const getTimetable = async () => {
   }
 };
 
-const formatProfessorName = (professor) => {
-  const parts = professor?.split(" ");
-  if (parts.length < 2) return professor;
-  const initial = parts[1][0];
-  const nom = parts[0];
-  return `${initial}. ${nom}`;
-};
 
 const INITIAL_DATE = new Date(
   new Date().getFullYear(),
@@ -41,52 +32,31 @@ const INITIAL_DATE = new Date(
   new Date().getDate()
 ).toISOString();
 
-const Semaine = () => {
-  const { colors } = useContext(ThemeContext);
-  const calendarRef = useRef(null);
-  const isFocused = useIsFocused();
-  const [timetable, setTimetable] = useState(null);
-  const [colorAlternant, setColorAlternant] = useState(colors.grey);
-  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
+const Semaine = forwardRef((props, ref) => {
+    const { colors } = useContext(ThemeContext);
+    const calendarRef = useRef(null);
+    const isFocused = useIsFocused();
+    const [timetable, setTimetable] = useState([]);
 
-  const getColorAlternant = async () => {
-    try {
-      let storedColor = await AsyncStorage.getItem("color_alternant");
-      if (storedColor) {
-        storedColor = storedColor.replace(/['"]+/g, "");
-        setColorAlternant(storedColor);
-      } else {
-        setColorAlternant(colors.grey);
-      }
-    } catch (error) {
-      console.error("Failed to fetch color from storage:", error);
-    }
-  };
+    useEffect(() => {
+        if (isFocused) {
+            getTimetable().then(data => setTimetable(data));
+        }
+    }, [isFocused]);
 
-  const getColorTimetable = async () => {
-    try {
-      let storedColor = await AsyncStorage.getItem("color_timetable");
-      if (storedColor) {
-        storedColor = storedColor?.replace(/['"]+/g, "");
-        setColorTimetable(storedColor);
-      }
-      if (storedColor === null) {
-        setColorTimetable(colors.blue_variable);
-      }
-    } catch (error) {
-      console.error("Failed to fetch color from storage:", error);
-    }
-  };
+    // Define the function to go to today's date
+    const localHandleGoToToday = () => {
+        calendarRef.current?.goToDate({
+            date: INITIAL_DATE, // Assurez-vous que INITIAL_DATE est défini
+            animatedDate: true,
+            animatedHour: true,
+        });
+    };
 
-  useEffect(() => {
-    if (isFocused) {
-      getTimetable().then((response) => {
-        setTimetable(response);
-      });
-      getColorAlternant();
-      getColorTimetable();
-    }
-  }, [isFocused]);
+    // Allow the parent to call localHandleGoToToday via ref
+    useImperativeHandle(ref, () => ({
+        goToToday: localHandleGoToToday,
+    }));
 
   const styles = StyleSheet.create({
     container: {
@@ -109,7 +79,8 @@ const Semaine = () => {
       alignItems: "start",
     },
     eventBack: {
-      paddingVertical: 1,
+      paddingVertical: 2,
+        paddingHorizontal: 2
     },
     eventContainer: {
       height: "100%",
@@ -157,13 +128,15 @@ const Semaine = () => {
       </View>
     );
   }
+  const height =
+      Dimensions.get("screen").height / 17.7 +
+      (Platform.OS === "android" ? 1 : 0);
 
   return (
     <View style={styles.container}>
       <CalendarContainer
         viewMode={"week"}
         minDate={"2024-09-02"}
-        timeZone="Europe/Paris"
         showWeekNumber={true}
         ref={calendarRef}
         numberOfDays={5}
@@ -171,8 +144,11 @@ const Semaine = () => {
         end={18.5 * 60}
         hideWeekDays={[6, 7]}
         events={timetable}
+        isLoading={!timetable}
+        scrollToNow
         initialDate={INITIAL_DATE}
         isShowHalfLine={false}
+        initialTimeIntervalHeight={height}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
@@ -222,6 +198,9 @@ const Semaine = () => {
           weekNumberContainer: {
             backgroundColor: colors.blue100,
           },
+          headerContainer: {
+            borderBottomWidth: 0
+          }
         }}
       >
         <CalendarHeader />
@@ -257,6 +236,6 @@ const Semaine = () => {
       </CalendarContainer>
     </View>
   );
-};
+});
 
 export default Semaine;

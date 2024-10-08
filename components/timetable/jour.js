@@ -38,59 +38,36 @@ const formatProfessorName = (professor) => {
   return `${initial}. ${nom}`;
 };
 
-const INITIAL_DATE = new Date(
-  new Date().getFullYear(),
-  new Date().getMonth(),
-  new Date().getDate()
-).toISOString();
+
 
 const Jour = () => {
   const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
   const calendarRef = useRef(null);
   const isFocused = useIsFocused();
-  const [timetable, setTimetable] = useState(null);
-  const [colorAlternant, setColorAlternant] = useState(colors.grey);
-  const [colorTimetable, setColorTimetable] = useState(colors.blue_variable);
-  const [viewMode, setViewMode] = useState("day");
+  const [timetable, setTimetable] = useState([]);
 
-  const getColorAlternant = async () => {
-    try {
-      let storedColor = await AsyncStorage.getItem("color_alternant");
-      if (storedColor) {
-        storedColor = storedColor.replace(/['"]+/g, "");
-        setColorAlternant(storedColor);
-      } else {
-        setColorAlternant(colors.grey);
-      }
-    } catch (error) {
-      console.error("Failed to fetch color from storage:", error);
-    }
-  };
+  const MIN_DATE = new Date(
+      new Date().getFullYear() - 2,
+      new Date().getMonth(),
+      new Date().getDate()
+  ).toISOString();
 
-  const getColorTimetable = async () => {
-    try {
-      let storedColor = await AsyncStorage.getItem("color_timetable");
-      if (storedColor) {
-        storedColor = storedColor?.replace(/['"]+/g, "");
-        setColorTimetable(storedColor);
-      }
-      if (storedColor === null) {
-        setColorTimetable(colors.blue_variable);
-      }
-    } catch (error) {
-      console.error("Failed to fetch color from storage:", error);
-    }
-  };
+  const MAX_DATE = new Date(
+      new Date().getFullYear() + 2,
+      new Date().getMonth(),
+      new Date().getDate()
+  ).toISOString();
+
+  const INITIAL_DATE = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate()
+  ).toISOString();
 
   useEffect(() => {
     if (isFocused) {
-      getTimetable().then((response) => {
-        setTimetable(response);
-
-      });
-      getColorAlternant();
-      getColorTimetable();
+      getTimetable().then(data => setTimetable(data));
     }
   }, [isFocused]);
 
@@ -107,6 +84,7 @@ const Jour = () => {
     },
     eventBack: {
       paddingVertical: 3,
+      paddingHorizontal: 3
     },
     eventBottom: {
       flexDirection: "row",
@@ -199,9 +177,9 @@ const Jour = () => {
   return (
     <View style={styles.container}>
       <CalendarContainer
-        viewMode={"day"}
-        minDate={"2024-09-02"}
-        timeZone="Europe/Paris"
+          initialDate={INITIAL_DATE}
+        minDate={MIN_DATE}
+        maxDate={MAX_DATE}
         showWeekNumber={true}
         ref={calendarRef}
         numberOfDays={1}
@@ -209,8 +187,10 @@ const Jour = () => {
         end={18.5 * 60}
         hideWeekDays={[6, 7]}
         events={timetable}
-        initialDate={INITIAL_DATE}
+        useHaptic={true}
+        scrollToNow={true}
         isShowHalfLine={false}
+        initialTimeIntervalHeight={height}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
@@ -252,6 +232,9 @@ const Jour = () => {
             fontSize: 12,
             color: colors.grey,
           },
+          headerContainer: {
+            borderBottomWidth: 0
+          }
         }}
       >
         <CalendarHeader renderHeaderItem={(props) => <Header {...props} />} />

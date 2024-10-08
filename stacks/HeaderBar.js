@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import * as DropdownMenu from 'zeego/dropdown-menu';
 import { ThemeContext } from "../utils/themeContext";
 import { useNavigation } from "@react-navigation/native";
 import { Bell, SettingsWheel } from "../assets/icons/Icons";

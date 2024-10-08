@@ -62,11 +62,11 @@ function Timetable() {
     setSelectedView(value); // Met à jour la vue sélectionnée
   };
 
-  const handleScrollToDate = () => {
-    if (scrollToDateFunc) {
-      scrollToDateFunc(); // Appelle la fonction scrollToDate dans l'enfant
-    } else {
-      console.log("La fonction scrollToDate n'est pas définie");
+  const semaineRef = useRef(null); // Create a ref for the Semaine component
+
+  const handleGoToToday = () => {
+    if (semaineRef.current) {
+      semaineRef.current.goToToday(); // Call the goToToday method in Semaine
     }
   };
 
@@ -74,12 +74,12 @@ function Timetable() {
     <View style={styles.modalBackground}>
       <View style={styles.modalDropdown}>
         <Dropdown options={options} onSelect={handleSelect} />
-        <TouchableOpacity onPress={handleScrollToDate}>
+        <TouchableOpacity onPress={handleGoToToday}>
           <ResetList stroke={colors.blue800} />
         </TouchableOpacity>
       </View>
       {selectedView === "day" && <Jour />}
-      {selectedView === "week" && <Semaine />}
+      {selectedView === "week" && <Semaine ref={semaineRef}/>}
     </View>
   );
 }
