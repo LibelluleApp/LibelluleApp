@@ -7,6 +7,7 @@ import {
   Platform,
   UIManager,
   StyleSheet,
+  Pressable,
 } from "react-native";
 import {
   MapPin,
@@ -22,7 +23,7 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ThemeContext } from "./../../../utils/themeContext";
-import {getColorTimetable as getColorsTimetable} from "../../../utils/storage";
+import { getColorTimetable as getColorsTimetable } from "../../../utils/storage";
 
 import Animated, {
   useSharedValue,
@@ -69,7 +70,6 @@ function ItemCourse({ data, color }) {
       console.error("Failed to fetch color from storage:", error);
     }
   };
-
 
   const styles = StyleSheet.create({
     container: {
@@ -241,79 +241,89 @@ function ItemCourse({ data, color }) {
   }
 
   return (
-    <TouchableOpacity onPress={toggleCard}>
-      <Animated.View style={[styles.container, animatedGapStyle]}>
+    <Pressable onPress={toggleCard}>
+      <Animated.View
+        style={[
+          styles.container,
+          data.title !== "Alternance" ? animatedGapStyle : null,
+        ]}
+      >
         <View style={styles.beforeElement} />
         <View style={styles.subjectContainer}>
           <Text style={styles.subjectText}>
             {data.title || "Matière indisponible"}
           </Text>
-          <Animated.View style={animatedRotationStyle}>
-            {isExpanded ? (
-              <Minus
-                stroke={colors.blue700}
-                strokeWidth={1.75}
-                width={15}
-                height={15}
-              />
-            ) : (
-              <Plus
-                stroke={colors.blue700}
-                strokeWidth={1.75}
-                width={15}
-                height={15}
-              />
-            )}
-          </Animated.View>
+
+          {/* Animation seulement si c'est "Alternance" */}
+          {data.title !== "Alternance" && (
+            <Animated.View style={animatedRotationStyle}>
+              {isExpanded ? (
+                <Minus
+                  stroke={colors.blue700}
+                  strokeWidth={1.75}
+                  width={15}
+                  height={15}
+                />
+              ) : (
+                <Plus
+                  stroke={colors.blue700}
+                  strokeWidth={1.75}
+                  width={15}
+                  height={15}
+                />
+              )}
+            </Animated.View>
+          )}
         </View>
 
-        {/* Description container avec animation de hauteur et opacité */}
-        <Animated.View style={[styles.descriptionContainer, animatedStyle]}>
-          <Animated.View
-            style={[
-              styles.descriptionContent,
-              { width: "35%" },
-              animatedOpacityStyle,
-            ]}
-          >
-            <MapPin
-              stroke={colors.blue800}
-              width={14}
-              height={14}
-              strokeWidth={1.75}
-            />
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={styles.descriptionText}
+        {/* Contenu animé seulement si "Alternance" */}
+        {data.title !== "Alternance" && (
+          <Animated.View style={[styles.descriptionContainer, animatedStyle]}>
+            <Animated.View
+              style={[
+                styles.descriptionContent,
+                { width: "35%" },
+                animatedOpacityStyle,
+              ]}
             >
-              {data.lieu || "N/C"}
-            </Text>
-          </Animated.View>
-          <Animated.View
-            style={[
-              styles.descriptionContent,
-              { width: "55%" },
-              animatedOpacityStyle,
-            ]}
-          >
-            <UserRound
-              stroke={colors.blue800}
-              width={14}
-              height={14}
-              strokeWidth={1.75}
-            />
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={styles.descriptionText}
+              <MapPin
+                stroke={colors.blue800}
+                width={14}
+                height={14}
+                strokeWidth={1.75}
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={styles.descriptionText}
+              >
+                {data.lieu || "N/C"}
+              </Text>
+            </Animated.View>
+            <Animated.View
+              style={[
+                styles.descriptionContent,
+                { width: "55%" },
+                animatedOpacityStyle,
+              ]}
             >
-              {formatProfessorName(data.description) || "N/C"}
-            </Text>
+              <UserRound
+                stroke={colors.blue800}
+                width={14}
+                height={14}
+                strokeWidth={1.75}
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={styles.descriptionText}
+              >
+                {formatProfessorName(data.description) || "N/C"}
+              </Text>
+            </Animated.View>
           </Animated.View>
-        </Animated.View>
+        )}
 
-        {/* Affichage de l'heure */}
         <View style={styles.hourContainer}>
           <View style={styles.descriptionContent}>
             <Clock
@@ -331,14 +341,22 @@ function ItemCourse({ data, color }) {
               <Text style={{ fontWeight: "bold" }}>{data.fin || "--:--"}</Text>
             </Text>
           </View>
-          <Animated.View style={animatedOpacityStyle}>
+
+          {/* Affiche l'animation uniquement pour "Alternance" */}
+          {data.title !== "Alternance" ? (
+            <Animated.View style={animatedOpacityStyle}>
+              <Text style={styles.descriptionText}>
+                Dans <Text style={{ fontWeight: "bold" }}>{remainingTime}</Text>
+              </Text>
+            </Animated.View>
+          ) : (
             <Text style={styles.descriptionText}>
               Dans <Text style={{ fontWeight: "bold" }}>{remainingTime}</Text>
             </Text>
-          </Animated.View>
+          )}
         </View>
       </Animated.View>
-    </TouchableOpacity>
+    </Pressable>
   );
 }
 
