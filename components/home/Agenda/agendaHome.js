@@ -22,7 +22,7 @@ function AgendaHome() {
   // Vérifie si aujourd'hui est vendredi (5) ou samedi (6)
   if (dayOfWeek === 5 || dayOfWeek === 6) {
     // Si c'est le week-end, on prend "la prochaine fois"
-    tomorrowDate = moment(todayDate).add(dayOfWeek === 0 ? 3 : 2, "days"); // Dimanche, on prend Lundi; Samedi, on prend Lundi
+    tomorrowDate = moment(todayDate).add(8 - dayOfWeek, "days"); // Calcule le lundi suivant
     message = "Pour la prochaine fois";
   } else {
     // Si c'est un jour de semaine, on prend demain
