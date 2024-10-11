@@ -33,7 +33,7 @@ import { ThemeContext } from "./../utils/themeContext";
 import messaging from "@react-native-firebase/messaging";
 import saveNotifications from "../api/Notifications/saveNotifications";
 import fetchWeather from "./../api/Weather/fetchWeather";
-import {getUserData} from "../utils/storage";
+import { getUserData } from "../utils/storage";
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -86,6 +86,7 @@ function Home() {
     leftContainer: {
       flexDirection: "row",
       gap: 12,
+      width: "60%",
     },
     image: {
       width: 50,
@@ -106,6 +107,10 @@ function Home() {
       fontSize: 13,
       color: colors.blue700,
       textAlign: "center",
+    },
+    welcomeContainer: {
+      flexDirection: "column",
+      width: "100%",
     },
   });
 
@@ -374,7 +379,6 @@ function Home() {
       setUser(data);
       setIsLoading(false);
       await fetchWeatherData();
-
     };
 
     fetchData();
@@ -461,21 +465,19 @@ function Home() {
             </View>
           </View>
           <View style={styles.rightContainer}>
-            <View style={styles.dateContainer}>
-              <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Emploi du temps")}
-                >
-                  <Text
-                    style={{
-                      fontFamily: "Ubuntu_500Medium",
-                      color: colors.blue700,
-                      fontSize: 15,
-                    }}
-                  >{`${formattedDate}`}</Text>
-                </TouchableOpacity>
-              </ShimmerPlaceHolder>
-            </View>
+            <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Emploi du temps")}
+              >
+                <Text
+                  style={{
+                    fontFamily: "Ubuntu_500Medium",
+                    color: colors.blue700,
+                    fontSize: 15,
+                  }}
+                >{`${formattedDate}`}</Text>
+              </TouchableOpacity>
+            </ShimmerPlaceHolder>
           </View>
         </View>
 
