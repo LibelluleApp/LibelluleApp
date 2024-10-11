@@ -1,9 +1,10 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import ApiManager from "../ApiManager";
+import {getUserData} from "../../utils/storage";
 
 async function checkAgenda(agenda_id) {
   try {
-    const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
+    const user_data = getUserData();
 
     if (!user_data.utilisateur_id) {
       throw new Error("L'ID' n'est pas défini dans AsyncStorage.");
@@ -24,7 +25,7 @@ async function checkAgenda(agenda_id) {
 }
 async function uncheckAgenda(agenda_id) {
   try {
-    const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
+    const user_data = getUserData();
 
     if (!user_data.utilisateur_id) {
       throw new Error("L'ID' n'est pas défini dans AsyncStorage.");
@@ -46,7 +47,7 @@ async function uncheckAgenda(agenda_id) {
 
 async function fetchCheckedAgenda(agenda_id) {
   try {
-    const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
+    const user_data = getUserData();
 
     if (!user_data.utilisateur_id) {
       throw new Error("L'ID' n'est pas défini dans AsyncStorage.");

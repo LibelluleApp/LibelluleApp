@@ -14,7 +14,6 @@ import {
 } from "@howljs/calendar-kit";
 import { ThemeContext } from "../../utils/themeContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import fetchTimetable from "../../api/Timetable/timetable";
 import { UserRound, MapPin } from "../../assets/icons/Icons";
 import moment from "moment";

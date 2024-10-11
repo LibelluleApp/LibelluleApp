@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
-  ScrollView,
 } from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
 import { Dropdown } from "react-native-element-dropdown";
@@ -57,7 +56,6 @@ const TransferRole = () => {
     },
     dropdown: {
       borderWidth: 1,
-      borderColor: colors.grey,
       borderRadius: 10,
       padding: 15,
       marginBottom: 10,

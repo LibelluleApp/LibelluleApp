@@ -16,7 +16,6 @@ import {
   ResetList,
   TouchableOpacity,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import SwiperFlatList from "react-native-swiper-flatlist";
 import PaginationHeader from "../components/agenda/pagination";
 import moment from "moment-timezone";
@@ -29,29 +28,10 @@ import { ThemeContext } from "./../utils/themeContext";
 // Import explicite des composants à pré-charger
 import EvalHome from "../components/agenda/items/Eval";
 import TaskHome from "../components/agenda/items/Task";
-import { set } from "date-fns";
+import {getIsFirstVisitAgenda, getUserData, setIsFirstVisitAgenda} from "../utils/storage";
 
 // Import des fonctions pour le stockage et la récupération des données du cache
-const storeData = async (key, value) => {
-  try {
-    await AsyncStorage.setItem(key, JSON.stringify(value));
-  } catch (error) {
-    console.error("Erreur lors du stockage des données", error);
-  }
-};
 
-const retrieveData = async (key) => {
-  try {
-    const value = await AsyncStorage.getItem(key);
-    if (value !== null) {
-      return JSON.parse(value);
-    }
-    return null;
-  } catch (error) {
-    console.error("Erreur lors de la récupération des données", error);
-    return null;
-  }
-};
 
 const preloadComponent = (component) => {
   return new Promise((resolve) => {
@@ -60,9 +40,6 @@ const preloadComponent = (component) => {
 };
 
 const Agenda = () => {
-  const resetFirstVisit = async () => {
-    await AsyncStorage.removeItem("isFirstVisitAgenda");
-  };
 
   const { colors } = useContext(ThemeContext);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
@@ -118,11 +95,11 @@ const Agenda = () => {
       alignSelf: "center",
     },
   });
-  const checkFirstVisit = async () => {
+  const checkFirstVisit = () => {
     try {
-      const value = await AsyncStorage.getItem("isFirstVisitAgenda");
-      if (!value) {
-        await AsyncStorage.setItem("isFirstVisitAgenda", "true");
+      const value = getIsFirstVisitAgenda();
+      if (value == null) {
+        setIsFirstVisitAgenda(true)
         setIsFirstVisit(true);
       } else {
         setIsFirstVisit(false);
@@ -131,9 +108,12 @@ const Agenda = () => {
       console.log("Error accessing AsyncStorage:", e);
     }
   };
-  if (isFocused) {
-    checkFirstVisit();
-  }
+  useEffect(() => {
+    if (isFocused) {
+      checkFirstVisit();
+    }
+  }, [isFocused]);
+
 
   useEffect(() => {
     if (isFirstVisit && isFocused) {
@@ -191,10 +171,10 @@ const Agenda = () => {
   const fetchData = async () => {
     try {
       const data = await fetchAgenda();
-      initializeAgenda(data);
-      const userDataJSON = await AsyncStorage.getItem("user_data");
+      await initializeAgenda(data);
+      const userDataJSON = getUserData();
       if (userDataJSON !== null) {
-        const userData = JSON.parse(userDataJSON);
+        const userData = userDataJSON;
         setUser_data(userData);
       }
       setIsLoading(false);
@@ -210,12 +190,7 @@ const Agenda = () => {
     }
   }, [isFocused]);
 
-  useEffect(() => {
-    fetchData();
 
-    preloadComponent(() => import("../components/agenda/items/Eval"));
-    preloadComponent(() => import("../components/agenda/items/Task"));
-  }, []);
 
   const initializeAgenda = async (data) => {
     const startDate = moment("2024-07-10");

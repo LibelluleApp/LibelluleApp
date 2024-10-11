@@ -4,25 +4,30 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Jour from "../components/timetable/jour";
 import Semaine from "../components/timetable/semaine";
 import { ThemeContext } from "../utils/themeContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import Dropdown from "../components/dropdown/Dropdown";
 import { ResetList } from "../assets/icons/Icons";
+import { getWeekDefault as getWeek } from "../utils/storage"; // MMKV
 
 const Tab = createMaterialTopTabNavigator();
 
+const fetchWeekDefault = () => {
+  try {
+    const value = getWeek(); // Pas de besoin d'async ici car MMKV est synchrone
+    return value;
+  } catch (error) {
+    console.error("Impossible de récupérer la vue semaine par défaut", error);
+    return false;
+  }
+};
+
 function Timetable() {
   const { colors } = useContext(ThemeContext);
-  const [isWeekDefault, setIsWeekDefault] = useState(false);
   const [selectedView, setSelectedView] = useState("day"); // Par défaut à "day"
+  const [options, setOptions] = useState([]);
   const isFocused = useIsFocused();
   const semaineRef = useRef(null);
   const jourRef = useRef(null);
-
-  const options = [
-    { label: "Vue journée", value: "day" },
-    { label: "Vue semaine", value: "week" },
-  ];
 
   const styles = StyleSheet.create({
     modalBackground: {
@@ -41,50 +46,48 @@ function Timetable() {
   });
 
   useEffect(() => {
-    const getWeekDefault = async () => {
-      try {
-        const value = await AsyncStorage.getItem("week_default");
-        return value ? JSON.parse(value) : false;
-      } catch (error) {
-        console.error(
-          "Impossible de récupérer la vue semaine par défaut",
-          error
-        );
-        return false;
+    const updateWeekDefault = () => {
+      const isWeekDefault = fetchWeekDefault();
+      if (isWeekDefault) {
+        setSelectedView("week");
+      } else {
+        setSelectedView("day");
       }
+      setOptions([
+        { label: "Vue journée", value: "day" },
+        { label: "Vue semaine", value: "week" },
+      ]);
     };
 
     if (isFocused) {
-      getWeekDefault().then(setIsWeekDefault);
+      updateWeekDefault();
     }
   }, [isFocused]);
 
   const handleSelect = (value) => {
-    setSelectedView(value); // Met à jour la vue sélectionnée
+    setSelectedView(value);
   };
-
-
 
   const handleGoToToday = () => {
     if (semaineRef.current && selectedView === "week") {
       semaineRef.current.goToToday();
     }
-    if(jourRef.current && selectedView === "day"){
+    if (jourRef.current && selectedView === "day") {
       jourRef.current.goToToday();
     }
   };
 
   return (
-    <View style={styles.modalBackground}>
-      <View style={styles.modalDropdown}>
-        <Dropdown options={options} onSelect={handleSelect} />
-        <TouchableOpacity onPress={handleGoToToday}>
-          <ResetList stroke={colors.blue800} />
-        </TouchableOpacity>
+      <View style={styles.modalBackground}>
+        <View style={styles.modalDropdown}>
+          <Dropdown options={options} onSelect={handleSelect} value={selectedView} />
+          <TouchableOpacity onPress={handleGoToToday}>
+            <ResetList stroke={colors.blue800} />
+          </TouchableOpacity>
+        </View>
+        {selectedView === "day" && <Jour ref={jourRef} />}
+        {selectedView === "week" && <Semaine ref={semaineRef} />}
       </View>
-      {selectedView === "day" && <Jour ref={jourRef}/>}
-      {selectedView === "week" && <Semaine ref={semaineRef}/>}
-    </View>
   );
 }
 

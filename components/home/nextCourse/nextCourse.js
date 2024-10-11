@@ -22,7 +22,7 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ThemeContext } from "./../../../utils/themeContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {getColorTimetable as getColorsTimetable} from "../../../utils/storage";
 
 import Animated, {
   useSharedValue,
@@ -57,9 +57,10 @@ function ItemCourse({ data, color }) {
   const { colors } = useContext(ThemeContext);
   const [remainingTime, setRemainingTime] = useState("");
   const [colorTimetable, setColorTimetable] = useState(colors.blue200);
-  const getColorTimetable = async () => {
+  const getColorTimetable = () => {
     try {
-      let storedColor = await AsyncStorage.getItem("color_timetable");
+      let storedColor = getColorsTimetable();
+
       if (storedColor) {
         storedColor = storedColor.replace(/['"]+/g, "");
         setColorTimetable(storedColor);
@@ -68,7 +69,7 @@ function ItemCourse({ data, color }) {
       console.error("Failed to fetch color from storage:", error);
     }
   };
-  const navigator = useNavigation();
+
 
   const styles = StyleSheet.create({
     container: {

@@ -26,7 +26,6 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import NextCourse from "../components/home/nextCourse/nextCourse";
 import AgendaHome from "../components/home/Agenda/agendaHome";
 import ParcourirHome from "../components/home/Parcourir";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
@@ -34,13 +33,14 @@ import { ThemeContext } from "./../utils/themeContext";
 import messaging from "@react-native-firebase/messaging";
 import saveNotifications from "../api/Notifications/saveNotifications";
 import fetchWeather from "./../api/Weather/fetchWeather";
+import {getUserData} from "../utils/storage";
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
-const getData = async () => {
+const getData = () => {
   try {
-    const value = await AsyncStorage.getItem("user_data");
-    return value ? JSON.parse(value) : null;
+    const value = getUserData();
+    return value;
   } catch (error) {
     console.error("Error fetching user data:", error);
     return null;
@@ -370,11 +370,11 @@ function Home() {
             console.error("Failed to get messaging token:", error)
           );
       }
-
-      await fetchWeatherData();
-      const data = await getData();
+      const data = getData();
       setUser(data);
       setIsLoading(false);
+      await fetchWeatherData();
+
     };
 
     fetchData();
