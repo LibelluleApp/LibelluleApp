@@ -9,9 +9,11 @@ import Animated, {
 import { ThemeContext } from "../../utils/themeContext";
 import { ChevronDown } from "../../assets/icons/Icons";
 
-const Dropdown = ({ options, onSelect }) => {
+const Dropdown = ({ options, onSelect, value }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLabel, setSelectedLabel] = useState(options[0]?.label || "");
+  const [selectedLabel, setSelectedLabel] = useState(
+      options.find((option) => option.value === value)?.label || options[0]?.label
+  );
   const { colors } = useContext(ThemeContext);
 
   const dropdownHeight = useSharedValue(0); // Pour animer la hauteur
@@ -35,6 +37,14 @@ const Dropdown = ({ options, onSelect }) => {
       easing: Easing.inOut(Easing.circle),
     });
   }, [isOpen]);
+
+  useEffect(() => {
+    // Met à jour le label sélectionné lorsque la prop `value` change
+    const selectedOption = options.find((option) => option.value === value);
+    if (selectedOption) {
+      setSelectedLabel(selectedOption.label);
+    }
+  }, [value, options]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -112,38 +122,38 @@ const Dropdown = ({ options, onSelect }) => {
   });
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={toggleDropdown} style={styles.button}>
-        <Text style={styles.buttonText}>{selectedLabel}</Text>
-        <Animated.View style={chevronStyle}>
-          <ChevronDown
-            stroke={colors.blue700}
-            width={14}
-            height={14}
-            strokeWidth={1.75}
-          />
-        </Animated.View>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={toggleDropdown} style={styles.button}>
+          <Text style={styles.buttonText}>{selectedLabel}</Text>
+          <Animated.View style={chevronStyle}>
+            <ChevronDown
+                stroke={colors.blue700}
+                width={14}
+                height={14}
+                strokeWidth={1.75}
+            />
+          </Animated.View>
+        </TouchableOpacity>
 
-      <Animated.View style={[styles.dropdown, animatedStyle]}>
-        {options.map((option) => (
-          <TouchableOpacity
-            key={option.value}
-            style={styles.dropdownItem}
-            onPress={() => handleSelect(option.label, option.value)}
-          >
-            <Text
-              style={[
-                styles.dropdownText,
-                selectedLabel === option.label && styles.selectedText,
-              ]}
-            >
-              {option.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </Animated.View>
-    </View>
+        <Animated.View style={[styles.dropdown, animatedStyle]}>
+          {options.map((option) => (
+              <TouchableOpacity
+                  key={option.value}
+                  style={styles.dropdownItem}
+                  onPress={() => handleSelect(option.label, option.value)}
+              >
+                <Text
+                    style={[
+                      styles.dropdownText,
+                      selectedLabel === option.label && styles.selectedText,
+                    ]}
+                >
+                  {option.label}
+                </Text>
+              </TouchableOpacity>
+          ))}
+        </Animated.View>
+      </View>
   );
 };
 

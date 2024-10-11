@@ -10,7 +10,6 @@ import {
   Alert,
 } from "react-native";
 import { ThemeContext } from "./../../../utils/themeContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -21,16 +20,13 @@ import ColorPicker, {
   Swatches,
   PreviewText,
 } from "reanimated-color-picker";
-
-const fetchStorageItem = async (key, defaultValue) => {
-  try {
-    const value = await AsyncStorage.getItem(key);
-    return value ? JSON.parse(value) : defaultValue;
-  } catch (error) {
-    console.error(`Impossible de récupérer ${key}`, error);
-    return defaultValue;
-  }
-};
+import {
+  getAlternant,
+  getColorAlternant,
+  getColorTimetable,
+  getWeekDefault,
+  setWeekDefault
+} from "../../../utils/storage";
 
 const ColorModal = ({
   visible,
@@ -127,13 +123,13 @@ function TimetableSettings() {
   const [isAlternant, setIsAlternant] = useState(false);
 
   useEffect(() => {
-    const initializeSettings = async () => {
-      const [weekDefault, colorAlt, colorTime, Alternant] = await Promise.all([
-        fetchStorageItem("week_default", false),
-        fetchStorageItem("color_alternant", "#9AA5B3"),
-        fetchStorageItem("color_timetable", colors.blue700),
-        fetchStorageItem("isAlternant", false),
-      ]);
+    const initializeSettings = () => {
+      const [weekDefault, colorAlt, colorTime, Alternant] = [
+        getWeekDefault(),
+        getColorAlternant(),
+        getColorTimetable(),
+        getAlternant(),
+      ];
       setIsWeekDefault(weekDefault);
       setColorAlternant(colorAlt);
       setIsAlternant(Alternant);
@@ -146,19 +142,13 @@ function TimetableSettings() {
     const weekDefault = !isWeekDefault;
     setIsWeekDefault(weekDefault);
     try {
-      await AsyncStorage.setItem("week_default", JSON.stringify(weekDefault));
+      console.log(weekDefault);
+      setWeekDefault(weekDefault);
     } catch (error) {
       console.error("Impossible de mettre la vue semaine par défaut", error);
     }
   };
 
-  const handleColorChange = async (key, color) => {
-    try {
-      await AsyncStorage.setItem(key, JSON.stringify(color));
-    } catch (error) {
-      console.error(`Impossible de mettre la couleur ${key}`, error);
-    }
-  };
 
   const openColorModal = (colorType) => {
     setCurrentColorType(colorType);
@@ -179,9 +169,9 @@ function TimetableSettings() {
 
   const handleSaveColor = () => {
     if (currentColorType === "alternant") {
-      handleColorChange("color_alternant", colorAlternant);
+      setColorAlternant(colorAlternant);
     } else if (currentColorType === "timetable") {
-      handleColorChange("color_timetable", colorTimetable);
+      setColorTimetable(colorTimetable);
     }
     closeColorModal();
   };

@@ -8,7 +8,6 @@ import {
   Alert,
 } from "react-native";
 import { Calendar, Student, LayoutList } from "../../../assets/icons/Icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Haptics from "expo-haptics";
 import fetchTask from "../../../api/Agenda/fetchTask";
 import deleteTask from "../../../api/Agenda/delete";
@@ -17,6 +16,7 @@ import moment from "moment";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../../utils/themeContext";
+import {getUserData} from "../../../utils/storage";
 
 const ViewTask = ({ route }) => {
   const { colors } = useContext(ThemeContext);
@@ -122,7 +122,7 @@ const ViewTask = ({ route }) => {
     try {
       setLoading(true);
       const response = await fetchTask(agenda_id);
-      setUserData(JSON.parse(await AsyncStorage.getItem("user_data")));
+      setUserData(getUserData());
       setTask(response[0]);
       setIsChecked(response[0].estFait);
     } catch (error) {

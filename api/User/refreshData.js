@@ -1,14 +1,14 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import ApiManager from "../ApiManager";
 import { jwtDecode } from "jwt-decode";
+import {getUserData, setUserData} from "../../utils/storage";
 
 const USER_DATA_KEY = "user_data";
 
 async function storeUserData(data) {
   try {
     const jsonValue = JSON.stringify(data);
-
-    await AsyncStorage.setItem(USER_DATA_KEY, jsonValue);
+    setUserData(jsonValue);
   } catch (error) {
     throw new Error("Could not save user data");
   }
@@ -16,9 +16,7 @@ async function storeUserData(data) {
 
 async function refreshData(token) {
   try {
-    console.log("100")
-    const user_data = await JSON.parse(AsyncStorage.getItem(USER_DATA_KEY));
-    console.log("99")
+    const user_data = getUserData();
 
     if (!user_data) {
       const data = jwtDecode(token);

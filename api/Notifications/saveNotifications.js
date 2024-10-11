@@ -1,9 +1,10 @@
 import ApiManager from "../ApiManager";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import {getUserData} from "../../utils/storage";
 
 async function saveNotifications(token) {
   try {
-    const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
+    const user_data = getUserData();
     if (!user_data.utilisateur_id) {
       throw new Error("L'utilisateur_id n'est pas défini dans AsyncStorage.");
     }

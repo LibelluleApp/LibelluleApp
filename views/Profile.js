@@ -25,10 +25,11 @@ import {
   Settings,
 } from "../assets/icons/Icons";
 import Constants from "expo-constants";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { useSession } from "../context/AuthContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "./../utils/themeContext";
+import {getAlternant, getUserData} from "../utils/storage";
 
 const isExpoGo = Constants.appOwnership === "expo";
 
@@ -44,15 +45,15 @@ if (!isExpoGo) {
 }
 async function getProfileData() {
   try {
-    const userData = JSON.parse(await AsyncStorage.getItem("user_data"));
+    const userData = getUserData();
     return userData;
   } catch (e) {
     console.error(e);
   }
 }
-async function getAlternant() {
+async function getIsAlternant() {
   try {
-    const isAlternant = await AsyncStorage.getItem("isAlternant");
+    const isAlternant = getAlternant();
     return isAlternant;
   } catch (e) {
     console.error(e);
@@ -206,7 +207,7 @@ function Profile() {
 
       setIsLoading(false);
     });
-    getAlternant().then((data) => {
+    getIsAlternant().then((data) => {
       setIsAlternant(data === "true");
     });
   }, []);
@@ -216,7 +217,7 @@ function Profile() {
       getProfileData().then((data) => {
         setUserData(data);
       });
-      getAlternant().then((data) => {
+      getIsAlternant().then((data) => {
         setIsAlternant(data === "true");
       });
     }

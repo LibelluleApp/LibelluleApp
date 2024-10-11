@@ -2,8 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import login from "../api/User/login";
 import {setupInterceptor} from "../api/ApiManager";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import refreshData from "../api/User/refreshData";
+import {getUserData} from "../utils/storage";
 
 // Créez le contexte
 const AuthContext = createContext();
@@ -59,7 +59,7 @@ export const SessionProvider = ({ children }) => {
 
   const checkToken = async () => {
     setLoading(true); // Commencer le chargement
-    const user_data = await AsyncStorage.getItem('user_data');
+    const user_data = getUserData();
 
     if (!user_data) {
       SecureStore.deleteItemAsync('secure_user_token')

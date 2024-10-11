@@ -4,25 +4,23 @@ import { useNavigation } from "@react-navigation/native";
 import { BookOpen, Student, Utensils, Link } from "../../assets/icons/Icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { ThemeContext } from "./../../utils/themeContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {getUserData} from "../../utils/storage";
 
 function ParcourirHome() {
   const { colors } = useContext(ThemeContext);
   const [user, setUser] = React.useState({});
 
   useEffect(() => {
-    const getData = async () => {
+    const getData = () => {
       try {
-        const value = await AsyncStorage.getItem("user_data");
-        return value ? JSON.parse(value) : null;
+        const value = getUserData();
+        setUser(value);
       } catch (error) {
         console.error("Error fetching user data:", error);
         return null;
       }
     };
-    getData().then((data) => {
-      setUser(data);
-    });
+  getData();
   }, []);
 
   const styles = StyleSheet.create({

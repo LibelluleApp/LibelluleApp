@@ -8,13 +8,12 @@ import {
   Switch,
 } from "react-native";
 import { ThemeContext } from "./../../utils/themeContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { Calendar, ChevronRight } from "./../../assets/icons/Icons";
+import {getAlternant, getUserData, setAlternant} from "../../utils/storage";
 
 function Settings() {
   const { isDarkMode, toggleTheme, colors } = React.useContext(ThemeContext);
-  const [isEnabled, setIsEnabled] = React.useState(false);
   const [isAlternant, setIsAlternant] = React.useState(false);
   const [userDatas, setUserDatas] = React.useState({});
 
@@ -79,37 +78,34 @@ function Settings() {
   });
 
   React.useEffect(() => {
-    const getData = async () => {
+    const getData = () => {
       try {
-        const value = await AsyncStorage.getItem("user_data");
-        return value ? JSON.parse(value) : {};
+        const value = getUserData();
+        setUserDatas(value);
       } catch (error) {
         console.error("Error fetching user data:", error);
         return {};
       }
     };
 
-    const getIsAlternant = async () => {
+    const getIsAlternant =  () => {
       try {
-        const value = await AsyncStorage.getItem("isAlternant");
-        setIsAlternant(value === "true");
+        const value = getAlternant();
+        setIsAlternant(value);
       } catch (error) {
         console.error("Error fetching alternant status:", error);
       }
     };
 
-    getData().then((data) => setUserDatas(data));
+    getData()
     getIsAlternant();
   }, []);
 
-  const handleAlternant = async () => {
+  const handleAlternant = () => {
     const newAlternantStatus = !isAlternant;
     setIsAlternant(newAlternantStatus);
     try {
-      await AsyncStorage.setItem(
-        "isAlternant",
-        JSON.stringify(newAlternantStatus)
-      );
+      setAlternant(newAlternantStatus);
     } catch (error) {
       console.error("Error setting alternant mode:", error);
     }
