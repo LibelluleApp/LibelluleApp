@@ -128,6 +128,8 @@ function Home() {
       "Ça dit quoi l'équipe ?",
       "Mentalité Kaizen, petit pas par petit pas 🏔️",
       "Chaque effort compte, continuez comme ça !",
+      "Prenez soin de vous la team 😊",
+      "Chaque erreur est une opportunité d'apprendre !",
     ];
 
     // Messages météorologiques drôles et courts
@@ -145,16 +147,16 @@ function Home() {
         weatherMessage = "Pas mal, mais pas parfait ! ☁️";
         break;
       case "Cloudy":
-        weatherMessage = "Il y a des nuages... comme mes pensées !";
+        weatherMessage = "Un peu nuageux aujourd'hui !";
         break;
       case "ScatteredThunderstorms":
       case "Thunderstorm":
-        weatherMessage = "Des éclairs ! Préparez les parapluies ! ⚡️";
+        weatherMessage = "Oulaaa temps orageux ! Faites attention⚡";
         break;
       case "HeavyRain":
       case "Rain":
       case "Showers":
-        weatherMessage = "Pluie, pluie, va-t'en ! ☔️";
+        weatherMessage = "Trop relou la pluie 🌧️";
         break;
       case "Drizzle":
         weatherMessage = "Juste une petite pluie, pas de panique ! 🌧️";
@@ -189,7 +191,7 @@ function Home() {
         weatherMessage = "Oula, c'est l'heure du chocolat chaud ! ☕️";
         break;
       default:
-        weatherMessage = "Passez une journée aussi incroyable que vous ! 🎉";
+        weatherMessage = "Passez une excellente journée ! 🎉";
         break;
     }
 

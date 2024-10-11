@@ -72,7 +72,7 @@ function Restauration() {
     button: {
       paddingHorizontal: 15,
       paddingVertical: 10,
-      borderRadius: 10,
+      borderRadius: 50,
       backgroundColor: colors.background,
       borderColor: colors.blue700,
       borderWidth: 0.5,

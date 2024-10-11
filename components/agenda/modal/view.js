@@ -83,23 +83,13 @@ const ViewTask = ({ route }) => {
       textAlign: "center",
     },
     taskCTA: {
-      flexDirection: "row",
+      flexDirection: "column",
       width: "95%",
       marginHorizontal: "auto",
       justifyContent: "center",
-      gap: 15,
-    },
-    taskCTADelete: {
       alignItems: "center",
-      justifyContent: "center",
-      flexDirection: "row",
-      gap: 10,
-      backgroundColor: colors.red700,
-      paddingHorizontal: 20,
-      paddingVertical: 10,
-      borderRadius: 10,
-      width: "45%",
     },
+    taskCTADelete: { padding: 10 },
     taskCTAEdit: {
       backgroundColor: colors.blue700,
       paddingHorizontal: 20,
@@ -108,8 +98,7 @@ const ViewTask = ({ route }) => {
       alignItems: "center",
       flexDirection: "row",
       justifyContent: "center",
-      gap: 10,
-      width: "55%",
+      width: "100%",
     },
     taskCTAText: {
       fontFamily: "Ubuntu_400Regular",
@@ -117,7 +106,7 @@ const ViewTask = ({ route }) => {
       color: colors.white,
     },
     taskCTATextDelete: {
-      color: colors.white,
+      color: colors.red600,
     },
   });
 
@@ -284,6 +273,9 @@ const ViewTask = ({ route }) => {
       </Text> */}
       {task.utilisateur_id == userData.utilisateur_id && (
         <View style={styles.taskCTA}>
+          <TouchableOpacity style={styles.taskCTAEdit} onPress={handlePress}>
+            <Text style={styles.taskCTAText}>Modifier</Text>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.taskCTADelete}
             onPress={handleConfirmDelete}
@@ -291,9 +283,6 @@ const ViewTask = ({ route }) => {
             <Text style={[styles.taskCTAText, styles.taskCTATextDelete]}>
               Supprimer
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.taskCTAEdit} onPress={handlePress}>
-            <Text style={styles.taskCTAText}>Modifier</Text>
           </TouchableOpacity>
         </View>
       )}
