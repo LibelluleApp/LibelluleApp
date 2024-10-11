@@ -67,6 +67,7 @@
     "react-native-ios-utilities": "^4.4.5",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-keyboard-controller": "^1.11.7",
+    "react-native-mmkv": "^3.0.2",
     "react-native-modal-datetime-picker": "^17.1.0",
     "react-native-pager-view": "^6.4.1",
     "react-native-password-validate-checklist": "github:Raphitpt/react-native-password-validate-checklist",
