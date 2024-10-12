@@ -47,7 +47,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies with npm
-        run: npm ci
+        run: yarn install
 
       - name: Cache Expo CLI
         uses: actions/cache@v3
