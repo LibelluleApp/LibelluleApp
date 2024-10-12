@@ -13,7 +13,7 @@ import whoIsChief from "../../api/Agenda/chef";
 import Dropdown from "./../dropdown/Dropdown";
 
 const PaginationHeader = ({
-  currentDay,
+  currentDate,
   onPrev,
   onNext,
   index,

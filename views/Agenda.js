@@ -14,6 +14,7 @@ import {
   getUserData,
   setIsFirstVisitAgenda,
 } from "./../utils/storage";
+import moment from "moment";
 
 const Agenda = () => {
   const { colors } = useContext(ThemeContext);
@@ -26,14 +27,17 @@ const Agenda = () => {
 
   const [user_data, setUser_data] = useState(null);
   const [daysOfWeek, setDaysOfWeek] = useState([]);
-  const [taskCount, setTaskCount] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentWeekNumber, setCurrentWeekNumber] = useState(0);
   const [totalTaskCount, setTotalTaskCount] = useState(0);
   const swiperRef = useRef(null); // Référence au Swiper
+  const [taskCount, setTaskCount] = useState(0);
   const [evalCount, setEvalCount] = useState(0);
   const [defaultIndex, setDefaultIndex] = useState(0);
   const [returnToday, setReturnToday] = useState(false);
+  const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MM-DD"));
+  const [day, setDay] = useState(moment());
+  const [weeks, setWeeks] = useState([]);
   const options = [
     { label: "Vue journée", value: "day" },
     { label: "Vue semaine", value: "week" },
@@ -44,7 +48,7 @@ const Agenda = () => {
     container: {
       flex: 1,
       backgroundColor: colors.background,
-      paddingVertical: 25,
+      paddingTop: 25,
     },
     loadingContainer: {
       flex: 1,
@@ -115,8 +119,6 @@ const Agenda = () => {
         index={currentIndex}
         defaultIndex={defaultIndex}
         setReturnToday={setReturnToday}
-        taskCount={taskCount} // Passage du compteur de tâches
-        totalTaskCount={totalTaskCount} // Passage du compteur total de tâches
         onSelect={handleSelect}
         value={selectedView}
         options={options}
@@ -143,6 +145,9 @@ const Agenda = () => {
           returnToday={returnToday}
           setReturnToday={setReturnToday}
           swiperRef={swiperRef}
+          currentDate={currentDate}
+          setCurrentDate={setCurrentDate}
+          day={day}
         />
       )}
       {selectedView === "week" && (
@@ -167,6 +172,11 @@ const Agenda = () => {
           returnToday={returnToday}
           setReturnToday={setReturnToday}
           swiperRef={swiperRef}
+          currentDate={currentDate}
+          setCurrentDate={setCurrentDate}
+          weeks={weeks}
+          setWeeks={setWeeks}
+          day={day}
         />
       )}
       {selectedView === "chronological" && <Chronologique tasks={tasks} />}

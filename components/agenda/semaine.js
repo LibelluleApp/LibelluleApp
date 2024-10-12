@@ -1,222 +1,413 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  TouchableOpacity,
+} from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { ArrowLeft, ArrowRight } from "./../../assets/icons/Icons";
 import moment from "moment-timezone";
 import SwiperFlatList from "react-native-swiper-flatlist";
 import Item from "./Item"; // Assurez-vous que ce composant est correctement importé
 import { ThemeContext } from "./../../utils/themeContext";
+import * as Progress from "react-native-progress";
 
-const { width } = Dimensions.get("window"); // Obtenir la largeur de l'écran
+const { width } = Dimensions.get("window");
 
 const Semaine = ({
   tasks,
   user_data,
   setUser_data,
-  daysOfWeek,
-  setDaysOfWeek,
-  taskCount,
   setTaskCount,
+  taskCount,
   currentIndex,
   setCurrentIndex,
   currentWeekNumber,
   setCurrentWeekNumber,
-  totalTaskCount,
-  setTotalTaskCount,
   evalCount,
   setEvalCount,
-  defaultIndex,
-  setDefaultIndex,
+  totalTaskCount,
+  setTotalTaskCount,
   returnToday,
   swiperRef,
   setReturnToday,
+  currentDate,
+  setCurrentDate,
+  weeks,
+  setWeeks,
+  day,
 }) => {
   const { colors } = useContext(ThemeContext);
+  const startDate = moment("2024-07-10");
 
-  useEffect(() => {
-    // Initialiser les jours lorsque le composant se monte
-    const startDate = moment("2024-07-10");
+  const styles = StyleSheet.create({
+    swiperContainer: {
+      flex: 1,
+    },
+    headerContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "90%",
+      marginHorizontal: "auto",
+      alignItems: "center",
+    },
+    headerTitleContainer: {
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    headerTitle: {
+      fontSize: 16,
+      fontFamily: "Ubuntu_500Medium",
+      color: colors.blue950,
+      textAlign: "center",
+    },
+    headerSubtitle: {
+      fontSize: 14,
+      fontFamily: "Ubuntu_400Regular",
+      color: colors.blue800,
+      textAlign: "center",
+    },
+    counts: {
+      width: "100%",
+      paddingHorizontal: 20,
+      borderBottomLeftRadius: 10,
+      borderBottomRightRadius: 10,
+      gap: 5,
+    },
+    progressTextTask: {
+      color: colors.blue_variable,
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 14,
+    },
+    progressTextPourcent: {
+      color: colors.grey_variable,
+      fontFamily: "Ubuntu_500Medium",
+      fontSize: 14,
+    },
+    progression: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    swiper: {
+      width: width,
+    },
+    itemContent: {
+      width: width,
+      paddingHorizontal: 20,
+    },
+    itemContainer: {
+      paddingTop: 10,
+      flexDirection: "column",
+      gap: 10,
+    },
+    noItemContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    noItemTitle: {
+      fontSize: 16,
+      color: colors.blue800,
+      fontFamily: "Ubuntu_400Regular",
+      textAlign: "center",
+    },
+    dateHeader: {
+      fontSize: 16,
+      fontFamily: "Ubuntu_500Medium",
+      color: colors.blue800,
+      marginVertical: 10,
+    },
+    dateTaskTitle: {
+      fontSize: 14,
+      fontFamily: "Ubuntu_500Medium",
+      color: colors.blue800,
+    },
+  });
+
+  // Fonction d'initialisation des semaines
+  const initializeWeeks = () => {
     const endDate = moment("2024-12-31");
+    const weeks = [];
+    let currentDateClone = startDate.clone(); // Utiliser une copie de startDate
 
-    const weekdays = [];
-    let currentDate = startDate.clone();
-    while (currentDate <= endDate) {
-      if (currentDate.day() !== 0 && currentDate.day() !== 6) {
-        let dayData = tasks.filter((item) =>
-          moment(item.date_fin).isSame(currentDate, "day")
-        );
-        if (dayData.length === 0) {
-          dayData = [
-            {
-              agenda_id: 0,
-              date_fin: currentDate.format("YYYY-MM-DD"),
-              titre: "Aucun élément à afficher",
-              type: "none",
-              Ressource: { nom_ressource: "Aucune matière" },
-            },
-          ];
+    while (currentDateClone <= endDate) {
+      const weekNumber = currentDateClone.isoWeek();
+      let weekTasks = tasks.filter(
+        (item) => moment(item.date_fin).isoWeek() === weekNumber
+      );
+
+      // Regroupement des tâches par date
+      const tasksByDate = weekTasks.reduce((acc, item) => {
+        const dateKey = moment(item.date_fin).format("YYYY-MM-DD");
+        if (!acc[dateKey]) {
+          acc[dateKey] = [];
         }
-        weekdays.push({ date: currentDate.clone(), data: dayData });
-      }
-      currentDate.add(1, "day");
+        acc[dateKey].push(item);
+        return acc;
+      }, {});
+
+      weeks.push({ week: weekNumber, data: tasksByDate });
+      currentDateClone.add(1, "week"); // Passer à la semaine suivante
     }
 
-    let todayIndex = weekdays.findIndex((day) =>
-      day.date.isSame(moment(), "day")
+    // Calculer l'index de la semaine actuelle
+    const currentWeek = day.isoWeek();
+    const currentWeekIndex = weeks.findIndex(
+      (week) => week.week === currentWeek
     );
 
-    if (todayIndex === -1) {
-      const today = moment();
-      if (today.day() === 6) {
-        // Samedi
-        today.add(2, "days");
-      } else if (today.day() === 0) {
-        // Dimanche
-        today.add(1, "days");
-      }
-      todayIndex = weekdays.findIndex((day) => day.date.isSame(today, "day"));
-    }
-
-    setCurrentIndex(todayIndex !== -1 ? todayIndex : 0);
-    setDefaultIndex(todayIndex !== -1 ? todayIndex : 0);
-
-    setDaysOfWeek(weekdays);
-    setCurrentWeekNumber(weekdays[todayIndex]?.date.week());
-
-    calculateCounts(weekdays[todayIndex]?.data || []);
-  }, []); // Recalculer si les tâches changent
-
-  useEffect(() => {
-    if (returnToday) {
-      setCurrentIndex(defaultIndex);
-      swiperRef.current.scrollToIndex({ index: defaultIndex });
-      setCurrentWeekNumber(daysOfWeek[defaultIndex].date.week());
-      calculateCounts(daysOfWeek[defaultIndex].data); // Appel de la fonction de calcul des compteurs pour le nouveau jour
-
-      // Réinitialiser returnToday à false
-      setReturnToday(false);
-    }
-  }, [returnToday, daysOfWeek]); // Déclencheur sur le changement de returnToday
-
-  const handleChangeIndex = ({ index }) => {
-    setCurrentIndex(index);
-    setCurrentWeekNumber(daysOfWeek[index].date.week());
-    calculateCounts(daysOfWeek[index].data); // Appel de la fonction de calcul des compteurs pour le nouveau jour
+    // Vérifiez que currentWeekIndex n'est pas -1
+    const indexToSet = currentWeekIndex !== -1 ? currentWeekIndex : 0;
+    setCurrentIndex(indexToSet);
+    setCurrentWeekNumber(weeks[indexToSet].week);
+    calculateCounts(weeks[indexToSet]?.data || []);
+    return weeks;
   };
 
-  const calculateCounts = (dayData) => {
+  // Fonction de calcul des compteurs (évaluations, devoirs)
+  const calculateCounts = (weekData) => {
     let evalCounter = 0;
     let taskCounter = 0;
     let totalTaskCounter = 0;
 
-    dayData.forEach((item) => {
-      if (item.type === "eval") {
-        evalCounter++;
-      } else if (item.type === "devoir" && !item.estFait) {
-        taskCounter++;
-      }
+    // Calculer les évaluations et les tâches restantes
+    Object.values(weekData).forEach((dateTasks) => {
+      dateTasks.forEach((item) => {
+        if (item.type === "eval") {
+          evalCounter++;
+        } else if (item.type === "devoir") {
+          totalTaskCounter++;
+          if (!item.estFait) {
+            taskCounter++;
+          }
+        }
+      });
     });
-
-    totalTaskCounter = dayData.filter((item) => item.type === "devoir").length;
 
     setEvalCount(evalCounter);
     setTaskCount(taskCounter);
     setTotalTaskCount(totalTaskCounter);
   };
 
+  const handlePrevWeek = () => {
+    const newIndex = currentIndex === 0 ? weeks.length - 1 : currentIndex - 1;
+
+    // Assurez-vous que l'index est valide avant de le définir
+    if (newIndex >= 0 && newIndex < weeks.length) {
+      setCurrentIndex(newIndex);
+      swiperRef.current.scrollToIndex({ index: newIndex });
+      setCurrentWeekNumber(weeks[newIndex].week);
+      calculateCounts(weeks[newIndex].data);
+    } else {
+      console.warn("L'index de la semaine précédente est invalide.");
+    }
+  };
+
+  const handleNextWeek = () => {
+    const newIndex = currentIndex === weeks.length - 1 ? 0 : currentIndex + 1;
+
+    // Assurez-vous que l'index est valide avant de le définir
+    if (newIndex >= 0 && newIndex < weeks.length) {
+      setCurrentIndex(newIndex);
+      swiperRef.current.scrollToIndex({ index: newIndex });
+      setCurrentWeekNumber(weeks[newIndex].week);
+      calculateCounts(weeks[newIndex].data);
+    } else {
+      console.warn("L'index de la semaine suivante est invalide.");
+    }
+  };
+
+  // Fonction pour gérer le changement de semaine
+  const handleChangeIndex = ({ index }) => {
+    // Vérifiez que l'index est valide avant de le définir
+    if (index >= 0 && index < weeks.length) {
+      setCurrentIndex(index);
+      setCurrentWeekNumber(weeks[index].week);
+      calculateCounts(weeks[index].data);
+    } else {
+      console.warn("L'index changé est invalide.");
+    }
+  };
+
+  // Fonction pour retourner à la semaine actuelle
+  const handleReturnToday = () => {
+    const currentWeek = moment().isoWeek();
+    const currentWeekIndex = weeks.findIndex(
+      (week) => week.week === currentWeek
+    );
+
+    if (currentWeekIndex !== -1 && swiperRef.current) {
+      setCurrentIndex(currentWeekIndex);
+      swiperRef.current.scrollToIndex({ index: currentWeekIndex });
+    } else {
+      console.warn("L'index de la semaine actuelle est invalide.");
+    }
+  };
+
+  // Gestion des tâches cochées
   const handleTaskCheck = (taskId) => {
-    const updatedDaysOfWeek = daysOfWeek.map((day) => {
-      const updatedData = day.data.map((item) => {
-        if (item.agenda_id === taskId) {
-          return { ...item, estFait: true };
-        }
-        return item;
+    const updatedWeeks = weeks.map((week) => {
+      const updatedData = Object.keys(week.data).map((dateKey) => {
+        const dateTasks = week.data[dateKey].map((item) =>
+          item.agenda_id === taskId ? { ...item, estFait: true } : item
+        );
+        return { [dateKey]: dateTasks };
       });
-      return { ...day, data: updatedData };
+      return { ...week, data: Object.assign({}, ...updatedData) };
     });
 
-    setDaysOfWeek(updatedDaysOfWeek);
-    setTaskCount((prev) => prev - 1); // Décrémenter le compte de tâches
+    setWeeks(updatedWeeks);
+
+    let newTaskCount = taskCount - 1;
+    setTaskCount(newTaskCount);
   };
 
+  // Gestion des tâches décochées
   const handleTaskUncheck = (taskId) => {
-    const updatedDaysOfWeek = daysOfWeek.map((day) => {
-      const updatedData = day.data.map((item) => {
-        if (item.agenda_id === taskId) {
-          return { ...item, estFait: false };
-        }
-        return item;
+    const updatedWeeks = weeks.map((week) => {
+      const updatedData = Object.keys(week.data).map((dateKey) => {
+        const dateTasks = week.data[dateKey].map((item) =>
+          item.agenda_id === taskId ? { ...item, estFait: false } : item
+        );
+        return { [dateKey]: dateTasks };
       });
-      return { ...day, data: updatedData };
+      return { ...week, data: Object.assign({}, ...updatedData) };
     });
 
-    setDaysOfWeek(updatedDaysOfWeek);
-    setTaskCount((prev) => prev + 1); // Incrémenter le compte de tâches
+    setWeeks(updatedWeeks);
+    let newTaskCount = taskCount + 1;
+    setTaskCount(newTaskCount);
   };
+
+  useEffect(() => {
+    const initWeeks = initializeWeeks();
+    setWeeks(initWeeks);
+  }, [tasks]);
+
+  useEffect(() => {
+    if (returnToday) {
+      handleReturnToday();
+      setReturnToday(false); // Réinitialiser l'état
+    }
+  }, [returnToday]);
+
+  let progression = 1;
+  let percentProgression = 100;
+  taskCount = totalTaskCount - taskCount;
+
+  if (totalTaskCount === 0) {
+    progression = 1;
+  } else {
+    progression = taskCount / totalTaskCount;
+    percentProgression = Math.round(progression * 100);
+  }
 
   return (
     <View style={styles.swiperContainer}>
+      {/* Affichage de la semaine actuelle */}
+      {/* <View style={styles.headerContainer}>
+        <TouchableOpacity
+          onPress={handlePrevWeek}
+          style={styles.aroundLeft}
+          hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+        >
+          <ArrowLeft
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={20}
+            height={20}
+          />
+        </TouchableOpacity>
+        <View style={styles.headerTitleContainer}>
+          <Text style={styles.headerTitle}>Semaine {currentWeekNumber}</Text>
+        </View>
+        <TouchableOpacity
+          onPress={handleNextWeek}
+          style={styles.aroundRight}
+          hitSlop={{ top: 20, bottom: 20, right: 20 }}
+        >
+          <ArrowRight
+            stroke={colors.black}
+            strokeWidth={1.75}
+            width={20}
+            height={20}
+          />
+        </TouchableOpacity>
+      </View> */}
+
+      {/* Liste des semaines avec Swiper */}
+      <View style={styles.counts}>
+        <View style={styles.progression}>
+          {totalTaskCount >= 0 && (
+            <Text style={styles.progressTextTask}>
+              {taskCount}/{totalTaskCount}{" "}
+              {totalTaskCount <= 1 ? "tâche" : "tâches"}
+            </Text>
+          )}
+          <Text style={styles.progressTextPourcent}>{percentProgression}%</Text>
+        </View>
+        <Progress.Bar
+          progress={progression}
+          width={null}
+          height={4}
+          animated={true}
+          unfilledColor={colors.grey}
+          borderWidth={0}
+          color={colors.blue_variable}
+        />
+      </View>
       <SwiperFlatList
-        ref={swiperRef} // Référence pour le swiper
-        index={currentIndex} // Positionner sur le jour actuel
-        data={daysOfWeek}
+        ref={swiperRef}
+        index={currentIndex}
+        data={weeks}
         renderItem={({ item }) => (
           <View style={styles.itemContent}>
-            <Text style={styles.dateText}>
-              {item.date.format("YYYY-MM-DD")}
-            </Text>
-            <View style={styles.itemContainer}>
-              {item.data.length > 0 ? (
-                item.data.map((agendaItem) => (
-                  <Item
-                    key={agendaItem.agenda_id}
-                    item={agendaItem}
-                    currentDay={item.date.format("YYYY-MM-DD")}
-                    onTaskCheck={handleTaskCheck}
-                    onTaskUncheck={handleTaskUncheck}
-                  />
-                ))
-              ) : (
-                <Text style={styles.noTasks}>Aucune tâche pour ce jour.</Text>
-              )}
-            </View>
+            {Object.keys(item.data).length > 0 ? (
+              <View style={styles.itemContainer}>
+                {Object.entries(item.data).map(([dateKey, dateTasks]) => (
+                  <View key={dateKey}>
+                    <Text style={styles.dateTaskTitle}>
+                      {moment(dateKey)
+                        .format("dddd D MMMM")
+                        .split(" ")
+                        .map(
+                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                        )
+                        .join(" ")}
+                    </Text>
+                    {dateTasks.map((agendaItem) => (
+                      <Item
+                        key={agendaItem.agenda_id}
+                        item={agendaItem}
+                        currentDate={agendaItem.date_fin}
+                        onTaskCheck={handleTaskCheck}
+                        onTaskUncheck={handleTaskUncheck}
+                        slide={true}
+                        bouncyBox={true}
+                        component={"normal"}
+                      />
+                    ))}
+                  </View>
+                ))}
+              </View>
+            ) : (
+              <View style={styles.noItemContainer}>
+                <Text style={styles.noItemTitle}>
+                  Aucune tâche pour cette semaine.
+                </Text>
+              </View>
+            )}
           </View>
         )}
         onChangeIndex={handleChangeIndex}
         bounces={false}
         windowSize={5}
-        style={styles.swiper} // Ajout de style au Swiper
+        style={styles.swiper}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  swiperContainer: {
-    flex: 1,
-  },
-  swiper: {
-    width: width, // Assurez-vous que le Swiper prend la largeur de l'écran
-  },
-  itemContent: {
-    width: width, // Chaque élément prend la largeur de l'écran
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 16,
-  },
-  itemContainer: {
-    flexDirection: "column",
-    gap: 10,
-  },
-  dateText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  noTasks: {
-    fontSize: 18,
-    color: "gray",
-    textAlign: "center",
-    marginTop: 20,
-  },
-});
 
 export default Semaine;
