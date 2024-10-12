@@ -70,7 +70,7 @@ function Restauration() {
       color: colors.blue950,
     },
     button: {
-      paddingHorizontal: 15,
+      paddingHorizontal: 20,
       paddingVertical: 10,
       borderRadius: 50,
       backgroundColor: colors.background,
@@ -122,6 +122,10 @@ function Restauration() {
       textTransform: "capitalize",
     },
   });
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   // Fonction pour récupérer les dates tout en sautant les week-ends
   const getValidDate = (daysToAdd) => {
@@ -213,9 +217,12 @@ function Restauration() {
 
   // Calcul des jours à afficher
   const daysToDisplay = [
-    { key: "today", label: getFormattedDate(0) },
-    { key: "tomorrow", label: getFormattedDate(1) },
-    { key: "dayAfterTomorrow", label: getFormattedDate(2) },
+    { key: "today", label: capitalizeFirstLetter(getFormattedDate(0)) },
+    { key: "tomorrow", label: capitalizeFirstLetter(getFormattedDate(1)) },
+    {
+      key: "dayAfterTomorrow",
+      label: capitalizeFirstLetter(getFormattedDate(2)),
+    },
   ];
 
   return (
@@ -256,7 +263,7 @@ function Restauration() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
             flexDirection: "row",
-            gap: 15,
+            gap: 10,
             marginVertical: 15,
           }}
         >

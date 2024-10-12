@@ -119,6 +119,7 @@ function Home() {
   };
 
   const formattedDate = capitalizeFirstLetter(today.format("ddd D MMM"));
+
   const generateWeatherMessage = (temp, conditionsType) => {
     // Messages pour les étudiants
     const studentMessages = [

@@ -16,7 +16,7 @@ import moment from "moment";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../../utils/themeContext";
-import {getUserData} from "../../../utils/storage";
+import { getUserData } from "../../../utils/storage";
 
 const ViewTask = ({ route }) => {
   const { colors } = useContext(ThemeContext);
@@ -107,6 +107,7 @@ const ViewTask = ({ route }) => {
     },
     taskCTATextDelete: {
       color: colors.red600,
+      fontSize: 15,
     },
   });
 

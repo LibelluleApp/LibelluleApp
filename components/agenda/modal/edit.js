@@ -53,11 +53,9 @@ const Edit = ({ route }) => {
     },
     input: {
       borderRadius: 10,
-      borderColor: colors.input_border,
       paddingHorizontal: 20,
       height: 58,
       color: colors.blue950,
-      borderWidth: 0.5,
       marginBottom: 20,
       justifyContent: "center",
       backgroundColor: colors.white_background,
@@ -166,7 +164,9 @@ const Edit = ({ route }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
           <View style={styles.inputContainer}>
-            <Text style={styles.title}>Date*</Text>
+            <Text style={styles.title}>
+              Date<Text style={{ color: colors.blue800 }}>*</Text>
+            </Text>
             <TouchableOpacity
               onPress={showDatePicker}
               style={[styles.input, styles.date]}
@@ -192,7 +192,9 @@ const Edit = ({ route }) => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.title}>Matière*</Text>
+            <Text style={styles.title}>
+              Matière<Text style={{ color: colors.blue800 }}>*</Text>
+            </Text>
             <TextInput
               style={styles.input}
               placeholderTextColor={colors.text_placeholder}
@@ -202,7 +204,9 @@ const Edit = ({ route }) => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.title}>Type de tâche*</Text>
+            <Text style={styles.title}>
+              Type de tâche<Text style={{ color: colors.blue800 }}>*</Text>
+            </Text>
             <SelectComponent
               onChange={(item) => {
                 setValue2(item.value);
@@ -214,27 +218,43 @@ const Edit = ({ route }) => {
           </View>
           {type !== "eval" && (
             <View style={styles.inputContainer}>
-              <Text style={styles.title}>Titre*</Text>
+              <Text style={styles.title}>
+                Titre<Text style={{ color: colors.blue800 }}>*</Text>
+              </Text>
               <TextInput
                 style={styles.input}
                 placeholderTextColor={colors.text_placeholder}
-                placeholder="Titre de la tâche"
+                placeholder="Entrer le nom de la tâche"
                 value={titre}
                 onChangeText={(text) => setTitre(text)}
               />
             </View>
           )}
-          <View style={styles.inputContainer}>
-            <Text style={styles.title}>Description</Text>
-            <TextInput
-              style={[styles.input, styles.description]}
-              placeholderTextColor={colors.text_placeholder}
-              placeholder="Description de la tâche"
-              multiline={true}
-              value={description}
-              onChangeText={(text) => setDescription(text)}
-            />
-          </View>
+          {type !== "eval" ? (
+            <View style={styles.inputContainer}>
+              <Text style={styles.title}>Description</Text>
+              <TextInput
+                style={[styles.input, styles.description]}
+                placeholderTextColor={colors.text_placeholder}
+                placeholder="Entrer une description de la tâche (ex : consignes, lieu du rendu, mail de l’enseignant.e...)"
+                multiline={true}
+                value={description}
+                onChangeText={(text) => setDescription(text)}
+              />
+            </View>
+          ) : (
+            <View style={styles.inputContainer}>
+              <Text style={styles.title}>Description</Text>
+              <TextInput
+                style={[styles.input, styles.description]}
+                placeholderTextColor={colors.text_placeholder}
+                placeholder="Entrer une description de l'évaluation (ex : durée, ce qu'il faut réviser...)"
+                multiline={true}
+                value={description}
+                onChangeText={(text) => setDescription(text)}
+              />
+            </View>
+          )}
 
           <ButtonAuth
             title="Sauvegarder"

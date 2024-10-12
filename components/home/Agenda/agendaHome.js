@@ -11,6 +11,10 @@ function AgendaHome() {
   const { colors } = useContext(ThemeContext);
   const [agendaContent, setAgendaContent] = useState(true);
 
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   const todayDate = moment();
 
   // Récupérer le jour de la semaine
@@ -31,7 +35,9 @@ function AgendaHome() {
   }
 
   // Formate la date pour obtenir "Mar. 02. oct"
-  const formattedDate = tomorrowDate.format("ddd DD MMM");
+  const formattedDate = capitalizeFirstLetter(
+    tomorrowDate.format("ddd DD MMM")
+  );
 
   const styles = StyleSheet.create({
     agendaContainer: {},
