@@ -159,9 +159,11 @@ const Add = ({ route }) => {
   return (
     <KeyboardAwareScrollView
       style={styles.background}
-      extraScrollHeight={40} // Ajuste l'espace pour éviter le recouvrement
-      keyboardOpeningTime={10} // Temps d'animation du clavier
-      // enableOnAndroid={true} // Activer sur Android
+      extraScrollHeight={40}
+      extraHeight={100}
+      keyboardOpeningTime={10}
+      // enableOnAndroid={true}
+      // keyboardShouldPersistTaps="always" // Empêche de bloquer les interactions
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.container}>
@@ -231,34 +233,21 @@ const Add = ({ route }) => {
               />
             </View>
           )}
-          {type !== "eval" ? (
-            <View style={styles.inputContainer}>
-              <Text style={styles.title}>Description</Text>
-              <TextInput
-                style={[styles.input, styles.description]}
-                placeholderTextColor={colors.text_placeholder}
-                placeholder="Entrer une description de la tâche (ex : consignes, lieu du rendu, mail de l’enseignant.e...)"
-                multiline={true}
-                onChangeText={(text) => setDescription(text)}
-                value={description}
-              />
-            </View>
-          ) : (
-            <View style={styles.inputContainer}>
-              <Text style={styles.title}>Description</Text>
-              <TextInput
-                onFocus={(event) => {
-                  scrollViewRef.current.scrollToFocusedInput(event.target);
-                }}
-                style={[styles.input, styles.description]}
-                placeholderTextColor={colors.text_placeholder}
-                placeholder="Entrer une description de l'évaluation (ex : durée, ce qu'il faut réviser...)"
-                multiline={true}
-                onChangeText={(text) => setDescription(text)}
-                value={description}
-              />
-            </View>
-          )}
+          <View style={styles.inputContainer}>
+            <Text style={styles.title}>Description</Text>
+            <TextInput
+              style={[styles.input, styles.description]}
+              placeholderTextColor={colors.text_placeholder}
+              placeholder={
+                type === "eval"
+                  ? "Entrer une description de l'évaluation"
+                  : "Entrer une description de la tâche"
+              }
+              multiline={true}
+              onChangeText={(text) => setDescription(text)}
+              value={description}
+            />
+          </View>
 
           <ButtonAuth
             title="Ajouter"

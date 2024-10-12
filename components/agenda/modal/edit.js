@@ -230,31 +230,21 @@ const Edit = ({ route }) => {
               />
             </View>
           )}
-          {type !== "eval" ? (
-            <View style={styles.inputContainer}>
-              <Text style={styles.title}>Description</Text>
-              <TextInput
-                style={[styles.input, styles.description]}
-                placeholderTextColor={colors.text_placeholder}
-                placeholder="Entrer une description de la tâche (ex : consignes, lieu du rendu, mail de l’enseignant.e...)"
-                multiline={true}
-                value={description}
-                onChangeText={(text) => setDescription(text)}
-              />
-            </View>
-          ) : (
-            <View style={styles.inputContainer}>
-              <Text style={styles.title}>Description</Text>
-              <TextInput
-                style={[styles.input, styles.description]}
-                placeholderTextColor={colors.text_placeholder}
-                placeholder="Entrer une description de l'évaluation (ex : durée, ce qu'il faut réviser...)"
-                multiline={true}
-                value={description}
-                onChangeText={(text) => setDescription(text)}
-              />
-            </View>
-          )}
+          <View style={styles.inputContainer}>
+            <Text style={styles.title}>Description</Text>
+            <TextInput
+              style={[styles.input, styles.description]}
+              placeholderTextColor={colors.text_placeholder}
+              placeholder={
+                type === "eval"
+                  ? "Entrer une description de l'évaluation"
+                  : "Entrer une description de la tâche"
+              }
+              multiline={true}
+              value={description}
+              onChangeText={(text) => setDescription(text)}
+            />
+          </View>
 
           <ButtonAuth
             title="Sauvegarder"
