@@ -78,16 +78,21 @@ function Timetable() {
   };
 
   return (
-      <View style={styles.modalBackground}>
-        <View style={styles.modalDropdown}>
-          <Dropdown options={options} onSelect={handleSelect} value={selectedView} />
-          <TouchableOpacity onPress={handleGoToToday}>
-            <ResetList stroke={colors.blue800} />
-          </TouchableOpacity>
-        </View>
-        {selectedView === "day" && <Jour ref={jourRef} />}
-        {selectedView === "week" && <Semaine ref={semaineRef} />}
+    <View style={styles.modalBackground}>
+      <View style={styles.modalDropdown}>
+        <Dropdown
+          options={options}
+          onSelect={handleSelect}
+          value={selectedView}
+          number={2}
+        />
+        <TouchableOpacity onPress={handleGoToToday}>
+          <ResetList stroke={colors.blue800} />
+        </TouchableOpacity>
       </View>
+      {selectedView === "day" && <Jour ref={jourRef} />}
+      {selectedView === "week" && <Semaine ref={semaineRef} />}
+    </View>
   );
 }
 

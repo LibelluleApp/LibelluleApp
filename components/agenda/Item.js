@@ -50,10 +50,6 @@ class Item extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  itemContainer: {
-    flex: 1,
-    padding: 10,
-  },
   noItemContainer: {
     flex: 1,
     justifyContent: "center",
