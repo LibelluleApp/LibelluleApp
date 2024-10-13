@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { View, StyleSheet, ActivityIndicator, ScrollView } from "react-native";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "../utils/themeContext";
-import Dropdown from "../components/dropdown/Dropdown";
+import Button from "./../components/agenda/button";
 import Jour from "./../components/agenda/jour";
 import Semaine from "./../components/agenda/semaine";
 import Chronologique from "./../components/agenda/chronologique";
@@ -14,6 +14,7 @@ import {
   getUserData,
   setIsFirstVisitAgenda,
 } from "./../utils/storage";
+
 import moment from "moment";
 
 const Agenda = () => {
@@ -69,6 +70,12 @@ const Agenda = () => {
       alignItems: "center",
       backgroundColor: colors.background,
     },
+    addButton: {
+      position: "absolute",
+      bottom: 20,
+      alignSelf: "center",
+      zIndex: 99,
+    },
   });
 
   const checkFirstVisit = () => {
@@ -103,6 +110,11 @@ const Agenda = () => {
         try {
           const data = await fetchAgenda();
           setTasks(data);
+          const userDataJSON = getUserData();
+          if (userDataJSON !== null) {
+            const userData = userDataJSON;
+            setUser_data(userData);
+          }
           console.log("Agenda chargé avec succès.");
           setIsLoading(false);
         } catch (error) {
@@ -191,6 +203,17 @@ const Agenda = () => {
         />
       )}
       {selectedView === "chronological" && <Chronologique tasks={tasks} />}
+      {user_data?.role.includes("Chef") && (
+        <Button
+          title="Ajouter une tâche"
+          onPress={() =>
+            navigation.navigate("addAgenda", {
+              date: daysOfWeek[currentIndex]?.date.format("yyyy-MM-DD"),
+            })
+          }
+          style={styles.addButton}
+        />
+      )}
     </View>
   );
 };
