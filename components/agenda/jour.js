@@ -38,9 +38,9 @@ const Jour = ({
   setReturnToday,
   currentDate,
   setCurrentDate,
+  todayMoment,
 }) => {
   const { colors } = useContext(ThemeContext);
-  const startDate = moment("2024-07-10");
 
   const styles = StyleSheet.create({
     swiperContainer: {
@@ -52,6 +52,7 @@ const Jour = ({
       width: "90%",
       marginHorizontal: "auto",
       alignItems: "center",
+      marginVertical: 10,
     },
     headerTitleContainer: {
       flexDirection: "column",
@@ -73,17 +74,15 @@ const Jour = ({
     counts: {
       width: "100%",
       paddingHorizontal: 20,
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
       gap: 5,
     },
     progressTextTask: {
-      color: colors.blue_variable,
+      color: colors.blue700,
       fontFamily: "Ubuntu_500Medium",
       fontSize: 14,
     },
     progressTextPourcent: {
-      color: colors.grey_variable,
+      color: colors.blue200,
       fontFamily: "Ubuntu_500Medium",
       fontSize: 14,
     },
@@ -118,44 +117,43 @@ const Jour = ({
 
   // Fonction d'initialisation des jours
   const initializeDays = () => {
-    const endDate = moment("2024-12-31");
+    const startDate = moment("2024-07-10"); // Date de début que tu veux, par exemple 10 juillet 2024
+    const endDate = moment("2024-12-31"); // Date de fin
     const weekdays = [];
-    let currentDateClone = startDate.clone();
+    let currentDateClone = todayMoment.clone();
 
+    // Remplir les jours de semaine entre startDate et endDate
     while (currentDateClone <= endDate) {
       if (currentDateClone.day() !== 0 && currentDateClone.day() !== 6) {
-        // S'assurer que seuls les jours de semaine sont inclus
-        let dayData = tasks.filter((item) =>
+        const dayData = tasks.filter((item) =>
           moment(item.date_fin).isSame(currentDateClone, "day")
         );
-
-        // Ajout de vérification pour les jours sans tâches
-        if (dayData.length === 0) {
-          dayData = [];
-        }
 
         weekdays.push({ date: currentDateClone.clone(), data: dayData });
       }
       currentDateClone.add(1, "day");
     }
 
-    // Calculer l'index du jour actuel
+    // Trouver l'index du jour actuel dans la liste weekdays
     let todayIndex = weekdays.findIndex((day) =>
-      day.date.isSame(moment(), "day")
+      day.date.isSame(todayMoment, "day")
     );
 
-    // Si on est samedi ou dimanche, aller au prochain jour ouvré
+    // Gérer le cas où on est un week-end et sauter au jour ouvré suivant
     if (todayIndex === -1) {
-      const today = moment();
-      if (today.day() === 6) today.add(2, "days"); // Samedi
-      else if (today.day() === 0) today.add(1, "days"); // Dimanche
-      todayIndex = weekdays.findIndex((day) => day.date.isSame(today, "day"));
+      if (todayMoment.day() === 6)
+        todayMoment.add(2, "days"); // Si on est samedi
+      else if (todayMoment.day() === 0) todayMoment.add(1, "days"); // Si on est dimanche
+      todayIndex = weekdays.findIndex((day) =>
+        day.date.isSame(todayMoment, "day")
+      );
     }
 
+    // Sauvegarde de l'état du jour actuel pour éviter de revenir au startDate à chaque rafraîchissement
     setDaysOfWeek(weekdays);
-    setCurrentIndex(todayIndex !== -1 ? todayIndex : 0);
-    setDefaultIndex(todayIndex !== -1 ? todayIndex : 0);
-    setCurrentWeekNumber(weekdays[todayIndex]?.date.week());
+    setCurrentIndex(todayIndex); // Fixe l'index du jour actuel ou par défaut 0
+    setDefaultIndex(todayIndex); // Même chose pour l'index par défaut
+    setCurrentWeekNumber(weekdays[todayIndex]?.date.week()); // Semaine courante
     setCurrentDate(
       weekdays[todayIndex].date
         .format("dddd D MMMM")
@@ -164,22 +162,30 @@ const Jour = ({
         .join(" ")
     );
 
-    calculateCounts(weekdays[todayIndex]?.data || []); // Calculer les compteurs pour le jour actuel
+    calculateCounts(weekdays[todayIndex]?.data || []); // Calculer les tâches pour le jour actuel
   };
 
   // Fonction de calcul des compteurs (évaluations, devoirs)
   const calculateCounts = (dayData) => {
     let evalCounter = 0;
     let taskCounter = 0;
-
+    let totalTaskCounter = 0;
     dayData.forEach((item) => {
-      if (item.type === "eval") evalCounter++;
-      else if (item.type === "devoir" && !item.estFait) taskCounter++;
+      if (item.type === "eval") {
+        evalCounter++;
+      } else if (item.type === "devoir" && !item.estFait) {
+        taskCounter++;
+      }
+    });
+    dayData.forEach((item) => {
+      if (item.type === "devoir") {
+        totalTaskCounter++;
+      }
     });
 
     setEvalCount(evalCounter);
     setTaskCount(taskCounter);
-    setTotalTaskCount(dayData.filter((item) => item.type === "devoir").length);
+    setTotalTaskCount(totalTaskCounter);
   };
 
   useEffect(() => {
@@ -232,7 +238,6 @@ const Jour = ({
     calculateCounts(daysOfWeek[index].data);
   };
 
-  // Gestion des tâches cochées
   const handleTaskCheck = (taskId) => {
     const updatedDaysOfWeek = daysOfWeek.map((day) => {
       const updatedData = day.data.map((item) =>
@@ -242,11 +247,9 @@ const Jour = ({
     });
 
     setDaysOfWeek(updatedDaysOfWeek);
-    let newTaskCount = taskCount + 1;
-    setTaskCount(newTaskCount);
+    setTaskCount((prevTaskCount) => Math.max(0, prevTaskCount - 1)); // Use state updater function
   };
 
-  // Gestion des tâches décochées
   const handleTaskUncheck = (taskId) => {
     const updatedDaysOfWeek = daysOfWeek.map((day) => {
       const updatedData = day.data.map((item) =>
@@ -256,10 +259,12 @@ const Jour = ({
     });
 
     setDaysOfWeek(updatedDaysOfWeek);
-    let newTaskCount = taskCount + 1;
-    setTaskCount(newTaskCount);
+    setTaskCount((prevTaskCount) =>
+      Math.min(totalTaskCount, prevTaskCount + 1)
+    ); // Use state updater function
   };
 
+  // Gestion de la progression des tâches
   let progression = 1;
   let percentProgression = 100;
   taskCount = totalTaskCount - taskCount;
@@ -267,7 +272,7 @@ const Jour = ({
   if (totalTaskCount === 0) {
     progression = 1;
   } else {
-    progression = taskCount / totalTaskCount;
+    progression = Math.max(0, Math.min(1, taskCount / totalTaskCount)); // Ensure progression is between 0 and 1
     percentProgression = Math.round(progression * 100);
   }
 
@@ -276,8 +281,9 @@ const Jour = ({
       {/* Affichage du jour actuel */}
       <View style={styles.headerContainer}>
         <TouchableOpacity
+          disabled={currentIndex === 0}
           onPress={handlePrevDay}
-          style={styles.aroundLeft}
+          style={[styles.aroundLeft, { opacity: currentIndex === 0 ? 0.5 : 1 }]}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
           <ArrowLeft
@@ -320,9 +326,9 @@ const Jour = ({
           width={null}
           height={4}
           animated={true}
-          unfilledColor={colors.grey}
+          unfilledColor={colors.blue200}
           borderWidth={0}
-          color={colors.blue_variable}
+          color={colors.blue700}
         />
       </View>
 
@@ -331,6 +337,7 @@ const Jour = ({
         ref={swiperRef}
         index={currentIndex}
         data={daysOfWeek}
+        initialNumToRender={5}
         renderItem={({ item }) => (
           <View style={styles.itemContent}>
             {item.data.length > 0 ? (

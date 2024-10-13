@@ -40,7 +40,7 @@ function TaskHome({
       flexDirection: "row",
       alignItems: "center",
       width: "85%",
-      gap: 10,
+      gap: 15,
     },
     taskLeftContent: {
       flexDirection: component === "little" ? "row" : "column",
@@ -101,6 +101,8 @@ function TaskHome({
             isChecked={isChecked}
             onPress={handleCheckboxPress}
             disableText={true}
+            hitSlop={{ top: 20, bottom: 20, right: 20, left: 20 }}
+            // style={{ padding: 10 }}
           />
         )}
         <View style={styles.taskLeftContent}>

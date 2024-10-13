@@ -82,7 +82,7 @@
     "react-native-soap-request": "^0.0.2",
     "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "15.7.1",
-    "react-native-swiper-flatlist": "^3.2.4",
+    "react-native-swiper-flatlist": "3.2.5",
     "react-native-xml2js": "^1.0.3",
     "reanimated-color-picker": "^3.0.4",
     "typescript": "~5.3.3"

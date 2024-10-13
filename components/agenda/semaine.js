@@ -1,11 +1,11 @@
-import React, {
-  useContext,
-  useState,
-  useEffect,
-  useRef,
+import React, { useContext, useState, useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
   TouchableOpacity,
-} from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+} from "react-native";
 import { ArrowLeft, ArrowRight } from "./../../assets/icons/Icons";
 import moment from "moment-timezone";
 import SwiperFlatList from "react-native-swiper-flatlist";
@@ -19,24 +19,28 @@ const Semaine = ({
   tasks,
   user_data,
   setUser_data,
-  setTaskCount,
+  daysOfWeek,
+  setDaysOfWeek,
   taskCount,
+  setTaskCount,
   currentIndex,
   setCurrentIndex,
   currentWeekNumber,
   setCurrentWeekNumber,
-  evalCount,
-  setEvalCount,
   totalTaskCount,
   setTotalTaskCount,
+  evalCount,
+  setEvalCount,
+  defaultIndex,
+  setDefaultIndex,
   returnToday,
-  swiperRef,
   setReturnToday,
+  swiperRef,
   currentDate,
   setCurrentDate,
   weeks,
   setWeeks,
-  day,
+  todayMoment,
 }) => {
   const { colors } = useContext(ThemeContext);
   const startDate = moment("2024-07-10");
@@ -51,6 +55,7 @@ const Semaine = ({
       width: "90%",
       marginHorizontal: "auto",
       alignItems: "center",
+      marginVertical: 10,
     },
     headerTitleContainer: {
       flexDirection: "column",
@@ -77,12 +82,12 @@ const Semaine = ({
       gap: 5,
     },
     progressTextTask: {
-      color: colors.blue_variable,
+      color: colors.blue700,
       fontFamily: "Ubuntu_500Medium",
       fontSize: 14,
     },
     progressTextPourcent: {
-      color: colors.grey_variable,
+      color: colors.blue200,
       fontFamily: "Ubuntu_500Medium",
       fontSize: 14,
     },
@@ -96,9 +101,10 @@ const Semaine = ({
     itemContent: {
       width: width,
       paddingHorizontal: 20,
+      paddingTop: 20,
+      gap: 20,
     },
     itemContainer: {
-      paddingTop: 10,
       flexDirection: "column",
       gap: 10,
     },
@@ -130,7 +136,7 @@ const Semaine = ({
   const initializeWeeks = () => {
     const endDate = moment("2024-12-31");
     const weeks = [];
-    let currentDateClone = startDate.clone(); // Utiliser une copie de startDate
+    let currentDateClone = todayMoment.clone(); // Utiliser une copie de startDate
 
     while (currentDateClone <= endDate) {
       const weekNumber = currentDateClone.isoWeek();
@@ -153,18 +159,19 @@ const Semaine = ({
     }
 
     // Calculer l'index de la semaine actuelle
-    const currentWeek = day.isoWeek();
-    const currentWeekIndex = weeks.findIndex(
-      (week) => week.week === currentWeek
-    );
+    const currentWeek = todayMoment.isoWeek();
+    const weekIndex = weeks.findIndex((week) => week.week === currentWeek);
 
-    // Vérifiez que currentWeekIndex n'est pas -1
-    const indexToSet = currentWeekIndex !== -1 ? currentWeekIndex : 0;
-    setCurrentIndex(indexToSet);
-    setCurrentWeekNumber(weeks[indexToSet].week);
-    calculateCounts(weeks[indexToSet]?.data || []);
-    return weeks;
+    setDaysOfWeek(weeks);
+    setCurrentIndex(weekIndex);
+    setDefaultIndex(weekIndex); // Même chose pour l'index par défaut
+    setCurrentWeekNumber(weeks[weekIndex].week);
+    calculateCounts(weeks[weekIndex]?.data || []); // Calculer les compteurs pour la semaine actuelle
   };
+
+  useEffect(() => {
+    initializeWeeks();
+  }, [tasks]);
 
   // Fonction de calcul des compteurs (évaluations, devoirs)
   const calculateCounts = (weekData) => {
@@ -172,83 +179,69 @@ const Semaine = ({
     let taskCounter = 0;
     let totalTaskCounter = 0;
 
-    // Calculer les évaluations et les tâches restantes
-    Object.values(weekData).forEach((dateTasks) => {
-      dateTasks.forEach((item) => {
-        if (item.type === "eval") {
-          evalCounter++;
-        } else if (item.type === "devoir") {
-          totalTaskCounter++;
-          if (!item.estFait) {
-            taskCounter++;
+    // Vérification des données reçues
+    if (weekData && Object.keys(weekData).length > 0) {
+      Object.values(weekData).forEach((dateTasks) => {
+        dateTasks.forEach((item) => {
+          if (item.type === "eval") {
+            evalCounter++;
+          } else if (item.type === "devoir") {
+            totalTaskCounter++;
+            if (!item.estFait) {
+              taskCounter++;
+            }
           }
-        }
+        });
       });
-    });
+    }
 
+    // Met à jour les compteurs
     setEvalCount(evalCounter);
     setTaskCount(taskCounter);
     setTotalTaskCount(totalTaskCounter);
   };
 
   const handlePrevWeek = () => {
-    const newIndex = currentIndex === 0 ? weeks.length - 1 : currentIndex - 1;
-
-    // Assurez-vous que l'index est valide avant de le définir
-    if (newIndex >= 0 && newIndex < weeks.length) {
-      setCurrentIndex(newIndex);
-      swiperRef.current.scrollToIndex({ index: newIndex });
-      setCurrentWeekNumber(weeks[newIndex].week);
-      calculateCounts(weeks[newIndex].data);
-    } else {
-      console.warn("L'index de la semaine précédente est invalide.");
-    }
+    const newIndex =
+      currentIndex === 0 ? daysOfWeek.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+    swiperRef.current.scrollToIndex({ index: newIndex });
+    setCurrentWeekNumber(daysOfWeek[newIndex].week);
+    calculateCounts(daysOfWeek[newIndex].data); // Appel de la fonction de calcul des compteurs pour le nouveau jour
   };
 
   const handleNextWeek = () => {
-    const newIndex = currentIndex === weeks.length - 1 ? 0 : currentIndex + 1;
-
-    // Assurez-vous que l'index est valide avant de le définir
-    if (newIndex >= 0 && newIndex < weeks.length) {
-      setCurrentIndex(newIndex);
-      swiperRef.current.scrollToIndex({ index: newIndex });
-      setCurrentWeekNumber(weeks[newIndex].week);
-      calculateCounts(weeks[newIndex].data);
-    } else {
-      console.warn("L'index de la semaine suivante est invalide.");
-    }
+    const newIndex =
+      currentIndex === daysOfWeek.length - 1 ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+    swiperRef.current.scrollToIndex({ index: newIndex });
+    setCurrentWeekNumber(daysOfWeek[newIndex].week);
+    calculateCounts(daysOfWeek[newIndex].data); // Appel de la fonction de calcul
   };
+
+  useEffect(() => {
+    if (returnToday) {
+      console.log(defaultIndex);
+      setCurrentIndex(defaultIndex);
+      swiperRef.current.scrollToIndex({ index: defaultIndex });
+      setCurrentWeekNumber(daysOfWeek[defaultIndex].week);
+      calculateCounts(daysOfWeek[defaultIndex].data); // Recalculer pour le jour actuel
+
+      setReturnToday(false); // Réinitialiser l'état
+    }
+  }, [returnToday, daysOfWeek]);
 
   // Fonction pour gérer le changement de semaine
   const handleChangeIndex = ({ index }) => {
     // Vérifiez que l'index est valide avant de le définir
-    if (index >= 0 && index < weeks.length) {
-      setCurrentIndex(index);
-      setCurrentWeekNumber(weeks[index].week);
-      calculateCounts(weeks[index].data);
-    } else {
-      console.warn("L'index changé est invalide.");
-    }
-  };
-
-  // Fonction pour retourner à la semaine actuelle
-  const handleReturnToday = () => {
-    const currentWeek = moment().isoWeek();
-    const currentWeekIndex = weeks.findIndex(
-      (week) => week.week === currentWeek
-    );
-
-    if (currentWeekIndex !== -1 && swiperRef.current) {
-      setCurrentIndex(currentWeekIndex);
-      swiperRef.current.scrollToIndex({ index: currentWeekIndex });
-    } else {
-      console.warn("L'index de la semaine actuelle est invalide.");
-    }
+    setCurrentIndex(index);
+    setCurrentWeekNumber(daysOfWeek[index].week);
+    calculateCounts(daysOfWeek[index].data);
   };
 
   // Gestion des tâches cochées
   const handleTaskCheck = (taskId) => {
-    const updatedWeeks = weeks.map((week) => {
+    const updatedWeeks = daysOfWeek.map((week) => {
       const updatedData = Object.keys(week.data).map((dateKey) => {
         const dateTasks = week.data[dateKey].map((item) =>
           item.agenda_id === taskId ? { ...item, estFait: true } : item
@@ -258,15 +251,13 @@ const Semaine = ({
       return { ...week, data: Object.assign({}, ...updatedData) };
     });
 
-    setWeeks(updatedWeeks);
-
-    let newTaskCount = taskCount - 1;
-    setTaskCount(newTaskCount);
+    setDaysOfWeek(updatedWeeks);
+    setTaskCount((prevTaskCount) => Math.max(0, prevTaskCount - 1)); // Use state updater function
   };
 
   // Gestion des tâches décochées
   const handleTaskUncheck = (taskId) => {
-    const updatedWeeks = weeks.map((week) => {
+    const updatedWeeks = daysOfWeek.map((week) => {
       const updatedData = Object.keys(week.data).map((dateKey) => {
         const dateTasks = week.data[dateKey].map((item) =>
           item.agenda_id === taskId ? { ...item, estFait: false } : item
@@ -276,22 +267,11 @@ const Semaine = ({
       return { ...week, data: Object.assign({}, ...updatedData) };
     });
 
-    setWeeks(updatedWeeks);
-    let newTaskCount = taskCount + 1;
-    setTaskCount(newTaskCount);
+    setDaysOfWeek(updatedWeeks);
+    setTaskCount((prevTaskCount) =>
+      Math.min(totalTaskCount, prevTaskCount + 1)
+    ); // Use state updater function
   };
-
-  useEffect(() => {
-    const initWeeks = initializeWeeks();
-    setWeeks(initWeeks);
-  }, [tasks]);
-
-  useEffect(() => {
-    if (returnToday) {
-      handleReturnToday();
-      setReturnToday(false); // Réinitialiser l'état
-    }
-  }, [returnToday]);
 
   let progression = 1;
   let percentProgression = 100;
@@ -306,15 +286,15 @@ const Semaine = ({
 
   return (
     <View style={styles.swiperContainer}>
-      {/* Affichage de la semaine actuelle */}
-      {/* <View style={styles.headerContainer}>
+      <View style={styles.headerContainer}>
         <TouchableOpacity
+          disabled={currentIndex === 0}
           onPress={handlePrevWeek}
-          style={styles.aroundLeft}
+          style={[styles.aroundLeft, { opacity: currentIndex === 0 ? 0.5 : 1 }]}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
           <ArrowLeft
-            stroke={colors.black}
+            stroke={colors.blue950}
             strokeWidth={1.75}
             width={20}
             height={20}
@@ -324,20 +304,25 @@ const Semaine = ({
           <Text style={styles.headerTitle}>Semaine {currentWeekNumber}</Text>
         </View>
         <TouchableOpacity
+          disabled={currentIndex === 0}
           onPress={handleNextWeek}
-          style={styles.aroundRight}
+          style={[
+            styles.aroundRight,
+            { opacity: currentIndex === 0 ? 0.5 : 1 },
+          ]}
           hitSlop={{ top: 20, bottom: 20, right: 20 }}
         >
           <ArrowRight
-            stroke={colors.black}
+            stroke={colors.blue950}
             strokeWidth={1.75}
             width={20}
             height={20}
           />
         </TouchableOpacity>
-      </View> */}
+      </View>
 
       {/* Liste des semaines avec Swiper */}
+
       <View style={styles.counts}>
         <View style={styles.progression}>
           {totalTaskCount >= 0 && (
@@ -353,15 +338,17 @@ const Semaine = ({
           width={null}
           height={4}
           animated={true}
-          unfilledColor={colors.grey}
+          unfilledColor={colors.blue200}
           borderWidth={0}
-          color={colors.blue_variable}
+          color={colors.blue700}
         />
       </View>
+
       <SwiperFlatList
         ref={swiperRef}
         index={currentIndex}
-        data={weeks}
+        data={daysOfWeek}
+        initialNumToRender={5}
         renderItem={({ item }) => (
           <View style={styles.itemContent}>
             {Object.keys(item.data).length > 0 ? (

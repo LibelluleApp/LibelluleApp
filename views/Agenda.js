@@ -36,7 +36,7 @@ const Agenda = () => {
   const [defaultIndex, setDefaultIndex] = useState(0);
   const [returnToday, setReturnToday] = useState(false);
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MM-DD"));
-  const [day, setDay] = useState(moment());
+  const [todayMoment, settodayMoment] = useState(moment());
   const [weeks, setWeeks] = useState([]);
   const options = [
     { label: "Vue journée", value: "day" },
@@ -147,7 +147,7 @@ const Agenda = () => {
           swiperRef={swiperRef}
           currentDate={currentDate}
           setCurrentDate={setCurrentDate}
-          day={day}
+          todayMoment={todayMoment}
         />
       )}
       {selectedView === "week" && (
@@ -176,7 +176,7 @@ const Agenda = () => {
           setCurrentDate={setCurrentDate}
           weeks={weeks}
           setWeeks={setWeeks}
-          day={day}
+          todayMoment={todayMoment}
         />
       )}
       {selectedView === "chronological" && <Chronologique tasks={tasks} />}
