@@ -18,10 +18,10 @@ import moment from "moment";
 
 const Agenda = () => {
   const { colors } = useContext(ThemeContext);
-  let defaultView = "day"; // Vue par défaut
+  let defaultView = "day"; // Vue par défaut de l'agenda
 
   const [selectedView, setSelectedView] = useState(defaultView); // Vue par défaut
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]); // Tâches de l'agenda
   const [isLoading, setIsLoading] = useState(true);
   const isFocused = useIsFocused();
   const navigation = useNavigation();
@@ -32,7 +32,7 @@ const Agenda = () => {
 
   // Index
   const [defaultIndex, setDefaultIndex] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(null); // Index actuel du Swiper
 
   // Compteur de tâches et d'évaluations
   const [totalTaskCount, setTotalTaskCount] = useState(0);
@@ -43,9 +43,9 @@ const Agenda = () => {
   const [currentWeekNumber, setCurrentWeekNumber] = useState(0);
   const [daysOfWeek, setDaysOfWeek] = useState([]);
 
-  const [returnToday, setReturnToday] = useState(false);
+  const [returnToday, setReturnToday] = useState(false); // Gestion du bouton retour à aujourd'hui entre les composant. False = aujourd'hui.
 
-  const [todayMoment, settodayMoment] = useState(moment());
+  const [todayMoment, settodayMoment] = useState(moment()); // Date actuelle
 
   const options = [
     { label: "Vue journée", value: "day" },
