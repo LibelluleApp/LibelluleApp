@@ -42,6 +42,8 @@ const Jour = ({
 }) => {
   const { colors } = useContext(ThemeContext);
 
+  console.log(currentIndex, defaultIndex); // Vérifiez que le tableau tasks est correctement rempli
+
   const styles = StyleSheet.create({
     swiperContainer: {
       flex: 1,
@@ -119,7 +121,7 @@ const Jour = ({
   const initializeDays = () => {
     const startDate = moment("2024-07-10"); // Date de début que tu veux, par exemple 10 juillet 2024
     const endDate = moment("2024-12-31"); // Date de fin
-    const weekdays = [];
+    const days = [];
     let currentDateClone = todayMoment.clone();
 
     // Remplir les jours de semaine entre startDate et endDate
@@ -129,13 +131,13 @@ const Jour = ({
           moment(item.date_fin).isSame(currentDateClone, "day")
         );
 
-        weekdays.push({ date: currentDateClone.clone(), data: dayData });
+        days.push({ date: currentDateClone.clone(), data: dayData });
       }
       currentDateClone.add(1, "day");
     }
 
     // Trouver l'index du jour actuel dans la liste weekdays
-    let todayIndex = weekdays.findIndex((day) =>
+    let todayIndex = days.findIndex((day) =>
       day.date.isSame(todayMoment, "day")
     );
 
@@ -144,25 +146,23 @@ const Jour = ({
       if (todayMoment.day() === 6)
         todayMoment.add(2, "days"); // Si on est samedi
       else if (todayMoment.day() === 0) todayMoment.add(1, "days"); // Si on est dimanche
-      todayIndex = weekdays.findIndex((day) =>
-        day.date.isSame(todayMoment, "day")
-      );
+      todayIndex = days.findIndex((day) => day.date.isSame(todayMoment, "day"));
     }
 
     // Sauvegarde de l'état du jour actuel pour éviter de revenir au startDate à chaque rafraîchissement
-    setDaysOfWeek(weekdays);
-    setCurrentIndex(todayIndex); // Fixe l'index du jour actuel ou par défaut 0
-    setDefaultIndex(todayIndex); // Même chose pour l'index par défaut
-    setCurrentWeekNumber(weekdays[todayIndex]?.date.week()); // Semaine courante
+    setDaysOfWeek(days);
+    setCurrentIndex(todayIndex);
+    setDefaultIndex(todayIndex);
+    setCurrentWeekNumber(days[todayIndex]?.date.week()); // Semaine courante
     setCurrentDate(
-      weekdays[todayIndex].date
+      days[todayIndex].date
         .format("dddd D MMMM")
         .split(" ")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ")
     );
 
-    calculateCounts(weekdays[todayIndex]?.data || []); // Calculer les tâches pour le jour actuel
+    calculateCounts(days[todayIndex]?.data || []); // Calculer les tâches pour le jour actuel
   };
 
   // Fonction de calcul des compteurs (évaluations, devoirs)
@@ -335,9 +335,9 @@ const Jour = ({
       {/* Liste de jours avec Swiper */}
       <SwiperFlatList
         ref={swiperRef}
-        index={currentIndex}
+        index={0}
         data={daysOfWeek}
-        initialNumToRender={5}
+        initialNumToRender={1}
         renderItem={({ item }) => (
           <View style={styles.itemContent}>
             {item.data.length > 0 ? (

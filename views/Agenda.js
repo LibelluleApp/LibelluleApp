@@ -18,31 +18,44 @@ import moment from "moment";
 
 const Agenda = () => {
   const { colors } = useContext(ThemeContext);
-  const [selectedView, setSelectedView] = useState("day"); // Vue par défaut
+  let defaultView = "day"; // Vue par défaut
+
+  const [selectedView, setSelectedView] = useState(defaultView); // Vue par défaut
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const [isFirstVisit, setIsFirstVisit] = useState(false);
+  const swiperRef = useRef(null); // Référence au Swiper
 
   const [user_data, setUser_data] = useState(null);
-  const [daysOfWeek, setDaysOfWeek] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentWeekNumber, setCurrentWeekNumber] = useState(0);
+
+  // Index
+  const [defaultIndex, setDefaultIndex] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(null);
+
+  // Compteur de tâches et d'évaluations
   const [totalTaskCount, setTotalTaskCount] = useState(0);
-  const swiperRef = useRef(null); // Référence au Swiper
-  const [taskCount, setTaskCount] = useState(0);
   const [evalCount, setEvalCount] = useState(0);
-  const [defaultIndex, setDefaultIndex] = useState(0);
-  const [returnToday, setReturnToday] = useState(false);
+  const [taskCount, setTaskCount] = useState(0);
+
   const [currentDate, setCurrentDate] = useState(moment().format("YYYY-MM-DD"));
+  const [currentWeekNumber, setCurrentWeekNumber] = useState(0);
+  const [daysOfWeek, setDaysOfWeek] = useState([]);
+
+  const [returnToday, setReturnToday] = useState(false);
+
   const [todayMoment, settodayMoment] = useState(moment());
-  const [weeks, setWeeks] = useState([]);
+
   const options = [
     { label: "Vue journée", value: "day" },
     { label: "Vue semaine", value: "week" },
     { label: "Vue chronologique", value: "chronological" },
   ];
+
+  options.sort((a, b) =>
+    a.value === defaultView ? -1 : b.value === defaultView ? 1 : 0
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -174,8 +187,6 @@ const Agenda = () => {
           swiperRef={swiperRef}
           currentDate={currentDate}
           setCurrentDate={setCurrentDate}
-          weeks={weeks}
-          setWeeks={setWeeks}
           todayMoment={todayMoment}
         />
       )}

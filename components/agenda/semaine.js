@@ -38,12 +38,11 @@ const Semaine = ({
   swiperRef,
   currentDate,
   setCurrentDate,
-  weeks,
-  setWeeks,
   todayMoment,
 }) => {
   const { colors } = useContext(ThemeContext);
-  const startDate = moment("2024-07-10");
+
+  console.log(currentIndex, defaultIndex);
 
   const styles = StyleSheet.create({
     swiperContainer: {
@@ -136,10 +135,22 @@ const Semaine = ({
   const initializeWeeks = () => {
     const endDate = moment("2024-12-31");
     const weeks = [];
-    let currentDateClone = todayMoment.clone(); // Utiliser une copie de startDate
+
+    // Vérifier si aujourd'hui est un samedi (6) ou un dimanche (0) et basculer à la semaine suivante
+    let currentDateClone = todayMoment.clone();
+
+    // Si c'est samedi ou dimanche, passer à lundi prochain
+    if (
+      currentDateClone.isoWeekday() === 6 ||
+      currentDateClone.isoWeekday() === 7
+    ) {
+      currentDateClone.add(1, "week").startOf("isoWeek");
+    } else {
+      currentDateClone.startOf("isoWeek"); // Sinon, commencer la semaine normalement
+    }
 
     while (currentDateClone <= endDate) {
-      const weekNumber = currentDateClone.isoWeek();
+      const weekNumber = currentDateClone.isoWeek(); // Numéro de semaine ISO
       let weekTasks = tasks.filter(
         (item) => moment(item.date_fin).isoWeek() === weekNumber
       );
@@ -159,7 +170,16 @@ const Semaine = ({
     }
 
     // Calculer l'index de la semaine actuelle
-    const currentWeek = todayMoment.isoWeek();
+    const currentWeek = todayMoment
+      .clone()
+      .add(
+        todayMoment.isoWeekday() === 6 || todayMoment.isoWeekday() === 7
+          ? 1
+          : 0,
+        "week"
+      )
+      .isoWeek(); // Toujours calculer à partir du lundi
+
     const weekIndex = weeks.findIndex((week) => week.week === currentWeek);
 
     setDaysOfWeek(weeks);
@@ -304,12 +324,8 @@ const Semaine = ({
           <Text style={styles.headerTitle}>Semaine {currentWeekNumber}</Text>
         </View>
         <TouchableOpacity
-          disabled={currentIndex === 0}
           onPress={handleNextWeek}
-          style={[
-            styles.aroundRight,
-            { opacity: currentIndex === 0 ? 0.5 : 1 },
-          ]}
+          style={styles.aroundRight}
           hitSlop={{ top: 20, bottom: 20, right: 20 }}
         >
           <ArrowRight
@@ -346,9 +362,9 @@ const Semaine = ({
 
       <SwiperFlatList
         ref={swiperRef}
-        index={currentIndex}
+        index={0}
         data={daysOfWeek}
-        initialNumToRender={5}
+        initialNumToRender={1}
         renderItem={({ item }) => (
           <View style={styles.itemContent}>
             {Object.keys(item.data).length > 0 ? (
