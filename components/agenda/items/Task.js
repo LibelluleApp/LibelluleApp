@@ -16,6 +16,8 @@ function TaskHome({
   checked,
   onTaskCheck,
   onTaskUncheck,
+  component,
+  bouncyBox,
 }) {
   const { colors } = useContext(ThemeContext);
 
@@ -31,40 +33,39 @@ function TaskHome({
       marginTop: 10,
     },
     taskRight: {
-      width: "15%",
       alignItems: "flex-end",
+      width: "15%",
     },
     taskLeft: {
       flexDirection: "row",
       alignItems: "center",
       width: "85%",
-      gap: 10,
+      gap: 15,
     },
     taskLeftContent: {
-      gap: 3,
+      flexDirection: component === "little" ? "row" : "column",
+      alignItems: component === "little" ? "center" : "flex-start", // Correction pour l'alignement
+      gap: component === "little" ? 7 : 3,
+      flex: component === "little" ? 1 : 0, // Permet à ce conteneur de prendre de l'espace disponible
     },
     taskTitle: {
       fontFamily: "Ubuntu_500Medium",
-      fontSize: 16,
+      fontSize: component === "little" ? 13 : 16,
       color: colors.blue950,
-    },
-    taskContentDate: {
-      fontFamily: "Ubuntu_400Regular",
-      color: colors.blue950,
-      fontSize: 13,
-    },
-    taskContentMore: {
-      fontFamily: "Ubuntu_500Medium",
-      color: colors.blue950,
-      fontSize: 13,
+      maxWidth: component === "little" ? 100 : "90%", // Limite la largeur
     },
     taskDescription: {
       fontFamily: "Ubuntu_400Regular",
       color: colors.blue800,
+      maxWidth: component === "little" ? "auto" : "100%", // Limite la largeur
+      overflow: "hidden", // Cache le texte débordant
+      textOverflow: "ellipsis", // Ajoute des points de suspension si le texte déborde
+      whiteSpace: "nowrap", // Empêche le retour à la ligne
+      flex: component === "little" ? 1 : 0, // Permet au texte de prendre tout l'espace disponible
     },
     strikethrough: {
       textDecorationLine: "line-through",
-      color: colors.grey, // Optional: change color when striked through
+      color: colors.grey,
     },
   });
 
@@ -93,21 +94,27 @@ function TaskHome({
       onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
     >
       <View style={styles.taskLeft}>
-        <BouncyCheckbox
-          fillColor={colors.blue700}
-          unfillColor={colors.white}
-          isChecked={isChecked}
-          onPress={handleCheckboxPress}
-          disableText={true}
-        />
+        {bouncyBox && (
+          <BouncyCheckbox
+            fillColor={colors.blue700}
+            unfillColor={colors.white}
+            isChecked={isChecked}
+            onPress={handleCheckboxPress}
+            disableText={true}
+            hitSlop={{ top: 20, bottom: 20, right: 20, left: 20 }}
+            // style={{ padding: 10 }}
+          />
+        )}
         <View style={styles.taskLeftContent}>
           <Text style={[styles.taskTitle, isChecked && styles.strikethrough]}>
             {matiere || "Matière indisponible"}
           </Text>
           <Text
             style={[styles.taskDescription, isChecked && styles.strikethrough]}
+            numberOfLines={1}
+            ellipsizeMode="tail"
           >
-            {titre || "Titre indisponible"}
+            {titre || "Titre indisponible"} dededed
           </Text>
         </View>
       </View>

@@ -43,7 +43,12 @@ export async function migrateFromAsyncStorage() {
 
 export function getUserData(){
     const data = storage.getString('user_data');
-    return JSON.parse(data);
+    if(data){
+        return JSON.parse(data);
+    } else {
+        return null;
+    }
+
 }
 export function setUserData(userData){
     storage.set('user_data', userData);

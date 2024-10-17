@@ -23,7 +23,6 @@
       }
     },
     "preview": {
-      "distribution": "internal",
       "ios": {
         "enterpriseProvisioning": "adhoc",
         "image": "latest"

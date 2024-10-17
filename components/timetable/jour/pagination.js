@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { ArrowLeft, ArrowRight } from "../../../assets/icons/Icons";
 
 const PaginationHeader = ({
-  currentDay,
+  currentDate,
   onPrev,
   onNext,
   index,
@@ -42,7 +42,7 @@ const PaginationHeader = ({
           </TouchableOpacity>
         )}
 
-        <Text style={styles.day}>{currentDay}</Text>
+        <Text style={styles.day}>{currentDate}</Text>
         <TouchableOpacity
           onPress={onNext}
           style={styles.around}
