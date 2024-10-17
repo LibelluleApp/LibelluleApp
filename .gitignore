@@ -44,3 +44,6 @@ yarn-error.*
 
 *.ipa
 *.tar.gz
+
+yarn.lock
+package-lock.json

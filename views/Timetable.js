@@ -65,7 +65,7 @@ function Timetable() {
         </View>
         {selectedView === "day" && <Jour ref={jourRef}/>}
         {selectedView === "week" && <Semaine ref={semaineRef}/>}
-      </View>
+    </View>
   );
 }
 
