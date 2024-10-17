@@ -66,7 +66,8 @@ export const SessionProvider = ({ children }) => {
           .then(() => {
             setSession(null);
           })
-          .catch((error) => console.error('Error deleting secure token:', error));
+          .catch((error) => console.error('Error deleting secure token:', error))
+          .finally(() => setLoading(false));
     }
 
     SecureStore.getItemAsync('secure_user_token')
