@@ -380,18 +380,24 @@ const Semaine = ({
                         )
                         .join(" ")}
                     </Text>
-                    {dateTasks.map((agendaItem) => (
-                      <Item
-                        key={agendaItem.agenda_id}
-                        item={agendaItem}
-                        currentDate={agendaItem.date_fin}
-                        onTaskCheck={handleTaskCheck}
-                        onTaskUncheck={handleTaskUncheck}
-                        slide={true}
-                        bouncyBox={true}
-                        component={"normal"}
-                      />
-                    ))}
+                    {Array.isArray(dateTasks) ? (
+                      dateTasks.map((agendaItem) => (
+                        <Item
+                          key={agendaItem.agenda_id}
+                          item={agendaItem}
+                          currentDate={agendaItem.date_fin}
+                          onTaskCheck={handleTaskCheck}
+                          onTaskUncheck={handleTaskUncheck}
+                          slide={true}
+                          bouncyBox={true}
+                          component={"normal"}
+                        />
+                      ))
+                    ) : (
+                      <Text style={styles.noItemTitle}>
+                        Aucune tâche pour ce jour.
+                      </Text>
+                    )}
                   </View>
                 ))}
               </View>

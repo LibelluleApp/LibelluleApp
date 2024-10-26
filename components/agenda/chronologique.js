@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import moment from "moment-timezone";
-import Item from "./Item"; // Assurez-vous que ce composant est correctement importé
+import Item from "./Item";
 import { ThemeContext } from "./../../utils/themeContext";
 
 const Chronologie = ({
@@ -37,31 +37,39 @@ const Chronologie = ({
       fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
       color: colors.blue950,
+      marginVertical: 5,
     },
     listContainer: {},
   });
 
-  // Vérification des tâches
-  console.log("Tasks:", tasks); // Vérifiez que le tableau tasks est correctement rempli
+  const today = moment().startOf("day");
 
-  // Obtenir la date d'aujourd'hui
-  const today = moment().startOf("day"); // Utiliser le début de la journée
-
-  // Filtrer et trier les tâches futures
   const upcomingTasks = tasks
-    .filter((task) => moment(task.date_fin).isAfter(today)) // Garder seulement les tâches à venir
-    .sort((a, b) => moment(a.date_fin).diff(moment(b.date_fin))); // Trier par date croissante
+    .filter((task) => moment(task.date_fin).isAfter(today))
+    .sort((a, b) => moment(a.date_fin).diff(moment(b.date_fin)));
 
-  // Fonction pour formater la date pour l'affichage
   const formatDate = (date) => {
     return moment(date).format("DD/MM");
   };
 
-  // Fonction de rendu pour chaque tâche
+  // Suivi de la dernière date affichée pour appliquer l'opacité
+  let lastRenderedDate = null;
+
   const renderItem = ({ item }) => {
+    const itemDate = formatDate(item.date_fin);
+    const isSameDate = itemDate === lastRenderedDate;
+    lastRenderedDate = itemDate;
+
     return (
       <View style={styles.taskContainer}>
-        <Text style={styles.dateText}>{formatDate(item.date_fin)}</Text>
+        <Text
+          style={[
+            styles.dateText,
+            { opacity: isSameDate ? 0 : 1 }, // Opacité à 0 pour les dates répétées
+          ]}
+        >
+          {itemDate}
+        </Text>
         <View style={{ flex: 1 }}>
           <Item
             item={item}
@@ -80,7 +88,7 @@ const Chronologie = ({
   return (
     <View style={styles.container}>
       <FlatList
-        data={upcomingTasks} // Utiliser la liste des tâches filtrées
+        data={upcomingTasks}
         renderItem={renderItem}
         keyExtractor={(item) => item.agenda_id.toString()}
         showsVerticalScrollIndicator={false}

@@ -240,8 +240,8 @@ const Add = ({ route }) => {
               placeholderTextColor={colors.text_placeholder}
               placeholder={
                 type === "eval"
-                  ? "Entrer une description de l'évaluation"
-                  : "Entrer une description de la tâche"
+                  ? "Entrer une description de l'évaluation (ex : consignes, durée, mail de l’enseignant.e...)"
+                  : "Entrer une description de la tâche (ex : consignes, lieu du rendu, mail de l’enseignant.e...)"
               }
               multiline={true}
               onChangeText={(text) => setDescription(text)}
