@@ -19,7 +19,7 @@ import moment from "moment";
 
 const Agenda = () => {
   const { colors } = useContext(ThemeContext);
-  let defaultView = "day"; // Vue par défaut de l'agenda
+  let defaultView = "week"; // Vue par défaut de l'agenda
 
   const [selectedView, setSelectedView] = useState(defaultView); // Vue par défaut
   const [tasks, setTasks] = useState([]); // Tâches de l'agenda
