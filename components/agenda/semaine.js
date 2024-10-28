@@ -323,6 +323,13 @@ const Semaine = ({
     percentProgression = Math.round(progression * 100);
   }
 
+  // Obtenir le début de l'année
+  const yearStart = moment().startOf("year");
+  // Calculer la date de début de la semaine en fonction du numéro de semaine
+  const startOfWeekDate = yearStart
+    .add(currentWeekNumber - 1, "weeks")
+    .startOf("isoWeek");
+
   return (
     <View style={styles.swiperContainer}>
       <View style={styles.headerContainer}>
@@ -341,6 +348,12 @@ const Semaine = ({
         </TouchableOpacity>
         <View style={styles.headerTitleContainer}>
           <Text style={styles.headerTitle}>Semaine {currentWeekNumber}</Text>
+          <Text style={styles.headerSubtitle}>
+            {`Du ${startOfWeekDate.format("DD/MM")} au ${startOfWeekDate
+              .clone()
+              .add(4, "days")
+              .format("DD/MM")}`}
+          </Text>
         </View>
         <TouchableOpacity
           onPress={handleNextWeek}
