@@ -40,6 +40,21 @@ const Chronologie = ({
       marginVertical: 5,
     },
     listContainer: {},
+    noItemContent: {
+      justifyContent: "center",
+      alignItems: "center",
+      gap: 7,
+      width: "100%",
+      marginBottom: 50,
+      flex: 1,
+    },
+    textNone: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      textAlign: "center",
+      color: colors.blue800,
+      width: "50%",
+    },
   });
 
   const today = moment().startOf("day");

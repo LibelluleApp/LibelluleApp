@@ -6,7 +6,11 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { ArrowLeft, ArrowRight } from "./../../assets/icons/Icons";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CircleCheckBig,
+} from "./../../assets/icons/Icons";
 import moment from "moment-timezone";
 import SwiperFlatList from "react-native-swiper-flatlist";
 import Item from "./Item"; // Assurez-vous que ce composant est correctement importé
@@ -128,6 +132,21 @@ const Semaine = ({
       fontSize: 14,
       fontFamily: "Ubuntu_500Medium",
       color: colors.blue800,
+    },
+    noItemContent: {
+      justifyContent: "center",
+      alignItems: "center",
+      gap: 7,
+      width: "100%",
+      marginBottom: 50,
+      flex: 1,
+    },
+    textNone: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      textAlign: "center",
+      color: colors.blue800,
+      width: "50%",
     },
   });
 
@@ -394,17 +413,31 @@ const Semaine = ({
                         />
                       ))
                     ) : (
-                      <Text style={styles.noItemTitle}>
-                        Aucune tâche pour ce jour.
-                      </Text>
+                      <View style={styles.noItemContent}>
+                        <CircleCheckBig
+                          stroke={colors.blue800}
+                          strokeWidth={1.75}
+                          width={30}
+                          height={30}
+                        />
+                        <Text style={styles.textNone}>
+                          Aucun élément à afficher pour cette semaine
+                        </Text>
+                      </View>
                     )}
                   </View>
                 ))}
               </View>
             ) : (
-              <View style={styles.noItemContainer}>
-                <Text style={styles.noItemTitle}>
-                  Aucune tâche pour cette semaine.
+              <View style={styles.noItemContent}>
+                <CircleCheckBig
+                  stroke={colors.blue800}
+                  strokeWidth={1.75}
+                  width={30}
+                  height={30}
+                />
+                <Text style={styles.textNone}>
+                  Aucun élément à afficher pour cette semaine
                 </Text>
               </View>
             )}
