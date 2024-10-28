@@ -25,7 +25,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import NextCourse from "../components/home/nextCourse/nextCourse";
 import AgendaHome from "../components/home/Agenda/agendaHome";
-import ParcourirHome from "../components/home/Parcourir";
+import Restauration from "../components/home/Restauration";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
@@ -484,7 +484,7 @@ function Home() {
 
         <NextCourse />
         <AgendaHome />
-        <ParcourirHome />
+        <Restauration />
       </ScrollView>
     </GestureHandlerRootView>
   );
