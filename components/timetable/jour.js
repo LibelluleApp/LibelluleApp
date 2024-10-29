@@ -191,6 +191,7 @@ const Jour = () => {
         minTimeIntervalHeight={height}
         initialTimeIntervalHeight={height}
         spaceFromTop={4}
+        isShowHalfLine={false}
         locale="fr"
         theme={{
           backgroundColor: colors.background,

@@ -159,6 +159,7 @@ const Semaine = () => {
         spaceFromTop={4}
         locale="fr"
         ref={calendarRef}
+        isShowHalfLine={false}
         allowPinchToZoom
         minTimeIntervalHeight={height}
         initialTimeIntervalHeight={height}

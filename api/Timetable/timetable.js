@@ -12,9 +12,19 @@ async function fetchTimetable() {
     if (isAlternant === "true") {
       user_data.groupe_id = user_data.groupe_id + "A";
     }
-    const response = await ApiManager.post("/timetable/timetable", {
-      groupe_id: user_data.groupe_id,
-    });
+    const response = await ApiManager.post(
+        "/timetable/timetable",
+        {
+          groupe_id: user_data.groupe_id,
+        },
+        {
+          headers: {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+          },
+        }
+    );
+
+
 
     if (response.data.status === "success") {
       return response.data.events;

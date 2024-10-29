@@ -36,7 +36,7 @@ export default {
     entitlements: {
       "aps-environment": "production",
     },
-    buildNumber: "1.17",
+    buildNumber: "1.18",
   },
   android: {
     adaptiveIcon: {
