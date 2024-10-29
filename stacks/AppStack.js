@@ -214,13 +214,8 @@ const AppStack = ({ navigation }) => {
             fontFamily: "Ubuntu_400Regular",
             fontSize: 16,
           },
-          headerStyle: {
-            backgroundColor: colors.background,
-            shadowColor: "transparent",
-            elevation: 0,
-          },
         }}
-      >
+       id={"app"}>
         {views.map((view) => (
           <Stack.Screen
             key={view.name}

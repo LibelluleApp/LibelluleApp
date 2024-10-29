@@ -52,11 +52,11 @@ function Notes() {
       color: colors.blue950,
     },
     altText: {
+      marginTop: 40,
       fontFamily: "Ubuntu_400Regular",
       color: colors.blue950,
-      fontSize: 13,
+      fontSize: 14,
       alignSelf: "center",
-      marginTop: 40,
     },
     textContent: {
       flexDirection: "row",
@@ -104,12 +104,6 @@ function Notes() {
       flexDirection: "row",
       justifyContent: "center",
       marginBottom: 20,
-    },
-    altText: {
-      fontFamily: "Ubuntu_400Regular",
-      color: colors.blue950,
-      fontSize: 14,
-      alignSelf: "center",
     },
     altTextLink: {
       fontFamily: "Ubuntu_400Regular",

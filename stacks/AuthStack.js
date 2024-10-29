@@ -63,11 +63,6 @@ const AuthStack = ({ navigation }) => {
           fontFamily: "Ubuntu_400Regular",
           fontSize: 16,
         },
-        headerStyle: {
-          backgroundColor: colors.background,
-          shadowColor: "transparent",
-          elevation: 0,
-        },
       }}
     >
       {views.map((view, index) => (
