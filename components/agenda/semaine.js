@@ -105,11 +105,10 @@ const Semaine = ({
       width: width,
       paddingHorizontal: 20,
       paddingTop: 20,
-      gap: 20,
     },
     itemContainer: {
       flexDirection: "column",
-      gap: 10,
+      gap: 20,
     },
     noItemContainer: {
       flex: 1,
