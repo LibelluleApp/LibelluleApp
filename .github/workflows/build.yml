@@ -148,7 +148,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build iOS
-        run: eas build --platform ios --profile development --local --non-interactive
+        run: eas build --platform ios --profile production --local --non-interactive
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
@@ -159,3 +159,9 @@ jobs:
           name: ios-app
           path: /Users/runner/work/LibelluleApp/LibelluleApp/*.ipa
 
+      - name: Upload iOS app to App Store
+        run: |
+          xcrun altool --upload-app --type ios --file /Users/runner/work/LibelluleApp/LibelluleApp/*.ipa --username $APPLE_ID --password $APPLE_APP_SPECIFIC_PASSWORD
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
