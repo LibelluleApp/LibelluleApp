@@ -159,9 +159,3 @@ jobs:
           name: ios-app
           path: /Users/runner/work/LibelluleApp/LibelluleApp/*.ipa
 
-      - name: Upload iOS app to App Store
-        run: |
-          xcrun altool --upload-app --type ios --file /Users/runner/work/LibelluleApp/LibelluleApp/*.ipa --username $APPLE_ID --password $APPLE_APP_SPECIFIC_PASSWORD
-        env:
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
