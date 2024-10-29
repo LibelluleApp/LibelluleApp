@@ -10,7 +10,7 @@ async function fetchWeather() {
     }
 
     // Récupération de la localisation de l'utilisateur
-    let currentLocation = await Location.getCurrentPositionAsync({});
+    let currentLocation = await Location.getLastKnownPositionAsync({});
     const { latitude, longitude } = currentLocation.coords;
 
     // Appel à l'API pour récupérer les données météo
