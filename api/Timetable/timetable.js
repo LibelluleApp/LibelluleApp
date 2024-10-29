@@ -12,7 +12,7 @@ async function fetchTimetable() {
     if (isAlternant === "true") {
       user_data.groupe_id = user_data.groupe_id + "A";
     }
-    const response = await ApiManager.post("/timetable/gettimetable", {
+    const response = await ApiManager.post("/timetable/timetable", {
       groupe_id: user_data.groupe_id,
     });
 

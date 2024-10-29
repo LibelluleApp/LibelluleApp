@@ -1,6 +1,6 @@
 import "expo-dev-client";
-import React, { useEffect } from "react";
-import { Text, View, StatusBar, TextInput, Platform } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View, StatusBar, TextInput, Platform, AppState } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
 import * as NavigationBar from "expo-navigation-bar";
@@ -12,30 +12,45 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { AuthProvider } from "./context/AuthContext";
-import AuthStackSwitcher from "./context/AuthStackSwitcher"; // Import the AuthStackSwitcher
+import AuthStackSwitcher from "./context/AuthStackSwitcher";
 import moment from "moment";
 import { useFonts } from "expo-font";
-import "moment/locale/fr"; // Import the French locale
+import "moment/locale/fr";
 
-moment.locale("fr"); // Set the locale to French
+moment.locale("fr");
 
 function App() {
+  const [appState, setAppState] = useState(AppState.currentState);
+  const [reloadKey, setReloadKey] = useState(0); // État pour forcer le re-rendu
+
+  useEffect(() => {
+    const handleAppStateChange = (nextAppState) => {
+      if (appState.match(/inactive|background/) && nextAppState === "active") {
+        setReloadKey(prevKey => prevKey + 1);
+      }
+      setAppState(nextAppState);
+    };
+
+    const appStateListener = AppState.addEventListener("change", handleAppStateChange);
+    return () => appStateListener.remove();
+  }, [appState]);
+
   useEffect(() => {
     messaging()
-      .getInitialNotification()
-      .then(async (remoteMessage) => {
-        if (remoteMessage) {
-          console.log(
-            "Notification caused app to open from quit state:",
-            remoteMessage.notification
-          );
-        }
-      });
+        .getInitialNotification()
+        .then(async (remoteMessage) => {
+          if (remoteMessage) {
+            console.log(
+                "Notification caused app to open from quit state:",
+                remoteMessage.notification
+            );
+          }
+        });
 
     messaging().onNotificationOpenedApp(async (remoteMessage) => {
       console.log(
-        "Notification caused app to open from background state:",
-        remoteMessage.notification
+          "Notification caused app to open from background state:",
+          remoteMessage.notification
       );
     });
 
@@ -46,6 +61,7 @@ function App() {
     const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       console.log("A new FCM message arrived!", remoteMessage);
     });
+    return unsubscribe;
   }, []);
 
   if (Platform.OS === "android") {
@@ -90,16 +106,16 @@ function App() {
   }
 
   return (
-    <ThemeProvider>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <AuthProvider>
-            <AuthStackSwitcher />
-            <FlashMessageWithInsets />
-          </AuthProvider>
-        </NavigationContainer>
-      </SafeAreaProvider>
-    </ThemeProvider>
+      <ThemeProvider>
+        <SafeAreaProvider>
+          <NavigationContainer key={reloadKey}>
+            <AuthProvider>
+              <AuthStackSwitcher />
+              <FlashMessageWithInsets />
+            </AuthProvider>
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </ThemeProvider>
   );
 }
 
@@ -107,11 +123,11 @@ function FlashMessageWithInsets() {
   const insets = useSafeAreaInsets();
 
   return (
-    <FlashMessage
-      position="top"
-      hideStatusBar={true}
-      statusBarHeight={insets.top}
-    />
+      <FlashMessage
+          position="top"
+          hideStatusBar={true}
+          statusBarHeight={insets.top}
+      />
   );
 }
 
