@@ -74,7 +74,7 @@ const AuthStackSwitcher = () => {
                 animation: "fade",
                 animationDuration: 150,
             }}
-        >
+         id={"app"}>
             {session ? (
                 <Stack.Screen name="AppStack" component={AppStack} />
             ) : (
