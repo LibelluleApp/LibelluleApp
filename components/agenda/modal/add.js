@@ -132,10 +132,19 @@ const Add = ({ route }) => {
       textTransform: "capitalize",
     },
     btnContainerBottom: {
+      flexDirection: "column",
+      gap: 10,
       position: "absolute",
       bottom: 40,
       width: "90%",
       alignSelf: "center",
+    },
+    btnContainerBottomText: {
+      color: colors.grey,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      textAlign: "center",
+      letterSpacing: -0.5,
     },
   });
 
@@ -275,6 +284,9 @@ const Add = ({ route }) => {
           onPress={handleSaveTask}
           loading={loading}
         />
+        <Text style={styles.btnContainerBottomText}>
+          Cette tâche s’affichera pour tous les étudiants du TP
+        </Text>
       </View>
     </View>
   );

@@ -2,7 +2,7 @@ export const lightModeColors = {
   background: "#F3F8FF",
   white_background: "#FFFFFF",
 
-  grey: "#9AA5B3",
+  grey: "#87A6DD",
   grey_variable: "#9AA5B3",
   grey_clear: "rgba(154,165,179,0.35)",
   white: "#FFFFFF",
@@ -61,7 +61,7 @@ export const darkModeColors = {
   background: "#10162A",
   white_background: "#0F295C",
 
-  grey: "#9AA5B3",
+  grey: "#87A6DD",
   grey_variable: "#FFFFFF",
   grey_clear: "rgba(155,155,155,0.8)",
   white: "#FFFFFF",
