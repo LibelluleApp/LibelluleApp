@@ -7,7 +7,11 @@ import {
   ActivityIndicator,
   Alert,
 } from "react-native";
-import { Calendar, Student, LayoutList } from "../../../assets/icons/Icons";
+import {
+  Calendar,
+  GraduationCap,
+  LayoutList,
+} from "../../../assets/icons/Icons";
 import * as Haptics from "expo-haptics";
 import fetchTask from "../../../api/Agenda/fetchTask";
 import deleteTask from "../../../api/Agenda/delete";
@@ -25,7 +29,6 @@ const ViewTask = ({ route }) => {
     container: {
       flex: 1,
       flexDirection: "column",
-      justifyContent: "space-between",
       backgroundColor: colors.background,
       padding: 20,
       gap: 20,
@@ -83,6 +86,9 @@ const ViewTask = ({ route }) => {
       textAlign: "center",
     },
     taskCTA: {
+      position: "absolute",
+      bottom: 20,
+      alignSelf: "center",
       flexDirection: "column",
       width: "95%",
       marginHorizontal: "auto",
@@ -205,7 +211,7 @@ const ViewTask = ({ route }) => {
             </View>
           </View>
           <View style={styles.taskInfoContent}>
-            <Student
+            <GraduationCap
               stroke={colors.blue950}
               strokeWidth={1.75}
               width={20}

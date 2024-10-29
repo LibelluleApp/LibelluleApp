@@ -1,10 +1,15 @@
 import React, { useContext, useEffect } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { BookOpen, Student, Utensils, Link } from "../../assets/icons/Icons";
+import {
+  BookOpen,
+  GraduationCap,
+  Utensils,
+  Link,
+} from "../../assets/icons/Icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { ThemeContext } from "./../../utils/themeContext";
-import {getUserData} from "../../utils/storage";
+import { getUserData } from "../../utils/storage";
 
 function ParcourirHome() {
   const { colors } = useContext(ThemeContext);
@@ -20,7 +25,7 @@ function ParcourirHome() {
         return null;
       }
     };
-  getData();
+    getData();
   }, []);
 
   const styles = StyleSheet.create({
@@ -112,7 +117,7 @@ function ParcourirHome() {
           style={[styles.tile, styles.disabled]}
           disabled={true}
         >
-          <Student
+          <GraduationCap
             color={colors.blue950}
             width={20}
             height={20}
@@ -173,7 +178,7 @@ function ParcourirHome() {
           style={[styles.tile, styles.disabled]}
           disabled={true}
         >
-          <Student
+          <GraduationCap
             color={colors.blue950}
             width={20}
             height={20}

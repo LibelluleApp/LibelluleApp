@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -8,12 +8,15 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { Calendar } from "./../../../assets/icons/Icons";
+import {
+  Calendar,
+  TextIcon,
+  Baseline,
+  GraduationCap,
+} from "./../../../assets/icons/Icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import SelectComponent from "./select";
 import ButtonAuth from "../../auth/buttonAuth";
-import saveAgenda from "../../../api/Agenda/save";
 import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment-timezone";
@@ -21,116 +24,30 @@ import { ThemeContext } from "./../../../utils/themeContext";
 
 const Add = ({ route }) => {
   const { colors } = useContext(ThemeContext);
-
-  const styles = StyleSheet.create({
-    background: {
-      backgroundColor: colors.background,
-      flex: 1,
-    },
-    container: {
-      width: "90%",
-      alignSelf: "center",
-      paddingTop: 20,
-    },
-    title: {
-      fontSize: 15,
-      fontFamily: "Ubuntu_500Medium",
-      color: colors.blue950,
-      marginBottom: 10,
-    },
-    input: {
-      borderRadius: 10,
-      paddingHorizontal: 20,
-      height: 58,
-      color: colors.blue950,
-      marginBottom: 20,
-      justifyContent: "center",
-      backgroundColor: colors.white_background,
-      fontFamily: "Ubuntu_400Regular",
-    },
-    date: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-    },
-    description: {
-      height: 135,
-      paddingHorizontal: 20,
-      padding: 15,
-      textAlignVertical: "top",
-      paddingVertical: 10,
-    },
-    textDate: {
-      color: colors.blue950,
-      fontFamily: "Ubuntu_400Regular",
-      fontSize: 15,
-      textTransform: "capitalize",
-    },
-  });
-
   const navigation = useNavigation();
   const { date } = route.params;
 
+  const [selectedButton, setSelectedButton] = useState("task");
   const [dates, setDates] = useState(moment.tz(date, "Europe/Paris"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [matiere, setMatiere] = useState(0);
   const [type, setType] = useState("");
   const [titre, setTitre] = useState("");
   const [description, setDescription] = useState("");
 
-  const [error, setError] = useState(null);
-
   const handleSaveTask = async () => {
-    if (type !== "eval") {
-      if (!dates || !matiere || !type || !titre) {
-        showMessage({
-          message: "Veuillez remplir tous les champs obligatoires.",
-          type: "danger",
-          titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        });
-        return;
-      }
-    } else {
-      if (!dates || !matiere || !type) {
-        showMessage({
-          message: "Veuillez remplir tous les champs obligatoires.",
-          type: "danger",
-          titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        });
-        return;
-      }
-    }
-
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await saveAgenda(
-        titre,
-        description,
-        dates.format("yyyy-MM-DD"),
-        matiere,
-        type
-      );
-      if (result.status === "success") {
-        showMessage({
-          message: "Tâche ajoutée avec succès.",
-          type: "success",
-          titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        });
-        navigation.goBack();
-      }
-    } catch (error) {
-      setError(error.message);
+    if (!dates || !matiere || !type || (type !== "eval" && !titre)) {
       showMessage({
-        message: error.message,
+        message: "Veuillez remplir tous les champs obligatoires.",
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
       });
-    } finally {
-      setLoading(false);
+      return;
     }
+    setLoading(true);
+    // Logique pour sauvegarder la tâche ici
+    setLoading(false);
   };
 
   const showDatePicker = () => {
@@ -146,117 +63,220 @@ const Add = ({ route }) => {
     hideDatePicker();
   };
 
-  const data = [{ label: "Anglais", value: "1" }];
-
-  const data2 = [
-    { label: "Tâche à faire", value: "devoir" },
-    { label: "Évaluation", value: "eval" },
-  ];
-
-  const [value, setValue] = useState(null);
-  const [value2, setValue2] = useState(null);
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    scrollViewContainer: {
+      width: "90%",
+      alignSelf: "center",
+      paddingTop: 20,
+      paddingBottom: 100, // Espace pour s'assurer que tout le contenu est visible au-dessus du bouton
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 20,
+    },
+    buttonContent: {
+      width: "48%",
+      height: 40,
+      borderRadius: 50,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    buttonContentSelected: {
+      backgroundColor: colors.blue200,
+    },
+    buttonContentUnselected: {
+      backgroundColor: colors.background,
+      borderColor: colors.blue200,
+      borderWidth: 1,
+    },
+    buttonTitleSelected: {
+      color: colors.blue900,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+    },
+    buttonTitleUnselected: {
+      color: colors.blue400,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+    },
+    inputContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      width: "100%",
+      marginVertical: 10,
+      gap: 15,
+    },
+    input: {
+      flex: 1,
+      borderRadius: 10,
+      paddingHorizontal: 20,
+      height: 58,
+      color: colors.blue900,
+      fontFamily: "Ubuntu_400Regular",
+      backgroundColor: colors.white_background,
+    },
+    description: {
+      height: 135,
+      padding: 15,
+      textAlignVertical: "top",
+    },
+    textDate: {
+      color: colors.blue900,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      textTransform: "capitalize",
+    },
+    btnContainerBottom: {
+      position: "absolute",
+      bottom: 40,
+      width: "90%",
+      alignSelf: "center",
+    },
+  });
 
   return (
-    <KeyboardAwareScrollView
-      style={styles.background}
-      extraScrollHeight={40}
-      extraHeight={100}
-      keyboardOpeningTime={10}
-      // enableOnAndroid={true}
-      // keyboardShouldPersistTaps="always" // Empêche de bloquer les interactions
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.container}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.title}>
-              Date<Text style={{ color: colors.blue800 }}>*</Text>
-            </Text>
-            <TouchableOpacity
-              onPress={showDatePicker}
-              style={[styles.input, styles.date]}
-            >
-              <Text style={styles.textDate}>
-                {dates.format("dddd DD MMMM")}
-              </Text>
-              <Calendar
-                stroke={colors.blue950}
-                strokeWidth={1.75}
-                width={16}
-                height={16}
-              />
-            </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              date={moment.tz(dates, "Europe/Paris").toDate()}
-              minimumDate={new Date()}
-              locale="fr-FR"
-              value={moment.tz(dates, "Europe/Paris").toDate()}
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.title}>
-              Matière<Text style={{ color: colors.blue800 }}>*</Text>
-            </Text>
-            <TextInput
-              style={styles.input}
-              placeholderTextColor={colors.text_placeholder}
-              placeholder="Nom de la matière"
-              onChangeText={(text) => setMatiere(text)}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.title}>
-              Type de tâche<Text style={{ color: colors.blue800 }}>*</Text>
-            </Text>
-            <SelectComponent
-              onChange={(item) => {
-                setValue2(item.value);
-                setType(item.value);
-              }}
-              data={data2}
-              value={value2}
-            />
-          </View>
-          {type !== "eval" && (
+    <View style={styles.container}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.scrollViewContainer}
+        extraScrollHeight={40}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <View>
+            {/* Boutons de sélection */}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.buttonContent,
+                  selectedButton === "task"
+                    ? styles.buttonContentSelected
+                    : styles.buttonContentUnselected,
+                ]}
+                onPress={() => {
+                  setSelectedButton("task");
+                  setType("devoir");
+                }}
+              >
+                <Text
+                  style={
+                    selectedButton === "task"
+                      ? styles.buttonTitleSelected
+                      : styles.buttonTitleUnselected
+                  }
+                >
+                  Tâche
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.buttonContent,
+                  selectedButton === "eval"
+                    ? styles.buttonContentSelected
+                    : styles.buttonContentUnselected,
+                ]}
+                onPress={() => {
+                  setSelectedButton("eval");
+                  setType("eval");
+                }}
+              >
+                <Text
+                  style={
+                    selectedButton === "eval"
+                      ? styles.buttonTitleSelected
+                      : styles.buttonTitleUnselected
+                  }
+                >
+                  Évaluation
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Champ pour le titre de la tâche */}
+            {type !== "eval" && (
+              <View style={styles.inputContainer}>
+                <Baseline width={20} height={20} stroke={colors.blue900} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Ajouter un titre"
+                  placeholderTextColor={colors.text_placeholder}
+                  onChangeText={(text) => setTitre(text)}
+                />
+              </View>
+            )}
+
+            {/* Date Picker */}
             <View style={styles.inputContainer}>
-              <Text style={styles.title}>
-                Titre<Text style={{ color: colors.blue800 }}>*</Text>
-              </Text>
-              <TextInput
-                style={styles.input}
-                placeholderTextColor={colors.text_placeholder}
-                placeholder="Entrer le nom de la tâche"
-                onChangeText={(text) => setTitre(text)}
+              <Calendar stroke={colors.blue900} width={20} height={20} />
+              <TouchableOpacity
+                onPress={showDatePicker}
+                style={[
+                  styles.input,
+                  {
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  },
+                ]}
+              >
+                <Text style={styles.textDate}>
+                  {dates.format("dddd DD MMMM")}
+                </Text>
+              </TouchableOpacity>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                date={moment.tz(dates, "Europe/Paris").toDate()}
+                minimumDate={new Date()}
+                locale="fr-FR"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
               />
             </View>
-          )}
-          <View style={styles.inputContainer}>
-            <Text style={styles.title}>Description</Text>
-            <TextInput
-              style={[styles.input, styles.description]}
-              placeholderTextColor={colors.text_placeholder}
-              placeholder={
-                type === "eval"
-                  ? "Entrer une description de l'évaluation (ex : consignes, durée, mail de l’enseignant.e...)"
-                  : "Entrer une description de la tâche (ex : consignes, lieu du rendu, mail de l’enseignant.e...)"
-              }
-              multiline={true}
-              onChangeText={(text) => setDescription(text)}
-              value={description}
-            />
-          </View>
 
-          <ButtonAuth
-            title="Ajouter"
-            onPress={handleSaveTask}
-            loading={loading}
-          />
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAwareScrollView>
+            {/* Champ pour la matière */}
+            <View style={styles.inputContainer}>
+              <GraduationCap width={20} height={20} stroke={colors.blue900} />
+              <TextInput
+                style={styles.input}
+                placeholder="Ajouter une matière"
+                placeholderTextColor={colors.text_placeholder}
+                onChangeText={(text) => setMatiere(text)}
+              />
+            </View>
+
+            {/* Champ pour la description */}
+            <View style={styles.inputContainer}>
+              <TextIcon width={20} height={20} stroke={colors.blue900} />
+              <TextInput
+                style={[styles.input, styles.description]}
+                placeholder={
+                  type === "eval"
+                    ? "Description de l'évaluation (consignes, durée...)"
+                    : "Description de la tâche (consignes, lieu du rendu...)"
+                }
+                placeholderTextColor={colors.text_placeholder}
+                multiline={true}
+                onChangeText={(text) => setDescription(text)}
+                value={description}
+              />
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAwareScrollView>
+
+      {/* Bouton Ajouter en bas de la vue */}
+      <View style={styles.btnContainerBottom}>
+        <ButtonAuth
+          title="Ajouter"
+          onPress={handleSaveTask}
+          loading={loading}
+        />
+      </View>
+    </View>
   );
 };
 

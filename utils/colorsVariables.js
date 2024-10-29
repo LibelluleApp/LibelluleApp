@@ -9,7 +9,7 @@ export const lightModeColors = {
   black50: "#385768",
   black: "#18313F",
   input_border: "#9AA5B3",
-  text_placeholder: "#9AA5B3",
+  text_placeholder: "#87A6DD",
   text_value: "#18313F",
 
   // blue_variable: "#0760FB",
@@ -68,7 +68,7 @@ export const darkModeColors = {
   black50: "#E2E2E2",
   black: "#F6F6F6",
   input_border: "#101D47",
-  text_placeholder: "#9AA5B3",
+  text_placeholder: "#87A6DD",
   text_value: "#18313F",
 
   // blue_variable: "#68AEFF",
