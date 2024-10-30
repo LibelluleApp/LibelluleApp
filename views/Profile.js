@@ -339,7 +339,10 @@ function Profile() {
         <View style={styles.sectionPageItem}>
           <Text style={styles.sectionTitle}>Autre</Text>
           <View style={styles.pageContainer}>
-            <TouchableOpacity style={styles.pageItem}>
+            <TouchableOpacity
+              style={styles.pageItem}
+              onPress={() => navigation.navigate("liensExterne")}
+            >
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <Link
