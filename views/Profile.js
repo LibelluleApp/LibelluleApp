@@ -119,7 +119,7 @@ function Profile() {
       letterSpacing: -0.6,
     },
     profilGroupContent: {
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.blue200_2,
       paddingHorizontal: 10,
       paddingVertical: 3,
       borderRadius: 5,
@@ -127,7 +127,7 @@ function Profile() {
     profilGroupTitle: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 13,
-      color: colors.blue900,
+      color: colors.blue900_2,
       letterSpacing: -0.6,
     },
     profilEmail: {
@@ -295,7 +295,7 @@ function Profile() {
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <Palette
-                    stroke={colors.white}
+                    stroke={colors.blue100}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -346,7 +346,7 @@ function Profile() {
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <Link
-                    stroke={colors.white}
+                    stroke={colors.blue100}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -371,7 +371,7 @@ function Profile() {
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <NotepadText
-                    stroke={colors.white}
+                    stroke={colors.blue100}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -396,7 +396,7 @@ function Profile() {
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <Landmark
-                    stroke={colors.white}
+                    stroke={colors.blue100}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -429,7 +429,7 @@ function Profile() {
                   style={[styles.pageIcon, { backgroundColor: colors.red800 }]}
                 >
                   <LogOut
-                    stroke={colors.white}
+                    stroke={colors.red100}
                     strokeWidth={1.75}
                     width={18}
                     height={18}

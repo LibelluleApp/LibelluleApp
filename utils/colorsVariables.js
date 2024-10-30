@@ -34,6 +34,7 @@ export const lightModeColors = {
   blue50: "#EDF8FF",
   blue100: "#D6EDFF",
   blue200: "#B7E1FF",
+  blue200_2: "#D6EDFF",
   blue300: "#85D1FF",
   blue400: "#4BB5FF",
   blue500: "#2293FF",
@@ -41,6 +42,7 @@ export const lightModeColors = {
   blue700: "#0760FB",
   blue800: "#0B49C2",
   blue900: "#0F4199",
+  blue900_2: "#0F4199",
   blue950: "#0F295C",
 
   // Red
@@ -93,6 +95,7 @@ export const darkModeColors = {
   blue50: "#1E5780",
   blue100: "#1E5780",
   blue200: "#0F295C",
+  blue200_2: "#D6EDFF",
   blue300: "#85D1FF",
   blue400: "#4BB5FF",
   blue500: "#2293FF",
@@ -100,18 +103,19 @@ export const darkModeColors = {
   blue700: "#4BB5FF",
   blue800: "#D6EDFF",
   blue900: "#D6EDFF",
+  blue900_2: "#1E5780",
   blue950: "#EDF8FF",
 
   // Red
   red50: "#4C0303",
-  red100: "#FFDFDF",
+  red100: "#8B1111",
   red200: "#FFC4C4",
   red300: "#A80C0C",
   red400: "#FF6161",
   red500: "#FF9B9B",
   red600: "#E80D0D",
-  red700: "#CC0909",
-  red800: "#A80C0C",
+  red700: "#FF6161",
+  red800: "#FF6161",
   red900: "#8B1111",
   red950: "#4C0303",
 };
