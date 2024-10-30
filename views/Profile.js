@@ -312,7 +312,7 @@ function Profile() {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.sectionPageItem}>
+        {/* <View style={styles.sectionPageItem}>
           <Text style={styles.sectionTitle}>Préférences</Text>
           <View style={styles.pageContainer}>
             <TouchableOpacity style={styles.pageItem}>
@@ -335,7 +335,7 @@ function Profile() {
               />
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
         <View style={styles.sectionPageItem}>
           <Text style={styles.sectionTitle}>Autre</Text>
           <View style={styles.pageContainer}>
