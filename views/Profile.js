@@ -11,25 +11,20 @@ import {
   Platform,
 } from "react-native";
 import {
-  ImageUp,
   ChevronRight,
-  IdCard,
-  Lock,
-  UserRoundPen,
-  InstaIcon,
   NotepadText,
   Landmark,
-  UserX,
-  Envelope,
   LogOut,
-  Settings,
+  Palette,
+  Bell,
+  Link,
 } from "../assets/icons/Icons";
 import Constants from "expo-constants";
 
 import { useSession } from "../context/AuthContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "./../utils/themeContext";
-import {getAlternant, getUserData} from "../utils/storage";
+import { getAlternant, getUserData } from "../utils/storage";
 
 const isExpoGo = Constants.appOwnership === "expo";
 
@@ -68,129 +63,119 @@ function Profile() {
       flex: 1,
       backgroundColor: colors.background,
     },
-
-    logout: {
-      position: "absolute",
-      padding: 20,
-      top: 0,
-      right: 0,
-      zIndex: 99,
-    },
-    topProfile: {
-      alignItems: "center",
-      padding: 20,
-    },
-    image: {
-      width: 70,
-      height: 70,
-      borderRadius: 50,
-    },
-    changePicture: {
-      position: "relative",
-    },
-    ChangePP: {
-      position: "absolute",
-      bottom: -2,
-      right: -2,
-      backgroundColor: colors.blue700,
-      borderRadius: 50,
-      padding: 5,
-    },
-    profileContainer: {
+    sectionPageContainer: {
       marginTop: 15,
-      alignItems: "center",
+      width: "90%",
+      marginHorizontal: "auto",
+      gap: 20,
     },
-    profileName: {
-      fontFamily: "Ubuntu_500Medium",
-      fontSize: 17,
-      color: colors.blue950,
-    },
-    profileEmail: {
+    sectionTitle: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       color: colors.grey,
+      letterSpacing: -0.6,
     },
-    containerCTA: {
-      width: "90%",
-      marginHorizontal: "auto",
+    sectionPageItem: {
+      gap: 10,
     },
-    profileCTA: {
-      marginVertical: 15,
-      alignItems: "center",
-      gap: 12,
+    pageSeparation: {
+      height: 0.5,
+      width: "85%",
+      backgroundColor: colors.grey,
+      alignSelf: "flex-end",
     },
-    profileButton: {
+    pageContainer: {
       backgroundColor: colors.white_background,
-      paddingVertical: 17,
-      paddingHorizontal: 20,
       borderRadius: 10,
-      width: "100%",
+    },
+    pageItem: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
+      padding: 15,
     },
-    profileBtnText: {
-      fontFamily: "Ubuntu_400Regular",
+    profilPicture: {
+      width: 50,
+      height: 50,
+      borderRadius: 50,
+    },
+    pageProfilContainer: {
+      flexDirection: "row",
+      gap: 15,
+    },
+    pageProfilContent: {
+      flexDirection: "column",
+      gap: 3,
+    },
+    pageProfilTitle: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 8,
+    },
+    profilName: {
+      fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
       color: colors.blue950,
+      letterSpacing: -0.6,
     },
-    profileBtnUnderText: {
+    profilGroupContent: {
+      backgroundColor: colors.blue200,
+      paddingHorizontal: 10,
+      paddingVertical: 3,
+      borderRadius: 5,
+    },
+    profilGroupTitle: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      color: colors.blue900,
+      letterSpacing: -0.6,
+    },
+    profilEmail: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 13,
       color: colors.grey,
+      letterSpacing: -0.6,
     },
-    CTAContent: {
+    pageContent: {
       flexDirection: "row",
-      alignItems: "center",
-      gap: 15,
-    },
-    profileSwitcher: {
-      paddingHorizontal: 20,
-      width: "100%",
-      marginVertical: 12,
-    },
-    switcherToggle: {
-      flexDirection: "column",
-      gap: Platform.OS === "ios" ? 10 : 0,
-    },
-    switcherContent: {
-      flexDirection: "row",
-      justifyContent: "space-between",
+      gap: 12,
       alignItems: "center",
     },
-    containerMediaLinks: {
-      flexDirection: "column",
-      gap: 20,
-    },
-    mediaLinks: {
-      flexDirection: "row",
-      alignItems: "center",
-      gap: 10,
-    },
-    profileBtnSwitch: {
+    pageTitle: {
       fontFamily: "Ubuntu_400Regular",
-      fontSize: 16,
-      color: colors.blue950,
+      fontSize: 15,
+      color: colors.blue900,
+      letterSpacing: -0.6,
     },
-    separatorStick: {
-      marginVertical: 20,
-      height: 1,
+    pageSubtitle: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      color: colors.grey,
+      letterSpacing: -0.6,
+    },
+    pageIcon: {
+      backgroundColor: colors.blue900,
+      borderRadius: 8,
+      padding: 8,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    footerContainer: {
       width: "90%",
-      backgroundColor: colors.grey,
+      marginHorizontal: "auto",
+      alignItems: "center",
     },
-    profileMediaInsta: {
+    footerTitle: {
       fontFamily: "Ubuntu_500Medium",
-      fontSize: 16,
-      color: "#FE068D",
+      fontSize: 13,
+      color: colors.grey,
+      letterSpacing: -0.6,
     },
-    profileMediaMail: {
-      fontFamily: "Ubuntu_500Medium",
-      fontSize: 16,
-      color: colors.blue700,
-      paddingBottom: 5,
-    },
-    disabled: {
-      opacity: 0.4,
+    footerSubtitle: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 11,
+      color: colors.grey,
+      letterSpacing: -0.6,
     },
   });
 
@@ -246,32 +231,228 @@ function Profile() {
     ]);
   };
 
-  const handlePressPrank = () => {
-    Alert.alert(
-      "Modifier la photo de profil",
-      "Voulez-vous vraiment modifier votre photo de profil ?",
-      [
-        {
-          text: "Annuler",
-          style: "cancel",
-        },
-        {
-          text: "Modifier",
-          onPress: () => {
-            Alert.alert(
-              "Aïe, aïe, aïe ! 😭",
-              "La fonctionnalité arrive bientôt, pas de panique !",
-              [{ text: "Compris !" }]
-            );
-          },
-        },
-      ]
-    );
-  };
+  // const handlePressPrank = () => {
+  //   Alert.alert(
+  //     "Modifier la photo de profil",
+  //     "Voulez-vous vraiment modifier votre photo de profil ?",
+  //     [
+  //       {
+  //         text: "Annuler",
+  //         style: "cancel",
+  //       },
+  //       {
+  //         text: "Modifier",
+  //         onPress: () => {
+  //           Alert.alert(
+  //             "Aïe, aïe, aïe ! 😭",
+  //             "La fonctionnalité arrive bientôt, pas de panique !",
+  //             [{ text: "Compris !" }]
+  //           );
+  //         },
+  //       },
+  //     ]
+  //   );
+  // };
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.topProfile}>
+      <View style={styles.sectionPageContainer}>
+        <TouchableOpacity style={styles.sectionPageItem}>
+          <View style={styles.pageContainer}>
+            <View style={styles.pageItem}>
+              <View style={styles.pageProfilContainer}>
+                <Image
+                  source={{ uri: userData.lien_photo_profil }}
+                  style={styles.profilPicture}
+                />
+                <View style={styles.pageProfilContent}>
+                  <View style={styles.pageProfilTitle}>
+                    <Text style={styles.profilName}>
+                      {userData.prenom} {userData.nom}
+                    </Text>
+                    <View style={styles.profilGroupContent}>
+                      <Text style={styles.profilGroupTitle}>
+                        {userData.groupe_id}
+                      </Text>
+                    </View>
+                  </View>
+                  <Text style={styles.profilEmail}>{userData.email_edu}</Text>
+                </View>
+              </View>
+              <ChevronRight
+                stroke={colors.blue700}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+            </View>
+          </View>
+        </TouchableOpacity>
+        <View style={styles.sectionPageItem}>
+          <Text style={styles.sectionTitle}>Personnalisation</Text>
+          <View style={styles.pageContainer}>
+            <TouchableOpacity style={styles.pageItem}>
+              <View style={styles.pageContent}>
+                <View style={styles.pageIcon}>
+                  <Palette
+                    stroke={colors.white}
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
+                  />
+                </View>
+                <Text style={styles.pageTitle}>Couleurs</Text>
+              </View>
+              <ChevronRight
+                stroke={colors.blue700}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.sectionPageItem}>
+          <Text style={styles.sectionTitle}>Préférences</Text>
+          <View style={styles.pageContainer}>
+            <TouchableOpacity style={styles.pageItem}>
+              <View style={styles.pageContent}>
+                <View style={styles.pageIcon}>
+                  <Bell
+                    stroke={colors.white}
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
+                  />
+                </View>
+                <Text style={styles.pageTitle}>Notifications</Text>
+              </View>
+              <ChevronRight
+                stroke={colors.blue700}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.sectionPageItem}>
+          <Text style={styles.sectionTitle}>Autre</Text>
+          <View style={styles.pageContainer}>
+            <TouchableOpacity style={styles.pageItem}>
+              <View style={styles.pageContent}>
+                <View style={styles.pageIcon}>
+                  <Link
+                    stroke={colors.white}
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
+                  />
+                </View>
+                <Text style={styles.pageTitle}>Liens externes</Text>
+              </View>
+              <ChevronRight
+                stroke={colors.blue700}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+            </TouchableOpacity>
+            <View style={styles.pageSeparation}></View>
+            <TouchableOpacity
+              style={styles.pageItem}
+              onPress={() => {
+                Linking.openURL("https://libellule.app/patchnotes");
+              }}
+            >
+              <View style={styles.pageContent}>
+                <View style={styles.pageIcon}>
+                  <NotepadText
+                    stroke={colors.white}
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
+                  />
+                </View>
+                <Text style={styles.pageTitle}>Journal des mises à jour</Text>
+              </View>
+              <ChevronRight
+                stroke={colors.blue700}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+            </TouchableOpacity>
+            <View style={styles.pageSeparation}></View>
+            <TouchableOpacity
+              style={styles.pageItem}
+              onPress={() => {
+                Linking.openURL("https://libellule.app/cgu");
+              }}
+            >
+              <View style={styles.pageContent}>
+                <View style={styles.pageIcon}>
+                  <Landmark
+                    stroke={colors.white}
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
+                  />
+                </View>
+                <View>
+                  <Text style={styles.pageTitle}>CGU</Text>
+                  <Text style={styles.pageSubtitle}>
+                    Conditions générales d'utilisation
+                  </Text>
+                </View>
+              </View>
+              <ChevronRight
+                stroke={colors.blue700}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.sectionPageItem}>
+          <View style={styles.pageContainer}>
+            <TouchableOpacity
+              style={styles.pageItem}
+              onPress={() => handleConfirmLogout()}
+            >
+              <View style={styles.pageContent}>
+                <View
+                  style={[styles.pageIcon, { backgroundColor: colors.red800 }]}
+                >
+                  <LogOut
+                    stroke={colors.white}
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
+                  />
+                </View>
+                <Text style={[styles.pageTitle, { color: colors.red800 }]}>
+                  Se déconnecter
+                </Text>
+              </View>
+              <ChevronRight
+                stroke={colors.red700}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.footerContainer}>
+          <Text style={styles.footerTitle}>Version 1.0.0</Text>
+          <Text style={styles.footerSubtitle}>
+            Créée avec ❤️ par Raphaël Tiphonet et Arnaud Graciet
+          </Text>
+        </View>
+
+        {/* <View style={styles.topProfile}>
         <TouchableOpacity
           style={styles.changePicture}
           onPress={handlePressPrank}
@@ -287,7 +468,7 @@ function Profile() {
               width={18}
               height={18}
             />
-          </View> */}
+          </View>
         </TouchableOpacity>
 
         <View style={styles.profileContainer}>
@@ -535,6 +716,7 @@ function Profile() {
             />
           </TouchableOpacity>
         </View>
+      </View> */}
       </View>
     </ScrollView>
   );

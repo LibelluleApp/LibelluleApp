@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -10,12 +10,12 @@ import {
 import { ThemeContext } from "./../../utils/themeContext";
 import { useNavigation } from "@react-navigation/native";
 import { Calendar, ChevronRight } from "./../../assets/icons/Icons";
-import {getAlternant, getUserData, setAlternant} from "../../utils/storage";
+import { getAlternant, getUserData, setAlternant } from "../../utils/storage";
 
 function Settings() {
-  const { isDarkMode, toggleTheme, colors } = React.useContext(ThemeContext);
-  const [isAlternant, setIsAlternant] = React.useState(false);
-  const [userDatas, setUserDatas] = React.useState({});
+  const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
+  const [isAlternant, setIsAlternant] = useState(false);
+  const [userDatas, setUserDatas] = useState({});
 
   const navigation = useNavigation();
 
@@ -77,7 +77,7 @@ function Settings() {
     },
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getData = () => {
       try {
         const value = getUserData();
@@ -88,7 +88,7 @@ function Settings() {
       }
     };
 
-    const getIsAlternant =  () => {
+    const getIsAlternant = () => {
       try {
         const value = getAlternant();
         setIsAlternant(value);
@@ -97,7 +97,7 @@ function Settings() {
       }
     };
 
-    getData()
+    getData();
     getIsAlternant();
   }, []);
 
