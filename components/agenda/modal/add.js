@@ -1,3 +1,4 @@
+// Ajoutez ceci dans le composant Add juste après vos imports
 import React, { useState, useContext } from "react";
 import {
   View,
@@ -8,6 +9,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
 import {
   Calendar,
   TextIcon,
@@ -22,6 +29,7 @@ import { useNavigation } from "@react-navigation/native";
 import moment from "moment-timezone";
 import { ThemeContext } from "./../../../utils/themeContext";
 
+// Composant Add avec animation corrigée
 const Add = ({ route }) => {
   const { colors } = useContext(ThemeContext);
   const navigation = useNavigation();
@@ -32,9 +40,30 @@ const Add = ({ route }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [loading, setLoading] = useState(false);
   const [matiere, setMatiere] = useState(0);
-  const [type, setType] = useState("");
+  const [type, setType] = useState("devoir");
   const [titre, setTitre] = useState("");
   const [description, setDescription] = useState("");
+
+  const titleHeight = useSharedValue(type === "eval" ? 0 : 58);
+
+  // Style d'animation de la hauteur et de l'opacité du champ titre
+  const animatedTitleStyle = useAnimatedStyle(() => ({
+    height: withTiming(titleHeight.value, {
+      duration: 250,
+      easing: Easing.inOut(Easing.circle),
+    }),
+    opacity: withTiming(titleHeight.value > 0 ? 1 : 0, {
+      duration: 250,
+      easing: Easing.inOut(Easing.circle),
+    }),
+  }));
+
+  // Met à jour le type et anime le champ titre
+  const updateType = (newType) => {
+    setType(newType);
+    setSelectedButton(newType === "eval" ? "eval" : "task");
+    titleHeight.value = newType === "eval" ? 0 : 58; // anime la hauteur
+  };
 
   const handleSaveTask = async () => {
     if (!dates || !matiere || !type || (type !== "eval" && !titre)) {
@@ -72,7 +101,7 @@ const Add = ({ route }) => {
       width: "90%",
       alignSelf: "center",
       paddingTop: 20,
-      paddingBottom: 100, // Espace pour s'assurer que tout le contenu est visible au-dessus du bouton
+      paddingBottom: 100,
     },
     buttonContainer: {
       flexDirection: "row",
@@ -105,10 +134,12 @@ const Add = ({ route }) => {
       fontSize: 15,
     },
     inputContainer: {
+      gap: 15,
+    },
+    inputContent: {
       flexDirection: "row",
       alignItems: "center",
       width: "100%",
-      marginVertical: 10,
       gap: 15,
     },
     input: {
@@ -165,10 +196,7 @@ const Add = ({ route }) => {
                     ? styles.buttonContentSelected
                     : styles.buttonContentUnselected,
                 ]}
-                onPress={() => {
-                  setSelectedButton("task");
-                  setType("devoir");
-                }}
+                onPress={() => updateType("devoir")}
               >
                 <Text
                   style={
@@ -187,10 +215,7 @@ const Add = ({ route }) => {
                     ? styles.buttonContentSelected
                     : styles.buttonContentUnselected,
                 ]}
-                onPress={() => {
-                  setSelectedButton("eval");
-                  setType("eval");
-                }}
+                onPress={() => updateType("eval")}
               >
                 <Text
                   style={
@@ -204,9 +229,9 @@ const Add = ({ route }) => {
               </TouchableOpacity>
             </View>
 
-            {/* Champ pour le titre de la tâche */}
-            {type !== "eval" && (
-              <View style={styles.inputContainer}>
+            <View style={styles.inputContainer}>
+              {/* Champ pour le titre de la tâche */}
+              <Animated.View style={[styles.inputContent, animatedTitleStyle]}>
                 <Baseline width={20} height={20} stroke={colors.blue900} />
                 <TextInput
                   style={styles.input}
@@ -214,64 +239,64 @@ const Add = ({ route }) => {
                   placeholderTextColor={colors.text_placeholder}
                   onChangeText={(text) => setTitre(text)}
                 />
+              </Animated.View>
+
+              {/* Date Picker */}
+              <View style={styles.inputContent}>
+                <Calendar stroke={colors.blue900} width={20} height={20} />
+                <TouchableOpacity
+                  onPress={showDatePicker}
+                  style={[
+                    styles.input,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    },
+                  ]}
+                >
+                  <Text style={styles.textDate}>
+                    {dates.format("dddd DD MMMM")}
+                  </Text>
+                </TouchableOpacity>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  date={moment.tz(dates, "Europe/Paris").toDate()}
+                  minimumDate={new Date()}
+                  locale="fr-FR"
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
+                />
               </View>
-            )}
 
-            {/* Date Picker */}
-            <View style={styles.inputContainer}>
-              <Calendar stroke={colors.blue900} width={20} height={20} />
-              <TouchableOpacity
-                onPress={showDatePicker}
-                style={[
-                  styles.input,
-                  {
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  },
-                ]}
-              >
-                <Text style={styles.textDate}>
-                  {dates.format("dddd DD MMMM")}
-                </Text>
-              </TouchableOpacity>
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                date={moment.tz(dates, "Europe/Paris").toDate()}
-                minimumDate={new Date()}
-                locale="fr-FR"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-              />
-            </View>
+              {/* Champ pour la matière */}
+              <View style={styles.inputContent}>
+                <GraduationCap width={20} height={20} stroke={colors.blue900} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Ajouter une matière"
+                  placeholderTextColor={colors.text_placeholder}
+                  onChangeText={(text) => setMatiere(text)}
+                />
+              </View>
 
-            {/* Champ pour la matière */}
-            <View style={styles.inputContainer}>
-              <GraduationCap width={20} height={20} stroke={colors.blue900} />
-              <TextInput
-                style={styles.input}
-                placeholder="Ajouter une matière"
-                placeholderTextColor={colors.text_placeholder}
-                onChangeText={(text) => setMatiere(text)}
-              />
-            </View>
-
-            {/* Champ pour la description */}
-            <View style={styles.inputContainer}>
-              <TextIcon width={20} height={20} stroke={colors.blue900} />
-              <TextInput
-                style={[styles.input, styles.description]}
-                placeholder={
-                  type === "eval"
-                    ? "Description de l'évaluation (consignes, durée...)"
-                    : "Description de la tâche (consignes, lieu du rendu...)"
-                }
-                placeholderTextColor={colors.text_placeholder}
-                multiline={true}
-                onChangeText={(text) => setDescription(text)}
-                value={description}
-              />
+              {/* Champ pour la description */}
+              <View style={styles.inputContent}>
+                <TextIcon width={20} height={20} stroke={colors.blue900} />
+                <TextInput
+                  style={[styles.input, styles.description]}
+                  placeholder={
+                    type === "eval"
+                      ? "Description de l'évaluation (consignes, durée...)"
+                      : "Description de la tâche (consignes, lieu du rendu...)"
+                  }
+                  placeholderTextColor={colors.text_placeholder}
+                  multiline={true}
+                  onChangeText={(text) => setDescription(text)}
+                  value={description}
+                />
+              </View>
             </View>
           </View>
         </TouchableWithoutFeedback>
