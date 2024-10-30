@@ -7,7 +7,7 @@ import {
   Linking,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { LoaderCircle } from "./../../assets/icons/Icons";
+import { LoaderCircle } from "../../assets/icons/Icons";
 import { ThemeContext } from "../../utils/themeContext";
 import { getUserData } from "../../utils/storage";
 import fetchMenu from "./../../api/Menu/fetchMenu";
@@ -38,7 +38,7 @@ function Restauration() {
   useEffect(() => {
     let isMounted = true; // pour suivre si le composant est monté
     const fetchData = async () => {
-      const data = await fetchMenu("today");
+      const data = await fetchMenu(new Date().toISOString().split('T')[0]);
       if (isMounted) {
         setMenu(data);
       }
@@ -50,9 +50,9 @@ function Restauration() {
   }, []);
 
   useEffect(() => {
-    const getData = async () => {
+    const getData =  () => {
       try {
-        const value = await getUserData();
+        const value = getUserData();
         setUser(value);
       } catch (error) {
         console.error("Error fetching user data:", error);
