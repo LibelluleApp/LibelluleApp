@@ -23,7 +23,7 @@ import Constants from "expo-constants";
 
 import { useSession } from "../context/AuthContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
-import { ThemeContext } from "./../utils/themeContext";
+import { ThemeContext } from "../utils/themeContext";
 import { getAlternant, getUserData } from "../utils/storage";
 
 const isExpoGo = Constants.appOwnership === "expo";
@@ -55,7 +55,7 @@ async function getIsAlternant() {
   }
 }
 
-function Profile() {
+function Settings() {
   const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -257,7 +257,10 @@ function Profile() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.sectionPageContainer}>
-        <TouchableOpacity style={styles.sectionPageItem}>
+        <TouchableOpacity
+          style={styles.sectionPageItem}
+          onPress={() => navigation.navigate("Profile")}
+        >
           <View style={styles.pageContainer}>
             <View style={styles.pageItem}>
               <View style={styles.pageProfilContainer}>
@@ -291,7 +294,10 @@ function Profile() {
         <View style={styles.sectionPageItem}>
           <Text style={styles.sectionTitle}>Personnalisation</Text>
           <View style={styles.pageContainer}>
-            <TouchableOpacity style={styles.pageItem}>
+            <TouchableOpacity
+              style={styles.pageItem}
+              onPress={() => navigation.navigate("Colors")}
+            >
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <Palette
@@ -725,4 +731,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Settings;
