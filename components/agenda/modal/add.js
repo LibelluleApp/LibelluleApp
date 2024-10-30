@@ -45,6 +45,7 @@ const Add = ({ route }) => {
   const [description, setDescription] = useState("");
 
   const titleHeight = useSharedValue(type === "eval" ? 0 : 58);
+  const marginValue = useSharedValue(20); // Valeur initiale du padding
 
   // Style d'animation de la hauteur et de l'opacité du champ titre
   const animatedTitleStyle = useAnimatedStyle(() => ({
@@ -58,11 +59,22 @@ const Add = ({ route }) => {
     }),
   }));
 
+  // Style d'animation pour le padding
+  const animatedInputContainerStyle = useAnimatedStyle(() => ({
+    marginTop: withTiming(marginValue.value, {
+      duration: 250,
+      easing: Easing.inOut(Easing.circle),
+    }),
+  }));
+
   // Met à jour le type et anime le champ titre
   const updateType = (newType) => {
     setType(newType);
     setSelectedButton(newType === "eval" ? "eval" : "task");
     titleHeight.value = newType === "eval" ? 0 : 58; // anime la hauteur
+
+    // Mettez à jour le padding en fonction du type
+    marginValue.value = newType === "eval" ? 5 : 20; // Padding à 0 si "eval"
   };
 
   const handleSaveTask = async () => {
@@ -106,7 +118,7 @@ const Add = ({ route }) => {
     buttonContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginBottom: 20,
+      zIndex: 5,
     },
     buttonContent: {
       width: "48%",
@@ -114,42 +126,52 @@ const Add = ({ route }) => {
       borderRadius: 50,
       justifyContent: "center",
       alignItems: "center",
+      zIndex: 5,
     },
     buttonContentSelected: {
       backgroundColor: colors.blue200,
+      zIndex: 5,
     },
     buttonContentUnselected: {
       backgroundColor: colors.background,
       borderColor: colors.blue200,
       borderWidth: 1,
+      zIndex: 5,
     },
     buttonTitleSelected: {
       color: colors.blue900,
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
+      zIndex: 5,
     },
     buttonTitleUnselected: {
       color: colors.blue400,
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
+      zIndex: 5,
     },
     inputContainer: {
+      marginTop: 20,
       gap: 15,
+      zIndex: 4,
     },
     inputContent: {
       flexDirection: "row",
       alignItems: "center",
       width: "100%",
       gap: 15,
+      zIndex: 4,
     },
     input: {
       flex: 1,
       borderRadius: 10,
       paddingHorizontal: 20,
       height: 58,
+      fontSize: 14,
       color: colors.blue900,
       fontFamily: "Ubuntu_400Regular",
       backgroundColor: colors.white_background,
+      zIndex: 4,
     },
     description: {
       height: 135,
@@ -159,7 +181,7 @@ const Add = ({ route }) => {
     textDate: {
       color: colors.blue900,
       fontFamily: "Ubuntu_400Regular",
-      fontSize: 15,
+      fontSize: 14,
       textTransform: "capitalize",
     },
     btnContainerBottom: {
@@ -229,7 +251,9 @@ const Add = ({ route }) => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.inputContainer}>
+            <Animated.View
+              style={[styles.inputContainer, animatedInputContainerStyle]}
+            >
               {/* Champ pour le titre de la tâche */}
               <Animated.View style={[styles.inputContent, animatedTitleStyle]}>
                 <Baseline width={20} height={20} stroke={colors.blue900} />
@@ -238,6 +262,9 @@ const Add = ({ route }) => {
                   placeholder="Ajouter un titre"
                   placeholderTextColor={colors.text_placeholder}
                   onChangeText={(text) => setTitre(text)}
+                  value={titre}
+                  editable={type !== "eval"} // Rend le champ inactif si le type est "eval"
+                  pointerEvents={type === "eval" ? "none" : "auto"} // Désactive les interactions tactiles
                 />
               </Animated.View>
 
@@ -297,7 +324,7 @@ const Add = ({ route }) => {
                   value={description}
                 />
               </View>
-            </View>
+            </Animated.View>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>

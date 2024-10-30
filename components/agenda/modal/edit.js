@@ -8,6 +8,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
 import {
   Calendar,
   TextIcon,
@@ -32,6 +38,7 @@ const Edit = ({ route }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [selectedButton, setSelectedButton] = useState("task");
   const [matiere, setMatiere] = useState(task.Ressource.nom_ressource);
   const [type, setType] = useState(task.type);
   const [titre, setTitre] = useState(task.titre);
@@ -52,7 +59,7 @@ const Edit = ({ route }) => {
     buttonContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginBottom: 20,
+      zIndex: 5,
     },
     buttonContent: {
       width: "48%",
@@ -60,40 +67,52 @@ const Edit = ({ route }) => {
       borderRadius: 50,
       justifyContent: "center",
       alignItems: "center",
+      zIndex: 5,
     },
     buttonContentSelected: {
       backgroundColor: colors.blue200,
+      zIndex: 5,
     },
     buttonContentUnselected: {
       backgroundColor: colors.background,
       borderColor: colors.blue200,
       borderWidth: 1,
+      zIndex: 5,
     },
     buttonTitleSelected: {
       color: colors.blue900,
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
+      zIndex: 5,
     },
     buttonTitleUnselected: {
       color: colors.blue400,
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
+      zIndex: 5,
     },
     inputContainer: {
+      marginTop: 20,
+      gap: 15,
+      zIndex: 4,
+    },
+    inputContent: {
       flexDirection: "row",
       alignItems: "center",
       width: "100%",
-      marginVertical: 10,
       gap: 15,
+      zIndex: 4,
     },
     input: {
       flex: 1,
       borderRadius: 10,
       paddingHorizontal: 20,
       height: 58,
+      fontSize: 14,
       color: colors.blue900,
       fontFamily: "Ubuntu_400Regular",
       backgroundColor: colors.white_background,
+      zIndex: 4,
     },
     description: {
       height: 135,
@@ -103,7 +122,7 @@ const Edit = ({ route }) => {
     textDate: {
       color: colors.blue900,
       fontFamily: "Ubuntu_400Regular",
-      fontSize: 15,
+      fontSize: 14,
       textTransform: "capitalize",
     },
     btnContainerBottom: {
@@ -180,6 +199,39 @@ const Edit = ({ route }) => {
     hideDatePicker();
   };
 
+  const titleHeight = useSharedValue(type === "eval" ? 0 : 58); // Hauteur initiale du champ titre
+  const marginValue = useSharedValue(20); // Valeur initiale du padding
+
+  // Style d'animation de la hauteur et de l'opacité du champ titre
+  const animatedTitleStyle = useAnimatedStyle(() => ({
+    height: withTiming(titleHeight.value, {
+      duration: 250,
+      easing: Easing.inOut(Easing.circle),
+    }),
+    opacity: withTiming(titleHeight.value > 0 ? 1 : 0, {
+      duration: 250,
+      easing: Easing.inOut(Easing.circle),
+    }),
+  }));
+
+  // Style d'animation pour le padding
+  const animatedInputContainerStyle = useAnimatedStyle(() => ({
+    marginTop: withTiming(marginValue.value, {
+      duration: 250,
+      easing: Easing.inOut(Easing.circle),
+    }),
+  }));
+
+  // Mettez à jour le marginValue lors du changement de type
+  const updateType = (newType) => {
+    setType(newType);
+    setSelectedButton(newType === "eval" ? "eval" : "task");
+    titleHeight.value = newType === "eval" ? 0 : 58; // anime la hauteur
+
+    // Mettez à jour le padding en fonction du type
+    marginValue.value = newType === "eval" ? 5 : 20; // Padding à 0 si "eval"
+  };
+
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -197,7 +249,7 @@ const Edit = ({ route }) => {
                     ? styles.buttonContentSelected
                     : styles.buttonContentUnselected,
                 ]}
-                onPress={() => setType("devoir")}
+                onPress={() => updateType("devoir")}
               >
                 <Text
                   style={
@@ -216,7 +268,7 @@ const Edit = ({ route }) => {
                     ? styles.buttonContentSelected
                     : styles.buttonContentUnselected,
                 ]}
-                onPress={() => setType("eval")}
+                onPress={() => updateType("eval")}
               >
                 <Text
                   style={
@@ -230,9 +282,11 @@ const Edit = ({ route }) => {
               </TouchableOpacity>
             </View>
 
-            {/* Champ pour le titre de la tâche */}
-            {type !== "eval" && (
-              <View style={styles.inputContainer}>
+            <Animated.View
+              style={[styles.inputContainer, animatedInputContainerStyle]}
+            >
+              {/* Champ pour le titre de la tâche */}
+              <Animated.View style={[styles.inputContent, animatedTitleStyle]}>
                 <Baseline width={20} height={20} stroke={colors.blue900} />
                 <TextInput
                   style={styles.input}
@@ -240,64 +294,66 @@ const Edit = ({ route }) => {
                   placeholderTextColor={colors.text_placeholder}
                   onChangeText={(text) => setTitre(text)}
                   value={titre}
+                  editable={type !== "eval"} // Rend le champ inactif si le type est "eval"
+                  pointerEvents={type === "eval" ? "none" : "auto"} // Désactive les interactions tactiles
+                />
+              </Animated.View>
+
+              {/* Date Picker */}
+              <View style={styles.inputContent}>
+                <Calendar stroke={colors.blue900} width={20} height={20} />
+                <TouchableOpacity
+                  onPress={showDatePicker}
+                  style={[
+                    styles.input,
+                    {
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    },
+                  ]}
+                >
+                  <Text style={styles.textDate}>
+                    {dates.format("dddd DD MMMM")}
+                  </Text>
+                </TouchableOpacity>
+                <DateTimePickerModal
+                  isVisible={isDatePickerVisible}
+                  mode="date"
+                  date={moment.tz(dates, "Europe/Paris").toDate()}
+                  minimumDate={new Date()}
+                  locale="fr-FR"
+                  onConfirm={handleConfirm}
+                  onCancel={hideDatePicker}
                 />
               </View>
-            )}
 
-            {/* Date Picker */}
-            <View style={styles.inputContainer}>
-              <Calendar stroke={colors.blue900} width={20} height={20} />
-              <TouchableOpacity
-                onPress={showDatePicker}
-                style={[
-                  styles.input,
-                  {
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  },
-                ]}
-              >
-                <Text style={styles.textDate}>
-                  {dates.format("dddd DD MMMM")}
-                </Text>
-              </TouchableOpacity>
-              <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                mode="date"
-                date={moment.tz(dates, "Europe/Paris").toDate()}
-                minimumDate={new Date()}
-                locale="fr-FR"
-                onConfirm={handleConfirm}
-                onCancel={hideDatePicker}
-              />
-            </View>
+              {/* Champ pour la matière */}
+              <View style={styles.inputContent}>
+                <GraduationCap width={20} height={20} stroke={colors.blue900} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Ajouter une matière"
+                  placeholderTextColor={colors.text_placeholder}
+                  onChangeText={(text) => setMatiere(text)}
+                  value={matiere}
+                />
+              </View>
 
-            {/* Champ pour la matière */}
-            <View style={styles.inputContainer}>
-              <GraduationCap width={20} height={20} stroke={colors.blue900} />
-              <TextInput
-                style={styles.input}
-                placeholder="Ajouter une matière"
-                placeholderTextColor={colors.text_placeholder}
-                onChangeText={(text) => setMatiere(text)}
-                value={matiere}
-              />
-            </View>
-
-            {/* Champ pour la description */}
-            <View style={styles.inputContainer}>
-              <TextIcon width={20} height={20} stroke={colors.blue900} />
-              <TextInput
-                style={[styles.input, styles.description]}
-                placeholder="Ajouter une description"
-                placeholderTextColor={colors.text_placeholder}
-                onChangeText={(text) => setDescription(text)}
-                value={description}
-                multiline={true}
-                numberOfLines={4}
-              />
-            </View>
+              {/* Champ pour la description */}
+              <View style={styles.inputContent}>
+                <TextIcon width={20} height={20} stroke={colors.blue900} />
+                <TextInput
+                  style={[styles.input, styles.description]}
+                  placeholder="Ajouter une description"
+                  placeholderTextColor={colors.text_placeholder}
+                  onChangeText={(text) => setDescription(text)}
+                  value={description}
+                  multiline={true}
+                  numberOfLines={4}
+                />
+              </View>
+            </Animated.View>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAwareScrollView>
