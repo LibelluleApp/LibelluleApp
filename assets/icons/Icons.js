@@ -292,6 +292,28 @@ function UsersRound(props) {
   );
 }
 
+// Pencil - Lucide
+
+function Pencil(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-pencil"
+      {...props}
+    >
+      <Path d="M21.174 6.812a1 1 0 00-3.986-3.987L3.842 16.174a2 2 0 00-.5.83l-1.321 4.352a.5.5 0 00.623.622l4.353-1.32a2 2 0 00.83-.497zM15 5l4 4" />
+    </Svg>
+  );
+}
+
 // Clock - Lucide
 function Clock(props) {
   return (
@@ -985,6 +1007,52 @@ function Landmark(props) {
   );
 }
 
+// RectangleEllipsis - Lucide
+
+function RectangleEllipsis(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-rectangle-ellipsis"
+      {...props}
+    >
+      <Rect width={20} height={12} x={2} y={6} rx={2} />
+      <Path d="M12 12h.01M17 12h.01M7 12h.01" />
+    </Svg>
+  );
+}
+
+// BriefcaseBusiness - Lucide
+
+function BriefcaseBusiness(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-briefcase-business"
+      {...props}
+    >
+      <Path d="M12 12h.01M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M22 13a18.15 18.15 0 01-20 0" />
+      <Rect width={20} height={14} x={2} y={6} rx={2} />
+    </Svg>
+  );
+}
+
 // Plus - Lucide
 function Plus(props) {
   return (
@@ -1405,6 +1473,7 @@ export {
   MapPin,
   UserRound,
   UsersRound,
+  Pencil,
   Clock,
   CircleAlert,
   ChevronRight,
@@ -1436,6 +1505,8 @@ export {
   Palette,
   NotepadText,
   Landmark,
+  RectangleEllipsis,
+  BriefcaseBusiness,
   Plus,
   Minus,
   ResetList,
