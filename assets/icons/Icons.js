@@ -292,6 +292,28 @@ function UsersRound(props) {
   );
 }
 
+// Pencil - Lucide
+
+function Pencil(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-pencil"
+      {...props}
+    >
+      <Path d="M21.174 6.812a1 1 0 00-3.986-3.987L3.842 16.174a2 2 0 00-.5.83l-1.321 4.352a.5.5 0 00.623.622l4.353-1.32a2 2 0 00.83-.497zM15 5l4 4" />
+    </Svg>
+  );
+}
+
 // Clock - Lucide
 function Clock(props) {
   return (
@@ -910,6 +932,32 @@ function Settings(props) {
   );
 }
 
+// Palette - Lucide
+
+function Palette(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-palette"
+      {...props}
+    >
+      <Circle cx={13.5} cy={6.5} r={0.5} fill="currentColor" />
+      <Circle cx={17.5} cy={10.5} r={0.5} fill="currentColor" />
+      <Circle cx={8.5} cy={7.5} r={0.5} fill="currentColor" />
+      <Circle cx={6.5} cy={12.5} r={0.5} fill="currentColor" />
+      <Path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 011.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+    </Svg>
+  );
+}
+
 // NotepadText - Lucide
 function NotepadText(props) {
   return (
@@ -955,6 +1003,52 @@ function Landmark(props) {
       <Path d="M14 18L14 11" />
       <Path d="M18 18L18 11" />
       <Path d="M12 2L20 7 4 7z" />
+    </Svg>
+  );
+}
+
+// RectangleEllipsis - Lucide
+
+function RectangleEllipsis(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-rectangle-ellipsis"
+      {...props}
+    >
+      <Rect width={20} height={12} x={2} y={6} rx={2} />
+      <Path d="M12 12h.01M17 12h.01M7 12h.01" />
+    </Svg>
+  );
+}
+
+// BriefcaseBusiness - Lucide
+
+function BriefcaseBusiness(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-briefcase-business"
+      {...props}
+    >
+      <Path d="M12 12h.01M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M22 13a18.15 18.15 0 01-20 0" />
+      <Rect width={20} height={14} x={2} y={6} rx={2} />
     </Svg>
   );
 }
@@ -1379,6 +1473,7 @@ export {
   MapPin,
   UserRound,
   UsersRound,
+  Pencil,
   Clock,
   CircleAlert,
   ChevronRight,
@@ -1407,8 +1502,11 @@ export {
   UserRoundPen,
   InstaIcon,
   Settings,
+  Palette,
   NotepadText,
   Landmark,
+  RectangleEllipsis,
+  BriefcaseBusiness,
   Plus,
   Minus,
   ResetList,
