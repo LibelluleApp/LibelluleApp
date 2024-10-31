@@ -18,6 +18,7 @@ import {
   Palette,
   Bell,
   Link,
+  Envelope,
 } from "../assets/icons/Icons";
 import Constants from "expo-constants";
 
@@ -367,7 +368,7 @@ function Settings() {
                 height={18}
               />
             </TouchableOpacity>
-            <View style={styles.pageSeparation}></View>
+            <View style={styles.pageSeparation} />
             <TouchableOpacity
               style={styles.pageItem}
               onPress={() => {
@@ -392,7 +393,33 @@ function Settings() {
                 height={18}
               />
             </TouchableOpacity>
-            <View style={styles.pageSeparation}></View>
+            <View style={styles.pageSeparation} />
+
+            <TouchableOpacity
+              style={styles.pageItem}
+              onPress={() => {
+                Linking.openURL("https://libellule.app/contact");
+              }}
+            >
+              <View style={styles.pageContent}>
+                <View style={styles.pageIcon}>
+                  <Envelope
+                    stroke={colors.blue100}
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
+                  />
+                </View>
+                <Text style={styles.pageTitle}>Nous contacter</Text>
+              </View>
+              <ChevronRight
+                stroke={colors.blue700}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+            </TouchableOpacity>
+            <View style={styles.pageSeparation} />
             <TouchableOpacity
               style={styles.pageItem}
               onPress={() => {

@@ -36,7 +36,7 @@ const AppStack = ({ navigation }) => {
       options: {
         title: "Liens Externes",
         presentation: "modal",
-        background: "transparent",
+        headerShadowVisible: false,
       },
     },
     {
