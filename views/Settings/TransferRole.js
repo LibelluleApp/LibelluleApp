@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
 import { Dropdown } from "react-native-element-dropdown";
 import { Info } from "../../assets/icons/Icons";
@@ -55,16 +49,15 @@ const TransferRole = () => {
       letterSpacing: -0.5,
     },
     dropdown: {
-      borderWidth: 1,
       borderRadius: 10,
       padding: 15,
       marginBottom: 10,
-      borderColor: colors.input_border,
       backgroundColor: colors.white_background,
     },
     placeholderStyle: {
-      color: colors.grey_variable,
+      color: colors.grey,
       fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
     },
     selectedTextStyle: {
       color: colors.blue950,
@@ -75,7 +68,6 @@ const TransferRole = () => {
       // borderRadius: 10,
       // marginBottom: 10,
       backgroundColor: colors.white_background,
-      borderColor: colors.input_border,
     },
     topInformations: {
       marginBottom: 20,
@@ -92,9 +84,9 @@ const TransferRole = () => {
       fontFamily: "Ubuntu_500Medium",
     },
     labelDropdown: {
-      fontFamily: "Ubuntu_500Medium",
+      fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.blue900,
       marginBottom: 10,
     },
     textDisclaimer: {
@@ -160,7 +152,7 @@ const TransferRole = () => {
           <View style={styles.topInformations}>
             <Info width={16} heigh={16} stroke={colors.blue950} />
             <Text style={styles.textInformations}>
-              Vous êtes <Text style={styles.bold}>responsable de l’agenda</Text>{" "}
+              Vous êtes <Text style={styles.bold}>responsable des devoirs</Text>{" "}
               de votre groupe de classe. Avec l’accord d’un autre étudiant, le
               rôle peut lui être transmis.
             </Text>

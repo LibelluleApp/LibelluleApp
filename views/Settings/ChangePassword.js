@@ -63,7 +63,7 @@ const ChangePassword = () => {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       color: colors.grey,
-      padding: 15,
+      padding: 10,
       paddingBottom: 30,
     },
   });

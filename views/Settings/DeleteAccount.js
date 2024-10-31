@@ -90,7 +90,7 @@ const DeleteAccount = () => {
     text: {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.blue900,
       marginBottom: 20,
     },
     textAdvertising: {
@@ -137,9 +137,9 @@ const DeleteAccount = () => {
           </Text>
           <Input
             label="Mot de passe"
-            placeholder="Votre mot de passe"
+            placeholder="Entrer votre mot de passe"
             icon={Lock}
-            placeholderTextColor="#A3A3A3"
+            placeholderTextColor={colors.text_placeholder}
             autoComplete="password"
             secureTextEntry={true}
             onChangeText={setMotDePasse}
