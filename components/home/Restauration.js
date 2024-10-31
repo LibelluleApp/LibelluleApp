@@ -38,7 +38,7 @@ function Restauration() {
   useEffect(() => {
     let isMounted = true; // pour suivre si le composant est monté
     const fetchData = async () => {
-      const data = await fetchMenu(new Date().toISOString().split('T')[0]);
+      const data = await fetchMenu(new Date().toISOString().split("T")[0]);
       if (isMounted) {
         setMenu(data);
       }
@@ -50,7 +50,7 @@ function Restauration() {
   }, []);
 
   useEffect(() => {
-    const getData =  () => {
+    const getData = () => {
       try {
         const value = getUserData();
         setUser(value);
@@ -131,7 +131,6 @@ function Restauration() {
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       color: colors.blue950,
-      marginLeft: 10,
       textTransform: "capitalize",
     },
   });
