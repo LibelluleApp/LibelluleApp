@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../utils/themeContext";
 import ButtonAuth from "./../../components/auth/buttonAuth";
 import whoIsChief from "../../api/Agenda/chef";
-import {setAlternant, setIsFirstVisitAgenda} from "../../utils/storage";
+import { setAlternant, setIsFirstVisitAgenda } from "../../utils/storage";
 
 const TutorialAgenda = () => {
   const [chef, setChef] = useState(null);
@@ -59,6 +59,7 @@ const TutorialAgenda = () => {
     },
     titleText: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.blue950,
     },
@@ -68,6 +69,7 @@ const TutorialAgenda = () => {
     },
     itemTextContentContainer: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue95050,
     },
@@ -85,11 +87,13 @@ const TutorialAgenda = () => {
     },
     textResponsable: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
     textResponsableName: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue700,
     },

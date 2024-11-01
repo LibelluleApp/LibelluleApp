@@ -48,6 +48,7 @@ const Edit = ({ route }) => {
     title: {
       fontSize: 15,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       color: colors.blue950,
       marginBottom: 10,
     },
@@ -60,6 +61,7 @@ const Edit = ({ route }) => {
       justifyContent: "center",
       backgroundColor: colors.white_background,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
     },
     date: {
       flexDirection: "row",
@@ -76,6 +78,7 @@ const Edit = ({ route }) => {
     textDate: {
       color: colors.blue950,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       textTransform: "capitalize",
     },

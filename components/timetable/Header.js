@@ -39,24 +39,28 @@ const CustomHeaderItem = ({ startUnix }) => {
     monthText: {
       fontSize: 12,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue800,
       textTransform: "capitalize",
     },
     weekNumberText: {
       fontSize: 12,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       color: colors.blue800,
       textTransform: "capitalize",
     },
     dayText: {
       fontSize: 14,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue900,
       textTransform: "capitalize",
     },
     dateNumberText: {
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       color: colors.blue900,
       textTransform: "capitalize",
     },

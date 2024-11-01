@@ -49,6 +49,7 @@ function CalendarList({ onDateSelect }) {
       color: colors.blue700,
       fontSize: 10,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       textAlign: "center",
     },
     selected: {
@@ -57,6 +58,7 @@ function CalendarList({ onDateSelect }) {
     dateText: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue700,
     },
     selectedText: {

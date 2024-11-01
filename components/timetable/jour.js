@@ -1,4 +1,11 @@
-import React, {useContext, useEffect, useState, useRef, forwardRef, useImperativeHandle} from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import {
   View,
   StyleSheet,
@@ -38,8 +45,6 @@ const formatProfessorName = (professor) => {
   return `${initial}. ${nom}`;
 };
 
-
-
 const Jour = forwardRef((props, ref) => {
   const navigator = useNavigation();
   const { colors } = useContext(ThemeContext);
@@ -48,26 +53,26 @@ const Jour = forwardRef((props, ref) => {
   const [timetable, setTimetable] = useState([]);
 
   const MIN_DATE = new Date(
-      new Date().getFullYear() - 2,
-      new Date().getMonth(),
-      new Date().getDate()
+    new Date().getFullYear() - 2,
+    new Date().getMonth(),
+    new Date().getDate()
   ).toISOString();
 
   const MAX_DATE = new Date(
-      new Date().getFullYear() + 2,
-      new Date().getMonth(),
-      new Date().getDate()
+    new Date().getFullYear() + 2,
+    new Date().getMonth(),
+    new Date().getDate()
   ).toISOString();
 
   const INITIAL_DATE = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      new Date().getDate()
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    new Date().getDate()
   ).toISOString();
 
   useEffect(() => {
     if (isFocused) {
-      getTimetable().then(data => setTimetable(data));
+      getTimetable().then((data) => setTimetable(data));
     }
   }, [isFocused]);
 
@@ -83,7 +88,6 @@ const Jour = forwardRef((props, ref) => {
     goToToday: localHandleGoToToday,
   }));
 
-
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -97,7 +101,7 @@ const Jour = forwardRef((props, ref) => {
     },
     eventBack: {
       paddingVertical: 3,
-      paddingHorizontal: 3
+      paddingHorizontal: 3,
     },
     eventBottom: {
       flexDirection: "row",
@@ -139,24 +143,28 @@ const Jour = forwardRef((props, ref) => {
     },
     eventTextContent: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.blue800,
       gap: 10,
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
       maxWidth: "100%",
     },
     eventTitleLittle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 12,
       color: colors.blue950,
       maxWidth: "100%",
     },
     eventTitleAlternance: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 20,
       color: colors.blue950,
       maxWidth: "100%",
@@ -190,8 +198,8 @@ const Jour = forwardRef((props, ref) => {
   return (
     <View style={styles.container}>
       <CalendarContainer
-          initialDate={INITIAL_DATE}
-          timeZone="Europe/Paris"
+        initialDate={INITIAL_DATE}
+        timeZone="Europe/Paris"
         minDate={MIN_DATE}
         maxDate={MAX_DATE}
         showWeekNumber={true}
@@ -205,20 +213,20 @@ const Jour = forwardRef((props, ref) => {
         scrollToNow={true}
         isShowHalfLine={false}
         initialTimeIntervalHeight={height}
-          onPressEvent={(event) => {
-            const eventWithSerializedDate = {
-              ...event,
-              start: {
-                ...event.start,
-                dateTime: event.start.dateTime.toISOString(),
-              },
-              end: {
-                ...event.end,
-                dateTime: event.end.dateTime.toISOString(),
-              },
-            };
-            navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
-          }}
+        onPressEvent={(event) => {
+          const eventWithSerializedDate = {
+            ...event,
+            start: {
+              ...event.start,
+              dateTime: event.start.dateTime.toISOString(),
+            },
+            end: {
+              ...event.end,
+              dateTime: event.end.dateTime.toISOString(),
+            },
+          };
+          navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
+        }}
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
@@ -231,6 +239,7 @@ const Jour = forwardRef((props, ref) => {
           },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
+            letterSpacing: -0.4,
           },
           todayNumberContainer: {
             backgroundColor: colors.blue700,
@@ -244,25 +253,29 @@ const Jour = forwardRef((props, ref) => {
           dayName: {
             color: colors.grey,
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
           },
           dayNumber: {
             color: colors.grey,
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
           },
           leftBarText: {
             fontFamily: "Ubuntu_500Medium",
+            letterSpacing: -0.4,
             color: colors.blue950,
             textTransform: "capitalize",
             fontSize: 12,
           },
           hourTextStyle: {
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
             fontSize: 12,
             color: colors.grey,
           },
           headerContainer: {
-            borderBottomWidth: 0
-          }
+            borderBottomWidth: 0,
+          },
         }}
       >
         <CalendarHeader renderHeaderItem={(props) => <Header {...props} />} />

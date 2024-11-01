@@ -24,6 +24,7 @@ function Notes() {
     containerContent: {
       marginTop: 25,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       borderRadius: 10,
       width: "90%",
       alignSelf: "center",
@@ -38,22 +39,26 @@ function Notes() {
     },
     absTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.blue950,
       marginBottom: 7,
     },
     absContent: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
       marginBottom: 2,
     },
     content: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
     },
     altText: {
       marginTop: 40,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
       fontSize: 14,
       alignSelf: "center",
@@ -78,11 +83,13 @@ function Notes() {
     },
     gridTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.blue950,
     },
     gridMoyenne: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.blue950,
       marginTop: 10,
@@ -90,6 +97,7 @@ function Notes() {
     },
     gridPromo: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
     },
@@ -107,6 +115,7 @@ function Notes() {
     },
     altTextLink: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
       fontSize: 14,
       alignSelf: "center",

@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   day: {
     fontSize: 15,
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
   },
   btntoday: {
     alignItems: "center",
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
   return: {
     fontSize: 15,
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
     color: "#7A797C",
     paddingHorizontal: 24,
 

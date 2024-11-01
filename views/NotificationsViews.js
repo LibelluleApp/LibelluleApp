@@ -22,6 +22,7 @@ function Notifications() {
     },
     textNoNotifs: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.grey_variable,
       textAlign: "center",

@@ -56,6 +56,7 @@ const AppStack = ({ navigation }) => {
         headerShadowVisible: false,
         headerBackTitleStyle: {
           fontFamily: "Ubuntu_400Regular",
+          letterSpacing: -0.4,
           fontSize: 16,
         },
         headerStyle: {
@@ -214,12 +215,14 @@ const AppStack = ({ navigation }) => {
           headerTintColor: colors.blue950,
           headerTitleStyle: {
             fontFamily: "Ubuntu_500Medium",
+            letterSpacing: -0.4,
             fontSize: 18,
             color: colors.blue950,
           },
           headerBackTitle: "Retour",
           headerBackTitleStyle: {
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
             fontSize: 16,
           },
         }}

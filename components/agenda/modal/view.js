@@ -60,16 +60,19 @@ const ViewTask = ({ route }) => {
     },
     taskInfoTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
     taskInfoDesc: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
     taskState: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.red_variable,
     },
@@ -78,6 +81,7 @@ const ViewTask = ({ route }) => {
     },
     taskDisclaimer: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.red_variable,
       textAlign: "center",
@@ -102,6 +106,7 @@ const ViewTask = ({ route }) => {
     },
     taskCTAText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.white,
     },

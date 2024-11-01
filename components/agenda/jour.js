@@ -64,12 +64,14 @@ const Jour = ({
     headerTitle: {
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       color: colors.blue950,
       textAlign: "center",
     },
     headerSubtitle: {
       fontSize: 14,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue800,
       textAlign: "center",
     },
@@ -81,11 +83,13 @@ const Jour = ({
     progressTextTask: {
       color: colors.blue700,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
     },
     progressTextPourcent: {
       color: colors.blue200,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
     },
     progression: {
@@ -113,6 +117,7 @@ const Jour = ({
       fontSize: 16,
       color: colors.blue800,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       textAlign: "center",
     },
   });

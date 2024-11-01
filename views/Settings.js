@@ -72,6 +72,7 @@ function Settings() {
     },
     sectionTitle: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.grey,
       letterSpacing: -0.6,
@@ -115,6 +116,7 @@ function Settings() {
     },
     profilName: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
       letterSpacing: -0.6,
@@ -127,12 +129,14 @@ function Settings() {
     },
     profilGroupTitle: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.blue900_2,
       letterSpacing: -0.6,
     },
     profilEmail: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
       letterSpacing: -0.6,
@@ -144,12 +148,14 @@ function Settings() {
     },
     pageTitle: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue900,
       letterSpacing: -0.6,
     },
     pageSubtitle: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
       letterSpacing: -0.6,
@@ -168,12 +174,14 @@ function Settings() {
     },
     footerTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
       letterSpacing: -0.6,
     },
     footerSubtitle: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 11,
       color: colors.grey,
       letterSpacing: -0.6,

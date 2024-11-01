@@ -93,6 +93,7 @@ const Dropdown = ({ options, onSelect, value, number }) => {
       color: colors.blue700,
       fontSize: 14,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
     },
     dropdown: {
       position: "absolute",
@@ -113,11 +114,13 @@ const Dropdown = ({ options, onSelect, value, number }) => {
       fontSize: 14,
       textAlign: "center",
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue700,
     },
     selectedText: {
       color: colors.blue700,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
     },
   });
 

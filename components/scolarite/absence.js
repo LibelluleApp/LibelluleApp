@@ -24,6 +24,7 @@ function Absence() {
     containerContent: {
       marginTop: 25,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       borderRadius: 10,
       width: "90%",
       alignSelf: "center",
@@ -38,18 +39,21 @@ function Absence() {
     },
     absTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.blue950,
       marginBottom: 7,
     },
     absContent: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.blue950,
       marginBottom: 2,
     },
     content: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.blue950,
     },
@@ -66,12 +70,14 @@ function Absence() {
     },
     altText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
       fontSize: 14,
       alignSelf: "center",
     },
     altTextLink: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
       fontSize: 14,
       alignSelf: "center",

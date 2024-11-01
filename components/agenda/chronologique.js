@@ -35,6 +35,7 @@ const Chronologie = ({
     },
     dateText: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.blue950,
     },

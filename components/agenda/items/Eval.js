@@ -31,6 +31,7 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
     evalText: {
       color: colors.red500,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
     },
     leftContainer: {

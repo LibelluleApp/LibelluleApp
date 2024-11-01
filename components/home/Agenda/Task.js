@@ -37,21 +37,25 @@ function Task({ data }) {
     },
     taskTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 16,
       color: colors.blue950,
     },
     taskContentDate: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
       fontSize: 13,
     },
     taskContentMore: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       color: colors.blue950,
       fontSize: 13,
     },
     taskDescription: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
     },
     strikethrough: {

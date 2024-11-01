@@ -126,12 +126,14 @@ function MailDetail({ route }) {
     },
     subject: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
       marginBottom: 15,
     },
     body: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
@@ -147,6 +149,7 @@ function MailDetail({ route }) {
     },
     sender: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },

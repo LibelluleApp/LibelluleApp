@@ -26,8 +26,8 @@ const DetailEvent = ({ route }) => {
   const endHour = moment(updatedEvent.endHour, "HH:mm").format("HH:mm");
 
   const duration = moment
-      .utc(moment(endHour, "HH:mm").diff(moment(startHour, "HH:mm")))
-      .format("HH:mm");
+    .utc(moment(endHour, "HH:mm").diff(moment(startHour, "HH:mm")))
+    .format("HH:mm");
 
   const date = moment(updatedEvent.start.dateTime).format("DD/MM/YYYY");
 
@@ -45,6 +45,7 @@ const DetailEvent = ({ route }) => {
     },
     titleText: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.blue950,
       alignSelf: "center",
@@ -73,118 +74,120 @@ const DetailEvent = ({ route }) => {
     },
     eventInfoTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
     eventInfoDesc: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
   });
 
   return (
-      <View style={styles.background}>
-        <View style={styles.container}>
-          <Text style={styles.titleText}>{updatedEvent.title}</Text>
-          <View style={styles.containerItems}>
-            <View style={styles.eventInfo}>
-              <View style={styles.eventInfoContent}>
-                <DoorOpen
-                    stroke={colors.blue950}
-                    strokeWidth={1.75}
-                    width={20}
-                    height={20}
-                />
-                <View>
-                  <Text style={styles.eventInfoTitle}>Salle de cours</Text>
-                  <Text style={styles.eventInfoDesc}>
-                    {updatedEvent.location || updatedEvent.lieu || "N/C"}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.eventInfoContent}>
-                <UserRound
-                    stroke={colors.blue950}
-                    strokeWidth={1.75}
-                    width={20}
-                    height={20}
-                />
-                <View>
-                  <Text style={styles.eventInfoTitle}>Enseignant</Text>
-                  <Text style={styles.eventInfoDesc}>
-                    {updatedEvent.professor || updatedEvent.description || "N/C"}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.eventInfoContent}>
-                <UsersRound
-                    stroke={colors.blue950}
-                    strokeWidth={1.75}
-                    width={20}
-                    height={20}
-                />
-                <View>
-                  <Text style={styles.eventInfoTitle}>Groupe</Text>
-                  <Text style={styles.eventInfoDesc}>
-                    {updatedEvent.groupe || "N/C"}
-                  </Text>
-                </View>
+    <View style={styles.background}>
+      <View style={styles.container}>
+        <Text style={styles.titleText}>{updatedEvent.title}</Text>
+        <View style={styles.containerItems}>
+          <View style={styles.eventInfo}>
+            <View style={styles.eventInfoContent}>
+              <DoorOpen
+                stroke={colors.blue950}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.eventInfoTitle}>Salle de cours</Text>
+                <Text style={styles.eventInfoDesc}>
+                  {updatedEvent.location || updatedEvent.lieu || "N/C"}
+                </Text>
               </View>
             </View>
-            <View style={styles.eventInfo}>
-              <View style={styles.eventInfoContent}>
-                <Calendar
-                    stroke={colors.blue950}
-                    strokeWidth={1.75}
-                    width={20}
-                    height={20}
-                />
-                <View>
-                  <Text style={styles.eventInfoTitle}>Date du cours</Text>
-                  <Text style={styles.eventInfoDesc}>{date}</Text>
-                </View>
+            <View style={styles.eventInfoContent}>
+              <UserRound
+                stroke={colors.blue950}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.eventInfoTitle}>Enseignant</Text>
+                <Text style={styles.eventInfoDesc}>
+                  {updatedEvent.professor || updatedEvent.description || "N/C"}
+                </Text>
               </View>
-              <View style={styles.eventInfoContent}>
-                <Hourglass
-                    stroke={colors.blue950}
-                    strokeWidth={1.75}
-                    width={20}
-                    height={20}
-                />
-                <View>
-                  <Text style={styles.eventInfoTitle}>Durée du cours</Text>
-                  <Text style={styles.eventInfoDesc}>{duration}</Text>
-                </View>
+            </View>
+            <View style={styles.eventInfoContent}>
+              <UsersRound
+                stroke={colors.blue950}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.eventInfoTitle}>Groupe</Text>
+                <Text style={styles.eventInfoDesc}>
+                  {updatedEvent.groupe || "N/C"}
+                </Text>
               </View>
-              <View style={styles.eventInfoContent}>
-                <Clock2
-                    stroke={colors.blue950}
-                    strokeWidth={1.75}
-                    width={20}
-                    height={20}
-                />
-                <View>
-                  <Text style={styles.eventInfoTitle}>Début du cours</Text>
-                  <Text style={styles.eventInfoDesc}>{startHour}</Text>
-                </View>
+            </View>
+          </View>
+          <View style={styles.eventInfo}>
+            <View style={styles.eventInfoContent}>
+              <Calendar
+                stroke={colors.blue950}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.eventInfoTitle}>Date du cours</Text>
+                <Text style={styles.eventInfoDesc}>{date}</Text>
               </View>
-              <View style={styles.eventInfoContent}>
-                <Clock8
-                    stroke={colors.blue950}
-                    strokeWidth={1.75}
-                    width={20}
-                    height={20}
-                />
-                <View>
-                  <Text style={styles.eventInfoTitle}>Fin du cours</Text>
-                  <Text style={styles.eventInfoDesc}>{endHour}</Text>
-                </View>
+            </View>
+            <View style={styles.eventInfoContent}>
+              <Hourglass
+                stroke={colors.blue950}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.eventInfoTitle}>Durée du cours</Text>
+                <Text style={styles.eventInfoDesc}>{duration}</Text>
+              </View>
+            </View>
+            <View style={styles.eventInfoContent}>
+              <Clock2
+                stroke={colors.blue950}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.eventInfoTitle}>Début du cours</Text>
+                <Text style={styles.eventInfoDesc}>{startHour}</Text>
+              </View>
+            </View>
+            <View style={styles.eventInfoContent}>
+              <Clock8
+                stroke={colors.blue950}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.eventInfoTitle}>Fin du cours</Text>
+                <Text style={styles.eventInfoDesc}>{endHour}</Text>
               </View>
             </View>
           </View>
         </View>
       </View>
+    </View>
   );
 };
 

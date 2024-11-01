@@ -58,11 +58,13 @@ const PaginationHeader = ({
     },
     textResponsable: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.blue800,
     },
     textResponsableName: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.blue800,
       width: "49%",
@@ -91,11 +93,13 @@ const PaginationHeader = ({
     day: {
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       color: colors.blue950,
     },
     week: {
       fontSize: 14,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.grey,
     },
     arrowRightContainer: {
@@ -127,11 +131,13 @@ const PaginationHeader = ({
     progressTextTask: {
       color: colors.blue700,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
     },
     progressTextPourcent: {
       color: colors.grey_variable,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
     },
     progression: {

@@ -151,12 +151,14 @@ function Mails() {
     },
     titleDescriptionLogin: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue800,
       alignSelf: "flex-start",
     },
     titleWarningLogin: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
       alignSelf: "flex-start",
@@ -183,7 +185,7 @@ function Mails() {
     //   borderWidth: 0.5,
     //   borderColor: colors.input_border,
     //   color: colors.blue950,
-    //   fontFamily: "Ubuntu_400Regular",
+    //   fontFamily: "Ubuntu_400Regular",letterSpacing: -0.4,
     // },
     // button: {
     //   width: "80%",
@@ -205,11 +207,13 @@ function Mails() {
     },
     textDescriptionMails: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.blue800,
     },
     linkDescriptionMails: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.blue800,
       textDecorationLine: "underline",
@@ -244,6 +248,7 @@ function Mails() {
     },
     noMailText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
       textAlign: "center",

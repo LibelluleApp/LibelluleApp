@@ -1,10 +1,18 @@
-import React, {useContext, useEffect, useState, useRef, forwardRef, useImperativeHandle} from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import {
   View,
   StyleSheet,
   ActivityIndicator,
   Text,
-  Dimensions, Platform,
+  Dimensions,
+  Platform,
 } from "react-native";
 import {
   CalendarBody,
@@ -25,7 +33,6 @@ const getTimetable = async () => {
   }
 };
 
-
 const INITIAL_DATE = new Date(
   new Date().getFullYear(),
   new Date().getMonth(),
@@ -33,29 +40,29 @@ const INITIAL_DATE = new Date(
 ).toISOString();
 
 const Semaine = forwardRef((props, ref) => {
-    const { colors } = useContext(ThemeContext);
-    const calendarRef = useRef(null);
-    const isFocused = useIsFocused();
-    const [timetable, setTimetable] = useState([]);
-    const navigator = useNavigation();
+  const { colors } = useContext(ThemeContext);
+  const calendarRef = useRef(null);
+  const isFocused = useIsFocused();
+  const [timetable, setTimetable] = useState([]);
+  const navigator = useNavigation();
 
-    useEffect(() => {
-        if (isFocused) {
-            getTimetable().then(data => setTimetable(data));
-        }
-    }, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      getTimetable().then((data) => setTimetable(data));
+    }
+  }, [isFocused]);
 
-    const localHandleGoToToday = () => {
-        calendarRef.current?.goToDate({
-            date: INITIAL_DATE,
-            animatedDate: true,
-            animatedHour: true,
-        });
-    };
+  const localHandleGoToToday = () => {
+    calendarRef.current?.goToDate({
+      date: INITIAL_DATE,
+      animatedDate: true,
+      animatedHour: true,
+    });
+  };
 
-    useImperativeHandle(ref, () => ({
-        goToToday: localHandleGoToToday,
-    }));
+  useImperativeHandle(ref, () => ({
+    goToToday: localHandleGoToToday,
+  }));
 
   const styles = StyleSheet.create({
     container: {
@@ -72,6 +79,7 @@ const Semaine = forwardRef((props, ref) => {
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       color: colors.blue950,
       fontSize: 11,
       maxWidth: "100%",
@@ -79,7 +87,7 @@ const Semaine = forwardRef((props, ref) => {
     },
     eventBack: {
       paddingVertical: 2,
-        paddingHorizontal: 2
+      paddingHorizontal: 2,
     },
     eventContainer: {
       height: "100%",
@@ -101,6 +109,7 @@ const Semaine = forwardRef((props, ref) => {
     // },
     eventTitleAlternance: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       includeFontPadding: false,
       fontSize: 15,
       width: 85,
@@ -128,16 +137,15 @@ const Semaine = forwardRef((props, ref) => {
     );
   }
   const height =
-      Dimensions.get("screen").height / 17.7 +
-      (Platform.OS === "android" ? 1 : 0);
+    Dimensions.get("screen").height / 17.7 +
+    (Platform.OS === "android" ? 1 : 0);
 
   const initialesLocale = {
-      fr: {
-       weekDayShort: 'Dim._Lun._Mar._Mer._Jeu._Ven._Sam.'.split('_'),
-          meridiem: { ante: "AM", post: "PM" }
-        },
-
-  }
+    fr: {
+      weekDayShort: "Dim._Lun._Mar._Mer._Jeu._Ven._Sam.".split("_"),
+      meridiem: { ante: "AM", post: "PM" },
+    },
+  };
 
   return (
     <View style={styles.container}>
@@ -160,21 +168,20 @@ const Semaine = forwardRef((props, ref) => {
         isShowHalfLine={true}
         initialTimeIntervalHeight={height}
         onPressEvent={(event) => {
-            const eventWithSerializedDate = {
-                ...event,
-                start: {
-                    ...event.start,
-                    dateTime: event.start.dateTime.toISOString(),
-                },
-                end: {
-                    ...event.end,
-                    dateTime: event.end.dateTime.toISOString(),
-                },
-            };
+          const eventWithSerializedDate = {
+            ...event,
+            start: {
+              ...event.start,
+              dateTime: event.start.dateTime.toISOString(),
+            },
+            end: {
+              ...event.end,
+              dateTime: event.end.dateTime.toISOString(),
+            },
+          };
 
-            navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
+          navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
         }}
-
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
@@ -187,6 +194,7 @@ const Semaine = forwardRef((props, ref) => {
           },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
+            letterSpacing: -0.4,
           },
           todayNumberContainer: {
             backgroundColor: colors.blue700,
@@ -200,19 +208,23 @@ const Semaine = forwardRef((props, ref) => {
           dayName: {
             color: colors.grey,
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
           },
           dayNumber: {
             color: colors.grey,
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
           },
           leftBarText: {
             fontFamily: "Ubuntu_500Medium",
+            letterSpacing: -0.4,
             color: colors.blue950,
             textTransform: "capitalize",
             fontSize: 12,
           },
           hourTextStyle: {
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
             fontSize: 12,
             color: colors.grey,
           },
@@ -220,13 +232,14 @@ const Semaine = forwardRef((props, ref) => {
           weekNumber: {
             color: colors.blue950,
             fontFamily: "Ubuntu_500Medium",
+            letterSpacing: -0.4,
           },
           weekNumberContainer: {
             backgroundColor: colors.blue100,
           },
           headerContainer: {
-            borderBottomWidth: 0
-          }
+            borderBottomWidth: 0,
+          },
         }}
       >
         <CalendarHeader />

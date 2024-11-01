@@ -73,6 +73,7 @@ function Home() {
     container: {
       backgroundColor: colors.background,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       flex: 1,
     },
     containerContent: {
@@ -104,6 +105,7 @@ function Home() {
     },
     weatherTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.blue700,
       textAlign: "center",
@@ -432,6 +434,7 @@ function Home() {
                 <Text
                   style={{
                     fontFamily: "Ubuntu_500Medium",
+                    letterSpacing: -0.4,
                     fontSize: 15,
                     color: colors.blue950,
                   }}
@@ -440,6 +443,7 @@ function Home() {
                   <Text
                     style={{
                       fontFamily: "Ubuntu_500Medium",
+                      letterSpacing: -0.4,
                       color: colors.blue800,
                     }}
                   >
@@ -456,6 +460,7 @@ function Home() {
                 <Text
                   style={{
                     fontFamily: "Ubuntu_400Regular",
+                    letterSpacing: -0.4,
                     fontSize: 13,
                     color: colors.blue950,
                   }}
@@ -473,6 +478,7 @@ function Home() {
                 <Text
                   style={{
                     fontFamily: "Ubuntu_500Medium",
+                    letterSpacing: -0.4,
                     color: colors.blue700,
                     fontSize: 15,
                   }}

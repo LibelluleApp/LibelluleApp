@@ -19,6 +19,7 @@ function Mail({ email }) {
     },
     sender: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.blue800,
       marginBottom: 5,
@@ -26,6 +27,7 @@ function Mail({ email }) {
     },
     subject: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
@@ -46,11 +48,13 @@ function Mail({ email }) {
     },
     date: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.blue800,
     },
     action: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.blue700,
     },

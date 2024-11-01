@@ -40,6 +40,7 @@ function LiensExterne() {
     },
     container: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       alignSelf: "center",
       width: "90%",
       marginTop: 22,
@@ -48,6 +49,7 @@ function LiensExterne() {
     },
     title: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.grey,
       marginBottom: 14,
@@ -70,12 +72,14 @@ function LiensExterne() {
     },
     titleText: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
       letterSpacing: -0.6,
     },
     descriptionText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.blue800,
       letterSpacing: -0.6,

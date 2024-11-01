@@ -59,6 +59,7 @@ function Login({ navigation }) {
     },
     forgotpass: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.grey,
       textDecorationLine: "underline",
@@ -79,11 +80,13 @@ function Login({ navigation }) {
     },
     accountText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.grey,
     },
     accountButton: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.blue700,
     },

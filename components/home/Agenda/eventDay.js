@@ -57,6 +57,7 @@ function EventDay({ date, onAgendaContentChange }) {
     },
     textNone: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       textAlign: "center",
       color: colors.blue800,
@@ -76,6 +77,7 @@ function EventDay({ date, onAgendaContentChange }) {
       color: colors.blue700,
       fontSize: 13,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
     },
     items: {},
   });

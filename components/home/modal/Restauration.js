@@ -23,6 +23,7 @@ function Restauration() {
     },
     container: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       alignSelf: "center",
       width: "90%",
       marginTop: 22,
@@ -41,6 +42,7 @@ function Restauration() {
     },
     hour: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 20,
       color: colors.blue950,
     },
@@ -56,6 +58,7 @@ function Restauration() {
     },
     title: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 20,
       color: colors.blue950,
     },
@@ -66,6 +69,7 @@ function Restauration() {
     },
     description: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
@@ -83,6 +87,7 @@ function Restauration() {
     },
     buttonText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue700,
     },
@@ -91,6 +96,7 @@ function Restauration() {
     },
     titleContent: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.grey,
       marginTop: 30,
@@ -106,16 +112,19 @@ function Restauration() {
     },
     noneDescriptionPlat: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue800,
     },
     descriptionMeal: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
     descriptionPlat: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
       marginLeft: 10,

@@ -20,11 +20,13 @@ const DropdownComponent = ({ onChange, data, value }) => {
     placeholderStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
     },
     selectedTextStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
     },
     iconStyle: {
@@ -38,6 +40,7 @@ const DropdownComponent = ({ onChange, data, value }) => {
       color: colors.blue950,
       borderBottomColor: colors.input_border,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
     },
     containerStyle: {
       borderWidth: 1,

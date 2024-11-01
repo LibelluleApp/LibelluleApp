@@ -261,6 +261,7 @@ const Register = () => {
         },
         titleItemInputContainer: {
           fontFamily: "Ubuntu_500Medium",
+          letterSpacing: -0.4,
           fontSize: 15,
           color: colors.blue950,
         },
@@ -295,11 +296,13 @@ const Register = () => {
         },
         inputListTitle: {
           fontFamily: "Ubuntu_400Regular",
+          letterSpacing: -0.4,
           fontSize: 15,
           color: colors.blue950,
         },
         inputListTitleSelected: {
           fontFamily: "Ubuntu_400Regular",
+          letterSpacing: -0.4,
           fontSize: 15,
           color: colors.blue700,
         },
@@ -317,12 +320,14 @@ const Register = () => {
         },
         accountText: {
           fontFamily: "Ubuntu_400Regular",
+          letterSpacing: -0.4,
           fontSize: 14,
           color: colors.grey,
           marginTop: 5,
         },
         accountButton: {
           fontFamily: "Ubuntu_500Medium",
+          letterSpacing: -0.4,
           fontSize: 14,
           color: colors.blue700,
         },
@@ -337,6 +342,7 @@ const Register = () => {
         },
         titleBackButton: {
           fontFamily: "Ubuntu_500Medium",
+          letterSpacing: -0.4,
           fontSize: 16,
           color: colors.blue950,
         },

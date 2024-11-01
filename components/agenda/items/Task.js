@@ -50,12 +50,14 @@ function TaskHome({
     },
     taskTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: component === "little" ? 13 : 16,
       color: colors.blue950,
       maxWidth: component === "little" ? 100 : "90%", // Limite la largeur
     },
     taskDescription: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue800,
       maxWidth: component === "little" ? "auto" : "100%", // Limite la largeur
       overflow: "hidden", // Cache le texte débordant

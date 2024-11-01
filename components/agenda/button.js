@@ -20,6 +20,7 @@ function Button({ title, onPress, style }) {
     },
     buttonText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.white,
       fontSize: 16,
     },

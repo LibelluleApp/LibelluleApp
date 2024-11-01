@@ -103,6 +103,7 @@ function Restauration() {
   const styles = StyleSheet.create({
     container: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       alignSelf: "center",
       width: "90%",
       marginTop: 22,
@@ -121,11 +122,13 @@ function Restauration() {
     headerTitle: {
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       color: colors.blue950,
     },
     headerSubtitle: {
       fontSize: 14,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue800,
     },
     btnOutline: {
@@ -139,6 +142,7 @@ function Restauration() {
       color: colors.blue700,
       fontSize: 13,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
     },
     contentMeal: {
       backgroundColor: colors.white_background,
@@ -153,16 +157,19 @@ function Restauration() {
     },
     noneDescriptionPlatTitle: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue800,
     },
     descriptionMeal: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
     descriptionPlat: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
       textTransform: "capitalize",

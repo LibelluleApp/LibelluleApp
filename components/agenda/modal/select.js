@@ -46,11 +46,13 @@ const SelectComponent = ({ onChange, data, value }) => {
     placeholderStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
     },
     selectedTextStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue950,
     },
     iconStyle: {

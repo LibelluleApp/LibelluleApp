@@ -25,7 +25,7 @@ import {
   getColorAlternant,
   getColorTimetable,
   getWeekDefault,
-  setWeekDefault
+  setWeekDefault,
 } from "../../../utils/storage";
 
 const ColorModal = ({
@@ -149,7 +149,6 @@ function TimetableSettings() {
     }
   };
 
-
   const openColorModal = (colorType) => {
     setCurrentColorType(colorType);
     setIsModalVisible(true);
@@ -266,6 +265,7 @@ const styles = StyleSheet.create({
   },
   profileBtnSwitch: {
     fontFamily: "Ubuntu_400Regular",
+    letterSpacing: -0.4,
     fontSize: 16,
   },
   colorBox: {

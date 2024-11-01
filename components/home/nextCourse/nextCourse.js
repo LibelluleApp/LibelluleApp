@@ -75,6 +75,7 @@ function ItemCourse({ data, color }) {
     container: {
       backgroundColor: colors.blue200,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       includeFontPadding: false,
       borderRadius: 10,
       width: "100%",
@@ -101,6 +102,7 @@ function ItemCourse({ data, color }) {
     },
     subjectText: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       includeFontPadding: false,
       fontSize: 16,
       color: colors.blue950,
@@ -118,6 +120,7 @@ function ItemCourse({ data, color }) {
     },
     descriptionText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       includeFontPadding: false,
       fontSize: 13,
       color: colors.blue800,

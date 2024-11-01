@@ -44,6 +44,7 @@ const TransferRole = () => {
     },
     editBtnText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.white,
       letterSpacing: -0.5,
@@ -57,11 +58,13 @@ const TransferRole = () => {
     placeholderStyle: {
       color: colors.grey,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
     },
     selectedTextStyle: {
       color: colors.blue950,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
     },
     dropdownContainer: {
@@ -77,20 +80,24 @@ const TransferRole = () => {
     },
     textInformations: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
     bold: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
     },
     labelDropdown: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue900,
       marginBottom: 10,
     },
     textDisclaimer: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
       textAlign: "center",

@@ -52,11 +52,13 @@ function AgendaHome() {
     nextTasksTitle: {
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       color: colors.blue950,
     },
     nextTasksSubtitle: {
       fontSize: 14,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.blue800,
     },
     nextTasksContent: {
@@ -76,6 +78,7 @@ function AgendaHome() {
       color: colors.blue700,
       fontSize: 13,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
     },
   });
 

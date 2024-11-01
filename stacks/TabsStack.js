@@ -29,7 +29,8 @@ const TabsStack = () => {
       options: {
         headerShown: false,
         tabBarLabel: "Accueil",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Home, color, 1.75, focused),
+        tabBarIcon: ({ color, size, focused }) =>
+          getIcon(Home, color, 1.75, focused),
       },
     },
     {
@@ -38,7 +39,8 @@ const TabsStack = () => {
       options: {
         headerShown: false,
         tabBarLabel: "EDT",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Calendar, color, 1.75, focused),
+        tabBarIcon: ({ color, size, focused }) =>
+          getIcon(Calendar, color, 1.75, focused),
       },
     },
     {
@@ -47,7 +49,8 @@ const TabsStack = () => {
       options: {
         headerShown: false,
         tabBarLabel: "Devoirs",
-        tabBarIcon: ({ color, size, focused }) => getIcon(Check, color, 1.75, focused),
+        tabBarIcon: ({ color, size, focused }) =>
+          getIcon(Check, color, 1.75, focused),
       },
     },
     {
@@ -83,6 +86,7 @@ const TabsStack = () => {
           tabBarLabelStyle: {
             marginTop: 1,
             fontFamily: "Ubuntu_500Medium",
+            letterSpacing: -0.4,
             fontSize: 12,
           },
           headerLeft: () => <LogoTitle />,

@@ -47,6 +47,7 @@ function Settings() {
     },
     profileBtnSwitch: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 16,
       color: colors.blue950,
     },
@@ -62,11 +63,13 @@ function Settings() {
     },
     profileBtnText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.blue950,
     },
     profileBtnUnderText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
     },

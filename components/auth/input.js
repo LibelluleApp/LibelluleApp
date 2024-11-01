@@ -35,6 +35,7 @@ function Input({
     },
     inputLabel: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.grey,
     },
@@ -43,6 +44,7 @@ function Input({
       borderRadius: 10,
       height: 58,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       paddingHorizontal: 45,
       color: colors.blue950,
     },
