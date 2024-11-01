@@ -16,7 +16,7 @@ import ColorPicker, {
   OpacitySlider,
   HueSlider,
 } from "reanimated-color-picker";
-import {getColors, setColors as setColor} from "../../utils/storage";
+import { getColors, setColors as setColor } from "../../utils/storage";
 
 const CustomColor = () => {
   const [showModal, setShowModal] = useState(false);
@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 15,
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
     marginBottom: 8,
     color: "#7A797C",
   },
@@ -182,11 +183,13 @@ const styles = StyleSheet.create({
   colorName: {
     fontSize: 17,
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
   },
   colorValue: {
     fontSize: 15,
     color: "#7A797C",
     fontFamily: "Ubuntu_400Regular",
+    letterSpacing: -0.4,
   },
   menuButton: {
     padding: 5,

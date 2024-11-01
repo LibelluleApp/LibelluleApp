@@ -11,6 +11,9 @@
         "enterpriseProvisioning": "adhoc",
         "image": "latest"
       },
+      "android": {
+        "buildType": "apk"
+      },
       "env": {
         "APP_VARIANT": "development"
       }

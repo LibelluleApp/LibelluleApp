@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -10,12 +10,12 @@ import {
 import { ThemeContext } from "./../../utils/themeContext";
 import { useNavigation } from "@react-navigation/native";
 import { Calendar, ChevronRight } from "./../../assets/icons/Icons";
-import {getAlternant, getUserData, setAlternant} from "../../utils/storage";
+import { getAlternant, getUserData, setAlternant } from "../../utils/storage";
 
 function Settings() {
-  const { isDarkMode, toggleTheme, colors } = React.useContext(ThemeContext);
-  const [isAlternant, setIsAlternant] = React.useState(false);
-  const [userDatas, setUserDatas] = React.useState({});
+  const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
+  const [isAlternant, setIsAlternant] = useState(false);
+  const [userDatas, setUserDatas] = useState({});
 
   const navigation = useNavigation();
 
@@ -47,8 +47,9 @@ function Settings() {
     },
     profileBtnSwitch: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 16,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     profileButton: {
       backgroundColor: colors.white_background,
@@ -62,11 +63,13 @@ function Settings() {
     },
     profileBtnText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     profileBtnUnderText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
     },
@@ -77,7 +80,7 @@ function Settings() {
     },
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getData = () => {
       try {
         const value = getUserData();
@@ -88,7 +91,7 @@ function Settings() {
       }
     };
 
-    const getIsAlternant =  () => {
+    const getIsAlternant = () => {
       try {
         const value = getAlternant();
         setIsAlternant(value);
@@ -97,7 +100,7 @@ function Settings() {
       }
     };
 
-    getData()
+    getData();
     getIsAlternant();
   }, []);
 
@@ -119,7 +122,7 @@ function Settings() {
           <Switch
             trackColor={{
               false: colors.grey,
-              true: colors.blue700,
+              true: colors.regular700,
             }}
             thumbColor={isDarkMode ? colors.white : colors.white}
             onValueChange={toggleTheme}
@@ -132,7 +135,7 @@ function Settings() {
             <Switch
               trackColor={{
                 false: colors.grey,
-                true: colors.blue700,
+                true: colors.regular700,
               }}
               thumbColor={isAlternant ? colors.white : colors.white}
               onValueChange={handleAlternant}
@@ -146,7 +149,7 @@ function Settings() {
         >
           <View style={styles.CTAContent}>
             <Calendar
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -154,7 +157,7 @@ function Settings() {
             <Text style={styles.profileBtnText}>Emploi du temps</Text>
           </View>
           <ChevronRight
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={18}
             height={18}

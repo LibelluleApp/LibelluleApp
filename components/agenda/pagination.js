@@ -58,13 +58,15 @@ const PaginationHeader = ({
     },
     textResponsable: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.blue800,
+      color: colors.regular800,
     },
     textResponsableName: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.blue800,
+      color: colors.regular800,
       width: "49%",
     },
     modalDropdown: {
@@ -91,11 +93,13 @@ const PaginationHeader = ({
     day: {
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
-      color: colors.blue950,
+      letterSpacing: -0.4,
+      color: colors.regular950,
     },
     week: {
       fontSize: 14,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.grey,
     },
     arrowRightContainer: {
@@ -125,13 +129,15 @@ const PaginationHeader = ({
       gap: 5,
     },
     progressTextTask: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
     },
     progressTextPourcent: {
-      color: colors.grey_variable,
+      color: colors.grey,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
     },
     progression: {
@@ -155,7 +161,7 @@ const PaginationHeader = ({
     <View style={styles.container}>
       <View style={styles.responsableContainer}>
         <Check
-          stroke={colors.blue800}
+          stroke={colors.regular800}
           strokeWidth={1.75}
           width={17}
           height={17}
@@ -181,7 +187,7 @@ const PaginationHeader = ({
         <TouchableOpacity>
           {index !== defaultIndex && (
             <TouchableOpacity onPress={handleReturnToday}>
-              <ResetList stroke={colors.blue800} />
+              <ResetList stroke={colors.regular800} />
             </TouchableOpacity>
           )}
         </TouchableOpacity>

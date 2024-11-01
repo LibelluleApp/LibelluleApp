@@ -1,10 +1,18 @@
-import React, {useContext, useEffect, useState, useRef, forwardRef, useImperativeHandle} from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import {
   View,
   StyleSheet,
   ActivityIndicator,
   Text,
-  Dimensions, Platform,
+  Dimensions,
+  Platform,
 } from "react-native";
 import {
   CalendarBody,
@@ -25,7 +33,6 @@ const getTimetable = async () => {
   }
 };
 
-
 const INITIAL_DATE = new Date(
   new Date().getFullYear(),
   new Date().getMonth(),
@@ -33,29 +40,29 @@ const INITIAL_DATE = new Date(
 ).toISOString();
 
 const Semaine = forwardRef((props, ref) => {
-    const { colors } = useContext(ThemeContext);
-    const calendarRef = useRef(null);
-    const isFocused = useIsFocused();
-    const [timetable, setTimetable] = useState([]);
-    const navigator = useNavigation();
+  const { colors } = useContext(ThemeContext);
+  const calendarRef = useRef(null);
+  const isFocused = useIsFocused();
+  const [timetable, setTimetable] = useState([]);
+  const navigator = useNavigation();
 
-    useEffect(() => {
-        if (isFocused) {
-            getTimetable().then(data => setTimetable(data));
-        }
-    }, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      getTimetable().then((data) => setTimetable(data));
+    }
+  }, [isFocused]);
 
-    const localHandleGoToToday = () => {
-        calendarRef.current?.goToDate({
-            date: INITIAL_DATE,
-            animatedDate: true,
-            animatedHour: true,
-        });
-    };
+  const localHandleGoToToday = () => {
+    calendarRef.current?.goToDate({
+      date: INITIAL_DATE,
+      animatedDate: true,
+      animatedHour: true,
+    });
+  };
 
-    useImperativeHandle(ref, () => ({
-        goToToday: localHandleGoToToday,
-    }));
+  useImperativeHandle(ref, () => ({
+    goToToday: localHandleGoToToday,
+  }));
 
   const styles = StyleSheet.create({
     container: {
@@ -72,14 +79,15 @@ const Semaine = forwardRef((props, ref) => {
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
-      color: colors.blue950,
+      letterSpacing: -0.4,
+      color: colors.regular950,
       fontSize: 11,
       maxWidth: "100%",
       alignItems: "start",
     },
     eventBack: {
       paddingVertical: 2,
-        paddingHorizontal: 2
+      paddingHorizontal: 2,
     },
     eventContainer: {
       height: "100%",
@@ -87,24 +95,25 @@ const Semaine = forwardRef((props, ref) => {
       paddingHorizontal: 10,
       borderRadius: 10,
       // backgroundColor: colorTimetable,
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.regular200,
       // position: "relative",
       // overflow: "hidden",
     },
     // beforeElement: {
     //   width: 5,
     //   height: 400,
-    //   backgroundColor: colors.blue500,
+    //   backgroundColor: colors.regular500,
     //   position: "absolute",
     //   left: 0,
     //   top: 0,
     // },
     eventTitleAlternance: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       includeFontPadding: false,
       fontSize: 15,
       width: 85,
-      color: colors.blue950,
+      color: colors.regular950,
       alignItems: "center",
       justifyContent: "center",
       transform: [{ rotate: "-90deg" }],
@@ -116,7 +125,7 @@ const Semaine = forwardRef((props, ref) => {
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.regular200,
     },
   });
 
@@ -128,16 +137,15 @@ const Semaine = forwardRef((props, ref) => {
     );
   }
   const height =
-      Dimensions.get("screen").height / 17.7 +
-      (Platform.OS === "android" ? 1 : 0);
+    Dimensions.get("screen").height / 17.7 +
+    (Platform.OS === "android" ? 1 : 0);
 
   const initialesLocale = {
-      fr: {
-       weekDayShort: 'Dim._Lun._Mar._Mer._Jeu._Ven._Sam.'.split('_'),
-          meridiem: { ante: "AM", post: "PM" }
-        },
-
-  }
+    fr: {
+      weekDayShort: "Dim._Lun._Mar._Mer._Jeu._Ven._Sam.".split("_"),
+      meridiem: { ante: "AM", post: "PM" },
+    },
+  };
 
   return (
     <View style={styles.container}>
@@ -160,21 +168,20 @@ const Semaine = forwardRef((props, ref) => {
         isShowHalfLine={true}
         initialTimeIntervalHeight={height}
         onPressEvent={(event) => {
-            const eventWithSerializedDate = {
-                ...event,
-                start: {
-                    ...event.start,
-                    dateTime: event.start.dateTime.toISOString(),
-                },
-                end: {
-                    ...event.end,
-                    dateTime: event.end.dateTime.toISOString(),
-                },
-            };
+          const eventWithSerializedDate = {
+            ...event,
+            start: {
+              ...event.start,
+              dateTime: event.start.dateTime.toISOString(),
+            },
+            end: {
+              ...event.end,
+              dateTime: event.end.dateTime.toISOString(),
+            },
+          };
 
-            navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
+          navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
         }}
-
         theme={{
           backgroundColor: colors.background,
           dayNumberContainer: {
@@ -183,50 +190,56 @@ const Semaine = forwardRef((props, ref) => {
           colors: {
             background: colors.background,
             border: colors.gray_clear,
-            text: colors.blue950,
+            text: colors.regular950,
           },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
+            letterSpacing: -0.4,
           },
           todayNumberContainer: {
-            backgroundColor: colors.blue700,
+            backgroundColor: colors.regular700,
           },
           todayNumber: {
             color: colors.white,
           },
           todayName: {
-            color: colors.blue700,
+            color: colors.regular700,
           },
           dayName: {
             color: colors.grey,
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
           },
           dayNumber: {
             color: colors.grey,
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
           },
           leftBarText: {
             fontFamily: "Ubuntu_500Medium",
-            color: colors.blue950,
+            letterSpacing: -0.4,
+            color: colors.regular950,
             textTransform: "capitalize",
             fontSize: 12,
           },
           hourTextStyle: {
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
             fontSize: 12,
             color: colors.grey,
           },
           // Week number
           weekNumber: {
-            color: colors.blue950,
+            color: colors.regular950,
             fontFamily: "Ubuntu_500Medium",
+            letterSpacing: -0.4,
           },
           weekNumberContainer: {
-            backgroundColor: colors.blue100,
+            backgroundColor: colors.regular100,
           },
           headerContainer: {
-            borderBottomWidth: 0
-          }
+            borderBottomWidth: 0,
+          },
         }}
       >
         <CalendarHeader />

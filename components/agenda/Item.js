@@ -24,7 +24,8 @@ const Item = ({
     },
     noItemText: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.blue800,
+      letterSpacing: -0.4,
+      color: colors.regular800,
     },
   });
 

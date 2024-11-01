@@ -43,7 +43,7 @@ const ChangePassword = () => {
       width: "100%",
     },
     editBtn: {
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       paddingHorizontal: 20,
       paddingVertical: 11,
       borderRadius: 10,
@@ -55,15 +55,17 @@ const ChangePassword = () => {
     },
     editBtnText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.white,
-      letterSpacing: -0.5,
+      letterSpacing: -0.4,
     },
     forgotPasswordText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.grey,
-      padding: 15,
+      padding: 10,
       paddingBottom: 30,
     },
   });
@@ -224,13 +226,15 @@ const ChangePassword = () => {
             labelStyle={{
               Success: {
                 fontFamily: "Ubuntu_400Regular",
+                letterSpacing: -0.4,
                 fontSize: 12,
                 color: colors.green700,
               },
               Error: {
                 fontFamily: "Ubuntu_400Regular",
+                letterSpacing: -0.4,
                 fontSize: 12,
-                color: colors.blue950,
+                color: colors.regular950,
               },
             }}
           />

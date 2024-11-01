@@ -1,13 +1,20 @@
 import "expo-dev-client";
-import React, {useEffect, useState} from "react";
-import {Text, View, TextInput, Platform, InteractionManager, ActivityIndicator} from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Text,
+  View,
+  TextInput,
+  Platform,
+  InteractionManager,
+  ActivityIndicator,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import FlashMessage from "react-native-flash-message";
 import * as NavigationBar from "expo-navigation-bar";
 import { setStatusBarHidden } from "expo-status-bar";
 import { ThemeProvider } from "./utils/themeContext";
 import messaging from "@react-native-firebase/messaging";
-import {SessionProvider} from './context/AuthContext';
+import { SessionProvider } from "./context/AuthContext";
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -16,7 +23,10 @@ import AuthStackSwitcher from "./context/AuthStackSwitcher"; // Import the AuthS
 import moment from "moment";
 import { useFonts } from "expo-font";
 import "moment/locale/fr"; // Import the French locale
-import { hasMigratedFromAsyncStorage, migrateFromAsyncStorage } from './utils/storage';
+import {
+  hasMigratedFromAsyncStorage,
+  migrateFromAsyncStorage,
+} from "./utils/storage";
 moment.locale("fr"); // Set the locale to French
 
 const fontConfig = {
@@ -47,7 +57,7 @@ function App() {
 
   if (Platform.OS === "android") {
     NavigationBar.setPositionAsync("absolute");
-    NavigationBar.setBackgroundColorAsync('#ffffff00');
+    NavigationBar.setBackgroundColorAsync("#ffffff00");
     NavigationBar.setVisibilityAsync("visible");
     NavigationBar.setBehaviorAsync("inset-touch");
     setStatusBarHidden(true, "none");
@@ -57,14 +67,12 @@ function App() {
     if (!hasMigratedFromAsyncStorage) {
       InteractionManager.runAfterInteractions(async () => {
         try {
-          await migrateFromAsyncStorage()
-          setHasMigrated(true)
-        } catch (e) {
-        }
+          await migrateFromAsyncStorage();
+          setHasMigrated(true);
+        } catch (e) {}
       });
     }
   }, []);
-
 
   useEffect(() => {
     messaging()
@@ -94,8 +102,6 @@ function App() {
     });
   }, []);
 
-
-
   useEffect(() => {
     Text.defaultProps = Text.defaultProps || {};
     Text.defaultProps.allowFontScaling = false;
@@ -107,9 +113,9 @@ function App() {
 
   if (!hasMigrated) {
     return (
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator color="black" />
-        </View>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator color={"black"} />
+      </View>
     );
   }
   if (!fontsLoaded) {

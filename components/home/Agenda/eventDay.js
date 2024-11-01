@@ -40,9 +40,18 @@ function EventDay({ date, onAgendaContentChange }) {
       gap: 10,
     },
     loadingContainer: {
+      marginTop: 15,
+      flexDirection: "row",
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
+      gap: 10,
+    },
+    loadingTitle: {
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      fontSize: 15,
+      color: colors.regular800,
     },
     noItemContainer: {
       justifyContent: "center",
@@ -57,25 +66,27 @@ function EventDay({ date, onAgendaContentChange }) {
     },
     textNone: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       textAlign: "center",
-      color: colors.blue800,
+      color: colors.regular800,
       width: "50%",
     },
     btnOutline: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontSize: 16,
       paddingHorizontal: 20,
       paddingVertical: 7,
       borderRadius: 50,
       borderWidth: 0.5,
-      borderColor: colors.blue700,
+      borderColor: colors.regular700,
       textAlign: "center",
     },
     btnOutlineText: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontSize: 13,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
     },
     items: {},
   });
@@ -159,7 +170,10 @@ function EventDay({ date, onAgendaContentChange }) {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="small" color={colors.regular800} />
+        <Text style={styles.loadingTitle}>
+          Les devoirs sont en cours de chargement...
+        </Text>
       </View>
     );
   }
@@ -170,7 +184,7 @@ function EventDay({ date, onAgendaContentChange }) {
         <View style={styles.noItemContainer}>
           <View style={styles.noItemContent}>
             <CircleCheckBig
-              stroke={colors.blue800}
+              stroke={colors.regular800}
               strokeWidth={1.75}
               width={30}
               height={30}

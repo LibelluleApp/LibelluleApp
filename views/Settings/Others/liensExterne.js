@@ -40,16 +40,20 @@ function LiensExterne() {
     },
     container: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       alignSelf: "center",
       width: "90%",
       marginTop: 22,
       marginBottom: 15,
+      letterSpacing: -0.6,
     },
     title: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.grey,
       marginBottom: 14,
+      letterSpacing: -0.6,
     },
     liens: {
       flexDirection: "column",
@@ -68,13 +72,17 @@ function LiensExterne() {
     },
     titleText: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
+      letterSpacing: -0.6,
     },
     descriptionText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
-      color: colors.grey,
+      color: colors.regular800,
+      letterSpacing: -0.6,
     },
     content: {
       gap: 5,
@@ -142,7 +150,7 @@ function LiensExterne() {
                   <Text style={styles.descriptionText}>{link.description}</Text>
                 </View>
                 <RedirectTo
-                  stroke={colors.grey}
+                  stroke={colors.regular700}
                   strokeWidth={1.75}
                   width={16}
                   height={16}

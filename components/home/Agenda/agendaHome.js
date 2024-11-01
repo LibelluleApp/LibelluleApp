@@ -40,42 +40,47 @@ function AgendaHome() {
   );
 
   const styles = StyleSheet.create({
-    agendaContainer: {},
+    agendaContainer: {
+      gap: 5,
+      marginTop: 20,
+    },
     nextTasksContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
       width: "90%",
       alignSelf: "center",
-      marginVertical: 20,
     },
     nextTasksTitle: {
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
-      color: colors.blue950,
+      letterSpacing: -0.4,
+      color: colors.regular950,
     },
     nextTasksSubtitle: {
       fontSize: 14,
       fontFamily: "Ubuntu_400Regular",
-      color: colors.blue800,
+      letterSpacing: -0.4,
+      color: colors.regular800,
     },
     nextTasksContent: {
       flexDirection: "column",
     },
     btnOutline: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontSize: 16,
       paddingHorizontal: 20,
       paddingVertical: 7,
       borderRadius: 50,
       borderWidth: 0.5,
-      borderColor: colors.blue700,
+      borderColor: colors.regular700,
       textAlign: "center",
     },
     btnOutlineText: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontSize: 13,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
     },
   });
 

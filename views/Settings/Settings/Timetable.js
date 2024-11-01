@@ -25,7 +25,7 @@ import {
   getColorAlternant,
   getColorTimetable,
   getWeekDefault,
-  setWeekDefault
+  setWeekDefault,
 } from "../../../utils/storage";
 
 const ColorModal = ({
@@ -83,7 +83,7 @@ const ColorModal = ({
                 style={styles.swatchesContainer}
                 swatchStyle={styles.swatchStyle}
                 colors={[
-                  colors.blue700,
+                  colors.regular700,
                   "#FF00FF",
                   "#FF0000",
                   "#D4C91D",
@@ -95,7 +95,7 @@ const ColorModal = ({
             <PreviewText style={styles.previewText} />
           </ColorPicker>
           <Pressable
-            style={[styles.closeButton, { backgroundColor: colors.blue700 }]}
+            style={[styles.closeButton, { backgroundColor: colors.regular700 }]}
             onPress={handleSave}
           >
             <Text
@@ -117,7 +117,7 @@ function TimetableSettings() {
   const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
   const [isWeekDefault, setIsWeekDefault] = useState(false);
   const [colorAlternant, setColorAlternant] = useState("#9AA5B3");
-  const [colorTimetable, setColorTimetable] = useState(colors.blue700);
+  const [colorTimetable, setColorTimetable] = useState(colors.regular700);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentColorType, setCurrentColorType] = useState(null);
   const [isAlternant, setIsAlternant] = useState(false);
@@ -149,7 +149,6 @@ function TimetableSettings() {
     }
   };
 
-
   const openColorModal = (colorType) => {
     setCurrentColorType(colorType);
     setIsModalVisible(true);
@@ -180,18 +179,18 @@ function TimetableSettings() {
     <View style={[styles.background, { backgroundColor: colors.background }]}>
       <View style={styles.container}>
         <View style={styles.switcherContent}>
-          <Text style={[styles.profileBtnSwitch, { color: colors.blue950 }]}>
+          <Text style={[styles.profileBtnSwitch, { color: colors.regular950 }]}>
             Vue semaine par défaut
           </Text>
           <Switch
-            trackColor={{ false: colors.grey, true: colors.blue700 }}
+            trackColor={{ false: colors.grey, true: colors.regular700 }}
             thumbColor={isDarkMode ? colors.white : colors.white}
             onValueChange={handleWeekDefault}
             value={isWeekDefault}
           />
         </View>
         {/* <View style={styles.switcherContent}>
-          <Text style={[styles.profileBtnSwitch, { color: colors.blue950 }]}>
+          <Text style={[styles.profileBtnSwitch, { color: colors.regular950 }]}>
             Couleurs aléatoires des évènements
           </Text>
           <TouchableOpacity
@@ -204,7 +203,7 @@ function TimetableSettings() {
             }
           >
             <Switch
-              trackColor={{ false: colors.grey, true: colors.blue700 }}
+              trackColor={{ false: colors.grey, true: colors.regular700 }}
               thumbColor={isDarkMode ? colors.white : colors.white}
               onValueChange={toggleTheme}
               value={isDarkMode}
@@ -213,7 +212,7 @@ function TimetableSettings() {
           </TouchableOpacity>
         </View> */}
         {/* <View style={styles.switcherContent}>
-          <Text style={[styles.profileBtnSwitch, { color: colors.blue950 }]}>
+          <Text style={[styles.profileBtnSwitch, { color: colors.regular950 }]}>
             Couleur des évènements par défaut
           </Text>
           <TouchableOpacity
@@ -223,7 +222,9 @@ function TimetableSettings() {
         </View> */}
         {isAlternant && (
           <View style={styles.switcherContent}>
-            <Text style={[styles.profileBtnSwitch, { color: colors.blue950 }]}>
+            <Text
+              style={[styles.profileBtnSwitch, { color: colors.regular950 }]}
+            >
               Couleur des évènements d'alternance
             </Text>
             <TouchableOpacity
@@ -266,6 +267,7 @@ const styles = StyleSheet.create({
   },
   profileBtnSwitch: {
     fontFamily: "Ubuntu_400Regular",
+    letterSpacing: -0.4,
     fontSize: 16,
   },
   colorBox: {

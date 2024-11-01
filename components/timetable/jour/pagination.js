@@ -20,7 +20,7 @@ const PaginationHeader = ({
             hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
           >
             <ArrowLeft
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -49,7 +49,7 @@ const PaginationHeader = ({
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
           <ArrowRight
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={18}
             height={18}
@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
   day: {
     fontSize: 15,
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
   },
   btntoday: {
     alignItems: "center",
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
   return: {
     fontSize: 15,
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
     color: "#7A797C",
     paddingHorizontal: 24,
 

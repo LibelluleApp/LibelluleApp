@@ -24,6 +24,7 @@ function Absence() {
     containerContent: {
       marginTop: 25,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       borderRadius: 10,
       width: "90%",
       alignSelf: "center",
@@ -38,20 +39,23 @@ function Absence() {
     },
     absTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 7,
     },
     absContent: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 2,
     },
     content: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     textContent: {
       flexDirection: "row",
@@ -66,13 +70,15 @@ function Absence() {
     },
     altText: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.blue950,
+      letterSpacing: -0.4,
+      color: colors.regular950,
       fontSize: 14,
       alignSelf: "center",
     },
     altTextLink: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.blue950,
+      letterSpacing: -0.4,
+      color: colors.regular950,
       fontSize: 14,
       alignSelf: "center",
       lineHeight: 20,
@@ -128,7 +134,7 @@ function Absence() {
         </View>
         <View style={styles.textContent}>
           <Clock
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={18}
             height={18}
@@ -139,7 +145,7 @@ function Absence() {
         </View>
         <View style={styles.textContent}>
           <Info
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={18}
             height={18}

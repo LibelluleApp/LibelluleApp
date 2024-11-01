@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../utils/themeContext";
 import ButtonAuth from "./../../components/auth/buttonAuth";
 import whoIsChief from "../../api/Agenda/chef";
-import {setAlternant, setIsFirstVisitAgenda} from "../../utils/storage";
+import { setAlternant, setIsFirstVisitAgenda } from "../../utils/storage";
 
 const TutorialAgenda = () => {
   const [chef, setChef] = useState(null);
@@ -59,8 +59,9 @@ const TutorialAgenda = () => {
     },
     titleText: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     textContentContainer: {
       flexDirection: "column",
@@ -68,8 +69,9 @@ const TutorialAgenda = () => {
     },
     itemTextContentContainer: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue95050,
+      color: colors.regular95050,
     },
     responsableContainer: {
       flexDirection: "row",
@@ -85,13 +87,15 @@ const TutorialAgenda = () => {
     },
     textResponsable: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     textResponsableName: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue700,
+      color: colors.regular700,
     },
   });
 
@@ -120,7 +124,7 @@ const TutorialAgenda = () => {
         <View style={styles.containerContent}>
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              <Check stroke={colors.blue950} width={20} height={20} />
+              <Check stroke={colors.regular950} width={20} height={20} />
               <Text style={styles.titleText}>
                 Comment fonctionne l’agenda ?
               </Text>
@@ -149,7 +153,7 @@ const TutorialAgenda = () => {
           </View>
           <View style={styles.responsableContainer}>
             <Check
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}

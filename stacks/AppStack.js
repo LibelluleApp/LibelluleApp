@@ -17,7 +17,7 @@ const AppStack = ({ navigation }) => {
   function NotificationBell({ onPress }) {
     return (
       <TouchableOpacity onPress={onPress} style={{ paddingRight: 10 }}>
-        <Feather name="bell" size={24} color={colors.blue950} />
+        <Feather name="bell" size={24} color={colors.regular950} />
       </TouchableOpacity>
     );
   }
@@ -32,11 +32,11 @@ const AppStack = ({ navigation }) => {
     },
     {
       name: "liensExterne",
-      component: require("../components/home/modal/liensExterne").default,
+      component: require("../views/Settings/Others/liensExterne").default,
       options: {
         title: "Liens Externes",
         presentation: "modal",
-        background: "transparent",
+        headerShadowVisible: false,
       },
     },
     {
@@ -56,6 +56,7 @@ const AppStack = ({ navigation }) => {
         headerShadowVisible: false,
         headerBackTitleStyle: {
           fontFamily: "Ubuntu_400Regular",
+          letterSpacing: -0.4,
           fontSize: 16,
         },
         headerStyle: {
@@ -100,7 +101,7 @@ const AppStack = ({ navigation }) => {
     },
     {
       name: "CustomColor",
-      component: require("../views/Profile/CustomColor").default,
+      component: require("../views/Settings/CustomColor").default,
       options: {
         title: "Modifiers les couleurs",
         headerShadowVisible: false,
@@ -109,7 +110,7 @@ const AppStack = ({ navigation }) => {
     },
     {
       name: "ChangePassword",
-      component: require("../views/Profile/ChangePassword").default,
+      component: require("../views/Settings/ChangePassword").default,
       options: {
         title: "Changer de mot de passe",
         headerShadowVisible: false,
@@ -141,7 +142,7 @@ const AppStack = ({ navigation }) => {
     },
     {
       name: "DeleteAccount",
-      component: require("../views/Profile/DeleteAccount").default,
+      component: require("../views/Settings/DeleteAccount").default,
       options: {
         title: "Supprimer le compte",
         headerShadowVisible: false,
@@ -149,7 +150,7 @@ const AppStack = ({ navigation }) => {
     },
     {
       name: "TransferRole",
-      component: require("../views/Profile/TransferRole").default,
+      component: require("../views/Settings/TransferRole").default,
       options: {
         title: "Transférer mon rôle",
         headerShadowVisible: false,
@@ -165,26 +166,34 @@ const AppStack = ({ navigation }) => {
       },
     },
     {
-      name: "Settings",
-      component: require("../views/Profile/Settings").default,
+      name: "Profile",
+      component: require("../views/Settings/Profile/Profile").default,
       options: {
-        title: "Paramètres",
+        title: "Profil",
+        headerShadowVisible: false,
+      },
+    },
+    {
+      name: "Colors",
+      component: require("../views/Settings/Customization/Colors").default,
+      options: {
+        title: "Couleurs",
         headerShadowVisible: false,
       },
     },
     {
       name: "TimetableSettings",
-      component: require("../views/Profile/Settings/Timetable").default,
+      component: require("../views/Settings/Settings/Timetable").default,
       options: {
         title: "Paramètres",
         headerShadowVisible: false,
       },
     },
     {
-      name: "Profile",
-      component: require("../views/Profile").default,
+      name: "Settings",
+      component: require("../views/Settings").default,
       options: {
-        title: "Profil",
+        title: "Paramètres",
         headerShadowVisible: false,
       },
     },
@@ -203,23 +212,21 @@ const AppStack = ({ navigation }) => {
               height: 0,
             },
           },
-          headerTintColor: colors.blue950,
+          headerTintColor: colors.regular950,
           headerTitleStyle: {
             fontFamily: "Ubuntu_500Medium",
+            letterSpacing: -0.4,
             fontSize: 18,
-            color: colors.blue950,
+            color: colors.regular950,
           },
           headerBackTitle: "Retour",
           headerBackTitleStyle: {
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
             fontSize: 16,
           },
-          headerStyle: {
-            backgroundColor: colors.background,
-            shadowColor: "transparent",
-            elevation: 0,
-          },
         }}
+        id={"app"}
       >
         {views.map((view) => (
           <Stack.Screen

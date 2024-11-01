@@ -126,14 +126,16 @@ function MailDetail({ route }) {
     },
     subject: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 15,
     },
     body: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     mailSender: {
       width: "90%",
@@ -147,8 +149,9 @@ function MailDetail({ route }) {
     },
     sender: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
   });
 
@@ -192,7 +195,7 @@ function MailDetail({ route }) {
       </View>
       <View style={styles.mailSender}>
         <UserRound
-          stroke={colors.blue950}
+          stroke={colors.regular950}
           strokeWidth={1.75}
           width={18}
           height={18}

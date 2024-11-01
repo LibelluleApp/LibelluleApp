@@ -20,24 +20,27 @@ const DropdownComponent = ({ onChange, data, value }) => {
     placeholderStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
-      color: colors.blue950,
+      letterSpacing: -0.4,
+      color: colors.regular950,
     },
     selectedTextStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
-      color: colors.blue950,
+      letterSpacing: -0.4,
+      color: colors.regular950,
     },
     iconStyle: {
       width: 20,
       height: 20,
-      backgroundColor: colors.blue950,
+      backgroundColor: colors.regular950,
     },
     inputSearchStyle: {
       height: 40,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
       borderBottomColor: colors.input_border,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
     },
     containerStyle: {
       borderWidth: 1,
@@ -67,7 +70,7 @@ const DropdownComponent = ({ onChange, data, value }) => {
       onChange={onChange}
       renderRightIcon={() => (
         <ChevronUpDown
-          stroke={colors.blue950}
+          stroke={colors.regular950}
           strokeWidth={1.75}
           width={18}
           height={18}

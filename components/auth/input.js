@@ -30,23 +30,23 @@ function Input({
   const styles = StyleSheet.create({
     container: {
       flexDirection: "column",
-      gap: 5,
+      gap: 10,
       width: "100%",
     },
     inputLabel: {
-      fontFamily: "Ubuntu_500Medium",
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.grey,
     },
     input: {
       backgroundColor: colors.white_background,
       borderRadius: 10,
-      borderWidth: 0.5,
-      borderColor: colors.input_border,
       height: 58,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       paddingHorizontal: 45,
-      color: colors.blue950,
+      color: colors.regular950,
     },
 
     iconRight: {
@@ -73,7 +73,7 @@ function Input({
         {IconComponent && (
           <IconComponent
             style={styles.iconLeft}
-            stroke={colors.blue950}
+            stroke={colors.regular900}
             strokeWidth={1.75}
             width={18}
             height={18}

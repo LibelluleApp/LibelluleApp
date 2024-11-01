@@ -32,6 +32,53 @@ import { ThemeContext } from "./../../../utils/themeContext";
 // Composant Add avec animation corrigée
 const Add = ({ route }) => {
   const { colors } = useContext(ThemeContext);
+
+  const styles = StyleSheet.create({
+    background: {
+      backgroundColor: colors.background,
+      flex: 1,
+    },
+    container: {
+      width: "90%",
+      alignSelf: "center",
+      paddingTop: 20,
+    },
+    title: {
+      fontSize: 15,
+      fontFamily: "Ubuntu_500Medium",
+      color: colors.blue950,
+      marginBottom: 10,
+    },
+    input: {
+      borderRadius: 10,
+      paddingHorizontal: 20,
+      height: 58,
+      color: colors.blue950,
+      marginBottom: 20,
+      justifyContent: "center",
+      backgroundColor: colors.white_background,
+      fontFamily: "Ubuntu_400Regular",
+    },
+    date: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    description: {
+      height: 135,
+      paddingHorizontal: 20,
+      padding: 15,
+      textAlignVertical: "top",
+      paddingVertical: 10,
+    },
+    textDate: {
+      color: colors.blue950,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      textTransform: "capitalize",
+    },
+  });
+
   const navigation = useNavigation();
   const { date } = route.params;
 

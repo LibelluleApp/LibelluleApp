@@ -25,7 +25,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import NextCourse from "../components/home/nextCourse/nextCourse";
 import AgendaHome from "../components/home/Agenda/agendaHome";
-import ParcourirHome from "../components/home/Parcourir";
+import Restauration from "../components/home/Restauration";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import moment from "moment";
@@ -73,6 +73,7 @@ function Home() {
     container: {
       backgroundColor: colors.background,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       flex: 1,
     },
     containerContent: {
@@ -104,8 +105,9 @@ function Home() {
     },
     weatherTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 13,
-      color: colors.blue700,
+      color: colors.regular700,
       textAlign: "center",
     },
     welcomeContainer: {
@@ -355,7 +357,7 @@ function Home() {
 
     return (
       <IconComponent
-        stroke={colors.blue700}
+        stroke={colors.regular700}
         strokeWidth={1.5}
         width={25}
         height={25}
@@ -432,15 +434,17 @@ function Home() {
                 <Text
                   style={{
                     fontFamily: "Ubuntu_500Medium",
+                    letterSpacing: -0.4,
                     fontSize: 15,
-                    color: colors.blue950,
+                    color: colors.regular950,
                   }}
                 >
                   Bonjour{" "}
                   <Text
                     style={{
                       fontFamily: "Ubuntu_500Medium",
-                      color: colors.blue800,
+                      letterSpacing: -0.4,
+                      color: colors.regular800,
                     }}
                   >
                     {user.prenom}
@@ -456,8 +460,9 @@ function Home() {
                 <Text
                   style={{
                     fontFamily: "Ubuntu_400Regular",
+                    letterSpacing: -0.4,
                     fontSize: 13,
-                    color: colors.blue950,
+                    color: colors.regular950,
                   }}
                 >
                   {isLoading ? "Chargement..." : weatherMessage}
@@ -473,7 +478,8 @@ function Home() {
                 <Text
                   style={{
                     fontFamily: "Ubuntu_500Medium",
-                    color: colors.blue700,
+                    letterSpacing: -0.4,
+                    color: colors.regular700,
                     fontSize: 15,
                   }}
                 >{`${formattedDate}`}</Text>
@@ -484,7 +490,7 @@ function Home() {
 
         <NextCourse />
         <AgendaHome />
-        <ParcourirHome />
+        <Restauration />
       </ScrollView>
     </GestureHandlerRootView>
   );

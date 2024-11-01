@@ -78,13 +78,13 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build Android
-        run: eas build --platform android --profile production --local
+        run: eas build --platform android --profile development --local
 
       - name: Upload Android artifact
         uses: actions/upload-artifact@v3
         with:
           name: android-app
-          path: /home/runner/work/LibelluleApp/LibelluleApp/*.aab
+          path: /home/runner/work/LibelluleApp/LibelluleApp/*.apk
 
   ios-build:
     name: Build iOS App
