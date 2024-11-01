@@ -19,7 +19,7 @@ import moment from "moment";
 
 const Agenda = () => {
   const { colors } = useContext(ThemeContext);
-  let defaultView = "day"; // Vue par défaut de l'agenda
+  let defaultView = "week"; // Vue par défaut de l'agenda
 
   const [selectedView, setSelectedView] = useState(defaultView); // Vue par défaut
   const [tasks, setTasks] = useState([]); // Tâches de l'agenda
@@ -206,11 +206,16 @@ const Agenda = () => {
       {user_data?.role.includes("Chef") && (
         <Button
           title="Ajouter une tâche"
-          onPress={() =>
+          onPress={() => {
+            // Utiliser la date courante si `currentIndex` ou `daysOfWeek` est indéfini
+            const selectedDate =
+              daysOfWeek[currentIndex]?.date?.format("YYYY-MM-DD") ||
+              currentDate.date?.format("YYYY-MM-DD");
+
             navigation.navigate("addAgenda", {
-              date: daysOfWeek[currentIndex]?.date.format("yyyy-MM-DD"),
-            })
-          }
+              date: selectedDate,
+            });
+          }}
           style={styles.addButton}
         />
       )}

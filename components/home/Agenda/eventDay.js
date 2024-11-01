@@ -114,6 +114,9 @@ function EventDay({ date, onAgendaContentChange }) {
               date={item.date_fin}
               matiere={item.Ressource?.nom_ressource}
               checked={item.estFait}
+              slide={false}
+              component={"normal"}
+              bouncyBox={true}
             />
           </Suspense>
         </View>

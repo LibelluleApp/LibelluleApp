@@ -6,7 +6,11 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { ArrowLeft, ArrowRight } from "../../assets/icons/Icons";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CircleCheckBig,
+} from "../../assets/icons/Icons";
 import moment from "moment-timezone";
 import SwiperFlatList from "react-native-swiper-flatlist";
 import Item from "./Item"; // Assurez-vous que ce composant est correctement importé
@@ -108,17 +112,20 @@ const Jour = ({
       flexDirection: "column",
       gap: 10,
     },
-    noItemContainer: {
-      flex: 1,
+    noItemContent: {
       justifyContent: "center",
       alignItems: "center",
+      gap: 7,
+      width: "100%",
+      marginBottom: 50,
+      flex: 1,
     },
-    noItemTitle: {
-      fontSize: 16,
-      color: colors.regular800,
+    textNone: {
       fontFamily: "Ubuntu_400Regular",
-      letterSpacing: -0.4,
+      fontSize: 15,
       textAlign: "center",
+      color: colors.blue800,
+      width: "50%",
     },
   });
 
@@ -361,9 +368,15 @@ const Jour = ({
                 ))}
               </View>
             ) : (
-              <View style={styles.noItemContainer}>
-                <Text style={styles.noItemTitle}>
-                  Aucune tâche pour ce jour.
+              <View style={styles.noItemContent}>
+                <CircleCheckBig
+                  stroke={colors.blue800}
+                  strokeWidth={1.75}
+                  width={30}
+                  height={30}
+                />
+                <Text style={styles.textNone}>
+                  Aucun élément à afficher pour cette journée
                 </Text>
               </View>
             )}

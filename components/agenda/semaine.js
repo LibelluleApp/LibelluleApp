@@ -6,7 +6,11 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { ArrowLeft, ArrowRight } from "./../../assets/icons/Icons";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CircleCheckBig,
+} from "./../../assets/icons/Icons";
 import moment from "moment-timezone";
 import SwiperFlatList from "react-native-swiper-flatlist";
 import Item from "./Item"; // Assurez-vous que ce composant est correctement importé
@@ -105,11 +109,10 @@ const Semaine = ({
       width: width,
       paddingHorizontal: 20,
       paddingTop: 20,
-      gap: 20,
     },
     itemContainer: {
       flexDirection: "column",
-      gap: 10,
+      gap: 20,
     },
     noItemContainer: {
       flex: 1,
@@ -135,6 +138,21 @@ const Semaine = ({
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       color: colors.regular800,
+    },
+    noItemContent: {
+      justifyContent: "center",
+      alignItems: "center",
+      gap: 7,
+      width: "100%",
+      marginBottom: 50,
+      flex: 1,
+    },
+    textNone: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      textAlign: "center",
+      color: colors.blue800,
+      width: "50%",
     },
   });
 
@@ -311,6 +329,13 @@ const Semaine = ({
     percentProgression = Math.round(progression * 100);
   }
 
+  // Obtenir le début de l'année
+  const yearStart = moment().startOf("year");
+  // Calculer la date de début de la semaine en fonction du numéro de semaine
+  const startOfWeekDate = yearStart
+    .add(currentWeekNumber - 1, "weeks")
+    .startOf("isoWeek");
+
   return (
     <View style={styles.swiperContainer}>
       <View style={styles.headerContainer}>
@@ -329,6 +354,12 @@ const Semaine = ({
         </TouchableOpacity>
         <View style={styles.headerTitleContainer}>
           <Text style={styles.headerTitle}>Semaine {currentWeekNumber}</Text>
+          <Text style={styles.headerSubtitle}>
+            {`Du ${startOfWeekDate.format("DD/MM")} au ${startOfWeekDate
+              .clone()
+              .add(4, "days")
+              .format("DD/MM")}`}
+          </Text>
         </View>
         <TouchableOpacity
           onPress={handleNextWeek}
@@ -387,25 +418,45 @@ const Semaine = ({
                         )
                         .join(" ")}
                     </Text>
-                    {dateTasks.map((agendaItem) => (
-                      <Item
-                        key={agendaItem.agenda_id}
-                        item={agendaItem}
-                        currentDate={agendaItem.date_fin}
-                        onTaskCheck={handleTaskCheck}
-                        onTaskUncheck={handleTaskUncheck}
-                        slide={true}
-                        bouncyBox={true}
-                        component={"normal"}
-                      />
-                    ))}
+                    {Array.isArray(dateTasks) ? (
+                      dateTasks.map((agendaItem) => (
+                        <Item
+                          key={agendaItem.agenda_id}
+                          item={agendaItem}
+                          currentDate={agendaItem.date_fin}
+                          onTaskCheck={handleTaskCheck}
+                          onTaskUncheck={handleTaskUncheck}
+                          slide={true}
+                          bouncyBox={true}
+                          component={"normal"}
+                        />
+                      ))
+                    ) : (
+                      <View style={styles.noItemContent}>
+                        <CircleCheckBig
+                          stroke={colors.blue800}
+                          strokeWidth={1.75}
+                          width={30}
+                          height={30}
+                        />
+                        <Text style={styles.textNone}>
+                          Aucun élément à afficher pour cette semaine
+                        </Text>
+                      </View>
+                    )}
                   </View>
                 ))}
               </View>
             ) : (
-              <View style={styles.noItemContainer}>
-                <Text style={styles.noItemTitle}>
-                  Aucune tâche pour cette semaine.
+              <View style={styles.noItemContent}>
+                <CircleCheckBig
+                  stroke={colors.blue800}
+                  strokeWidth={1.75}
+                  width={30}
+                  height={30}
+                />
+                <Text style={styles.textNone}>
+                  Aucun élément à afficher pour cette semaine
                 </Text>
               </View>
             )}

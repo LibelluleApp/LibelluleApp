@@ -116,7 +116,7 @@ function TaskHome({
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            {titre || "Titre indisponible"} dededed
+            {titre || "Titre indisponible"}
           </Text>
         </View>
       </View>

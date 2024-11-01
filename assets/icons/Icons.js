@@ -465,34 +465,24 @@ function BookOpen(props) {
   );
 }
 
-// Mortarboard01 - HugeIcon
-function Student(props) {
+// GraduationCap - Lucide
+function GraduationCap(props) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
       width={24}
       height={24}
-      color="#000"
+      viewBox="0 0 24 24"
       fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-graduation-cap"
       {...props}
     >
-      <Path
-        d="M1.998 8c0 1.341 8.096 5 9.988 5 1.891 0 9.987-3.659 9.987-5 0-1.343-8.096-5.001-9.987-5.001-1.892 0-9.988 3.658-9.988 5z"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        {...props}
-      />
-      <Path
-        d="M5.992 11l1.251 5.8c.086.398.284.769.614 1.005 2.222 1.595 6.034 1.595 8.256 0 .33-.236.527-.607.613-1.005l1.251-5.8M20.477 9.5v7m0 0c-.79 1.447-1.14 2.222-1.496 3.501-.077.455-.016.684.298.888.127.083.28.112.431.112h1.519a.798.798 0 00.457-.125c.291-.201.366-.422.287-.875-.311-1.188-.708-2-1.496-3.5z"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        {...props}
-      />
+      <Path d="M21.42 10.922a1 1 0 00-.019-1.838L12.83 5.18a2 2 0 00-1.66 0L2.6 9.08a1 1 0 000 1.832l8.57 3.908a2 2 0 001.66 0zM22 10v6" />
+      <Path d="M6 12.5V16a6 3 0 0012 0v-3.5" />
     </Svg>
   );
 }
@@ -1232,6 +1222,50 @@ function LightbulbOff(props) {
   );
 }
 
+// Baseline - Lucide
+
+function Baseline(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-baseline"
+      {...props}
+    >
+      <Path d="M4 20h16M6 16l6-12 6 12M8 12h8" />
+    </Svg>
+  );
+}
+
+// TextIcon - Lucide
+
+function TextIcon(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-text"
+      {...props}
+    >
+      <Path d="M17 6.1H3M21 12.1H3M15.1 18H3" />
+    </Svg>
+  );
+}
+
 // --- Weather ---
 
 // Thermometer - Lucide
@@ -1524,7 +1558,7 @@ export {
   Link,
   Utensils,
   BookOpen,
-  Student,
+  GraduationCap,
   RedirectTo,
   LoaderCircle,
   Phone,
@@ -1557,6 +1591,8 @@ export {
   LogOut,
   UserX,
   MailSearch,
+  Baseline,
+  TextIcon,
   Lightbulb,
   LightbulbOff,
 
