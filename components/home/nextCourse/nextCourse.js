@@ -422,19 +422,31 @@ function NextCourse() {
   }, [isFocused]);
 
   const styles = StyleSheet.create({
-    swiper: {
+    container: {
+      width: "90%",
+      alignSelf: "center",
+    },
+    shimmer: {
+      borderRadius: 10,
+      width: "100%", // Aligne la largeur du shimmer avec celle du contenu
+      height: 3, // Remplacez 120 par la hauteur dynamique si nécessaire
+    },
+    container: {
       width: "90%",
       alignSelf: "center",
     },
   });
 
   return (
-    <View style={styles.swiper}>
+    <View style={styles.container}>
       <ShimmerPlaceholder
-        shimmerStyle={{ borderRadius: 10 }}
-        // width={slideWidth}
-        // height={slideHeight}
-        visible={isLoading ? false : true}
+        shimmerStyle={styles.shimmer}
+        shimmerColors={[
+          colors.regular100,
+          colors.regular200,
+          colors.regular300,
+        ]}
+        visible={!isLoading}
       >
         <ItemCourse data={nextCourse} color={color} />
         {/* 
