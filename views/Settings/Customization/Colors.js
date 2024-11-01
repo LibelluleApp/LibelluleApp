@@ -251,7 +251,7 @@ function Colors() {
                       styles.colorTitle,
                       {
                         color: isDarkMode
-                          ? colors.lightText
+                          ? colors.regular900
                           : themes[theme][isDarkMode ? "dark" : "light"]
                               .regular900,
                         opacity: selectedColor === theme ? 1 : 0.3,

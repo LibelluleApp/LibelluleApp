@@ -40,7 +40,7 @@ function ParcourirHome() {
     title: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 14,
     },
     tile: {
@@ -57,7 +57,7 @@ function ParcourirHome() {
     tileText: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
-      color: colors.blue800,
+      color: colors.regular800,
     },
     disabled: {
       opacity: 0.4,
@@ -78,7 +78,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Link
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -90,7 +90,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Utensils
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -104,7 +104,7 @@ function ParcourirHome() {
             disabled={true}
           >
             <BookOpen
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               width={20}
               height={20}
               strokeWidth={1.75}
@@ -118,7 +118,7 @@ function ParcourirHome() {
           disabled={true}
         >
           <GraduationCap
-            color={colors.blue950}
+            color={colors.regular950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -139,7 +139,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Link
-            stroke={colors.blue800}
+            stroke={colors.regular800}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -151,7 +151,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Utensils
-            stroke={colors.blue800}
+            stroke={colors.regular800}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -165,7 +165,7 @@ function ParcourirHome() {
             disabled={true}
           >
             <BookOpen
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               width={20}
               height={20}
               strokeWidth={1.75}
@@ -179,7 +179,7 @@ function ParcourirHome() {
           disabled={true}
         >
           <GraduationCap
-            color={colors.blue950}
+            color={colors.regular950}
             width={20}
             height={20}
             strokeWidth={1.75}

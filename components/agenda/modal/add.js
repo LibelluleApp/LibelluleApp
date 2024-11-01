@@ -46,14 +46,14 @@ const Add = ({ route }) => {
     title: {
       fontSize: 15,
       fontFamily: "Ubuntu_500Medium",
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 10,
     },
     input: {
       borderRadius: 10,
       paddingHorizontal: 20,
       height: 58,
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 20,
       justifyContent: "center",
       backgroundColor: colors.white_background,
@@ -72,10 +72,104 @@ const Add = ({ route }) => {
       paddingVertical: 10,
     },
     textDate: {
-      color: colors.blue950,
+      color: colors.regular950,
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       textTransform: "capitalize",
+    },
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    scrollViewContainer: {
+      width: "90%",
+      alignSelf: "center",
+      paddingTop: 20,
+      paddingBottom: 100,
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      zIndex: 5,
+    },
+    buttonContent: {
+      width: "48%",
+      height: 40,
+      borderRadius: 50,
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 5,
+    },
+    buttonContentSelected: {
+      backgroundColor: colors.regular200,
+      zIndex: 5,
+    },
+    buttonContentUnselected: {
+      backgroundColor: colors.background,
+      borderColor: colors.regular200,
+      borderWidth: 1,
+      zIndex: 5,
+    },
+    buttonTitleSelected: {
+      color: colors.regular900,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      zIndex: 5,
+    },
+    buttonTitleUnselected: {
+      color: colors.regular400,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      zIndex: 5,
+    },
+    inputContainer: {
+      marginTop: 20,
+      gap: 15,
+      zIndex: 4,
+    },
+    inputContent: {
+      flexDirection: "row",
+      alignItems: "center",
+      width: "100%",
+      gap: 15,
+      zIndex: 4,
+    },
+    input: {
+      flex: 1,
+      borderRadius: 10,
+      paddingHorizontal: 20,
+      height: 58,
+      fontSize: 14,
+      color: colors.regular900,
+      fontFamily: "Ubuntu_400Regular",
+      backgroundColor: colors.white_background,
+      zIndex: 4,
+    },
+    description: {
+      height: 135,
+      padding: 15,
+      textAlignVertical: "top",
+    },
+    textDate: {
+      color: colors.regular900,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 14,
+      textTransform: "capitalize",
+    },
+    btnContainerBottom: {
+      flexDirection: "column",
+      gap: 10,
+      position: "absolute",
+      bottom: 40,
+      width: "90%",
+      alignSelf: "center",
+    },
+    btnContainerBottomText: {
+      color: colors.grey,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      textAlign: "center",
+      letterSpacing: -0.5,
     },
   });
 
@@ -151,103 +245,6 @@ const Add = ({ route }) => {
     hideDatePicker();
   };
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.background,
-    },
-    scrollViewContainer: {
-      width: "90%",
-      alignSelf: "center",
-      paddingTop: 20,
-      paddingBottom: 100,
-    },
-    buttonContainer: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      zIndex: 5,
-    },
-    buttonContent: {
-      width: "48%",
-      height: 40,
-      borderRadius: 50,
-      justifyContent: "center",
-      alignItems: "center",
-      zIndex: 5,
-    },
-    buttonContentSelected: {
-      backgroundColor: colors.blue200,
-      zIndex: 5,
-    },
-    buttonContentUnselected: {
-      backgroundColor: colors.background,
-      borderColor: colors.blue200,
-      borderWidth: 1,
-      zIndex: 5,
-    },
-    buttonTitleSelected: {
-      color: colors.blue900,
-      fontFamily: "Ubuntu_400Regular",
-      fontSize: 15,
-      zIndex: 5,
-    },
-    buttonTitleUnselected: {
-      color: colors.blue400,
-      fontFamily: "Ubuntu_400Regular",
-      fontSize: 15,
-      zIndex: 5,
-    },
-    inputContainer: {
-      marginTop: 20,
-      gap: 15,
-      zIndex: 4,
-    },
-    inputContent: {
-      flexDirection: "row",
-      alignItems: "center",
-      width: "100%",
-      gap: 15,
-      zIndex: 4,
-    },
-    input: {
-      flex: 1,
-      borderRadius: 10,
-      paddingHorizontal: 20,
-      height: 58,
-      fontSize: 14,
-      color: colors.blue900,
-      fontFamily: "Ubuntu_400Regular",
-      backgroundColor: colors.white_background,
-      zIndex: 4,
-    },
-    description: {
-      height: 135,
-      padding: 15,
-      textAlignVertical: "top",
-    },
-    textDate: {
-      color: colors.blue900,
-      fontFamily: "Ubuntu_400Regular",
-      fontSize: 14,
-      textTransform: "capitalize",
-    },
-    btnContainerBottom: {
-      flexDirection: "column",
-      gap: 10,
-      position: "absolute",
-      bottom: 40,
-      width: "90%",
-      alignSelf: "center",
-    },
-    btnContainerBottomText: {
-      color: colors.grey,
-      fontFamily: "Ubuntu_400Regular",
-      fontSize: 13,
-      textAlign: "center",
-      letterSpacing: -0.5,
-    },
-  });
-
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
@@ -303,7 +300,7 @@ const Add = ({ route }) => {
             >
               {/* Champ pour le titre de la tâche */}
               <Animated.View style={[styles.inputContent, animatedTitleStyle]}>
-                <Baseline width={20} height={20} stroke={colors.blue900} />
+                <Baseline width={20} height={20} stroke={colors.regular900} />
                 <TextInput
                   style={styles.input}
                   placeholder="Ajouter un titre"
@@ -317,7 +314,7 @@ const Add = ({ route }) => {
 
               {/* Date Picker */}
               <View style={styles.inputContent}>
-                <Calendar stroke={colors.blue900} width={20} height={20} />
+                <Calendar stroke={colors.regular900} width={20} height={20} />
                 <TouchableOpacity
                   onPress={showDatePicker}
                   style={[
@@ -346,7 +343,11 @@ const Add = ({ route }) => {
 
               {/* Champ pour la matière */}
               <View style={styles.inputContent}>
-                <GraduationCap width={20} height={20} stroke={colors.blue900} />
+                <GraduationCap
+                  width={20}
+                  height={20}
+                  stroke={colors.regular900}
+                />
                 <TextInput
                   style={styles.input}
                   placeholder="Ajouter une matière"
@@ -357,7 +358,7 @@ const Add = ({ route }) => {
 
               {/* Champ pour la description */}
               <View style={styles.inputContent}>
-                <TextIcon width={20} height={20} stroke={colors.blue900} />
+                <TextIcon width={20} height={20} stroke={colors.regular900} />
                 <TextInput
                   style={[styles.input, styles.description]}
                   placeholder={

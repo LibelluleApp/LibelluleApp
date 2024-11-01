@@ -70,23 +70,23 @@ const Edit = ({ route }) => {
       zIndex: 5,
     },
     buttonContentSelected: {
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.regular200,
       zIndex: 5,
     },
     buttonContentUnselected: {
       backgroundColor: colors.background,
-      borderColor: colors.blue200,
+      borderColor: colors.regular200,
       borderWidth: 1,
       zIndex: 5,
     },
     buttonTitleSelected: {
-      color: colors.blue900,
+      color: colors.regular900,
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       zIndex: 5,
     },
     buttonTitleUnselected: {
-      color: colors.blue400,
+      color: colors.regular400,
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       zIndex: 5,
@@ -109,7 +109,7 @@ const Edit = ({ route }) => {
       paddingHorizontal: 20,
       height: 58,
       fontSize: 14,
-      color: colors.blue900,
+      color: colors.regular900,
       fontFamily: "Ubuntu_400Regular",
       backgroundColor: colors.white_background,
       zIndex: 4,
@@ -120,7 +120,7 @@ const Edit = ({ route }) => {
       textAlignVertical: "top",
     },
     textDate: {
-      color: colors.blue900,
+      color: colors.regular900,
       fontFamily: "Ubuntu_400Regular",
       fontSize: 14,
       textTransform: "capitalize",
@@ -287,7 +287,7 @@ const Edit = ({ route }) => {
             >
               {/* Champ pour le titre de la tâche */}
               <Animated.View style={[styles.inputContent, animatedTitleStyle]}>
-                <Baseline width={20} height={20} stroke={colors.blue900} />
+                <Baseline width={20} height={20} stroke={colors.regular900} />
                 <TextInput
                   style={styles.input}
                   placeholder="Ajouter un titre"
@@ -301,7 +301,7 @@ const Edit = ({ route }) => {
 
               {/* Date Picker */}
               <View style={styles.inputContent}>
-                <Calendar stroke={colors.blue900} width={20} height={20} />
+                <Calendar stroke={colors.regular900} width={20} height={20} />
                 <TouchableOpacity
                   onPress={showDatePicker}
                   style={[
@@ -330,7 +330,11 @@ const Edit = ({ route }) => {
 
               {/* Champ pour la matière */}
               <View style={styles.inputContent}>
-                <GraduationCap width={20} height={20} stroke={colors.blue900} />
+                <GraduationCap
+                  width={20}
+                  height={20}
+                  stroke={colors.regular900}
+                />
                 <TextInput
                   style={styles.input}
                   placeholder="Ajouter une matière"
@@ -342,7 +346,7 @@ const Edit = ({ route }) => {
 
               {/* Champ pour la description */}
               <View style={styles.inputContent}>
-                <TextIcon width={20} height={20} stroke={colors.blue900} />
+                <TextIcon width={20} height={20} stroke={colors.regular900} />
                 <TextInput
                   style={[styles.input, styles.description]}
                   placeholder="Ajouter une description"
@@ -362,7 +366,7 @@ const Edit = ({ route }) => {
       <View style={styles.btnContainerBottom}>
         <ButtonAuth
           title="Modifier"
-          bgColor={colors.blue900}
+          bgColor={colors.regular900}
           loading={loading}
           onPress={handleSaveTask}
         />

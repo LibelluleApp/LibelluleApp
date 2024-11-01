@@ -124,7 +124,7 @@ const Jour = ({
       fontFamily: "Ubuntu_400Regular",
       fontSize: 15,
       textAlign: "center",
-      color: colors.blue800,
+      color: colors.regular800,
       width: "50%",
     },
   });
@@ -370,7 +370,7 @@ const Jour = ({
             ) : (
               <View style={styles.noItemContent}>
                 <CircleCheckBig
-                  stroke={colors.blue800}
+                  stroke={colors.regular800}
                   strokeWidth={1.75}
                   width={30}
                   height={30}

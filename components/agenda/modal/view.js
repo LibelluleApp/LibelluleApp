@@ -217,7 +217,7 @@ const ViewTask = ({ route }) => {
           </View>
           <View style={styles.taskInfoContent}>
             <GraduationCap
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={20}
               height={20}

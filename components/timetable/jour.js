@@ -186,7 +186,7 @@ const Jour = forwardRef((props, ref) => {
   if (!timetable) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color={colors.blue_variable} />
+        <ActivityIndicator size="large" color={colors.regular_variable} />
       </View>
     );
   }
