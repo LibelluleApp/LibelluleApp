@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -20,23 +20,58 @@ import Animated, {
 
 function Restauration() {
   const { colors } = useContext(ThemeContext);
-  const [menu, setMenu] = React.useState([]);
-  const [user, setUser] = React.useState({});
+  const [menu, setMenu] = useState([]);
+  const [user, setUser] = useState({});
 
-  // Initialiser la rotation avec Reanimated
   const rotation = useSharedValue(0);
 
   useEffect(() => {
-    // Lancer une rotation infinie
-    rotation.value = withRepeat(
-      withTiming(360, { duration: 2000 }), // 1000ms pour une rotation complète
-      -1, // Répétition infinie
-      false // Pas de retour en arrière
-    );
+    rotation.value = withRepeat(withTiming(360, { duration: 2000 }), -1, false);
   }, []);
 
+  // Détermine si aujourd'hui est un jour férié en France
+  const estJourFerie = () => {
+    const joursFeries = [
+      "01-01", // Nouvel An
+      "05-01", // Fête du Travail
+      "05-08", // Victoire 1945
+      "07-14", // Fête Nationale
+      "08-15", // Assomption
+      "11-01", // Toussaint
+      "11-11", // Armistice
+      "12-25", // Noël
+    ];
+    const today = new Date();
+    const todayStr = `${String(today.getMonth() + 1).padStart(2, "0")}-${String(
+      today.getDate()
+    ).padStart(2, "0")}`;
+    return joursFeries.includes(todayStr);
+  };
+
+  // Vérifie si aujourd'hui est le week-end
+  const estWeekend = () => {
+    const today = new Date();
+    return today.getDay() === 6 || today.getDay() === 0; // 6 = samedi, 0 = dimanche
+  };
+
+  // Détermine si aujourd'hui est dans une période de vacances
+  const estEnVacances = () => {
+    const vacances = [
+      { start: "2023-10-21", end: "2023-10-27" },
+      { start: "2023-12-23", end: "2024-01-05" },
+      { start: "2024-02-24", end: "2024-03-02" },
+      { start: "2024-04-21", end: "2024-05-04" },
+    ];
+    const today = new Date();
+    return vacances.some(({ start, end }) => {
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      return today >= startDate && today <= endDate;
+    });
+  };
+
   useEffect(() => {
-    let isMounted = true; // pour suivre si le composant est monté
+    let isMounted = true;
     const fetchData = async () => {
       const data = await fetchMenu(new Date().toISOString().split("T")[0]);
       if (isMounted) {
@@ -61,7 +96,6 @@ function Restauration() {
     getData();
   }, []);
 
-  // Style animé pour la rotation
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ rotate: `${rotation.value}deg` }],
   }));
@@ -141,8 +175,13 @@ function Restauration() {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.headerContent}>
-          <Text style={styles.headerTitle}>Menu du Crousty</Text>
-          <Text style={styles.headerSubtitle}>Ouvert de 11h45 à 13h30</Text>
+          <Text style={styles.headerTitle}>Menu du midi - Le Crousty</Text>
+          {menu.length === 0 &&
+          (estJourFerie() || estWeekend() || estEnVacances()) ? (
+            <Text style={styles.headerSubtitle}>Fermé</Text>
+          ) : (
+            <Text style={styles.headerSubtitle}>Ouvert de 11h45 à 13h30</Text>
+          )}
         </View>
         <TouchableOpacity
           style={styles.btnOutline}
@@ -158,19 +197,27 @@ function Restauration() {
       </View>
       <View style={styles.contentMeal}>
         {menu.length === 0 ? (
-          <View style={styles.noneDescriptionPlat}>
-            <Animated.View style={animatedStyle}>
-              <LoaderCircle
-                stroke={colors.blue800}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-            </Animated.View>
-            <Text style={styles.noneDescriptionPlatTitle}>
-              Non actualisé sur le site du Crousty
-            </Text>
-          </View>
+          estJourFerie() || estWeekend() || estEnVacances() ? (
+            <View style={styles.noneDescriptionPlat}>
+              <Text style={styles.noneDescriptionPlatTitle}>
+                Aucun menu aujourd'hui
+              </Text>
+            </View>
+          ) : (
+            <View style={styles.noneDescriptionPlat}>
+              <Animated.View style={animatedStyle}>
+                <LoaderCircle
+                  stroke={colors.blue800}
+                  strokeWidth={1.75}
+                  width={18}
+                  height={18}
+                />
+              </Animated.View>
+              <Text style={styles.noneDescriptionPlatTitle}>
+                Non actualisé sur le site du Crousty
+              </Text>
+            </View>
+          )
         ) : (
           menu.map((meal, index) => (
             <View key={index} style={styles.descriptionMeal}>
