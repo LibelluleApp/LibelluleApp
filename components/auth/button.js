@@ -24,7 +24,7 @@ function Button({ title, onPress }) {
       letterSpacing: -0.4,
       color: colors.white,
       fontSize: 17,
-      letterSpacing: -0.5,
+      letterSpacing: -0.4,
     },
   });
 

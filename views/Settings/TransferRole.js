@@ -47,7 +47,7 @@ const TransferRole = () => {
       letterSpacing: -0.4,
       fontSize: 17,
       color: colors.white,
-      letterSpacing: -0.5,
+      letterSpacing: -0.4,
     },
     dropdown: {
       borderRadius: 10,
