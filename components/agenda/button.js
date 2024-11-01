@@ -9,7 +9,7 @@ function Button({ title, onPress, style }) {
   const styles = StyleSheet.create({
     button: {
       flexDirection: "row",
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       width: 50,
       height: 50,
       borderRadius: 50,

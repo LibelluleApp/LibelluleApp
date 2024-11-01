@@ -18,7 +18,7 @@ function ButtonAuth({ title, onPress, loading }) {
     },
     button: {
       flexDirection: "row",
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       paddingHorizontal: 20,
       paddingVertical: 11,
       borderRadius: 10,

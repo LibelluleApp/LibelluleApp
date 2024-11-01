@@ -41,25 +41,25 @@ function Notes() {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 17,
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 7,
     },
     absContent: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 2,
     },
     content: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     altText: {
       marginTop: 40,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
       fontSize: 14,
       alignSelf: "center",
     },
@@ -85,13 +85,13 @@ function Notes() {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 17,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     gridMoyenne: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 13,
-      color: colors.blue950,
+      color: colors.regular950,
       marginTop: 10,
       marginBottom: 2,
     },
@@ -116,7 +116,7 @@ function Notes() {
     altTextLink: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
       fontSize: 14,
       alignSelf: "center",
       lineHeight: 20,
@@ -202,7 +202,7 @@ function Notes() {
         </View>
         <View style={styles.textContent}>
           <Info
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={18}
             height={18}

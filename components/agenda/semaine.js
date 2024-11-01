@@ -65,14 +65,14 @@ const Semaine = ({
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
       textAlign: "center",
     },
     headerSubtitle: {
       fontSize: 14,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue800,
+      color: colors.regular800,
       textAlign: "center",
     },
     counts: {
@@ -83,13 +83,13 @@ const Semaine = ({
       gap: 5,
     },
     progressTextTask: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 14,
     },
     progressTextPourcent: {
-      color: colors.blue200,
+      color: colors.regular200,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 14,
@@ -118,7 +118,7 @@ const Semaine = ({
     },
     noItemTitle: {
       fontSize: 16,
-      color: colors.blue800,
+      color: colors.regular800,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       textAlign: "center",
@@ -127,14 +127,14 @@ const Semaine = ({
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
-      color: colors.blue800,
+      color: colors.regular800,
       marginVertical: 10,
     },
     dateTaskTitle: {
       fontSize: 14,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
-      color: colors.blue800,
+      color: colors.regular800,
     },
   });
 
@@ -321,7 +321,7 @@ const Semaine = ({
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
           <ArrowLeft
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={20}
             height={20}
@@ -336,7 +336,7 @@ const Semaine = ({
           hitSlop={{ top: 20, bottom: 20, right: 20 }}
         >
           <ArrowRight
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={20}
             height={20}
@@ -361,9 +361,9 @@ const Semaine = ({
           width={null}
           height={4}
           animated={true}
-          unfilledColor={colors.blue200}
+          unfilledColor={colors.regular200}
           borderWidth={0}
-          color={colors.blue700}
+          color={colors.regular700}
         />
       </View>
 

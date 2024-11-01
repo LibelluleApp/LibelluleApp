@@ -52,13 +52,13 @@ function TaskHome({
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: component === "little" ? 13 : 16,
-      color: colors.blue950,
+      color: colors.regular950,
       maxWidth: component === "little" ? 100 : "90%", // Limite la largeur
     },
     taskDescription: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue800,
+      color: colors.regular800,
       maxWidth: component === "little" ? "auto" : "100%", // Limite la largeur
       overflow: "hidden", // Cache le texte débordant
       textOverflow: "ellipsis", // Ajoute des points de suspension si le texte déborde
@@ -98,7 +98,7 @@ function TaskHome({
       <View style={styles.taskLeft}>
         {bouncyBox && (
           <BouncyCheckbox
-            fillColor={colors.blue700}
+            fillColor={colors.regular700}
             unfillColor={colors.white}
             isChecked={isChecked}
             onPress={handleCheckboxPress}
@@ -122,7 +122,7 @@ function TaskHome({
       </View>
       <View style={styles.taskRight}>
         <ChevronRight
-          stroke={colors.blue700}
+          stroke={colors.regular700}
           strokeWidth={1.75}
           width={18}
           height={18}

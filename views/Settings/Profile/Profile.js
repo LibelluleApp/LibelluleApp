@@ -147,11 +147,11 @@ function Profile() {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
       letterSpacing: -0.6,
     },
     profilGroupContent: {
-      backgroundColor: colors.blue200_2,
+      backgroundColor: colors.regular200_2,
       paddingHorizontal: 10,
       paddingVertical: 3,
       borderRadius: 5,
@@ -160,7 +160,7 @@ function Profile() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 13,
-      color: colors.blue900_2,
+      color: colors.regular900_2,
       letterSpacing: -0.6,
     },
     profilEmail: {
@@ -179,7 +179,7 @@ function Profile() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue900,
+      color: colors.regular900,
       letterSpacing: -0.6,
     },
     pageSubtitle: {
@@ -190,7 +190,7 @@ function Profile() {
       letterSpacing: -0.6,
     },
     pageIcon: {
-      backgroundColor: colors.blue900,
+      backgroundColor: colors.regular900,
       borderRadius: 8,
       padding: 8,
       justifyContent: "center",
@@ -218,7 +218,7 @@ function Profile() {
                 </Text>
               </View>
               <ChevronRight
-                stroke={colors.blue700}
+                stroke={colors.regular700}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -235,7 +235,7 @@ function Profile() {
             >
               <View style={styles.pageContent}>
                 <IdCard
-                  stroke={colors.blue800}
+                  stroke={colors.regular800}
                   strokeWidth={1.75}
                   width={22}
                   height={22}
@@ -261,7 +261,7 @@ function Profile() {
             >
               <View style={styles.pageContent}>
                 <UsersRound
-                  stroke={colors.blue800}
+                  stroke={colors.regular800}
                   strokeWidth={1.75}
                   width={22}
                   height={22}
@@ -285,7 +285,7 @@ function Profile() {
             >
               <View style={styles.pageContent}>
                 <RectangleEllipsis
-                  stroke={colors.blue800}
+                  stroke={colors.regular800}
                   strokeWidth={1.75}
                   width={22}
                   height={22}
@@ -296,7 +296,7 @@ function Profile() {
                 </View>
               </View>
               <ChevronRight
-                stroke={colors.blue700}
+                stroke={colors.regular700}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -310,7 +310,7 @@ function Profile() {
             >
               <View style={styles.pageContent}>
                 <BriefcaseBusiness
-                  stroke={colors.blue800}
+                  stroke={colors.regular800}
                   strokeWidth={1.75}
                   width={22}
                   height={22}
@@ -320,7 +320,7 @@ function Profile() {
               <Switch
                 trackColor={{
                   false: colors.grey,
-                  true: colors.blue700,
+                  true: colors.regular700,
                 }}
                 thumbColor={isAlternant ? colors.white : colors.white}
                 onValueChange={handleAlternant}
@@ -340,7 +340,7 @@ function Profile() {
                 <View style={styles.pageContent}>
                   <View style={styles.pageIcon}>
                     <UserRoundPen
-                      stroke={colors.blue100}
+                      stroke={colors.regular100}
                       strokeWidth={1.75}
                       width={18}
                       height={18}
@@ -349,7 +349,7 @@ function Profile() {
                   <Text style={styles.pageTitle}>Transmettre mon rôle</Text>
                 </View>
                 <ChevronRight
-                  stroke={colors.blue700}
+                  stroke={colors.regular700}
                   strokeWidth={1.75}
                   width={18}
                   height={18}

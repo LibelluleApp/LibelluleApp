@@ -46,7 +46,7 @@ function Input({
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       paddingHorizontal: 45,
-      color: colors.blue950,
+      color: colors.regular950,
     },
 
     iconRight: {
@@ -73,7 +73,7 @@ function Input({
         {IconComponent && (
           <IconComponent
             style={styles.iconLeft}
-            stroke={colors.blue900}
+            stroke={colors.regular900}
             strokeWidth={1.75}
             width={18}
             height={18}

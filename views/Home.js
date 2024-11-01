@@ -107,7 +107,7 @@ function Home() {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 13,
-      color: colors.blue700,
+      color: colors.regular700,
       textAlign: "center",
     },
     welcomeContainer: {
@@ -357,7 +357,7 @@ function Home() {
 
     return (
       <IconComponent
-        stroke={colors.blue700}
+        stroke={colors.regular700}
         strokeWidth={1.5}
         width={25}
         height={25}
@@ -436,7 +436,7 @@ function Home() {
                     fontFamily: "Ubuntu_500Medium",
                     letterSpacing: -0.4,
                     fontSize: 15,
-                    color: colors.blue950,
+                    color: colors.regular950,
                   }}
                 >
                   Bonjour{" "}
@@ -444,7 +444,7 @@ function Home() {
                     style={{
                       fontFamily: "Ubuntu_500Medium",
                       letterSpacing: -0.4,
-                      color: colors.blue800,
+                      color: colors.regular800,
                     }}
                   >
                     {user.prenom}
@@ -462,7 +462,7 @@ function Home() {
                     fontFamily: "Ubuntu_400Regular",
                     letterSpacing: -0.4,
                     fontSize: 13,
-                    color: colors.blue950,
+                    color: colors.regular950,
                   }}
                 >
                   {isLoading ? "Chargement..." : weatherMessage}
@@ -479,7 +479,7 @@ function Home() {
                   style={{
                     fontFamily: "Ubuntu_500Medium",
                     letterSpacing: -0.4,
-                    color: colors.blue700,
+                    color: colors.regular700,
                     fontSize: 15,
                   }}
                 >{`${formattedDate}`}</Text>

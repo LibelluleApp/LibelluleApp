@@ -80,7 +80,7 @@ const Semaine = forwardRef((props, ref) => {
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
       fontSize: 11,
       maxWidth: "100%",
       alignItems: "start",
@@ -95,14 +95,14 @@ const Semaine = forwardRef((props, ref) => {
       paddingHorizontal: 10,
       borderRadius: 10,
       // backgroundColor: colorTimetable,
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.regular200,
       // position: "relative",
       // overflow: "hidden",
     },
     // beforeElement: {
     //   width: 5,
     //   height: 400,
-    //   backgroundColor: colors.blue500,
+    //   backgroundColor: colors.regular500,
     //   position: "absolute",
     //   left: 0,
     //   top: 0,
@@ -113,7 +113,7 @@ const Semaine = forwardRef((props, ref) => {
       includeFontPadding: false,
       fontSize: 15,
       width: 85,
-      color: colors.blue950,
+      color: colors.regular950,
       alignItems: "center",
       justifyContent: "center",
       transform: [{ rotate: "-90deg" }],
@@ -125,7 +125,7 @@ const Semaine = forwardRef((props, ref) => {
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.regular200,
     },
   });
 
@@ -190,20 +190,20 @@ const Semaine = forwardRef((props, ref) => {
           colors: {
             background: colors.background,
             border: colors.gray_clear,
-            text: colors.blue950,
+            text: colors.regular950,
           },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
             letterSpacing: -0.4,
           },
           todayNumberContainer: {
-            backgroundColor: colors.blue700,
+            backgroundColor: colors.regular700,
           },
           todayNumber: {
             color: colors.white,
           },
           todayName: {
-            color: colors.blue700,
+            color: colors.regular700,
           },
           dayName: {
             color: colors.grey,
@@ -218,7 +218,7 @@ const Semaine = forwardRef((props, ref) => {
           leftBarText: {
             fontFamily: "Ubuntu_500Medium",
             letterSpacing: -0.4,
-            color: colors.blue950,
+            color: colors.regular950,
             textTransform: "capitalize",
             fontSize: 12,
           },
@@ -230,12 +230,12 @@ const Semaine = forwardRef((props, ref) => {
           },
           // Week number
           weekNumber: {
-            color: colors.blue950,
+            color: colors.regular950,
             fontFamily: "Ubuntu_500Medium",
             letterSpacing: -0.4,
           },
           weekNumberContainer: {
-            backgroundColor: colors.blue100,
+            backgroundColor: colors.regular100,
           },
           headerContainer: {
             borderBottomWidth: 0,

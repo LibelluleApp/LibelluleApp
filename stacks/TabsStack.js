@@ -14,7 +14,7 @@ const TabsStack = () => {
   const insets = useSafeAreaInsets();
   const [headerTitle, setHeaderTitle] = useState("Vue d'ensemble");
   const getIcon = (Icon, color, strokeWidth, focused) => {
-    const fillColor = focused ? colors.blue700 : color;
+    const fillColor = focused ? colors.regular700 : color;
 
     return <Icon stroke={fillColor} strokeWidth={strokeWidth} />;
   };
@@ -81,7 +81,7 @@ const TabsStack = () => {
             borderTopWidth: 0,
             height: 95,
           },
-          tabBarActiveTintColor: colors.blue700,
+          tabBarActiveTintColor: colors.regular700,
           tabBarInactiveTintColor: colors.grey,
           tabBarLabelStyle: {
             marginTop: 1,

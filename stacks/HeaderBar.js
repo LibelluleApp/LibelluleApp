@@ -45,7 +45,7 @@ const CustomHeader = ({ title }) => {
             fontFamily: "Ubuntu_500Medium",
             letterSpacing: -0.4,
             fontSize: 18,
-            color: colors.blue950,
+            color: colors.regular950,
           }}
         >
           {title}

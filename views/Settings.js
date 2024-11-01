@@ -118,11 +118,11 @@ function Settings() {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
       letterSpacing: -0.6,
     },
     profilGroupContent: {
-      backgroundColor: colors.blue200_2,
+      backgroundColor: colors.regular200_2,
       paddingHorizontal: 10,
       paddingVertical: 3,
       borderRadius: 5,
@@ -131,7 +131,7 @@ function Settings() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 13,
-      color: colors.blue900_2,
+      color: colors.regular900_2,
       letterSpacing: -0.6,
     },
     profilEmail: {
@@ -150,7 +150,7 @@ function Settings() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue900,
+      color: colors.regular900,
       letterSpacing: -0.6,
     },
     pageSubtitle: {
@@ -161,7 +161,7 @@ function Settings() {
       letterSpacing: -0.6,
     },
     pageIcon: {
-      backgroundColor: colors.blue900,
+      backgroundColor: colors.regular900,
       borderRadius: 8,
       padding: 8,
       justifyContent: "center",
@@ -292,7 +292,7 @@ function Settings() {
                 </View>
               </View>
               <ChevronRight
-                stroke={colors.blue700}
+                stroke={colors.regular700}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -310,7 +310,7 @@ function Settings() {
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <Palette
-                    stroke={colors.blue100}
+                    stroke={colors.regular100}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -319,7 +319,7 @@ function Settings() {
                 <Text style={styles.pageTitle}>Couleurs</Text>
               </View>
               <ChevronRight
-                stroke={colors.blue700}
+                stroke={colors.regular700}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -343,7 +343,7 @@ function Settings() {
                 <Text style={styles.pageTitle}>Notifications</Text>
               </View>
               <ChevronRight
-                stroke={colors.blue700}
+                stroke={colors.regular700}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -361,7 +361,7 @@ function Settings() {
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <Link
-                    stroke={colors.blue100}
+                    stroke={colors.regular100}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -370,7 +370,7 @@ function Settings() {
                 <Text style={styles.pageTitle}>Liens externes</Text>
               </View>
               <ChevronRight
-                stroke={colors.blue700}
+                stroke={colors.regular700}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -386,7 +386,7 @@ function Settings() {
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <NotepadText
-                    stroke={colors.blue100}
+                    stroke={colors.regular100}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -395,7 +395,7 @@ function Settings() {
                 <Text style={styles.pageTitle}>Journal des mises à jour</Text>
               </View>
               <ChevronRight
-                stroke={colors.blue700}
+                stroke={colors.regular700}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -412,7 +412,7 @@ function Settings() {
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <Envelope
-                    stroke={colors.blue100}
+                    stroke={colors.regular100}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -421,7 +421,7 @@ function Settings() {
                 <Text style={styles.pageTitle}>Nous contacter</Text>
               </View>
               <ChevronRight
-                stroke={colors.blue700}
+                stroke={colors.regular700}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -437,7 +437,7 @@ function Settings() {
               <View style={styles.pageContent}>
                 <View style={styles.pageIcon}>
                   <Landmark
-                    stroke={colors.blue100}
+                    stroke={colors.regular100}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -451,7 +451,7 @@ function Settings() {
                 </View>
               </View>
               <ChevronRight
-                stroke={colors.blue700}
+                stroke={colors.regular700}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -542,7 +542,7 @@ function Settings() {
           >
             <View style={styles.CTAContent}>
               <IdCard
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -550,7 +550,7 @@ function Settings() {
               <Text style={styles.profileBtnText}>Mes informations</Text>
             </View>
             <ChevronRight
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -562,7 +562,7 @@ function Settings() {
           >
             <View style={styles.CTAContent}>
               <Lock
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -572,7 +572,7 @@ function Settings() {
               </Text>
             </View>
             <ChevronRight
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -585,7 +585,7 @@ function Settings() {
             >
               <View style={styles.CTAContent}>
                 <UserRoundPen
-                  stroke={colors.blue950}
+                  stroke={colors.regular950}
                   strokeWidth={1.75}
                   width={18}
                   height={18}
@@ -593,7 +593,7 @@ function Settings() {
                 <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
               </View>
               <ChevronRight
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -606,7 +606,7 @@ function Settings() {
           >
             <View style={styles.CTAContent}>
               <Settings
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -614,7 +614,7 @@ function Settings() {
               <Text style={styles.profileBtnText}>Paramètres</Text>
             </View>
             <ChevronRight
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -645,7 +645,7 @@ function Settings() {
               >
                 <View style={styles.mediaLinks}>
                   <Envelope
-                    stroke={colors.blue700}
+                    stroke={colors.regular700}
                     strokeWidth={1.75}
                     width={18}
                     height={18}
@@ -665,7 +665,7 @@ function Settings() {
           >
             <View style={styles.CTAContent}>
               <NotepadText
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -675,7 +675,7 @@ function Settings() {
               </Text>
             </View>
             <ChevronRight
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -689,7 +689,7 @@ function Settings() {
           >
             <View style={styles.CTAContent}>
               <Landmark
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}
@@ -702,7 +702,7 @@ function Settings() {
               </View>
             </View>
             <ChevronRight
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}

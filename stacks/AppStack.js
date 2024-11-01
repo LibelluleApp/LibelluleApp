@@ -17,7 +17,7 @@ const AppStack = ({ navigation }) => {
   function NotificationBell({ onPress }) {
     return (
       <TouchableOpacity onPress={onPress} style={{ paddingRight: 10 }}>
-        <Feather name="bell" size={24} color={colors.blue950} />
+        <Feather name="bell" size={24} color={colors.regular950} />
       </TouchableOpacity>
     );
   }
@@ -212,12 +212,12 @@ const AppStack = ({ navigation }) => {
               height: 0,
             },
           },
-          headerTintColor: colors.blue950,
+          headerTintColor: colors.regular950,
           headerTitleStyle: {
             fontFamily: "Ubuntu_500Medium",
             letterSpacing: -0.4,
             fontSize: 18,
-            color: colors.blue950,
+            color: colors.regular950,
           },
           headerBackTitle: "Retour",
           headerBackTitleStyle: {

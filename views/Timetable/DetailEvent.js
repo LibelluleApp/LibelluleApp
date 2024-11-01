@@ -47,7 +47,7 @@ const DetailEvent = ({ route }) => {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 17,
-      color: colors.blue950,
+      color: colors.regular950,
       alignSelf: "center",
     },
     containerItems: {
@@ -76,13 +76,13 @@ const DetailEvent = ({ route }) => {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     eventInfoDesc: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
   });
 
@@ -94,7 +94,7 @@ const DetailEvent = ({ route }) => {
           <View style={styles.eventInfo}>
             <View style={styles.eventInfoContent}>
               <DoorOpen
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={20}
                 height={20}
@@ -108,7 +108,7 @@ const DetailEvent = ({ route }) => {
             </View>
             <View style={styles.eventInfoContent}>
               <UserRound
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={20}
                 height={20}
@@ -122,7 +122,7 @@ const DetailEvent = ({ route }) => {
             </View>
             <View style={styles.eventInfoContent}>
               <UsersRound
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={20}
                 height={20}
@@ -138,7 +138,7 @@ const DetailEvent = ({ route }) => {
           <View style={styles.eventInfo}>
             <View style={styles.eventInfoContent}>
               <Calendar
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={20}
                 height={20}
@@ -150,7 +150,7 @@ const DetailEvent = ({ route }) => {
             </View>
             <View style={styles.eventInfoContent}>
               <Hourglass
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={20}
                 height={20}
@@ -162,7 +162,7 @@ const DetailEvent = ({ route }) => {
             </View>
             <View style={styles.eventInfoContent}>
               <Clock2
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={20}
                 height={20}
@@ -174,7 +174,7 @@ const DetailEvent = ({ route }) => {
             </View>
             <View style={styles.eventInfoContent}>
               <Clock8
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={20}
                 height={20}

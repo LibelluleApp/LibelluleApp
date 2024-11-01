@@ -39,24 +39,24 @@ function Task({ data }) {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 16,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     taskContentDate: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
       fontSize: 13,
     },
     taskContentMore: {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
       fontSize: 13,
     },
     taskDescription: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     strikethrough: {
       textDecorationLine: "line-through",
@@ -183,7 +183,7 @@ function Task({ data }) {
   //         >
   //           <View style={styles.taskLeft}>
   //             <BouncyCheckbox
-  //               fillColor={colors.blue700}
+  //               fillColor={colors.regular700}
   //               unfillColor={colors.white}
   //               isChecked={isChecked}
   //               onPress={handleCheckboxPress}
@@ -206,7 +206,7 @@ function Task({ data }) {
   //           </View>
   //           <View style={styles.taskRight}>
   //             <ChevronRight
-  //               stroke={colors.blue950}
+  //               stroke={colors.regular950}
   //               strokeWidth={1.75}
   //               width={18}
   //               height={18}

@@ -62,13 +62,13 @@ const ViewTask = ({ route }) => {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     taskInfoDesc: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     taskState: {
       fontFamily: "Ubuntu_400Regular",
@@ -95,7 +95,7 @@ const ViewTask = ({ route }) => {
     },
     taskCTADelete: { padding: 10 },
     taskCTAEdit: {
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       paddingHorizontal: 20,
       paddingVertical: 10,
       borderRadius: 10,
@@ -197,7 +197,7 @@ const ViewTask = ({ route }) => {
         <View style={styles.taskInfo}>
           <View style={styles.taskInfoContent}>
             <Calendar
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={20}
               height={20}
@@ -211,7 +211,7 @@ const ViewTask = ({ route }) => {
           </View>
           <View style={styles.taskInfoContent}>
             <Student
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={20}
               height={20}
@@ -225,7 +225,7 @@ const ViewTask = ({ route }) => {
           </View>
           <View style={styles.taskInfoContent}>
             <LayoutList
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={20}
               height={20}
@@ -258,7 +258,7 @@ const ViewTask = ({ route }) => {
         {task.type == "devoir" && (
           <View style={styles.taskFooter}>
             <BouncyCheckbox
-              fillColor={colors.blue700}
+              fillColor={colors.regular700}
               unfillColor={colors.white}
               onPress={handleCheckboxPress}
               isChecked={isChecked}

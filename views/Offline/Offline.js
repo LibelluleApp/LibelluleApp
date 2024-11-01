@@ -17,7 +17,7 @@ const Offline = () => {
       color: "#000",
     },
     button: {
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       padding: 10,
       borderRadius: 5,
       marginTop: 20,

@@ -39,32 +39,33 @@ function Timetable() {
     },
   });
 
-
   const handleSelect = (value) => {
     setSelectedView(value); // Met à jour la vue sélectionnée
   };
-
-
 
   const handleGoToToday = () => {
     if (semaineRef.current && selectedView === "week") {
       semaineRef.current.goToToday();
     }
-    if(jourRef.current && selectedView === "day"){
+    if (jourRef.current && selectedView === "day") {
       jourRef.current.goToToday();
     }
   };
 
   return (
-      <View style={styles.modalBackground}>
-        <View style={styles.modalDropdown}>
-          <Dropdown options={options} onSelect={handleSelect} value={selectedView}/>
-          <TouchableOpacity onPress={handleGoToToday}>
-            <ResetList stroke={colors.blue800} />
-          </TouchableOpacity>
-        </View>
-        {selectedView === "day" && <Jour ref={jourRef}/>}
-        {selectedView === "week" && <Semaine ref={semaineRef}/>}
+    <View style={styles.modalBackground}>
+      <View style={styles.modalDropdown}>
+        <Dropdown
+          options={options}
+          onSelect={handleSelect}
+          value={selectedView}
+        />
+        <TouchableOpacity onPress={handleGoToToday}>
+          <ResetList stroke={colors.regular800} />
+        </TouchableOpacity>
+      </View>
+      {selectedView === "day" && <Jour ref={jourRef} />}
+      {selectedView === "week" && <Semaine ref={semaineRef} />}
     </View>
   );
 }

@@ -79,7 +79,7 @@ const Dropdown = ({ options, onSelect, value, number }) => {
     },
     button: {
       backgroundColor: colors.background,
-      borderColor: colors.blue700,
+      borderColor: colors.regular700,
       borderWidth: 0.5,
       borderRadius: 50,
       paddingHorizontal: 16,
@@ -90,7 +90,7 @@ const Dropdown = ({ options, onSelect, value, number }) => {
       zIndex: 999,
     },
     buttonText: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontSize: 14,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
@@ -101,7 +101,7 @@ const Dropdown = ({ options, onSelect, value, number }) => {
       backgroundColor: colors.background,
       borderRadius: 10,
       overflow: "hidden",
-      borderColor: colors.blue700,
+      borderColor: colors.regular700,
       borderWidth: 0.5,
       width: number >= 3 ? 150 : 125,
       zIndex: 999,
@@ -115,10 +115,10 @@ const Dropdown = ({ options, onSelect, value, number }) => {
       textAlign: "center",
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue700,
+      color: colors.regular700,
     },
     selectedText: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
     },
@@ -130,7 +130,7 @@ const Dropdown = ({ options, onSelect, value, number }) => {
         <Text style={styles.buttonText}>{selectedLabel}</Text>
         <Animated.View style={chevronStyle}>
           <ChevronDown
-            stroke={colors.blue700}
+            stroke={colors.regular700}
             width={14}
             height={14}
             strokeWidth={1.75}

@@ -43,7 +43,7 @@ const ChangePassword = () => {
       width: "100%",
     },
     editBtn: {
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       paddingHorizontal: 20,
       paddingVertical: 11,
       borderRadius: 10,
@@ -234,7 +234,7 @@ const ChangePassword = () => {
                 fontFamily: "Ubuntu_400Regular",
                 letterSpacing: -0.4,
                 fontSize: 12,
-                color: colors.blue950,
+                color: colors.regular950,
               },
             }}
           />

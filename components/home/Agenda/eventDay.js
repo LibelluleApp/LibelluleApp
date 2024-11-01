@@ -60,21 +60,21 @@ function EventDay({ date, onAgendaContentChange }) {
       letterSpacing: -0.4,
       fontSize: 15,
       textAlign: "center",
-      color: colors.blue800,
+      color: colors.regular800,
       width: "50%",
     },
     btnOutline: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontSize: 16,
       paddingHorizontal: 20,
       paddingVertical: 7,
       borderRadius: 50,
       borderWidth: 0.5,
-      borderColor: colors.blue700,
+      borderColor: colors.regular700,
       textAlign: "center",
     },
     btnOutlineText: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontSize: 13,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
@@ -169,7 +169,7 @@ function EventDay({ date, onAgendaContentChange }) {
         <View style={styles.noItemContainer}>
           <View style={styles.noItemContent}>
             <CircleCheckBig
-              stroke={colors.blue800}
+              stroke={colors.regular800}
               strokeWidth={1.75}
               width={30}
               height={30}

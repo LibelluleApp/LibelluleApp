@@ -123,23 +123,23 @@ function Restauration() {
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     headerSubtitle: {
       fontSize: 14,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue800,
+      color: colors.regular800,
     },
     btnOutline: {
-      borderColor: colors.blue700,
+      borderColor: colors.regular700,
       borderWidth: 0.5,
       borderRadius: 50,
       paddingHorizontal: 20,
       paddingVertical: 7,
     },
     btnOutlineText: {
-      color: colors.blue700,
+      color: colors.regular700,
       fontSize: 13,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
@@ -159,19 +159,19 @@ function Restauration() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue800,
+      color: colors.regular800,
     },
     descriptionMeal: {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     descriptionPlat: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
       textTransform: "capitalize",
     },
   });
@@ -214,7 +214,7 @@ function Restauration() {
             <View style={styles.noneDescriptionPlat}>
               <Animated.View style={animatedStyle}>
                 <LoaderCircle
-                  stroke={colors.blue800}
+                  stroke={colors.regular800}
                   strokeWidth={1.75}
                   width={18}
                   height={18}

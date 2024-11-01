@@ -99,7 +99,7 @@ const Agenda = () => {
       alignItems: "center",
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     addButton: {
       position: "absolute",

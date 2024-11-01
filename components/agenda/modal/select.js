@@ -47,13 +47,13 @@ const SelectComponent = ({ onChange, data, value }) => {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     selectedTextStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     iconStyle: {
       width: 20,
@@ -92,7 +92,7 @@ const SelectComponent = ({ onChange, data, value }) => {
       renderRightIcon={() => (
         <Animated.View style={{ transform: [{ rotate: chevronRotation }] }}>
           <ChevronDown
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={18}
             height={18}

@@ -49,7 +49,7 @@ function Settings() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 16,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     profileButton: {
       backgroundColor: colors.white_background,
@@ -65,7 +65,7 @@ function Settings() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     profileBtnUnderText: {
       fontFamily: "Ubuntu_400Regular",
@@ -122,7 +122,7 @@ function Settings() {
           <Switch
             trackColor={{
               false: colors.grey,
-              true: colors.blue700,
+              true: colors.regular700,
             }}
             thumbColor={isDarkMode ? colors.white : colors.white}
             onValueChange={toggleTheme}
@@ -135,7 +135,7 @@ function Settings() {
             <Switch
               trackColor={{
                 false: colors.grey,
-                true: colors.blue700,
+                true: colors.regular700,
               }}
               thumbColor={isAlternant ? colors.white : colors.white}
               onValueChange={handleAlternant}
@@ -149,7 +149,7 @@ function Settings() {
         >
           <View style={styles.CTAContent}>
             <Calendar
-              stroke={colors.blue950}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -157,7 +157,7 @@ function Settings() {
             <Text style={styles.profileBtnText}>Emploi du temps</Text>
           </View>
           <ChevronRight
-            stroke={colors.blue950}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={18}
             height={18}

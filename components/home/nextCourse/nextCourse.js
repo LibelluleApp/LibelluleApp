@@ -57,7 +57,7 @@ const fetchCourse = async () => {
 function ItemCourse({ data, color }) {
   const { colors } = useContext(ThemeContext);
   const [remainingTime, setRemainingTime] = useState("");
-  const [colorTimetable, setColorTimetable] = useState(colors.blue200);
+  const [colorTimetable, setColorTimetable] = useState(colors.regular200);
   const getColorTimetable = () => {
     try {
       let storedColor = getColorsTimetable();
@@ -73,7 +73,7 @@ function ItemCourse({ data, color }) {
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.regular200,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       includeFontPadding: false,
@@ -90,7 +90,7 @@ function ItemCourse({ data, color }) {
     beforeElement: {
       width: 7,
       height: 400,
-      backgroundColor: colors.blue600,
+      backgroundColor: colors.regular600,
       position: "absolute",
       left: 0,
       top: 0,
@@ -105,7 +105,7 @@ function ItemCourse({ data, color }) {
       letterSpacing: -0.4,
       includeFontPadding: false,
       fontSize: 16,
-      color: colors.blue950,
+      color: colors.regular950,
       Width: "90%",
     },
     descriptionContainer: {
@@ -123,7 +123,7 @@ function ItemCourse({ data, color }) {
       letterSpacing: -0.4,
       includeFontPadding: false,
       fontSize: 13,
-      color: colors.blue800,
+      color: colors.regular800,
     },
     hourContainer: {
       flexDirection: "row",
@@ -262,14 +262,14 @@ function ItemCourse({ data, color }) {
             <Animated.View style={animatedRotationStyle}>
               {isExpanded ? (
                 <Minus
-                  stroke={colors.blue700}
+                  stroke={colors.regular700}
                   strokeWidth={1.75}
                   width={15}
                   height={15}
                 />
               ) : (
                 <Plus
-                  stroke={colors.blue700}
+                  stroke={colors.regular700}
                   strokeWidth={1.75}
                   width={15}
                   height={15}
@@ -290,7 +290,7 @@ function ItemCourse({ data, color }) {
               ]}
             >
               <MapPin
-                stroke={colors.blue800}
+                stroke={colors.regular800}
                 width={14}
                 height={14}
                 strokeWidth={1.75}
@@ -311,7 +311,7 @@ function ItemCourse({ data, color }) {
               ]}
             >
               <UserRound
-                stroke={colors.blue800}
+                stroke={colors.regular800}
                 width={14}
                 height={14}
                 strokeWidth={1.75}
@@ -330,7 +330,7 @@ function ItemCourse({ data, color }) {
         <View style={styles.hourContainer}>
           <View style={styles.descriptionContent}>
             <Clock
-              stroke={colors.blue800}
+              stroke={colors.regular800}
               width={14}
               height={14}
               strokeWidth={1.75}

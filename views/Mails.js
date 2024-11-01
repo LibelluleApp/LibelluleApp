@@ -147,13 +147,13 @@ function Mails() {
       alignSelf: "flex-start",
       fontSize: 27,
       letterSpacing: -1,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     titleDescriptionLogin: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue800,
+      color: colors.regular800,
       alignSelf: "flex-start",
     },
     titleWarningLogin: {
@@ -184,7 +184,7 @@ function Mails() {
     //   borderRadius: 10,
     //   borderWidth: 0.5,
     //   borderColor: colors.input_border,
-    //   color: colors.blue950,
+    //   color: colors.regular950,
     //   fontFamily: "Ubuntu_400Regular",letterSpacing: -0.4,
     // },
     // button: {
@@ -209,13 +209,13 @@ function Mails() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.blue800,
+      color: colors.regular800,
     },
     linkDescriptionMails: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.blue800,
+      color: colors.regular800,
       textDecorationLine: "underline",
     },
     emailItem: {
@@ -250,7 +250,7 @@ function Mails() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
       textAlign: "center",
     },
   });
@@ -354,7 +354,7 @@ function Mails() {
           {messages && (
             <View style={styles.noMessageContainer}>
               <MailSearch
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={18}
                 height={18}

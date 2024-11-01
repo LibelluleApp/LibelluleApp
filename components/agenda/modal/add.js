@@ -36,14 +36,14 @@ const Add = ({ route }) => {
       fontSize: 15,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 10,
     },
     input: {
       borderRadius: 10,
       paddingHorizontal: 20,
       height: 58,
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 20,
       justifyContent: "center",
       backgroundColor: colors.white_background,
@@ -63,7 +63,7 @@ const Add = ({ route }) => {
       paddingVertical: 10,
     },
     textDate: {
-      color: colors.blue950,
+      color: colors.regular950,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
@@ -172,7 +172,7 @@ const Add = ({ route }) => {
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>
-              Date<Text style={{ color: colors.blue800 }}>*</Text>
+              Date<Text style={{ color: colors.regular800 }}>*</Text>
             </Text>
             <TouchableOpacity
               onPress={showDatePicker}
@@ -182,7 +182,7 @@ const Add = ({ route }) => {
                 {dates.format("dddd DD MMMM")}
               </Text>
               <Calendar
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={16}
                 height={16}
@@ -201,7 +201,7 @@ const Add = ({ route }) => {
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>
-              Matière<Text style={{ color: colors.blue800 }}>*</Text>
+              Matière<Text style={{ color: colors.regular800 }}>*</Text>
             </Text>
             <TextInput
               style={styles.input}
@@ -212,7 +212,7 @@ const Add = ({ route }) => {
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>
-              Type de tâche<Text style={{ color: colors.blue800 }}>*</Text>
+              Type de tâche<Text style={{ color: colors.regular800 }}>*</Text>
             </Text>
             <SelectComponent
               onChange={(item) => {
@@ -226,7 +226,7 @@ const Add = ({ route }) => {
           {type !== "eval" && (
             <View style={styles.inputContainer}>
               <Text style={styles.title}>
-                Titre<Text style={{ color: colors.blue800 }}>*</Text>
+                Titre<Text style={{ color: colors.regular800 }}>*</Text>
               </Text>
               <TextInput
                 style={styles.input}

@@ -120,7 +120,7 @@ const Jour = forwardRef((props, ref) => {
       gap: 7,
       justifyContent: "center",
       // backgroundColor: colorTimetable,
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.regular200,
       position: "relative",
       overflow: "hidden",
     },
@@ -131,12 +131,12 @@ const Jour = forwardRef((props, ref) => {
       borderRadius: 10,
       justifyContent: "center",
       // backgroundColor: colorTimetable,
-      backgroundColor: colors.blue600,
+      backgroundColor: colors.regular600,
     },
     beforeElement: {
       width: 7,
       height: 400,
-      backgroundColor: colors.blue500,
+      backgroundColor: colors.regular500,
       position: "absolute",
       left: 0,
       top: 0,
@@ -145,28 +145,28 @@ const Jour = forwardRef((props, ref) => {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 13,
-      color: colors.blue800,
+      color: colors.regular800,
       gap: 10,
     },
     eventTitle: {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
       maxWidth: "100%",
     },
     eventTitleLittle: {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 12,
-      color: colors.blue950,
+      color: colors.regular950,
       maxWidth: "100%",
     },
     eventTitleAlternance: {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 20,
-      color: colors.blue950,
+      color: colors.regular950,
       maxWidth: "100%",
       alignItems: "center",
       justifyContent: "center",
@@ -179,7 +179,7 @@ const Jour = forwardRef((props, ref) => {
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: colors.blue200,
+      backgroundColor: colors.regular200,
     },
   });
 
@@ -235,20 +235,20 @@ const Jour = forwardRef((props, ref) => {
           colors: {
             background: colors.background,
             border: colors.gray_clear,
-            text: colors.blue950,
+            text: colors.regular950,
           },
           textStyle: {
             fontFamily: "Ubuntu_500Medium",
             letterSpacing: -0.4,
           },
           todayNumberContainer: {
-            backgroundColor: colors.blue700,
+            backgroundColor: colors.regular700,
           },
           todayNumber: {
             color: colors.white,
           },
           todayName: {
-            color: colors.blue700,
+            color: colors.regular700,
           },
           dayName: {
             color: colors.grey,
@@ -263,7 +263,7 @@ const Jour = forwardRef((props, ref) => {
           leftBarText: {
             fontFamily: "Ubuntu_500Medium",
             letterSpacing: -0.4,
-            color: colors.blue950,
+            color: colors.regular950,
             textTransform: "capitalize",
             fontSize: 12,
           },
@@ -328,7 +328,7 @@ const Jour = forwardRef((props, ref) => {
                   <View style={styles.eventBottom}>
                     <View style={styles.eventContent}>
                       <MapPin
-                        stroke={colors.blue800}
+                        stroke={colors.regular800}
                         width={14}
                         height={14}
                         strokeWidth={1.75}
@@ -339,7 +339,7 @@ const Jour = forwardRef((props, ref) => {
                     </View>
                     <View style={styles.eventContent}>
                       <UserRound
-                        stroke={colors.blue800}
+                        stroke={colors.regular800}
                         width={14}
                         height={14}
                         strokeWidth={1.75}

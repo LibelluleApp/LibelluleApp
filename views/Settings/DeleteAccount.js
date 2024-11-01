@@ -91,14 +91,14 @@ const DeleteAccount = () => {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue900,
+      color: colors.regular900,
       marginBottom: 20,
     },
     textAdvertising: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
       marginBottom: 20,
     },
     editBtn: {

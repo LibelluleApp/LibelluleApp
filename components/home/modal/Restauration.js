@@ -44,10 +44,10 @@ function Restauration() {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 20,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     stick: {
-      backgroundColor: colors.blue950,
+      backgroundColor: colors.regular950,
       height: "90%",
       width: 1,
       marginHorizontal: 15,
@@ -60,7 +60,7 @@ function Restauration() {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 20,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     content: {
       flexDirection: "row",
@@ -71,25 +71,25 @@ function Restauration() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     button: {
       paddingHorizontal: 20,
       paddingVertical: 10,
       borderRadius: 50,
       backgroundColor: colors.background,
-      borderColor: colors.blue700,
+      borderColor: colors.regular700,
       borderWidth: 0.5,
     },
     buttonToday: {
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       borderWidth: 0,
     },
     buttonText: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue700,
+      color: colors.regular700,
     },
     buttonTextToday: {
       color: colors.white,
@@ -114,19 +114,19 @@ function Restauration() {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue800,
+      color: colors.regular800,
     },
     descriptionMeal: {
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     descriptionPlat: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
       marginLeft: 10,
       textTransform: "capitalize",
     },
@@ -247,7 +247,7 @@ function Restauration() {
             <Text style={styles.title}>RU Le Crousty</Text>
             <View style={styles.content}>
               <Phone
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={16}
                 height={16}
@@ -256,7 +256,7 @@ function Restauration() {
             </View>
             <View style={styles.content}>
               <Calendar
-                stroke={colors.blue950}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={16}
                 height={16}

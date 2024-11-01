@@ -31,7 +31,7 @@ const TransferRole = () => {
       justifyContent: "space-between",
     },
     editBtn: {
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       paddingHorizontal: 20,
       paddingVertical: 11,
       borderRadius: 10,
@@ -62,7 +62,7 @@ const TransferRole = () => {
       fontSize: 15,
     },
     selectedTextStyle: {
-      color: colors.blue950,
+      color: colors.regular950,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
@@ -82,7 +82,7 @@ const TransferRole = () => {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     bold: {
       fontFamily: "Ubuntu_500Medium",
@@ -92,7 +92,7 @@ const TransferRole = () => {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue900,
+      color: colors.regular900,
       marginBottom: 10,
     },
     textDisclaimer: {
@@ -157,7 +157,7 @@ const TransferRole = () => {
       <View style={styles.container}>
         <View>
           <View style={styles.topInformations}>
-            <Info width={16} heigh={16} stroke={colors.blue950} />
+            <Info width={16} heigh={16} stroke={colors.regular950} />
             <Text style={styles.textInformations}>
               Vous êtes <Text style={styles.bold}>responsable des devoirs</Text>{" "}
               de votre groupe de classe. Avec l’accord d’un autre étudiant, le
@@ -173,7 +173,7 @@ const TransferRole = () => {
               mode="default"
               style={[
                 styles.dropdown,
-                isFocus && { borderColor: colors.blue950 },
+                isFocus && { borderColor: colors.regular950 },
               ]}
               activeColor={colors.white_background}
               placeholderStyle={styles.placeholderStyle}

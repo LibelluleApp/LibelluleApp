@@ -37,7 +37,7 @@ const Chronologie = ({
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 13,
-      color: colors.blue950,
+      color: colors.regular950,
     },
     listContainer: {},
   });
