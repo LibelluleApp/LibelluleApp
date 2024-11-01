@@ -106,15 +106,14 @@ function Restauration() {
       letterSpacing: -0.4,
       alignSelf: "center",
       width: "90%",
-      marginTop: 22,
-      marginBottom: 15,
+      marginVertical: 20,
+      gap: 15,
     },
     headerContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
       width: "100%",
-      marginVertical: 20,
     },
     headerContent: {
       flexDirection: "column",

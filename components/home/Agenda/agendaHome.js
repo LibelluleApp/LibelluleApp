@@ -40,14 +40,16 @@ function AgendaHome() {
   );
 
   const styles = StyleSheet.create({
-    agendaContainer: {},
+    agendaContainer: {
+      gap: 5,
+      marginTop: 20,
+    },
     nextTasksContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
       width: "90%",
       alignSelf: "center",
-      marginVertical: 20,
     },
     nextTasksTitle: {
       fontSize: 16,

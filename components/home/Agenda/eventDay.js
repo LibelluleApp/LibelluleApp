@@ -40,9 +40,18 @@ function EventDay({ date, onAgendaContentChange }) {
       gap: 10,
     },
     loadingContainer: {
+      marginTop: 15,
+      flexDirection: "row",
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
+      gap: 10,
+    },
+    loadingTitle: {
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      fontSize: 15,
+      color: colors.regular800,
     },
     noItemContainer: {
       justifyContent: "center",
@@ -158,7 +167,10 @@ function EventDay({ date, onAgendaContentChange }) {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="small" color={colors.regular800} />
+        <Text style={styles.loadingTitle}>
+          Les devoirs sont en cours de chargement...
+        </Text>
       </View>
     );
   }
