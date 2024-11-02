@@ -45,7 +45,7 @@ function LiensExterne() {
       width: "90%",
       marginTop: 22,
       marginBottom: 15,
-      letterSpacing: -0.6,
+      letterSpacing: -0.4,
     },
     title: {
       fontFamily: "Ubuntu_500Medium",
@@ -53,7 +53,7 @@ function LiensExterne() {
       fontSize: 17,
       color: colors.grey,
       marginBottom: 14,
-      letterSpacing: -0.6,
+      letterSpacing: -0.4,
     },
     liens: {
       flexDirection: "column",
@@ -75,14 +75,14 @@ function LiensExterne() {
       letterSpacing: -0.4,
       fontSize: 15,
       color: colors.regular950,
-      letterSpacing: -0.6,
+      letterSpacing: -0.4,
     },
     descriptionText: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 13,
       color: colors.regular800,
-      letterSpacing: -0.6,
+      letterSpacing: -0.4,
     },
     content: {
       gap: 5,

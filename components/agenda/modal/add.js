@@ -24,6 +24,7 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import ButtonAuth from "../../auth/buttonAuth";
+import saveAgenda from "../../../api/Agenda/save";
 import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment-timezone";
@@ -184,6 +185,7 @@ const Add = ({ route }) => {
   const [type, setType] = useState("devoir");
   const [titre, setTitre] = useState("");
   const [description, setDescription] = useState("");
+  const [error, setError] = useState(null);
 
   const titleHeight = useSharedValue(type === "eval" ? 0 : 58);
   const marginValue = useSharedValue(20); // Valeur initiale du padding
@@ -219,17 +221,53 @@ const Add = ({ route }) => {
   };
 
   const handleSaveTask = async () => {
-    if (!dates || !matiere || !type || (type !== "eval" && !titre)) {
+    if (type !== "eval") {
+      if (!dates || !matiere || !type || !titre) {
+        showMessage({
+          message: "Veuillez remplir tous les champs obligatoires.",
+          type: "danger",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        });
+        return;
+      }
+    } else {
+      if (!dates || !matiere || !type) {
+        showMessage({
+          message: "Veuillez remplir tous les champs obligatoires.",
+          type: "danger",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        });
+        return;
+      }
+    }
+
+    setLoading(true);
+    try {
+      const result = await saveAgenda(
+        titre,
+        description,
+        dates.format("yyyy-MM-DD"),
+        matiere,
+        type
+      );
+      if (result.status === "success") {
+        showMessage({
+          message: "Tâche ajoutée avec succès.",
+          type: "success",
+          titleStyle: { fontFamily: "Ubuntu_400Regular" },
+        });
+        navigation.goBack();
+      }
+    } catch (error) {
+      setError(error.message);
       showMessage({
-        message: "Veuillez remplir tous les champs obligatoires.",
+        message: error.message,
         type: "danger",
         titleStyle: { fontFamily: "Ubuntu_400Regular" },
       });
-      return;
+    } finally {
+      setLoading(false);
     }
-    setLoading(true);
-    // Logique pour sauvegarder la tâche ici
-    setLoading(false);
   };
 
   const showDatePicker = () => {
@@ -244,6 +282,16 @@ const Add = ({ route }) => {
     setDates(moment.tz(date, "Europe/Paris"));
     hideDatePicker();
   };
+
+  const data = [{ label: "Anglais", value: "1" }];
+
+  const data2 = [
+    { label: "Tâche à faire", value: "devoir" },
+    { label: "Évaluation", value: "eval" },
+  ];
+
+  const [value, setValue] = useState(null);
+  const [value2, setValue2] = useState(null);
 
   return (
     <View style={styles.container}>
@@ -381,6 +429,7 @@ const Add = ({ route }) => {
       <View style={styles.btnContainerBottom}>
         <ButtonAuth
           title="Ajouter"
+          bgColor={colors.regular900}
           onPress={handleSaveTask}
           loading={loading}
         />

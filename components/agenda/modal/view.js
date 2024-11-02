@@ -11,6 +11,8 @@ import {
   Calendar,
   GraduationCap,
   LayoutList,
+  Baseline,
+  TextIcon,
 } from "../../../assets/icons/Icons";
 import * as Haptics from "expo-haptics";
 import fetchTask from "../../../api/Agenda/fetchTask";
@@ -26,12 +28,14 @@ const ViewTask = ({ route }) => {
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
-    container: {
+    background: {
       flex: 1,
-      flexDirection: "column",
       backgroundColor: colors.background,
-      padding: 20,
-      gap: 20,
+    },
+    container: {
+      flexDirection: "column",
+      width: "90%",
+      marginHorizontal: "auto",
     },
     containerItems: {
       flexDirection: "column",
@@ -62,25 +66,25 @@ const ViewTask = ({ route }) => {
       flexDirection: "row",
     },
     taskInfoTitle: {
-      fontFamily: "Ubuntu_500Medium",
+      fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      fontSize: 15,
-      color: colors.regular950,
+      fontSize: 13,
+      color: colors.grey,
     },
     taskInfoDesc: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.regular950,
+      color: colors.regular900,
     },
     taskState: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.red_variable,
+      color: colors.regular900,
     },
     taskGood: {
-      color: colors.green_variable,
+      color: colors.regular700,
     },
     taskDisclaimer: {
       fontFamily: "Ubuntu_400Regular",
@@ -91,15 +95,15 @@ const ViewTask = ({ route }) => {
     },
     taskCTA: {
       position: "absolute",
-      bottom: 20,
+      bottom: 70,
       alignSelf: "center",
       flexDirection: "column",
-      width: "95%",
+      width: "90%",
       marginHorizontal: "auto",
       justifyContent: "center",
       alignItems: "center",
     },
-    taskCTADelete: { padding: 10 },
+    taskCTADelete: { padding: 7 },
     taskCTAEdit: {
       backgroundColor: colors.regular700,
       paddingHorizontal: 20,
@@ -198,91 +202,110 @@ const ViewTask = ({ route }) => {
     }, 300);
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.containerItems}>
-        <View style={styles.taskInfo}>
-          <View style={styles.taskInfoContent}>
-            <Calendar
-              stroke={colors.regular950}
-              strokeWidth={1.75}
-              width={20}
-              height={20}
-            />
-            <View>
-              <Text style={styles.taskInfoTitle}>Date</Text>
-              <Text style={styles.taskInfoDesc}>
-                {moment(task.date_fin).format("ddd DD MMMM")}
-              </Text>
+    <View style={styles.background}>
+      <View style={styles.container}>
+        <View style={styles.containerItems}>
+          <View style={styles.taskInfo}>
+            <View style={styles.taskInfoContent}>
+              <Calendar
+                stroke={colors.regular900}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.taskInfoTitle}>Date</Text>
+                <Text style={styles.taskInfoDesc}>
+                  {moment(task.date_fin).format("ddd DD MMMM")}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.taskInfoContent}>
+              <GraduationCap
+                stroke={colors.regular900}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.taskInfoTitle}>Matière</Text>
+                <Text style={styles.taskInfoDesc}>
+                  {task.Ressource.nom_ressource || "Matière indisponible"}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.taskInfoContent}>
+              <LayoutList
+                stroke={colors.regular900}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.taskInfoTitle}>Type de tâche</Text>
+                <Text style={styles.taskInfoDesc}>
+                  {task.type == "eval" ? "Evaluation" : "Tâche à faire"}
+                </Text>
+              </View>
             </View>
           </View>
-          <View style={styles.taskInfoContent}>
-            <GraduationCap
-              stroke={colors.regular950}
-              strokeWidth={1.75}
-              width={20}
-              height={20}
-            />
-            <View>
-              <Text style={styles.taskInfoTitle}>Matière</Text>
-              <Text style={styles.taskInfoDesc}>
-                {task.Ressource.nom_ressource || "Matière indisponible"}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.taskInfoContent}>
-            <LayoutList
-              stroke={colors.regular950}
-              strokeWidth={1.75}
-              width={20}
-              height={20}
-            />
-            <View>
-              <Text style={styles.taskInfoTitle}>Type de tâche</Text>
-              <Text style={styles.taskInfoDesc}>
-                {task.type == "eval" ? "Evaluation" : "Tâche à faire"}
-              </Text>
-            </View>
-          </View>
-        </View>
 
-        <View style={styles.taskContent}>
+          <View style={styles.taskContent}>
+            {task.type == "devoir" && (
+              <View style={styles.taskInfoContent}>
+                <Baseline
+                  stroke={colors.regular900}
+                  strokeWidth={1.75}
+                  width={20}
+                  height={20}
+                />
+                <View>
+                  <Text style={styles.taskInfoTitle}>Titre</Text>
+                  <Text style={styles.taskInfoDesc}>
+                    {task.titre || "Titre indisponible"}
+                  </Text>
+                </View>
+              </View>
+            )}
+            <View style={styles.taskInfoContent}>
+              <TextIcon
+                stroke={colors.regular900}
+                strokeWidth={1.75}
+                width={20}
+                height={20}
+              />
+              <View>
+                <Text style={styles.taskInfoTitle}>Description</Text>
+                <Text style={styles.taskInfoDesc}>
+                  {task.contenu || "Contenu indisponible"}
+                </Text>
+              </View>
+            </View>
+          </View>
+
           {task.type == "devoir" && (
-            <View>
-              <Text style={styles.taskInfoTitle}>Titre</Text>
-              <Text style={styles.taskInfoDesc}>
-                {task.titre || "Titre indisponible"}
-              </Text>
+            <View style={styles.taskFooter}>
+              <BouncyCheckbox
+                fillColor={colors.regular700}
+                unfillColor={colors.white}
+                onPress={handleCheckboxPress}
+                isChecked={isChecked}
+              />
+
+              <View>
+                <Text style={styles.taskInfoTitle}>État</Text>
+                <Text style={[styles.taskState, isChecked && styles.taskGood]}>
+                  {isChecked ? "Fait" : "Non fait"}
+                </Text>
+              </View>
             </View>
           )}
-          <View>
-            <Text style={styles.taskInfoTitle}>Description</Text>
-            <Text style={styles.taskInfoDesc}>
-              {task.contenu || "Contenu indisponible"}
-            </Text>
-          </View>
         </View>
-        {task.type == "devoir" && (
-          <View style={styles.taskFooter}>
-            <BouncyCheckbox
-              fillColor={colors.regular700}
-              unfillColor={colors.white}
-              onPress={handleCheckboxPress}
-              isChecked={isChecked}
-            />
-
-            <View>
-              <Text style={styles.taskInfoTitle}>État</Text>
-              <Text style={[styles.taskState, isChecked && styles.taskGood]}>
-                {isChecked ? "Fait" : "Non fait"}
-              </Text>
-            </View>
-          </View>
-        )}
-      </View>
-      {/* <Text style={styles.taskDisclaimer}>
+        {/* <Text style={styles.taskDisclaimer}>
         Cette {task.type == "devoir" ? "tâche" : "évaluation"} n'a pas été
         validé par l'enseignant
       </Text> */}
+      </View>
       {task.utilisateur_id == userData.utilisateur_id && (
         <View style={styles.taskCTA}>
           <TouchableOpacity style={styles.taskCTAEdit} onPress={handlePress}>
