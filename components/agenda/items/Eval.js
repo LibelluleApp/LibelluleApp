@@ -23,10 +23,11 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
       backgroundColor: colors.red50,
       gap: 10,
       borderRadius: 10,
-      paddingVertical: 15,
-      paddingHorizontal: 20,
+      paddingVertical: 12,
+      paddingHorizontal: 17,
       borderWidth: 0.5,
       borderColor: colors.red300,
+      marginTop: 10,
     },
     evalText: {
       color: colors.red500,
@@ -55,7 +56,16 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
           strokeWidth={1.75}
         />
         <Text style={styles.evalText}>
-          <Text style={{ fontWeight: "bold" }}>[Évaluation]</Text>{" "}
+          <Text
+            style={{
+              color: colors.red500,
+              fontFamily: "Ubuntu_500Medium",
+              letterSpacing: -0.4,
+              fontSize: 14,
+            }}
+          >
+            [Évaluation]
+          </Text>{" "}
           {matiere || "Titre non disponible"}
         </Text>
       </View>
