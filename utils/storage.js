@@ -108,3 +108,4 @@ export function setIsFirstVisitAgenda(value){
 export function getIsFirstVisitAgenda() {
     const data = storage.getBoolean('isFirstVisitAgenda');
     return data;
+}
