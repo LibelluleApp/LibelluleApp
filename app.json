@@ -31,8 +31,8 @@
   "android": {
   "adaptiveIcon": {
     "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#0760FB",
-        "monochromeImage": "./assets/monochrome.png"
+    "backgroundColor": "#0760FB",
+    "monochromeImage": "./assets/monochrome.png"
   },
   "googleServicesFile": "./google-services.json",
       "package": "com.libellule.libellule",

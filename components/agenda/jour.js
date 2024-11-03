@@ -46,7 +46,6 @@ const Jour = ({
 }) => {
   const { colors } = useContext(ThemeContext);
 
-  console.log(currentIndex, defaultIndex); // Vérifiez que le tableau tasks est correctement rempli
 
   const styles = StyleSheet.create({
     swiperContainer: {

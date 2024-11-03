@@ -33,14 +33,12 @@ async function refreshData(token) {
     if (!user_data.utilisateur_id) {
       throw new Error("L'adresse mail n'est pas définie dans AsyncStorage.");
     }
-    console.log("1")
+
     const response = await ApiManager.get(`/user/fetch/${user_data.utilisateur_id}`);
     if (response.status === 200) {
-      console.log("2")
 
       const userData = { ...response.data };
       await storeUserData(userData);
-      console.log("3")
 
       return userData;
     } else {

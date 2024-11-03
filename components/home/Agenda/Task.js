@@ -64,7 +64,6 @@ function Task({ data }) {
     },
   });
 
-  console.log(data);
 
   const navigation = useNavigation();
   const [isChecked, setIsChecked] = useState(estFait);

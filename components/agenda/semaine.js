@@ -46,7 +46,6 @@ const Semaine = ({
 }) => {
   const { colors } = useContext(ThemeContext);
 
-  console.log(currentIndex, defaultIndex);
 
   const styles = StyleSheet.create({
     swiperContainer: {
@@ -266,7 +265,6 @@ const Semaine = ({
 
   useEffect(() => {
     if (returnToday) {
-      console.log(defaultIndex);
       setCurrentIndex(defaultIndex);
       swiperRef.current.scrollToIndex({ index: defaultIndex });
       setCurrentWeekNumber(daysOfWeek[defaultIndex].week);

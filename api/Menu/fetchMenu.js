@@ -2,7 +2,6 @@ import ApiManager from "../ApiManager";
 
 async function fetchMenu(date) {
   try {
-    console.log(date);
     const response = await ApiManager.post(`/meal/fetchmenu`, {
       date: date,
     });

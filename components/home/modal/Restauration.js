@@ -220,7 +220,6 @@ function Restauration() {
     const validDate = getValidDate(dayOffset);
     fetchMenu(validDate).then((data) => {
       setMenu(data);
-      console.log(data);
     });
   }, [selectedDay]);
 
