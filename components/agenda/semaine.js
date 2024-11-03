@@ -16,6 +16,7 @@ import SwiperFlatList from "react-native-swiper-flatlist";
 import Item from "./Item"; // Assurez-vous que ce composant est correctement importé
 import { ThemeContext } from "./../../utils/themeContext";
 import * as Progress from "react-native-progress";
+import TouchableScale from "react-native-touchable-scale";
 
 const { width } = Dimensions.get("window");
 
@@ -45,7 +46,6 @@ const Semaine = ({
   todayMoment,
 }) => {
   const { colors } = useContext(ThemeContext);
-
 
   const styles = StyleSheet.create({
     swiperContainer: {
@@ -337,19 +337,27 @@ const Semaine = ({
   return (
     <View style={styles.swiperContainer}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity
+        <TouchableScale
+          friction={6}
+          activeScale={0.7}
           disabled={currentIndex === 0}
           onPress={handlePrevWeek}
-          style={[styles.aroundLeft, { opacity: currentIndex === 0 ? 0.5 : 1 }]}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
-          <ArrowLeft
-            stroke={colors.regular950}
-            strokeWidth={1.75}
-            width={20}
-            height={20}
-          />
-        </TouchableOpacity>
+          <View
+            style={[
+              styles.aroundLeft,
+              { opacity: currentIndex === 0 ? 0.5 : 1 },
+            ]}
+          >
+            <ArrowLeft
+              stroke={colors.regular950}
+              strokeWidth={1.75}
+              width={20}
+              height={20}
+            />
+          </View>
+        </TouchableScale>
         <View style={styles.headerTitleContainer}>
           <Text style={styles.headerTitle}>Semaine {currentWeekNumber}</Text>
           <Text style={styles.headerSubtitle}>
@@ -359,18 +367,21 @@ const Semaine = ({
               .format("DD/MM")}`}
           </Text>
         </View>
-        <TouchableOpacity
+        <TouchableScale
+          friction={6}
+          activeScale={0.7}
           onPress={handleNextWeek}
-          style={styles.aroundRight}
           hitSlop={{ top: 20, bottom: 20, right: 20 }}
         >
-          <ArrowRight
-            stroke={colors.regular950}
-            strokeWidth={1.75}
-            width={20}
-            height={20}
-          />
-        </TouchableOpacity>
+          <View style={styles.aroundRight}>
+            <ArrowRight
+              stroke={colors.regular950}
+              strokeWidth={1.75}
+              width={20}
+              height={20}
+            />
+          </View>
+        </TouchableScale>
       </View>
 
       {/* Liste des semaines avec Swiper */}

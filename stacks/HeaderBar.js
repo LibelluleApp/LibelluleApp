@@ -4,14 +4,19 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemeContext } from "../utils/themeContext";
 import { useNavigation } from "@react-navigation/native";
 import { Bell, SettingsWheel } from "../assets/icons/Icons";
+import TouchableScale from "react-native-touchable-scale";
 
 function NotificationBell() {
   const { colors } = useContext(ThemeContext);
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Notifications")}>
+    <TouchableScale
+      friction={6}
+      activeScale={0.7}
+      onPress={() => navigation.navigate("Notifications")}
+    >
       <Bell stroke={colors.grey} strokeWidth={2} width={22} height={22} />
-    </TouchableOpacity>
+    </TouchableScale>
   );
 }
 
@@ -36,9 +41,13 @@ const CustomHeader = ({ title }) => {
           paddingHorizontal: 21,
         }}
       >
-        <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+        <TouchableScale
+          friction={6}
+          activeScale={0.7}
+          onPress={() => navigation.navigate("Settings")}
+        >
           <SettingsWheel stroke={colors.grey} strokeWidth={1.75} />
-        </TouchableOpacity>
+        </TouchableScale>
 
         <Text
           style={{

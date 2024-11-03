@@ -34,6 +34,7 @@ import messaging from "@react-native-firebase/messaging";
 import saveNotifications from "../api/Notifications/saveNotifications";
 import fetchWeather from "./../api/Weather/fetchWeather";
 import { getUserData } from "../utils/storage";
+import TouchableScale from "react-native-touchable-scale";
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -472,7 +473,9 @@ function Home() {
           </View>
           <View style={styles.rightContainer}>
             <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
-              <TouchableOpacity
+              <TouchableScale
+                friction={6}
+                activeScale={0.95}
                 onPress={() => navigation.navigate("Emploi du temps")}
               >
                 <Text
@@ -483,7 +486,7 @@ function Home() {
                     fontSize: 15,
                   }}
                 >{`${formattedDate}`}</Text>
-              </TouchableOpacity>
+              </TouchableScale>
             </ShimmerPlaceHolder>
           </View>
         </View>

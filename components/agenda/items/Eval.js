@@ -8,6 +8,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import { ThemeContext } from "./../../../utils/themeContext";
+import TouchableScale from "react-native-touchable-scale";
 
 function EvalHome({ date, titre, agenda_id, matiere }) {
   const navigation = useNavigation();
@@ -44,40 +45,43 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
   });
 
   return (
-    <TouchableOpacity
-      style={styles.containerEval}
+    <TouchableScale
+      friction={6}
+      activeScale={0.97}
       onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
     >
-      <View style={styles.leftContainer}>
-        <CircleAlert
-          stroke={colors.red500}
-          width={20}
-          height={20}
-          strokeWidth={1.75}
-        />
-        <Text style={styles.evalText}>
-          <Text
-            style={{
-              color: colors.red500,
-              fontFamily: "Ubuntu_500Medium",
-              letterSpacing: -0.4,
-              fontSize: 14,
-            }}
-          >
-            [Évaluation]
-          </Text>{" "}
-          {matiere || "Titre non disponible"}
-        </Text>
+      <View style={styles.containerEval}>
+        <View style={styles.leftContainer}>
+          <CircleAlert
+            stroke={colors.red500}
+            width={20}
+            height={20}
+            strokeWidth={1.75}
+          />
+          <Text style={styles.evalText}>
+            <Text
+              style={{
+                color: colors.red500,
+                fontFamily: "Ubuntu_500Medium",
+                letterSpacing: -0.4,
+                fontSize: 14,
+              }}
+            >
+              [Évaluation]
+            </Text>{" "}
+            {matiere || "Titre non disponible"}
+          </Text>
+        </View>
+        <View style={styles.rightContainer}>
+          <ChevronRight
+            stroke={colors.red500}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          ></ChevronRight>
+        </View>
       </View>
-      <View style={styles.rightContainer}>
-        <ChevronRight
-          stroke={colors.red500}
-          strokeWidth={1.75}
-          width={18}
-          height={18}
-        ></ChevronRight>
-      </View>
-    </TouchableOpacity>
+    </TouchableScale>
   );
 }
 

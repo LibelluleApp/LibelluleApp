@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../utils/themeContext";
+import TouchableScale from "react-native-touchable-scale";
 
 function ButtonAuth({ title, onPress, loading }) {
   const { colors } = useContext(ThemeContext);
@@ -39,19 +40,22 @@ function ButtonAuth({ title, onPress, loading }) {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
-      style={styles.container}
+    <TouchableScale
+      friction={6}
+      activeScale={0.97}
       onPress={onPress}
       disabled={loading}
     >
-      <View style={styles.button}>
-        {loading ? (
-          <ActivityIndicator size="small" color={colors.white} />
-        ) : (
-          <Text style={styles.buttonText}>{title}</Text>
-        )}
+      <View style={styles.container}>
+        <View style={styles.button}>
+          {loading ? (
+            <ActivityIndicator size="small" color={colors.white} />
+          ) : (
+            <Text style={styles.buttonText}>{title}</Text>
+          )}
+        </View>
       </View>
-    </TouchableOpacity>
+    </TouchableScale>
   );
 }
 

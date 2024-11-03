@@ -16,6 +16,7 @@ import SwiperFlatList from "react-native-swiper-flatlist";
 import Item from "./Item"; // Assurez-vous que ce composant est correctement importé
 import { ThemeContext } from "./../../utils/themeContext";
 import * as Progress from "react-native-progress";
+import TouchableScale from "react-native-touchable-scale";
 
 const { width } = Dimensions.get("window");
 
@@ -45,7 +46,6 @@ const Jour = ({
   todayMoment,
 }) => {
   const { colors } = useContext(ThemeContext);
-
 
   const styles = StyleSheet.create({
     swiperContainer: {
@@ -291,35 +291,46 @@ const Jour = ({
     <View style={styles.swiperContainer}>
       {/* Affichage du jour actuel */}
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          disabled={currentIndex === 0}
+        <TouchableScale
+          friction={6}
+          activeScale={0.7}
           onPress={handlePrevDay}
-          style={[styles.aroundLeft, { opacity: currentIndex === 0 ? 0.5 : 1 }]}
+          disabled={currentIndex === 0}
           hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
         >
-          <ArrowLeft
-            stroke={colors.regular950}
-            strokeWidth={1.75}
-            width={20}
-            height={20}
-          />
-        </TouchableOpacity>
+          <View
+            style={[
+              styles.aroundLeft,
+              { opacity: currentIndex === 0 ? 0.5 : 1 },
+            ]}
+          >
+            <ArrowLeft
+              stroke={colors.regular950}
+              strokeWidth={1.75}
+              width={20}
+              height={20}
+            />
+          </View>
+        </TouchableScale>
         <View style={styles.headerTitleContainer}>
           <Text style={styles.headerTitle}>{currentDate}</Text>
           <Text style={styles.headerSubtitle}>Semaine {currentWeekNumber}</Text>
         </View>
-        <TouchableOpacity
+        <TouchableScale
+          friction={6}
+          activeScale={0.7}
           onPress={handleNextDay}
-          style={styles.aroundRight}
           hitSlop={{ top: 20, bottom: 20, right: 20 }}
         >
-          <ArrowRight
-            stroke={colors.regular950}
-            strokeWidth={1.75}
-            width={20}
-            height={20}
-          />
-        </TouchableOpacity>
+          <View style={styles.aroundRight}>
+            <ArrowRight
+              stroke={colors.regular950}
+              strokeWidth={1.75}
+              width={20}
+              height={20}
+            />
+          </View>
+        </TouchableScale>
       </View>
 
       <View style={styles.counts}>

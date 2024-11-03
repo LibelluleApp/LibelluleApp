@@ -6,6 +6,7 @@ import moment from "moment";
 import { ThemeContext } from "./../../../utils/themeContext";
 import { useNavigation } from "@react-navigation/native";
 import "moment/locale/fr"; // Assurez-vous que la langue est correctement définie si vous utilisez des formats localisés
+import TouchableScale from "react-native-touchable-scale";
 
 function AgendaHome() {
   const { colors } = useContext(ThemeContext);
@@ -96,12 +97,15 @@ function AgendaHome() {
         </View>
         {/* Utilisation de l'opérateur && pour afficher un bouton conditionnel */}
         {agendaContent === true && (
-          <TouchableOpacity
-            style={styles.btnOutline}
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
             onPress={() => navigation.navigate("Agenda")}
           >
-            <Text style={styles.btnOutlineText}>Voir plus</Text>
-          </TouchableOpacity>
+            <View style={styles.btnOutline}>
+              <Text style={styles.btnOutlineText}>Voir plus</Text>
+            </View>
+          </TouchableScale>
         )}
       </View>
       <EventDay

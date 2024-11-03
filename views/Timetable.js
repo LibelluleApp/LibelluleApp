@@ -7,6 +7,7 @@ import { ThemeContext } from "../utils/themeContext";
 import { useIsFocused } from "@react-navigation/native";
 import Dropdown from "../components/dropdown/Dropdown";
 import { ResetList } from "../assets/icons/Icons";
+import TouchableScale from "react-native-touchable-scale";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -60,9 +61,13 @@ function Timetable() {
           onSelect={handleSelect}
           value={selectedView}
         />
-        <TouchableOpacity onPress={handleGoToToday}>
+        <TouchableScale
+          friction={6}
+          activeScale={0.7}
+          onPress={handleGoToToday}
+        >
           <ResetList stroke={colors.regular800} />
-        </TouchableOpacity>
+        </TouchableScale>
       </View>
       {selectedView === "day" && <Jour ref={jourRef} />}
       {selectedView === "week" && <Semaine ref={semaineRef} />}

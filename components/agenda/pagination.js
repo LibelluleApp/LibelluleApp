@@ -11,6 +11,7 @@ import { ThemeContext } from "./../../utils/themeContext";
 import * as Progress from "react-native-progress";
 import whoIsChief from "../../api/Agenda/chef";
 import Dropdown from "./../dropdown/Dropdown";
+import TouchableScale from "react-native-touchable-scale";
 
 const PaginationHeader = ({
   currentDate,
@@ -184,13 +185,15 @@ const PaginationHeader = ({
           value={value}
           number={3}
         />
-        <TouchableOpacity>
-          {index !== defaultIndex && (
-            <TouchableOpacity onPress={handleReturnToday}>
-              <ResetList stroke={colors.regular800} />
-            </TouchableOpacity>
-          )}
-        </TouchableOpacity>
+        {index !== defaultIndex && (
+          <TouchableScale
+            friction={6}
+            activeScale={0.7}
+            onPress={handleReturnToday}
+          >
+            <ResetList stroke={colors.regular800} />
+          </TouchableScale>
+        )}
       </View>
     </View>
   );

@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Calendar, ChevronRight } from "../../assets/icons/Icons";
 import { ThemeContext } from "./../../utils/themeContext";
 import moment from "moment";
+import TouchableScale from "react-native-touchable-scale";
 
 function Mail({ email }) {
   const { colors } = useContext(ThemeContext);
@@ -67,33 +68,36 @@ function Mail({ email }) {
   const from = email.e[email.e.length - 1]?.p;
 
   return (
-    <TouchableOpacity
-      style={styles.container}
+    <TouchableScale
+      friction={6}
+      activeScale={0.97}
       onPress={() => navigation.navigate("MailDetail", { email })}
     >
-      <Text style={styles.sender}>{from || email.e[0].a}</Text>
-      <Text style={styles.subject}>{email.su}</Text>
-      <View style={styles.bottom}>
-        <View style={styles.bottomLeft}>
-          <Calendar
-            stroke={colors.regular800}
-            strokeWidth={1.75}
-            width={15}
-            height={15}
-          />
-          <Text style={styles.date}>{date}</Text>
-        </View>
-        <View style={styles.bottomRight}>
-          <Text style={styles.action}>Ouvrir</Text>
-          <ChevronRight
-            stroke={colors.regular700}
-            strokeWidth={1.75}
-            width={18}
-            height={18}
-          />
+      <View style={styles.container}>
+        <Text style={styles.sender}>{from || email.e[0].a}</Text>
+        <Text style={styles.subject}>{email.su}</Text>
+        <View style={styles.bottom}>
+          <View style={styles.bottomLeft}>
+            <Calendar
+              stroke={colors.regular800}
+              strokeWidth={1.75}
+              width={15}
+              height={15}
+            />
+            <Text style={styles.date}>{date}</Text>
+          </View>
+          <View style={styles.bottomRight}>
+            <Text style={styles.action}>Ouvrir</Text>
+            <ChevronRight
+              stroke={colors.regular700}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
+          </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableScale>
   );
 }
 

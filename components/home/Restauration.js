@@ -17,6 +17,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
+import TouchableScale from "react-native-touchable-scale";
 
 function Restauration() {
   const { colors } = useContext(ThemeContext);
@@ -189,17 +190,19 @@ function Restauration() {
             <Text style={styles.headerSubtitle}>Ouvert de 11h45 à 13h30</Text>
           )}
         </View>
-        <TouchableOpacity
-          style={styles.btnOutline}
+        <TouchableScale
+          friction={6}
+          activeScale={0.95}
           onPress={() => {
             Linking.openURL(
               "https://www.crous-poitiers.fr/restaurant/r-u-crousty/"
             );
           }}
-          accessibilityLabel="Voir plus sur le restaurant Crousty"
         >
-          <Text style={styles.btnOutlineText}>Voir plus</Text>
-        </TouchableOpacity>
+          <View style={styles.btnOutline}>
+            <Text style={styles.btnOutlineText}>Voir plus</Text>
+          </View>
+        </TouchableScale>
       </View>
       <View style={styles.contentMeal}>
         {menu.length === 0 ? (
