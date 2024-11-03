@@ -95,7 +95,7 @@ const ViewTask = ({ route }) => {
     },
     taskCTA: {
       position: "absolute",
-      bottom: 70,
+      bottom: 80,
       alignSelf: "center",
       flexDirection: "column",
       width: "90%",

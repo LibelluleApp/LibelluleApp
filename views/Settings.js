@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, forwardRef } from "react";
 import {
   View,
   ScrollView,
@@ -26,6 +26,7 @@ import { useSession } from "../context/AuthContext";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { ThemeContext } from "../utils/themeContext";
 import { getAlternant, getUserData } from "../utils/storage";
+import TouchableScale from "react-native-touchable-scale";
 
 const isExpoGo = Constants.appOwnership === "expo";
 
@@ -266,8 +267,10 @@ function Settings() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.sectionPageContainer}>
-        <TouchableOpacity
+        <TouchableScale
           style={styles.sectionPageItem}
+          friction={6}
+          activeScale={0.94}
           onPress={() => navigation.navigate("Profile")}
         >
           <View style={styles.pageContainer}>
@@ -299,7 +302,7 @@ function Settings() {
               />
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableScale>
         <View style={styles.sectionPageItem}>
           <Text style={styles.sectionTitle}>Personnalisation</Text>
           <View style={styles.pageContainer}>
