@@ -189,7 +189,7 @@ export const purpleDarkModeColors = {
   // Blue Ribbon
   regular50: "#3B2D4C",
   regular100: "#3B2D4C",
-  regular200: "#1E1A33",
+  regular200: "#470368",
   regular200_2: "#E2B3E0",
   regular300: "#BFA3D9",
   regular400: "#8C69BF",
