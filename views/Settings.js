@@ -71,15 +71,15 @@ function Settings() {
       marginHorizontal: "auto",
       gap: 20,
     },
+    sectionPageItem: {
+      gap: 10,
+    },
     sectionTitle: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
       color: colors.grey,
       letterSpacing: -0.4,
-    },
-    sectionPageItem: {
-      gap: 10,
     },
     pageSeparation: {
       height: 0.5,
@@ -268,38 +268,39 @@ function Settings() {
     <ScrollView style={styles.container}>
       <View style={styles.sectionPageContainer}>
         <TouchableScale
-          style={styles.sectionPageItem}
           friction={6}
           activeScale={0.94}
           onPress={() => navigation.navigate("Profile")}
         >
-          <View style={styles.pageContainer}>
-            <View style={styles.pageItem}>
-              <View style={styles.pageProfilContainer}>
-                <Image
-                  source={{ uri: userData.lien_photo_profil }}
-                  style={styles.profilPicture}
-                />
-                <View style={styles.pageProfilContent}>
-                  <View style={styles.pageProfilTitle}>
-                    <Text style={styles.profilName}>
-                      {userData.prenom} {userData.nom}
-                    </Text>
-                    <View style={styles.profilGroupContent}>
-                      <Text style={styles.profilGroupTitle}>
-                        {userData.groupe_id}
+          <View style={styles.sectionPageItem}>
+            <View style={styles.pageContainer}>
+              <View style={styles.pageItem}>
+                <View style={styles.pageProfilContainer}>
+                  <Image
+                    source={{ uri: userData.lien_photo_profil }}
+                    style={styles.profilPicture}
+                  />
+                  <View style={styles.pageProfilContent}>
+                    <View style={styles.pageProfilTitle}>
+                      <Text style={styles.profilName}>
+                        {userData.prenom} {userData.nom}
                       </Text>
+                      <View style={styles.profilGroupContent}>
+                        <Text style={styles.profilGroupTitle}>
+                          {userData.groupe_id}
+                        </Text>
+                      </View>
                     </View>
+                    <Text style={styles.profilEmail}>{userData.email_edu}</Text>
                   </View>
-                  <Text style={styles.profilEmail}>{userData.email_edu}</Text>
                 </View>
+                <ChevronRight
+                  stroke={colors.regular700}
+                  strokeWidth={1.75}
+                  width={18}
+                  height={18}
+                />
               </View>
-              <ChevronRight
-                stroke={colors.regular700}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
             </View>
           </View>
         </TouchableScale>
