@@ -14,15 +14,15 @@ export const ThemeProvider = ({ children }) => {
     const loadTheme = async () => {
       try {
         await migrateFromAsyncStorage(); // Migration des données si nécessaire
-        const storedTheme = await getTheme();
+        const storedTheme = getTheme();
         if (storedTheme) {
-          const { mode, theme } = JSON.parse(storedTheme); // Conversion de la chaîne JSON en objet
+          const { mode, theme } = JSON.parse(storedTheme);
           setIsDarkMode(mode === "dark");
           setCurrentTheme(theme);
         } else {
           const systemTheme = Appearance.getColorScheme();
           setIsDarkMode(systemTheme === "dark");
-          setCurrentTheme("azure"); // ou un autre thème par défaut
+          setCurrentTheme("azure");
         }
       } catch (error) {
         console.error("Failed to load theme from storage", error);
