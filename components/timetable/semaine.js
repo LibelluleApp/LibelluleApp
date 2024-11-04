@@ -5,6 +5,8 @@ import React, {
   useRef,
   forwardRef,
   useImperativeHandle,
+  useMemo,
+  useCallback,
 } from "react";
 import {
   View,
@@ -34,9 +36,9 @@ const getTimetable = async () => {
 };
 
 const INITIAL_DATE = new Date(
-  new Date().getFullYear(),
-  new Date().getMonth(),
-  new Date().getDate()
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    new Date().getDate()
 ).toISOString();
 
 const Semaine = forwardRef((props, ref) => {
@@ -52,228 +54,205 @@ const Semaine = forwardRef((props, ref) => {
     }
   }, [isFocused]);
 
-  const localHandleGoToToday = () => {
+  const localHandleGoToToday = useCallback(() => {
     calendarRef.current?.goToDate({
       date: INITIAL_DATE,
       animatedDate: true,
       animatedHour: true,
     });
-  };
+  }, []);
 
   useImperativeHandle(ref, () => ({
     goToToday: localHandleGoToToday,
   }));
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: colors.background,
-      gap: 10,
-      paddingTop: 10,
-    },
-    itemContainer: {
-      flex: 1,
-      width: Dimensions.get("window").width,
-      justifyContent: "start",
-      paddingHorizontal: "5%",
-    },
-    eventTitle: {
-      fontFamily: "Ubuntu_500Medium",
-      letterSpacing: -0.4,
-      color: colors.regular950,
-      fontSize: 11,
-      maxWidth: "100%",
-      alignItems: "start",
-    },
-    eventBack: {
-      paddingVertical: 2,
-      paddingHorizontal: 2,
-    },
-    eventContainer: {
-      height: "100%",
-      paddingVertical: 10,
-      paddingHorizontal: 10,
-      borderRadius: 10,
-      // backgroundColor: colorTimetable,
-      backgroundColor: colors.regular200,
-      // position: "relative",
-      // overflow: "hidden",
-    },
-    // beforeElement: {
-    //   width: 5,
-    //   height: 400,
-    //   backgroundColor: colors.regular500,
-    //   position: "absolute",
-    //   left: 0,
-    //   top: 0,
-    // },
-    eventTitleAlternance: {
-      fontFamily: "Ubuntu_500Medium",
-      letterSpacing: -0.4,
-      includeFontPadding: false,
-      fontSize: 15,
-      width: 85,
-      color: colors.regular950,
-      alignItems: "center",
-      justifyContent: "center",
-      transform: [{ rotate: "-90deg" }],
-    },
-    eventContainerAlternance: {
-      height: "100%",
-      width: "100%",
+  const styles = useMemo(
+      () =>
+          StyleSheet.create({
+            container: {
+              flex: 1,
+              backgroundColor: colors.background,
+              gap: 10,
+              paddingTop: 10,
+            },
+            eventBack: {
+              paddingVertical: 2,
+              paddingHorizontal: 2,
+            },
+            eventContainerLong: {
+              height: "100%",
+              width: "100%",
+              borderRadius: 10,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: colors.regular200,
+            },
+            eventContainerShort: {
+              height: "100%",
+              paddingVertical: 10,
+              paddingHorizontal: 10,
+              borderRadius: 10,
+              backgroundColor: colors.regular200,
+            },
+            eventTitleLong: {
+              fontFamily: "Ubuntu_500Medium",
+              fontSize: 15,
+              color: colors.regular950,
+              transform: [{ rotate: "-90deg" }],
+              width: 85,
+            },
+            eventTitleShort: {
+              fontFamily: "Ubuntu_500Medium",
+              fontSize: 11,
+              color: colors.regular950,
+              maxWidth: "100%",
+            },
+          }),
+      [colors]
+  );
 
-      borderRadius: 10,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: colors.regular200,
-    },
-  });
+  const renderEvent = useCallback(
+      (event) => {
+        const isLongEvent = event._internal.duration > 600;
+        return (
+            <View style={styles.eventBack}>
+              <View style={isLongEvent ? styles.eventContainerLong : styles.eventContainerShort}>
+                <Text
+                    style={isLongEvent ? styles.eventTitleLong : styles.eventTitleShort}
+                    numberOfLines={isLongEvent ? 1 : 4}
+                    ellipsizeMode="tail"
+                >
+                  {event.title}
+                </Text>
+              </View>
+            </View>
+        );
+      },
+      [styles]
+  );
 
   if (!timetable) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color={colors.regular_variable} />
-      </View>
+        <View style={styles.container}>
+          <ActivityIndicator size="large" color={colors.regular_variable} />
+        </View>
     );
   }
-  const height =
-    Dimensions.get("screen").height / 17.7 +
-    (Platform.OS === "android" ? 1 : 0);
 
-  const initialesLocale = {
-    fr: {
-      weekDayShort: "Dim._Lun._Mar._Mer._Jeu._Ven._Sam.".split("_"),
-      meridiem: { ante: "AM", post: "PM" },
-    },
-  };
+  const height =
+      Dimensions.get("screen").height / 17.7 +
+      (Platform.OS === "android" ? 1 : 0);
+
+  const initialesLocale = useMemo(
+      () => ({
+        fr: {
+          weekDayShort: "Dim._Lun._Mar._Mer._Jeu._Ven._Sam.".split("_"),
+          meridiem: { ante: "AM", post: "PM" },
+        },
+      }),
+      []
+  );
 
   return (
-    <View style={styles.container}>
-      <CalendarContainer
-        viewMode={"week"}
-        minDate={"2024-09-02"}
-        showWeekNumber={true}
-        ref={calendarRef}
-        numberOfDays={5}
-        start={8 * 60}
-        end={18.5 * 60}
-        hideWeekDays={[6, 7]}
-        events={timetable}
-        isLoading={!timetable}
-        scrollToNow
-        scrollByDay={false}
-        initialDate={INITIAL_DATE}
-        initialLocales={initialesLocale}
-        locale={"fr"}
-        isShowHalfLine={true}
-        initialTimeIntervalHeight={height}
-        onPressEvent={(event) => {
-          const eventWithSerializedDate = {
-            ...event,
-            start: {
-              ...event.start,
-              dateTime: event.start.dateTime.toISOString(),
-            },
-            end: {
-              ...event.end,
-              dateTime: event.end.dateTime.toISOString(),
-            },
-          };
+      <View style={styles.container}>
+        <CalendarContainer
+            viewMode={"week"}
+            minDate={"2024-09-02"}
+            showWeekNumber={true}
+            ref={calendarRef}
+            numberOfDays={5}
+            start={8 * 60}
+            end={18.5 * 60}
+            hideWeekDays={[6, 7]}
+            events={timetable}
+            isLoading={!timetable}
+            pagesPerSide={2}
+            sho
+            scrollToNow
+            scrollByDay={false}
+            initialDate={INITIAL_DATE}
+            initialLocales={initialesLocale}
+            locale={"fr"}
+            isShowHalfLine={true}
+            initialTimeIntervalHeight={height}
+            onPressEvent={(event) => {
+              const eventWithSerializedDate = {
+                ...event,
+                start: {
+                  ...event.start,
+                  dateTime: event.start.dateTime.toISOString(),
+                },
+                end: {
+                  ...event.end,
+                  dateTime: event.end.dateTime.toISOString(),
+                },
+              };
 
-          navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
-        }}
-        theme={{
-          backgroundColor: colors.background,
-          dayNumberContainer: {
-            backgroundColor: colors.background,
-          },
-          colors: {
-            background: colors.background,
-            border: colors.gray_clear,
-            text: colors.regular950,
-          },
-          textStyle: {
-            fontFamily: "Ubuntu_500Medium",
-            letterSpacing: -0.4,
-          },
-          todayNumberContainer: {
-            backgroundColor: colors.regular700,
-          },
-          todayNumber: {
-            color: colors.white,
-          },
-          todayName: {
-            color: colors.regular700,
-          },
-          dayName: {
-            color: colors.grey,
-            fontFamily: "Ubuntu_400Regular",
-            letterSpacing: -0.4,
-          },
-          dayNumber: {
-            color: colors.grey,
-            fontFamily: "Ubuntu_400Regular",
-            letterSpacing: -0.4,
-          },
-          leftBarText: {
-            fontFamily: "Ubuntu_500Medium",
-            letterSpacing: -0.4,
-            color: colors.regular950,
-            textTransform: "capitalize",
-            fontSize: 12,
-          },
-          hourTextStyle: {
-            fontFamily: "Ubuntu_400Regular",
-            letterSpacing: -0.4,
-            fontSize: 12,
-            color: colors.grey,
-          },
-          // Week number
-          weekNumber: {
-            color: colors.regular950,
-            fontFamily: "Ubuntu_500Medium",
-            letterSpacing: -0.4,
-          },
-          weekNumberContainer: {
-            backgroundColor: colors.regular100,
-          },
-          headerContainer: {
-            borderBottomWidth: 0,
-          },
-        }}
-      >
-        <CalendarHeader />
-        <CalendarBody
-          renderEvent={(event) => {
-            if (event._internal.duration > 600) {
-              return (
-                <View style={styles.eventBack}>
-                  <View style={styles.eventContainerAlternance}>
-                    <Text style={styles.eventTitleAlternance} numberOfLines={1}>
-                      {event.title}
-                    </Text>
-                  </View>
-                </View>
-              );
-            }
-            return (
-              <View style={styles.eventBack}>
-                <View style={styles.eventContainer}>
-                  {/* <View style={styles.beforeElement} /> */}
-                  <Text
-                    style={styles.eventTitle}
-                    numberOfLines={4}
-                    ellipsizeMode="tail"
-                  >
-                    {event.title}
-                  </Text>
-                </View>
-              </View>
-            );
-          }}
-        />
-      </CalendarContainer>
-    </View>
+              navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
+            }}
+            theme={{
+              backgroundColor: colors.background,
+              dayNumberContainer: {
+                backgroundColor: colors.background,
+              },
+              colors: {
+                background: colors.background,
+                border: colors.gray_clear,
+                text: colors.regular950,
+              },
+              textStyle: {
+                fontFamily: "Ubuntu_500Medium",
+                letterSpacing: -0.4,
+              },
+              todayNumberContainer: {
+                backgroundColor: colors.regular700,
+              },
+              todayNumber: {
+                color: colors.white,
+              },
+              todayName: {
+                color: colors.regular700,
+              },
+              dayName: {
+                color: colors.grey,
+                fontFamily: "Ubuntu_400Regular",
+                letterSpacing: -0.4,
+              },
+              dayNumber: {
+                color: colors.grey,
+                fontFamily: "Ubuntu_400Regular",
+                letterSpacing: -0.4,
+              },
+              leftBarText: {
+                fontFamily: "Ubuntu_500Medium",
+                letterSpacing: -0.4,
+                color: colors.regular950,
+                textTransform: "capitalize",
+                fontSize: 12,
+              },
+              hourTextStyle: {
+                fontFamily: "Ubuntu_400Regular",
+                letterSpacing: -0.4,
+                fontSize: 12,
+                color: colors.grey,
+              },
+              weekNumber: {
+                color: colors.regular950,
+                fontFamily: "Ubuntu_500Medium",
+                letterSpacing: -0.4,
+              },
+              weekNumberContainer: {
+                backgroundColor: colors.regular100,
+              },
+              headerContainer: {
+                borderBottomWidth: 0,
+              },
+            }}
+        >
+          <CalendarHeader />
+          <CalendarBody renderEvent={renderEvent} />
+        </CalendarContainer>
+      </View>
   );
 });
 

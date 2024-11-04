@@ -21,12 +21,13 @@ import {
 } from "react-native-safe-area-context";
 import AuthStackSwitcher from "./context/AuthStackSwitcher"; // Import the AuthStackSwitcher
 import moment from "moment";
-import { useFonts } from "expo-font";
+import * as Font from "expo-font";
 import "moment/locale/fr"; // Import the French locale
 import {
   hasMigratedFromAsyncStorage,
   migrateFromAsyncStorage,
 } from "./utils/storage";
+import {isLoaded, useFonts} from "expo-font";
 moment.locale("fr"); // Set the locale to French
 
 const fontConfig = {
@@ -52,7 +53,7 @@ if (Platform.OS === "android") {
 }
 
 function App() {
-  const [fontsLoaded] = useFonts(fontConfig);
+  const [loaded, error] = useFonts(fontConfig);
   const [hasMigrated, setHasMigrated] = useState(hasMigratedFromAsyncStorage);
 
   if (Platform.OS === "android") {
@@ -118,7 +119,8 @@ function App() {
       </View>
     );
   }
-  if (!fontsLoaded) {
+
+  if (!loaded && !error) {
     return null;
   }
 

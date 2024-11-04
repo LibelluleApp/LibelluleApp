@@ -16,9 +16,15 @@ export const ThemeProvider = ({ children }) => {
         await migrateFromAsyncStorage(); // Migration des données si nécessaire
         const storedTheme = getTheme();
         if (storedTheme) {
-          const { mode, theme } = JSON.parse(storedTheme);
-          setIsDarkMode(mode === "dark");
-          setCurrentTheme(theme);
+          if(storedTheme === "light" || storedTheme === "dark") {
+            const systemTheme = Appearance.getColorScheme();
+            setIsDarkMode(systemTheme === storedTheme);
+            setCurrentTheme("azure");
+          }else {
+            const { mode, theme } = JSON.parse(storedTheme);
+            setIsDarkMode(mode === "dark");
+            setCurrentTheme(theme);
+          }
         } else {
           const systemTheme = Appearance.getColorScheme();
           setIsDarkMode(systemTheme === "dark");
