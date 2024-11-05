@@ -8,9 +8,9 @@
     "owner": "libellule",
     "assetBundlePatterns": ["**/*"],
     "splash": {
-  "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#0760FB"
+        "image": "./assets/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#0760FB"
 },
   "ios": {
   "supportsTablet": false,
@@ -18,15 +18,11 @@
     "usesNonExemptEncryption": false
   },
   "googleServicesFile": "./GoogleService-Info.plist",
-      "bundleIdentifier": "com.libellule.libelluledev",
-      "splash": {
-    "backgroundColor": "#0760FB",
-        "image": "./assets/splash.png"
-  },
+  "bundleIdentifier": "com.libellule.libelluledev",
   "entitlements": {
     "aps-environment": "production"
   },
-  "buildNumber": "1.22"
+  "buildNumber": "1.23"
 },
   "android": {
   "adaptiveIcon": {
@@ -36,11 +32,7 @@
   },
   "googleServicesFile": "./google-services.json",
       "package": "com.libellule.libellule",
-      "splash": {
-    "backgroundColor": "#0760FB",
-        "image": "./assets/splash.png"
-  },
-  "versionCode": 20
+  "versionCode": 21
 },
   "web": {
   "favicon": "./assets/favicon.png"
