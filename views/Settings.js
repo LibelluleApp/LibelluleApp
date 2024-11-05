@@ -79,7 +79,6 @@ function Settings() {
       letterSpacing: -0.4,
       fontSize: 15,
       color: colors.grey,
-      letterSpacing: -0.4,
     },
     pageSeparation: {
       height: 0.5,
@@ -120,7 +119,6 @@ function Settings() {
       letterSpacing: -0.4,
       fontSize: 15,
       color: colors.regular950,
-      letterSpacing: -0.4,
     },
     profilGroupContent: {
       backgroundColor: colors.regular200_2,
@@ -133,14 +131,12 @@ function Settings() {
       letterSpacing: -0.4,
       fontSize: 13,
       color: colors.regular900_2,
-      letterSpacing: -0.4,
     },
     profilEmail: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
-      letterSpacing: -0.4,
     },
     pageContent: {
       flexDirection: "row",
@@ -152,14 +148,12 @@ function Settings() {
       letterSpacing: -0.4,
       fontSize: 15,
       color: colors.regular900,
-      letterSpacing: -0.4,
     },
     pageSubtitle: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
-      letterSpacing: -0.4,
     },
     pageIcon: {
       backgroundColor: colors.regular900,
@@ -178,14 +172,12 @@ function Settings() {
       letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
-      letterSpacing: -0.4,
     },
     footerSubtitle: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 11,
       color: colors.grey,
-      letterSpacing: -0.4,
     },
   });
 
@@ -240,29 +232,6 @@ function Settings() {
       },
     ]);
   };
-
-  // const handlePressPrank = () => {
-  //   Alert.alert(
-  //     "Modifier la photo de profil",
-  //     "Voulez-vous vraiment modifier votre photo de profil ?",
-  //     [
-  //       {
-  //         text: "Annuler",
-  //         style: "cancel",
-  //       },
-  //       {
-  //         text: "Modifier",
-  //         onPress: () => {
-  //           Alert.alert(
-  //             "Aïe, aïe, aïe ! 😭",
-  //             "La fonctionnalité arrive bientôt, pas de panique !",
-  //             [{ text: "Compris !" }]
-  //           );
-  //         },
-  //       },
-  //     ]
-  //   );
-  // };
 
   return (
     <ScrollView style={styles.container}>
@@ -331,30 +300,6 @@ function Settings() {
             </TouchableOpacity>
           </View>
         </View>
-        {/* <View style={styles.sectionPageItem}>
-          <Text style={styles.sectionTitle}>Préférences</Text>
-          <View style={styles.pageContainer}>
-            <TouchableOpacity style={styles.pageItem}>
-              <View style={styles.pageContent}>
-                <View style={styles.pageIcon}>
-                  <Bell
-                    stroke={colors.white}
-                    strokeWidth={1.75}
-                    width={18}
-                    height={18}
-                  />
-                </View>
-                <Text style={styles.pageTitle}>Notifications</Text>
-              </View>
-              <ChevronRight
-                stroke={colors.regular700}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-            </TouchableOpacity>
-          </View>
-        </View> */}
         <View style={styles.sectionPageItem}>
           <Text style={styles.sectionTitle}>Autre</Text>
           <View style={styles.pageContainer}>
@@ -499,272 +444,6 @@ function Settings() {
             Créée avec ❤️ par Raphaël Tiphonet et Arnaud Graciet
           </Text>
         </View>
-
-        {/* <View style={styles.topProfile}>
-        <TouchableOpacity
-          style={styles.changePicture}
-          onPress={handlePressPrank}
-        >
-          <Image
-            source={{ uri: userData.lien_photo_profil }}
-            style={styles.image}
-          />
-          {/* <View style={styles.ChangePP}>
-            <ImageUp
-              stroke={colors.white}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-          </View>
-        </TouchableOpacity>
-
-        <View style={styles.profileContainer}>
-          <Text style={styles.profileName}>
-            {userData.prenom} {userData.nom}
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL("https://webmail.univ-poitiers.fr/");
-            }}
-          >
-            <Text style={styles.profileEmail}>{userData.email_edu}</Text>
-          </TouchableOpacity>
-          <Text style={styles.profileEmail}>
-            Mon groupe : {userData.groupe_id}
-          </Text>
-          {isAlternant === true && (
-            <Text style={styles.profileEmail}>Alternant</Text>
-          )}
-        </View>
-      </View>
-      <View style={styles.containerCTA}>
-        <View style={styles.profileCTA}>
-          <TouchableOpacity
-            style={[styles.profileButton, styles.disabled]}
-            disabled={true}
-          >
-            <View style={styles.CTAContent}>
-              <IdCard
-                stroke={colors.regular950}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-              <Text style={styles.profileBtnText}>Mes informations</Text>
-            </View>
-            <ChevronRight
-              stroke={colors.regular950}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.profileButton}
-            onPress={() => navigation.navigate("ChangePassword")}
-          >
-            <View style={styles.CTAContent}>
-              <Lock
-                stroke={colors.regular950}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-              <Text style={styles.profileBtnText}>
-                Modifier mon mot de passe
-              </Text>
-            </View>
-            <ChevronRight
-              stroke={colors.regular950}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-          </TouchableOpacity>
-          {userData.role === "Chef" && (
-            <TouchableOpacity
-              style={[styles.profileButton]}
-              onPress={() => navigation.navigate("TransferRole")}
-            >
-              <View style={styles.CTAContent}>
-                <UserRoundPen
-                  stroke={colors.regular950}
-                  strokeWidth={1.75}
-                  width={18}
-                  height={18}
-                />
-                <Text style={styles.profileBtnText}>Transmettre mon rôle</Text>
-              </View>
-              <ChevronRight
-                stroke={colors.regular950}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity
-            style={[styles.profileButton]}
-            onPress={() => navigation.navigate("Settings")}
-          >
-            <View style={styles.CTAContent}>
-              <Settings
-                stroke={colors.regular950}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-              <Text style={styles.profileBtnText}>Paramètres</Text>
-            </View>
-            <ChevronRight
-              stroke={colors.regular950}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-          </TouchableOpacity>
-          <View style={styles.profileSwitcher}>
-            <View style={styles.separatorStick}></View>
-            <View style={styles.containerMediaLinks}>
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL("https://www.instagram.com/libelluleapp");
-                }}
-              >
-                <View style={styles.mediaLinks}>
-                  <InstaIcon
-                    stroke="#FE068D"
-                    strokeWidth={1.75}
-                    width={18}
-                    height={18}
-                  />
-                  <Text style={styles.profileMediaInsta}>@libellule</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  Linking.openURL("mailto:support@libellule.app");
-                }}
-              >
-                <View style={styles.mediaLinks}>
-                  <Envelope
-                    stroke={colors.regular700}
-                    strokeWidth={1.75}
-                    width={18}
-                    height={18}
-                  />
-                  <Text style={styles.profileMediaMail}>
-                    support@libellule.app
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <TouchableOpacity
-            style={styles.profileButton}
-            onPress={() => {
-              Linking.openURL("https://libellule.app/patchnotes");
-            }}
-          >
-            <View style={styles.CTAContent}>
-              <NotepadText
-                stroke={colors.regular950}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-              <Text style={styles.profileBtnText}>
-                Journal des mises à jour
-              </Text>
-            </View>
-            <ChevronRight
-              stroke={colors.regular950}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.profileButton}
-            onPress={() => {
-              Linking.openURL("https://libellule.app/cgu");
-            }}
-          >
-            <View style={styles.CTAContent}>
-              <Landmark
-                stroke={colors.regular950}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-              <View>
-                <Text style={styles.profileBtnText}>CGU</Text>
-                <Text style={styles.profileBtnUnderText}>
-                  Conditions générales d'utilisation
-                </Text>
-              </View>
-            </View>
-            <ChevronRight
-              stroke={colors.regular950}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-          </TouchableOpacity>
-          <View style={styles.separatorStick}></View>
-
-          <TouchableOpacity
-            style={[
-              styles.profileButton,
-              {
-                backgroundColor: colors.red_background_variable,
-              },
-            ]}
-            onPress={() => handleConfirmLogout()}
-          >
-            <View style={styles.CTAContent}>
-              <LogOut
-                stroke={colors.red700}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-              <View>
-                <Text style={[styles.profileBtnText, { color: colors.red700 }]}>
-                  Se déconnecter
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.profileButton, { backgroundColor: colors.red700 }]}
-            onPress={() => {
-              navigation.navigate("DeleteAccount");
-            }}
-          >
-            <View style={styles.CTAContent}>
-              <UserX
-                stroke={colors.white}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-              <View>
-                <Text style={[styles.profileBtnText, { color: colors.white }]}>
-                  Supprimer mon compte
-                </Text>
-              </View>
-            </View>
-            <ChevronRight
-              stroke={colors.white}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-          </TouchableOpacity>
-        </View>
-      </View> */}
       </View>
     </ScrollView>
   );

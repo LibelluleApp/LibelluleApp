@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import {
   View,
   Text,
@@ -7,7 +7,10 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView,
+  Platform,
 } from "react-native";
+import { KeyboardAvoidingView } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -20,7 +23,6 @@ import {
   Baseline,
   GraduationCap,
 } from "./../../../assets/icons/Icons";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import ButtonAuth from "../../auth/buttonAuth";
 import { showMessage } from "react-native-flash-message";
@@ -33,6 +35,8 @@ const Edit = ({ route }) => {
   const { colors } = useContext(ThemeContext);
   const navigation = useNavigation();
   const { task } = route.params;
+  const scrollViewRef = useRef(null);
+  const descriptionInputRef = useRef(null);
 
   const [dates, setDates] = useState(moment.tz(task.date_fin, "Europe/Paris"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -45,16 +49,32 @@ const Edit = ({ route }) => {
   const [description, setDescription] = useState(task.contenu);
   const agenda_id = task.agenda_id;
 
+  const handleDescriptionFocus = () => {
+    // Attendre que le clavier soit complètement ouvert
+    setTimeout(() => {
+      descriptionInputRef.current?.measureInWindow((x, y, width, height) => {
+        scrollViewRef.current?.scrollTo({
+          y: y - 100, // 100px au-dessus du champ pour une meilleure visibilité
+          animated: true,
+        });
+      });
+    }, 100);
+  };
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: colors.background,
     },
+    contentContainer: {
+      flex: 1,
+    },
     scrollViewContainer: {
+      flexGrow: 1,
       width: "90%",
       alignSelf: "center",
       paddingTop: 20,
-      paddingBottom: 100,
+      paddingBottom: 20,
     },
     buttonContainer: {
       flexDirection: "row",
@@ -126,12 +146,10 @@ const Edit = ({ route }) => {
       textTransform: "capitalize",
     },
     btnContainerBottom: {
-      flexDirection: "column",
-      gap: 10,
-      position: "absolute",
-      bottom: 40,
-      width: "90%",
-      alignSelf: "center",
+      padding: 20,
+      paddingBottom: Platform.OS === 'ios' ? 40 : 20,
+      backgroundColor: colors.background,
+      width: "100%",
     },
     btnContainerBottomText: {
       color: colors.grey,
@@ -139,9 +157,9 @@ const Edit = ({ route }) => {
       fontSize: 13,
       textAlign: "center",
       letterSpacing: -0.5,
+      marginTop: 10,
     },
   });
-
   const handleSaveTask = async () => {
     if (type !== "eval") {
       if (!dates || !matiere || !type || !titre) {
@@ -164,12 +182,12 @@ const Edit = ({ route }) => {
     setLoading(true);
     try {
       const result = await saveEditAgenda(
-        titre,
-        description,
-        dates.format("yyyy-MM-DD"),
-        matiere,
-        type,
-        agenda_id
+          titre,
+          description,
+          dates.format("yyyy-MM-DD"),
+          matiere,
+          type,
+          agenda_id
       );
       if (result.status === "success") {
         showMessage({
@@ -199,10 +217,9 @@ const Edit = ({ route }) => {
     hideDatePicker();
   };
 
-  const titleHeight = useSharedValue(type === "eval" ? 0 : 58); // Hauteur initiale du champ titre
-  const marginValue = useSharedValue(20); // Valeur initiale du padding
+  const titleHeight = useSharedValue(type === "eval" ? 0 : 58);
+  const marginValue = useSharedValue(20);
 
-  // Style d'animation de la hauteur et de l'opacité du champ titre
   const animatedTitleStyle = useAnimatedStyle(() => ({
     height: withTiming(titleHeight.value, {
       duration: 250,
@@ -214,7 +231,6 @@ const Edit = ({ route }) => {
     }),
   }));
 
-  // Style d'animation pour le padding
   const animatedInputContainerStyle = useAnimatedStyle(() => ({
     marginTop: withTiming(marginValue.value, {
       duration: 250,
@@ -222,159 +238,172 @@ const Edit = ({ route }) => {
     }),
   }));
 
-  // Mettez à jour le marginValue lors du changement de type
   const updateType = (newType) => {
     setType(newType);
     setSelectedButton(newType === "eval" ? "eval" : "task");
-    titleHeight.value = newType === "eval" ? 0 : 58; // anime la hauteur
-
-    // Mettez à jour le padding en fonction du type
-    marginValue.value = newType === "eval" ? 5 : 20; // Padding à 0 si "eval"
+    titleHeight.value = newType === "eval" ? 0 : 58;
+    marginValue.value = newType === "eval" ? 5 : 20;
   };
 
   return (
-    <View style={styles.container}>
-      <KeyboardAwareScrollView
-        contentContainerStyle={styles.scrollViewContainer}
-        extraScrollHeight={40}
-      >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View>
-            {/* Boutons de sélection */}
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={[
-                  styles.buttonContent,
-                  type === "devoir"
-                    ? styles.buttonContentSelected
-                    : styles.buttonContentUnselected,
-                ]}
-                onPress={() => updateType("devoir")}
-              >
-                <Text
-                  style={
-                    type === "devoir"
-                      ? styles.buttonTitleSelected
-                      : styles.buttonTitleUnselected
-                  }
-                >
-                  Tâche
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.buttonContent,
-                  type === "eval"
-                    ? styles.buttonContentSelected
-                    : styles.buttonContentUnselected,
-                ]}
-                onPress={() => updateType("eval")}
-              >
-                <Text
-                  style={
-                    type === "eval"
-                      ? styles.buttonTitleSelected
-                      : styles.buttonTitleUnselected
-                  }
-                >
-                  Évaluation
-                </Text>
-              </TouchableOpacity>
-            </View>
 
-            <Animated.View
-              style={[styles.inputContainer, animatedInputContainerStyle]}
-            >
-              {/* Champ pour le titre de la tâche */}
-              <Animated.View style={[styles.inputContent, animatedTitleStyle]}>
-                <Baseline width={20} height={20} stroke={colors.regular900} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Ajouter un titre"
-                  placeholderTextColor={colors.text_placeholder}
-                  onChangeText={(text) => setTitre(text)}
-                  value={titre}
-                  editable={type !== "eval"} // Rend le champ inactif si le type est "eval"
-                  pointerEvents={type === "eval" ? "none" : "auto"} // Désactive les interactions tactiles
-                />
-              </Animated.View>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            style={{ flex: 1 }}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+        >
+          <View style={styles.container}>
+          <ScrollView
+              ref={scrollViewRef}
+              contentContainerStyle={styles.scrollViewContainer}
+              keyboardDismissMode="interactive"
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+          >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity
+                      style={[
+                        styles.buttonContent,
+                        type === "devoir"
+                            ? styles.buttonContentSelected
+                            : styles.buttonContentUnselected,
+                      ]}
+                      onPress={() => updateType("devoir")}
+                  >
+                    <Text
+                        style={
+                          type === "devoir"
+                              ? styles.buttonTitleSelected
+                              : styles.buttonTitleUnselected
+                        }
+                    >
+                      Tâche
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                      style={[
+                        styles.buttonContent,
+                        type === "eval"
+                            ? styles.buttonContentSelected
+                            : styles.buttonContentUnselected,
+                      ]}
+                      onPress={() => updateType("eval")}
+                  >
+                    <Text
+                        style={
+                          type === "eval"
+                              ? styles.buttonTitleSelected
+                              : styles.buttonTitleUnselected
+                        }
+                    >
+                      Évaluation
+                    </Text>
+                  </TouchableOpacity>
+                </View>
 
-              {/* Date Picker */}
-              <View style={styles.inputContent}>
-                <Calendar stroke={colors.regular900} width={20} height={20} />
-                <TouchableOpacity
-                  onPress={showDatePicker}
-                  style={[
-                    styles.input,
-                    {
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    },
-                  ]}
-                >
-                  <Text style={styles.textDate}>
-                    {dates.format("dddd DD MMMM")}
+                <Animated.View style={[styles.inputContainer, animatedInputContainerStyle]}>
+                  <Animated.View style={[styles.inputContent, animatedTitleStyle]}>
+                    <Baseline width={20} height={20} stroke={colors.regular900} />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Ajouter un titre"
+                        placeholderTextColor={colors.text_placeholder}
+                        onChangeText={(text) => setTitre(text)}
+                        value={titre}
+                        editable={type !== "eval"}
+                        pointerEvents={type === "eval" ? "none" : "auto"}
+                    />
+                  </Animated.View>
+
+                  <View style={styles.inputContent}>
+                    <Calendar stroke={colors.regular900} width={20} height={20} />
+                    <TouchableOpacity
+                        onPress={showDatePicker}
+                        style={[
+                          styles.input,
+                          {
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                          },
+                        ]}
+                    >
+                      <Text style={styles.textDate}>
+                        {dates.format("dddd DD MMMM")}
+                      </Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="date"
+                        date={moment.tz(dates, "Europe/Paris").toDate()}
+                        minimumDate={new Date()}
+                        locale="fr-FR"
+                        onConfirm={handleConfirm}
+                        onCancel={hideDatePicker}
+                    />
+                  </View>
+
+                  <View style={styles.inputContent}>
+                    <GraduationCap width={20} height={20} stroke={colors.regular900} />
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Ajouter une matière"
+                        placeholderTextColor={colors.text_placeholder}
+                        onChangeText={(text) => setMatiere(text)}
+                        value={matiere}
+                    />
+                  </View>
+
+                  <View style={styles.inputContent}>
+                    <TextIcon width={20} height={20} stroke={colors.regular900} />
+                    <TextInput
+                        ref={descriptionInputRef}
+                        style={[styles.input, styles.description]}
+                        placeholder="Ajouter une description"
+                        placeholderTextColor={colors.text_placeholder}
+                        onChangeText={(text) => setDescription(text)}
+                        value={description}
+                        multiline={true}
+                        numberOfLines={4}
+                        onFocus={handleDescriptionFocus}
+                    />
+                  </View>
+                </Animated.View>
+              </View>
+            </TouchableWithoutFeedback>
+          </ScrollView>
+
+          {Platform.OS === 'android' ? (
+              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.btnContainerBottom}>
+                  <ButtonAuth
+                      title="Modifier"
+                      bgColor={colors.regular900}
+                      loading={loading}
+                      onPress={handleSaveTask}
+                  />
+                  <Text style={styles.btnContainerBottomText}>
+                    Cette modification sera visible pour tous les étudiants du TP.
                   </Text>
-                </TouchableOpacity>
-                <DateTimePickerModal
-                  isVisible={isDatePickerVisible}
-                  mode="date"
-                  date={moment.tz(dates, "Europe/Paris").toDate()}
-                  minimumDate={new Date()}
-                  locale="fr-FR"
-                  onConfirm={handleConfirm}
-                  onCancel={hideDatePicker}
+                </View>
+              </TouchableWithoutFeedback>
+          ) : (
+              <View style={styles.btnContainerBottom}>
+                <ButtonAuth
+                    title="Modifier"
+                    bgColor={colors.regular900}
+                    loading={loading}
+                    onPress={handleSaveTask}
                 />
+                <Text style={styles.btnContainerBottomText}>
+                  Cette modification sera visible pour tous les étudiants du TP.
+                </Text>
               </View>
-
-              {/* Champ pour la matière */}
-              <View style={styles.inputContent}>
-                <GraduationCap
-                  width={20}
-                  height={20}
-                  stroke={colors.regular900}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Ajouter une matière"
-                  placeholderTextColor={colors.text_placeholder}
-                  onChangeText={(text) => setMatiere(text)}
-                  value={matiere}
-                />
-              </View>
-
-              {/* Champ pour la description */}
-              <View style={styles.inputContent}>
-                <TextIcon width={20} height={20} stroke={colors.regular900} />
-                <TextInput
-                  style={[styles.input, styles.description]}
-                  placeholder="Ajouter une description"
-                  placeholderTextColor={colors.text_placeholder}
-                  onChangeText={(text) => setDescription(text)}
-                  value={description}
-                  multiline={true}
-                  numberOfLines={4}
-                />
-              </View>
-            </Animated.View>
-          </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAwareScrollView>
-
-      {/* Boutons de sauvegarde */}
-      <View style={styles.btnContainerBottom}>
-        <ButtonAuth
-          title="Modifier"
-          bgColor={colors.regular900}
-          loading={loading}
-          onPress={handleSaveTask}
-        />
-        <Text style={styles.btnContainerBottomText}>
-          Cette modification sera visible pour tous les étudiants du TP.
-        </Text>
+          )}
       </View>
-    </View>
+  </KeyboardAvoidingView>
   );
 };
 

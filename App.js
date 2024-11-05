@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 import FlashMessage from "react-native-flash-message";
 import * as NavigationBar from "expo-navigation-bar";
 import { setStatusBarHidden } from "expo-status-bar";
@@ -56,14 +57,33 @@ function App() {
   const [loaded, error] = useFonts(fontConfig);
   const [hasMigrated, setHasMigrated] = useState(hasMigratedFromAsyncStorage);
 
-  if (Platform.OS === "android") {
-    NavigationBar.setPositionAsync("absolute");
-    NavigationBar.setBackgroundColorAsync("#ffffff00");
-    NavigationBar.setVisibilityAsync("visible");
-    NavigationBar.setBehaviorAsync("inset-touch");
-    setStatusBarHidden(true, "none");
-  }
 
+
+  useEffect(() => {
+    const configureNavBar = async () => {
+      try {
+        if (Platform.OS === "android") {
+          await NavigationBar.setPositionAsync("absolute");
+          await NavigationBar.setBackgroundColorAsync("#FFFFFF00");
+          await NavigationBar.setVisibilityAsync("hidden");
+          await NavigationBar.setBehaviorAsync("overlay-swipe");
+          setStatusBarHidden(false, "none");
+        }
+      } catch (error) {
+        console.error('Error configuring navigation bar:', error);
+      }
+    };
+
+    configureNavBar();
+
+    return () => {
+      if (Platform.OS === "android") {
+        NavigationBar.setVisibilityAsync("visible")
+            .catch(error => console.error('Error restoring navigation bar:', error));
+        setStatusBarHidden(false, "none");
+      }
+    };
+  }, []);
   useEffect(() => {
     if (!hasMigratedFromAsyncStorage) {
       InteractionManager.runAfterInteractions(async () => {
@@ -126,6 +146,7 @@ function App() {
 
   return (
     <ThemeProvider>
+      <KeyboardProvider>
       <SafeAreaProvider>
         <NavigationContainer>
           <SessionProvider>
@@ -134,6 +155,7 @@ function App() {
           </SessionProvider>
         </NavigationContainer>
       </SafeAreaProvider>
+        </KeyboardProvider>
     </ThemeProvider>
   );
 }

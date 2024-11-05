@@ -5,6 +5,8 @@ import React, {
   useRef,
   forwardRef,
   useImperativeHandle,
+  useMemo,
+  useCallback,
 } from "react";
 import {
   View,
@@ -26,17 +28,6 @@ import { UserRound, MapPin } from "../../assets/icons/Icons";
 import moment from "moment";
 import Header from "./Header";
 
-const getTimetable = async () => {
-  try {
-    const response = await fetchTimetable();
-
-    return response || null;
-  } catch (error) {
-    console.error("Error fetching timetable:", error);
-    return null;
-  }
-};
-
 const formatProfessorName = (professor) => {
   const parts = professor?.split(" ");
   if (parts.length < 2) return professor;
@@ -51,44 +42,58 @@ const Jour = forwardRef((props, ref) => {
   const calendarRef = useRef(null);
   const isFocused = useIsFocused();
   const [timetable, setTimetable] = useState([]);
+  const [isLoadingData, setIsLoadingData] = useState(false);
 
-  const MIN_DATE = new Date(
-    new Date().getFullYear() - 2,
-    new Date().getMonth(),
-    new Date().getDate()
-  ).toISOString();
+  const dates = useMemo(() => ({
+    MIN_DATE: new Date(
+        new Date().getFullYear() - 2,
+        new Date().getMonth(),
+        new Date().getDate()
+    ).toISOString(),
+    MAX_DATE: new Date(
+        new Date().getFullYear() + 2,
+        new Date().getMonth(),
+        new Date().getDate()
+    ).toISOString(),
+    INITIAL_DATE: new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        new Date().getDate()
+    ).toISOString()
+  }), []);
 
-  const MAX_DATE = new Date(
-    new Date().getFullYear() + 2,
-    new Date().getMonth(),
-    new Date().getDate()
-  ).toISOString();
-
-  const INITIAL_DATE = new Date(
-    new Date().getFullYear(),
-    new Date().getMonth(),
-    new Date().getDate()
-  ).toISOString();
+  const fetchData = useCallback(async () => {
+    setIsLoadingData(true);
+    try {
+      const data = await fetchTimetable();
+      setTimetable(data || []);
+    } catch (error) {
+      console.error("Error fetching timetable:", error);
+      setTimetable([]);
+    } finally {
+      setIsLoadingData(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (isFocused) {
-      getTimetable().then((data) => setTimetable(data));
+      fetchData();
     }
-  }, [isFocused]);
+  }, [isFocused, fetchData]);
 
-  const localHandleGoToToday = () => {
+  const localHandleGoToToday = useCallback(() => {
     calendarRef.current?.goToDate({
-      date: INITIAL_DATE,
+      date: dates.INITIAL_DATE,
       animatedDate: true,
       animatedHour: true,
     });
-  };
+  }, [dates.INITIAL_DATE]);
 
   useImperativeHandle(ref, () => ({
     goToToday: localHandleGoToToday,
-  }));
+  }), [localHandleGoToToday]);
 
-  const styles = StyleSheet.create({
+  const styles = useMemo(() => StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: colors.background,
@@ -119,18 +124,15 @@ const Jour = forwardRef((props, ref) => {
       borderRadius: 10,
       gap: 7,
       justifyContent: "center",
-      // backgroundColor: colorTimetable,
       backgroundColor: colors.regular200,
       position: "relative",
       overflow: "hidden",
     },
-
     eventContainerLittle: {
       height: "100%",
       paddingHorizontal: 10,
       borderRadius: 10,
       justifyContent: "center",
-      // backgroundColor: colorTimetable,
       backgroundColor: colors.regular600,
     },
     beforeElement: {
@@ -181,181 +183,195 @@ const Jour = forwardRef((props, ref) => {
       alignItems: "center",
       backgroundColor: colors.regular200,
     },
-  });
+    loadingOverlay: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      padding: 10,
+      zIndex: 1000,
+    }
+  }), [colors]);
 
-  if (!timetable) {
+  const height = useMemo(() =>
+          Dimensions.get("screen").height / 17.7 +
+          (Platform.OS === "android" ? 1 : 0),
+      []
+  );
+
+  const handlePressEvent = useCallback((event) => {
+    const eventWithSerializedDate = {
+      ...event,
+      start: {
+        ...event.start,
+        dateTime: event.start.dateTime.toISOString(),
+      },
+      end: {
+        ...event.end,
+        dateTime: event.end.dateTime.toISOString(),
+      },
+    };
+    navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
+  }, [navigator]);
+
+  const calendarTheme = useMemo(() => ({
+    backgroundColor: colors.background,
+    dayNumberContainer: {
+      backgroundColor: colors.background,
+    },
+    colors: {
+      background: colors.background,
+      border: colors.gray_clear,
+      text: colors.regular950,
+    },
+    textStyle: {
+      fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
+    },
+    todayNumberContainer: {
+      backgroundColor: colors.regular700,
+    },
+    todayNumber: {
+      color: colors.white,
+    },
+    todayName: {
+      color: colors.regular700,
+    },
+    dayName: {
+      color: colors.grey,
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+    },
+    dayNumber: {
+      color: colors.grey,
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+    },
+    leftBarText: {
+      fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
+      color: colors.regular950,
+      textTransform: "capitalize",
+      fontSize: 12,
+    },
+    hourTextStyle: {
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      fontSize: 12,
+      color: colors.grey,
+    },
+    headerContainer: {
+      borderBottomWidth: 0,
+    },
+  }), [colors]);
+
+  const renderEvent = useCallback((event) => {
+    const formattedProfessor = event.professor
+        ? formatProfessorName(event.professor)
+        : "N/C";
+
+    if (event._internal.duration < 60) {
+      return (
+          <View style={styles.eventBack}>
+            <View style={styles.eventContainerLittle}>
+              <Text
+                  style={styles.eventTitleLittle}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+              >
+                {event.title} - {event.location || "N/C"} - {formattedProfessor}
+              </Text>
+            </View>
+          </View>
+      );
+    }
+
+    if (event._internal.duration > 600) {
+      return (
+          <View style={styles.eventBack}>
+            <View style={styles.eventContainerAlternance}>
+              <Text
+                  style={styles.eventTitleAlternance}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+              >
+                {event.title}
+              </Text>
+            </View>
+          </View>
+      );
+    }
+
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color={colors.regular_variable} />
-      </View>
+        <View style={styles.eventBack}>
+          <View style={styles.eventContainer}>
+            <Text
+                style={styles.eventTitle}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+            >
+              {event.title}
+            </Text>
+            <View style={styles.eventBottom}>
+              <View style={styles.eventContent}>
+                <MapPin
+                    stroke={colors.regular800}
+                    width={14}
+                    height={14}
+                    strokeWidth={1.75}
+                />
+                <Text style={styles.eventTextContent}>
+                  {event.location || "N/C"}
+                </Text>
+              </View>
+              <View style={styles.eventContent}>
+                <UserRound
+                    stroke={colors.regular800}
+                    width={14}
+                    height={14}
+                    strokeWidth={1.75}
+                />
+                <Text style={styles.eventTextContent}>
+                  {formattedProfessor}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
     );
-  }
+  }, [styles, colors.regular800]);
 
-  const height =
-    Dimensions.get("screen").height / 17.7 +
-    (Platform.OS === "android" ? 1 : 0);
+  const calendarProps = useMemo(() => ({
+    initialDate: dates.INITIAL_DATE,
+    timeZone: "Europe/Paris",
+    minDate: dates.MIN_DATE,
+    maxDate: dates.MAX_DATE,
+    showWeekNumber: true,
+    numberOfDays: 1,
+    start: 8 * 60,
+    end: 18.5 * 60,
+    hideWeekDays: [6, 7],
+    events: timetable,
+    useHaptic: true,
+    scrollToNow: true,
+    isShowHalfLine: false,
+    initialTimeIntervalHeight: height,
+    theme: calendarTheme
+  }), [dates, height, timetable, calendarTheme]);
 
   return (
-    <View style={styles.container}>
-      <CalendarContainer
-        initialDate={INITIAL_DATE}
-        timeZone="Europe/Paris"
-        minDate={MIN_DATE}
-        maxDate={MAX_DATE}
-        showWeekNumber={true}
-        ref={calendarRef}
-        numberOfDays={1}
-        start={8 * 60}
-        end={18.5 * 60}
-        hideWeekDays={[6, 7]}
-        events={timetable}
-        useHaptic={true}
-        scrollToNow={true}
-        isShowHalfLine={false}
-        initialTimeIntervalHeight={height}
-        onPressEvent={(event) => {
-          const eventWithSerializedDate = {
-            ...event,
-            start: {
-              ...event.start,
-              dateTime: event.start.dateTime.toISOString(),
-            },
-            end: {
-              ...event.end,
-              dateTime: event.end.dateTime.toISOString(),
-            },
-          };
-          navigator.navigate("DetailEvent", { event: eventWithSerializedDate });
-        }}
-        theme={{
-          backgroundColor: colors.background,
-          dayNumberContainer: {
-            backgroundColor: colors.background,
-          },
-          colors: {
-            background: colors.background,
-            border: colors.gray_clear,
-            text: colors.regular950,
-          },
-          textStyle: {
-            fontFamily: "Ubuntu_500Medium",
-            letterSpacing: -0.4,
-          },
-          todayNumberContainer: {
-            backgroundColor: colors.regular700,
-          },
-          todayNumber: {
-            color: colors.white,
-          },
-          todayName: {
-            color: colors.regular700,
-          },
-          dayName: {
-            color: colors.grey,
-            fontFamily: "Ubuntu_400Regular",
-            letterSpacing: -0.4,
-          },
-          dayNumber: {
-            color: colors.grey,
-            fontFamily: "Ubuntu_400Regular",
-            letterSpacing: -0.4,
-          },
-          leftBarText: {
-            fontFamily: "Ubuntu_500Medium",
-            letterSpacing: -0.4,
-            color: colors.regular950,
-            textTransform: "capitalize",
-            fontSize: 12,
-          },
-          hourTextStyle: {
-            fontFamily: "Ubuntu_400Regular",
-            letterSpacing: -0.4,
-            fontSize: 12,
-            color: colors.grey,
-          },
-          headerContainer: {
-            borderBottomWidth: 0,
-          },
-        }}
-      >
-        <CalendarHeader renderHeaderItem={(props) => <Header {...props} />} />
-        <CalendarBody
-          renderEvent={(event) => {
-            const formattedProfessor = event.professor
-              ? formatProfessorName(event.professor)
-              : "N/C";
-            if (event._internal.duration < 60) {
-              return (
-                <View style={styles.eventBack}>
-                  <View style={styles.eventContainerLittle}>
-                    <Text
-                      style={styles.eventTitleLittle}
-                      numberOfLines={1}
-                      ellipsizeMode="tail"
-                    >
-                      {event.title} - {event.location || "N/C"} -{" "}
-                      {formattedProfessor}
-                    </Text>
-                  </View>
-                </View>
-              );
-            }
-            if (event._internal.duration > 600) {
-              return (
-                <View style={styles.eventBack}>
-                  <View style={styles.eventContainerAlternance}>
-                    <Text
-                      style={styles.eventTitleAlternance}
-                      numberOfLines={1}
-                      ellipsizeMode="tail"
-                    >
-                      {event.title}
-                    </Text>
-                  </View>
-                </View>
-              );
-            }
-            return (
-              <View style={styles.eventBack}>
-                <View style={styles.eventContainer}>
-                  <Text
-                    style={styles.eventTitle}
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                  >
-                    {event.title}
-                  </Text>
-                  <View style={styles.eventBottom}>
-                    <View style={styles.eventContent}>
-                      <MapPin
-                        stroke={colors.regular800}
-                        width={14}
-                        height={14}
-                        strokeWidth={1.75}
-                      />
-                      <Text style={styles.eventTextContent}>
-                        {event.location || "N/C"}
-                      </Text>
-                    </View>
-                    <View style={styles.eventContent}>
-                      <UserRound
-                        stroke={colors.regular800}
-                        width={14}
-                        height={14}
-                        strokeWidth={1.75}
-                      />
-                      <Text style={styles.eventTextContent}>
-                        {formattedProfessor}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            );
-          }}
-        />
-      </CalendarContainer>
-    </View>
+      <View style={styles.container}>
+        <CalendarContainer
+            {...calendarProps}
+            ref={calendarRef}
+            isLoading={isLoadingData}
+            onPressEvent={handlePressEvent}
+        >
+          <CalendarHeader renderHeaderItem={(props) => <Header {...props} />} />
+          <CalendarBody
+              renderEvent={renderEvent}
+          />
+        </CalendarContainer>
+      </View>
   );
 });
 

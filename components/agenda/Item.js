@@ -40,7 +40,6 @@ const Item = ({
     } else if (item?.type === "devoir") {
       ComponentToRender = TaskHome;
     }
-    // Pas de composant pour le type 'none'
   }
 
   return ComponentToRender ? (
@@ -53,8 +52,8 @@ const Item = ({
           date={item.date_fin}
           matiere={item.Ressource?.nom_ressource}
           checked={item.estFait}
-          onTaskCheck={onTaskCheck} // Passer le callback ici
-          onTaskUncheck={onTaskUncheck} // Passer le callback ici
+          onTaskCheck={onTaskCheck}
+          onTaskUncheck={onTaskUncheck}
           component={component}
           bouncyBox={bouncyBox}
         />

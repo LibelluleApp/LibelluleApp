@@ -148,7 +148,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build iOS
-        run: eas build --platform ios --profile development --local --non-interactive
+        run: eas build --platform ios --profile preview --local --non-interactive
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}

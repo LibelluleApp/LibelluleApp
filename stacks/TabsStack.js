@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View } from "react-native";
+import {Platform, View} from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LogoTitle from "../components/logo";
@@ -79,7 +79,8 @@ const TabsStack = () => {
             paddingHorizontal: 15,
             backgroundColor: colors.white_background,
             borderTopWidth: 0,
-            height: 95,
+            height: Platform.OS === "ios" ? 85 : 80,
+            paddingBottom: insets.bottom,
           },
           tabBarActiveTintColor: colors.regular700,
           tabBarInactiveTintColor: colors.grey,

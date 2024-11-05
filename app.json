@@ -10,7 +10,8 @@
     "splash": {
         "image": "./assets/splash.png",
         "resizeMode": "contain",
-        "backgroundColor": "#0760FB"
+        "backgroundColor": "#0760FB",
+      "logoWidth" : "700"
 },
   "ios": {
   "supportsTablet": false,
@@ -22,7 +23,7 @@
   "entitlements": {
     "aps-environment": "production"
   },
-  "buildNumber": "1.23"
+  "buildNumber": "1.24"
 },
   "android": {
   "adaptiveIcon": {
@@ -37,6 +38,7 @@
   "web": {
   "favicon": "./assets/favicon.png"
 },
+  "newArchEnabled": true,
   "plugins": [
   "expo-font",
   "expo-secure-store",
@@ -45,11 +47,7 @@
     "expo-build-properties",
     {
       "ios": {
-        "useFrameworks": "static",
-        "newArchEnabled": true
-      },
-      "android": {
-        "newArchEnabled": true
+        "useFrameworks": "static"
       }
     }
   ],
