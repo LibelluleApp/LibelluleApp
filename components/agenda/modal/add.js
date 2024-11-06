@@ -146,7 +146,7 @@ const Add = ({ route }) => {
     },
     btnContainerBottom: {
       padding: 20,
-      paddingBottom: Platform.OS === "ios" ? 40 : 20,
+      paddingBottom: Platform.OS === "ios" ? 40 : 25,
       backgroundColor: colors.background,
       width: "100%",
     },
