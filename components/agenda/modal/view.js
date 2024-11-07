@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  Platform,
 } from "react-native";
 import {
   Calendar,
@@ -33,11 +34,13 @@ const ViewTask = ({ route }) => {
       backgroundColor: colors.background,
     },
     container: {
+      flex: 1,
       flexDirection: "column",
       width: "90%",
       marginHorizontal: "auto",
     },
     containerItems: {
+      flexGrow: 1,
       flexDirection: "column",
       gap: 20,
     },
@@ -94,16 +97,15 @@ const ViewTask = ({ route }) => {
       textAlign: "center",
     },
     taskCTA: {
-      position: "absolute",
-      bottom: 80,
+      paddingBottom: Platform.OS === "ios" ? 40 : 25,
       alignSelf: "center",
       flexDirection: "column",
-      width: "90%",
+      width: "100%",
       marginHorizontal: "auto",
       justifyContent: "center",
       alignItems: "center",
     },
-    taskCTADelete: { padding: 7 },
+    taskCTADelete: { padding: 8 },
     taskCTAEdit: {
       backgroundColor: colors.regular700,
       paddingHorizontal: 20,
@@ -305,22 +307,22 @@ const ViewTask = ({ route }) => {
         Cette {task.type == "devoir" ? "tâche" : "évaluation"} n'a pas été
         validé par l'enseignant
       </Text> */}
+        {task.utilisateur_id == userData.utilisateur_id && (
+          <View style={styles.taskCTA}>
+            <TouchableOpacity style={styles.taskCTAEdit} onPress={handlePress}>
+              <Text style={styles.taskCTAText}>Modifier</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.taskCTADelete}
+              onPress={handleConfirmDelete}
+            >
+              <Text style={[styles.taskCTAText, styles.taskCTATextDelete]}>
+                Supprimer
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
-      {task.utilisateur_id == userData.utilisateur_id && (
-        <View style={styles.taskCTA}>
-          <TouchableOpacity style={styles.taskCTAEdit} onPress={handlePress}>
-            <Text style={styles.taskCTAText}>Modifier</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.taskCTADelete}
-            onPress={handleConfirmDelete}
-          >
-            <Text style={[styles.taskCTAText, styles.taskCTATextDelete]}>
-              Supprimer
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
     </View>
   );
 };

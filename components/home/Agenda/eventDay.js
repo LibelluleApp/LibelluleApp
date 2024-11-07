@@ -22,6 +22,7 @@ import EvalHome from "./../../agenda/items/Eval";
 import TaskHome from "./../../agenda/items/Task";
 import { CircleCheckBig } from "./../../../assets/icons/Icons";
 import { useNavigation } from "@react-navigation/native";
+import TouchableScale from "react-native-touchable-scale";
 
 function EventDay({ date, onAgendaContentChange }) {
   const { colors } = useContext(ThemeContext);
@@ -56,7 +57,7 @@ function EventDay({ date, onAgendaContentChange }) {
     noItemContainer: {
       justifyContent: "center",
       alignItems: "center",
-      gap: 20,
+      gap: 15,
     },
     noItemContent: {
       justifyContent: "center",
@@ -193,12 +194,15 @@ function EventDay({ date, onAgendaContentChange }) {
               Aucun élément à afficher pour cette journée
             </Text>
           </View>
-          <TouchableOpacity
-            style={styles.btnOutline}
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
             onPress={() => navigation.navigate("Agenda")}
           >
-            <Text style={styles.btnOutlineText}>Voir tous les devoirs</Text>
-          </TouchableOpacity>
+            <View style={styles.btnOutline}>
+              <Text style={styles.btnOutlineText}>Voir tous les devoirs</Text>
+            </View>
+          </TouchableScale>
         </View>
       ) : (
         <View style={styles.containerAgenda}>

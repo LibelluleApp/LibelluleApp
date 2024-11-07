@@ -24,6 +24,7 @@ import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 import { ThemeContext } from "./../../../utils/themeContext";
 import { getColorTimetable as getColorsTimetable } from "../../../utils/storage";
+import TouchableScale from "react-native-touchable-scale";
 
 import Animated, {
   useSharedValue,
@@ -244,7 +245,7 @@ function ItemCourse({ data, color }) {
   }
 
   return (
-    <Pressable onPress={toggleCard}>
+    <TouchableScale friction={6} activeScale={0.95} onPress={toggleCard}>
       <Animated.View
         style={[
           styles.container,
@@ -359,7 +360,7 @@ function ItemCourse({ data, color }) {
           )}
         </View>
       </Animated.View>
-    </Pressable>
+    </TouchableScale>
   );
 }
 

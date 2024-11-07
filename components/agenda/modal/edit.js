@@ -10,7 +10,7 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-import { KeyboardAvoidingView } from 'react-native';
+import { KeyboardAvoidingView } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -30,6 +30,7 @@ import { useNavigation } from "@react-navigation/native";
 import moment from "moment-timezone";
 import { ThemeContext } from "./../../../utils/themeContext";
 import saveEditAgenda from "../../../api/Agenda/edit";
+import TouchableScale from "react-native-touchable-scale";
 
 const Edit = ({ route }) => {
   const { colors } = useContext(ThemeContext);
@@ -147,7 +148,7 @@ const Edit = ({ route }) => {
     },
     btnContainerBottom: {
       padding: 20,
-      paddingBottom: Platform.OS === 'ios' ? 40 : 20,
+      paddingBottom: Platform.OS === "ios" ? 40 : 20,
       backgroundColor: colors.background,
       width: "100%",
     },
@@ -182,12 +183,12 @@ const Edit = ({ route }) => {
     setLoading(true);
     try {
       const result = await saveEditAgenda(
-          titre,
-          description,
-          dates.format("yyyy-MM-DD"),
-          matiere,
-          type,
-          agenda_id
+        titre,
+        description,
+        dates.format("yyyy-MM-DD"),
+        matiere,
+        type,
+        agenda_id
       );
       if (result.status === "success") {
         showMessage({
@@ -246,164 +247,171 @@ const Edit = ({ route }) => {
   };
 
   return (
-
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            style={{ flex: 1 }}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
+    >
+      <View style={styles.container}>
+        <ScrollView
+          ref={scrollViewRef}
+          contentContainerStyle={styles.scrollViewContainer}
+          keyboardDismissMode="interactive"
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
         >
-          <View style={styles.container}>
-          <ScrollView
-              ref={scrollViewRef}
-              contentContainerStyle={styles.scrollViewContainer}
-              keyboardDismissMode="interactive"
-              keyboardShouldPersistTaps="handled"
-              showsVerticalScrollIndicator={false}
-          >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <View>
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                      style={[
-                        styles.buttonContent,
-                        type === "devoir"
-                            ? styles.buttonContentSelected
-                            : styles.buttonContentUnselected,
-                      ]}
-                      onPress={() => updateType("devoir")}
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View>
+              <View style={styles.buttonContainer}>
+                <TouchableScale
+                  style={[
+                    styles.buttonContent,
+                    type === "devoir"
+                      ? styles.buttonContentSelected
+                      : styles.buttonContentUnselected,
+                  ]}
+                  onPress={() => updateType("devoir")}
+                >
+                  <Text
+                    style={
+                      type === "devoir"
+                        ? styles.buttonTitleSelected
+                        : styles.buttonTitleUnselected
+                    }
                   >
-                    <Text
-                        style={
-                          type === "devoir"
-                              ? styles.buttonTitleSelected
-                              : styles.buttonTitleUnselected
-                        }
-                    >
-                      Tâche
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                      style={[
-                        styles.buttonContent,
-                        type === "eval"
-                            ? styles.buttonContentSelected
-                            : styles.buttonContentUnselected,
-                      ]}
-                      onPress={() => updateType("eval")}
-                  >
-                    <Text
-                        style={
-                          type === "eval"
-                              ? styles.buttonTitleSelected
-                              : styles.buttonTitleUnselected
-                        }
-                    >
-                      Évaluation
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-
-                <Animated.View style={[styles.inputContainer, animatedInputContainerStyle]}>
-                  <Animated.View style={[styles.inputContent, animatedTitleStyle]}>
-                    <Baseline width={20} height={20} stroke={colors.regular900} />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Ajouter un titre"
-                        placeholderTextColor={colors.text_placeholder}
-                        onChangeText={(text) => setTitre(text)}
-                        value={titre}
-                        editable={type !== "eval"}
-                        pointerEvents={type === "eval" ? "none" : "auto"}
-                    />
-                  </Animated.View>
-
-                  <View style={styles.inputContent}>
-                    <Calendar stroke={colors.regular900} width={20} height={20} />
-                    <TouchableOpacity
-                        onPress={showDatePicker}
-                        style={[
-                          styles.input,
-                          {
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          },
-                        ]}
-                    >
-                      <Text style={styles.textDate}>
-                        {dates.format("dddd DD MMMM")}
-                      </Text>
-                    </TouchableOpacity>
-                    <DateTimePickerModal
-                        isVisible={isDatePickerVisible}
-                        mode="date"
-                        date={moment.tz(dates, "Europe/Paris").toDate()}
-                        minimumDate={new Date()}
-                        locale="fr-FR"
-                        onConfirm={handleConfirm}
-                        onCancel={hideDatePicker}
-                    />
-                  </View>
-
-                  <View style={styles.inputContent}>
-                    <GraduationCap width={20} height={20} stroke={colors.regular900} />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Ajouter une matière"
-                        placeholderTextColor={colors.text_placeholder}
-                        onChangeText={(text) => setMatiere(text)}
-                        value={matiere}
-                    />
-                  </View>
-
-                  <View style={styles.inputContent}>
-                    <TextIcon width={20} height={20} stroke={colors.regular900} />
-                    <TextInput
-                        ref={descriptionInputRef}
-                        style={[styles.input, styles.description]}
-                        placeholder="Ajouter une description"
-                        placeholderTextColor={colors.text_placeholder}
-                        onChangeText={(text) => setDescription(text)}
-                        value={description}
-                        multiline={true}
-                        numberOfLines={4}
-                        onFocus={handleDescriptionFocus}
-                    />
-                  </View>
-                </Animated.View>
-              </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
-
-          {Platform.OS === 'android' ? (
-              <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <View style={styles.btnContainerBottom}>
-                  <ButtonAuth
-                      title="Modifier"
-                      bgColor={colors.regular900}
-                      loading={loading}
-                      onPress={handleSaveTask}
-                  />
-                  <Text style={styles.btnContainerBottomText}>
-                    Cette modification sera visible pour tous les étudiants du TP.
+                    Tâche
                   </Text>
-                </View>
-              </TouchableWithoutFeedback>
-          ) : (
-              <View style={styles.btnContainerBottom}>
-                <ButtonAuth
-                    title="Modifier"
-                    bgColor={colors.regular900}
-                    loading={loading}
-                    onPress={handleSaveTask}
-                />
-                <Text style={styles.btnContainerBottomText}>
-                  Cette modification sera visible pour tous les étudiants du TP.
-                </Text>
+                </TouchableScale>
+                <TouchableScale
+                  style={[
+                    styles.buttonContent,
+                    type === "eval"
+                      ? styles.buttonContentSelected
+                      : styles.buttonContentUnselected,
+                  ]}
+                  onPress={() => updateType("eval")}
+                >
+                  <Text
+                    style={
+                      type === "eval"
+                        ? styles.buttonTitleSelected
+                        : styles.buttonTitleUnselected
+                    }
+                  >
+                    Évaluation
+                  </Text>
+                </TouchableScale>
               </View>
-          )}
+
+              <Animated.View
+                style={[styles.inputContainer, animatedInputContainerStyle]}
+              >
+                <Animated.View
+                  style={[styles.inputContent, animatedTitleStyle]}
+                >
+                  <Baseline width={20} height={20} stroke={colors.regular900} />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Ajouter un titre"
+                    placeholderTextColor={colors.text_placeholder}
+                    onChangeText={(text) => setTitre(text)}
+                    value={titre}
+                    editable={type !== "eval"}
+                    pointerEvents={type === "eval" ? "none" : "auto"}
+                  />
+                </Animated.View>
+
+                <View style={styles.inputContent}>
+                  <Calendar stroke={colors.regular900} width={20} height={20} />
+                  <TouchableOpacity
+                    onPress={showDatePicker}
+                    style={[
+                      styles.input,
+                      {
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      },
+                    ]}
+                  >
+                    <Text style={styles.textDate}>
+                      {dates.format("dddd DD MMMM")}
+                    </Text>
+                  </TouchableOpacity>
+                  <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    date={moment.tz(dates, "Europe/Paris").toDate()}
+                    minimumDate={new Date()}
+                    locale="fr-FR"
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
+                  />
+                </View>
+
+                <View style={styles.inputContent}>
+                  <GraduationCap
+                    width={20}
+                    height={20}
+                    stroke={colors.regular900}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Ajouter une matière"
+                    placeholderTextColor={colors.text_placeholder}
+                    onChangeText={(text) => setMatiere(text)}
+                    value={matiere}
+                  />
+                </View>
+
+                <View style={styles.inputContent}>
+                  <TextIcon width={20} height={20} stroke={colors.regular900} />
+                  <TextInput
+                    ref={descriptionInputRef}
+                    style={[styles.input, styles.description]}
+                    placeholder="Ajouter une description"
+                    placeholderTextColor={colors.text_placeholder}
+                    onChangeText={(text) => setDescription(text)}
+                    value={description}
+                    multiline={true}
+                    numberOfLines={4}
+                    onFocus={handleDescriptionFocus}
+                  />
+                </View>
+              </Animated.View>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+
+        {Platform.OS === "android" ? (
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.btnContainerBottom}>
+              <ButtonAuth
+                title="Modifier"
+                bgColor={colors.regular900}
+                loading={loading}
+                onPress={handleSaveTask}
+              />
+              <Text style={styles.btnContainerBottomText}>
+                Cette modification sera visible pour tous les étudiants du TP.
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        ) : (
+          <View style={styles.btnContainerBottom}>
+            <ButtonAuth
+              title="Modifier"
+              bgColor={colors.regular900}
+              loading={loading}
+              onPress={handleSaveTask}
+            />
+            <Text style={styles.btnContainerBottomText}>
+              Cette modification sera visible pour tous les étudiants du TP.
+            </Text>
+          </View>
+        )}
       </View>
-  </KeyboardAvoidingView>
+    </KeyboardAvoidingView>
   );
 };
 
