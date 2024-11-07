@@ -104,7 +104,6 @@ function Profile() {
       letterSpacing: -0.4,
       fontSize: 15,
       color: colors.grey,
-      letterSpacing: -0.4,
     },
     sectionPageItem: {
       gap: 10,
@@ -148,7 +147,6 @@ function Profile() {
       letterSpacing: -0.4,
       fontSize: 15,
       color: colors.regular950,
-      letterSpacing: -0.4,
     },
     profilGroupContent: {
       backgroundColor: colors.regular200_2,
@@ -161,14 +159,12 @@ function Profile() {
       letterSpacing: -0.4,
       fontSize: 13,
       color: colors.regular900_2,
-      letterSpacing: -0.4,
     },
     profilEmail: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
-      letterSpacing: -0.4,
     },
     pageContent: {
       flexDirection: "row",
@@ -180,14 +176,12 @@ function Profile() {
       letterSpacing: -0.4,
       fontSize: 15,
       color: colors.regular900,
-      letterSpacing: -0.4,
     },
     pageSubtitle: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
-      letterSpacing: -0.4,
     },
     pageIcon: {
       backgroundColor: colors.regular900,
@@ -199,7 +193,7 @@ function Profile() {
   });
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} bounces={false}>
       <View style={styles.sectionPageContainer}>
         <View style={styles.sectionPageItem}>
           <Text style={styles.sectionTitle}>Photo de profil</Text>

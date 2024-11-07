@@ -22,12 +22,12 @@ import { checkAgenda, uncheckAgenda } from "../../../api/Agenda/check";
 import moment from "moment";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useNavigation } from "@react-navigation/native";
-import { ThemeContext } from "./../../../utils/themeContext";
+import { ThemeContext } from "../../../utils/themeContext";
 import { getUserData } from "../../../utils/storage";
+
 
 const ViewTask = ({ route }) => {
   const { colors } = useContext(ThemeContext);
-
   const styles = StyleSheet.create({
     background: {
       flex: 1,
@@ -97,7 +97,7 @@ const ViewTask = ({ route }) => {
       textAlign: "center",
     },
     taskCTA: {
-      paddingBottom: Platform.OS === "ios" ? 40 : 25,
+      paddingBottom: Platform.OS === "ios" ? 75 : 25,
       alignSelf: "center",
       flexDirection: "column",
       width: "100%",

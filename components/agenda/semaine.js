@@ -92,7 +92,7 @@ const Semaine = ({
       fontSize: 14,
     },
     progressTextPourcent: {
-      color: colors.regular200,
+      color: colors.regular700,
       fontFamily: "Ubuntu_500Medium",
       letterSpacing: -0.4,
       fontSize: 14,

@@ -71,7 +71,7 @@ const TutorialAgenda = () => {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.regular95050,
+      color: colors.regular950,
     },
     responsableContainer: {
       flexDirection: "row",
