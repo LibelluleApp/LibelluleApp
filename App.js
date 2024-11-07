@@ -1,5 +1,5 @@
 import "expo-dev-client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, memo } from "react";
 import {
   Text,
   View,
@@ -20,124 +20,166 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import AuthStackSwitcher from "./context/AuthStackSwitcher"; // Import the AuthStackSwitcher
+import AuthStackSwitcher from "./context/AuthStackSwitcher";
 import moment from "moment";
-import * as Font from "expo-font";
-import "moment/locale/fr"; // Import the French locale
+import "moment/locale/fr";
 import {
   hasMigratedFromAsyncStorage,
   migrateFromAsyncStorage,
 } from "./utils/storage";
-import {isLoaded, useFonts} from "expo-font";
-moment.locale("fr"); // Set the locale to French
+import { useFonts } from "expo-font";
 
-const fontConfig = {
-  Ubuntu_300Light: require("./assets/fonts/Ubuntu/Ubuntu-Light.otf"),
-  Ubuntu_300Light_Italic: require("./assets/fonts/Ubuntu/Ubuntu-LightItalic.otf"),
-  Ubuntu_400Regular: require("./assets/fonts/Ubuntu/Ubuntu-Regular.otf"),
-  Ubuntu_400Regular_Italic: require("./assets/fonts/Ubuntu/Ubuntu-Italic.otf"),
-  Ubuntu_500Medium: require("./assets/fonts/Ubuntu/Ubuntu-Medium.otf"),
-  Ubuntu_500Medium_Italic: require("./assets/fonts/Ubuntu/Ubuntu-MediumItalic.otf"),
-  Ubuntu_700Bold: require("./assets/fonts/Ubuntu/Ubuntu-Bold.otf"),
-  Ubuntu_700Bold_Italic: require("./assets/fonts/Ubuntu/Ubuntu-BoldItalic.otf"),
+// Set French locale
+moment.locale("fr");
+
+// Font configuration
+const FONT_CONFIG = {
+  Ubuntu_300Light: Platform.select({
+    ios: require("./assets/fonts/Ubuntu/Ubuntu-Light.otf"),
+    android: require("./assets/fonts/Ubuntu/Ubuntu-Light-Fix.ttf"),
+  }),
+  Ubuntu_300Light_Italic: Platform.select({
+    ios: require("./assets/fonts/Ubuntu/Ubuntu-LightItalic.otf"),
+    android: require("./assets/fonts/Ubuntu/Ubuntu-LightItalic-Fix.ttf"),
+  }),
+  Ubuntu_400Regular: Platform.select({
+    ios: require("./assets/fonts/Ubuntu/Ubuntu-Regular.otf"),
+    android: require("./assets/fonts/Ubuntu/Ubuntu-Regular-Fix.ttf"),
+  }),
+  Ubuntu_400Regular_Italic: Platform.select({
+    ios: require("./assets/fonts/Ubuntu/Ubuntu-Italic.otf"),
+    android: require("./assets/fonts/Ubuntu/Ubuntu-Italic-Fix.ttf"),
+  }),
+  Ubuntu_500Medium: Platform.select({
+    ios: require("./assets/fonts/Ubuntu/Ubuntu-Medium.otf"),
+    android: require("./assets/fonts/Ubuntu/Ubuntu-Medium-Fix.ttf"),
+  }),
+  Ubuntu_500Medium_Italic: Platform.select({
+    ios: require("./assets/fonts/Ubuntu/Ubuntu-MediumItalic.otf"),
+    android: require("./assets/fonts/Ubuntu/Ubuntu-MediumItalic-Fix.ttf"),
+  }),
+  Ubuntu_700Bold: Platform.select({
+    ios: require("./assets/fonts/Ubuntu/Ubuntu-Bold.otf"),
+    android: require("./assets/fonts/Ubuntu/Ubuntu-Bold-Fix.ttf"),
+  }),
+  Ubuntu_700Bold_Italic: Platform.select({
+    ios: require("./assets/fonts/Ubuntu/Ubuntu-BoldItalic.otf"),
+    android: require("./assets/fonts/Ubuntu/Ubuntu-BoldItalic-Fix.ttf"),
+  }),
 };
 
-if (Platform.OS === "android") {
-  fontConfig.Ubuntu_400Regular = require("./assets/fonts/Ubuntu/Ubuntu-Regular-Fix.ttf");
-  fontConfig.Ubuntu_500Medium = require("./assets/fonts/Ubuntu/Ubuntu-Medium-Fix.ttf");
-  fontConfig.Ubuntu_700Bold = require("./assets/fonts/Ubuntu/Ubuntu-Bold-Fix.ttf");
-  fontConfig.Ubuntu_300Light = require("./assets/fonts/Ubuntu/Ubuntu-Light-Fix.ttf");
-  fontConfig.Ubuntu_400Regular_Italic = require("./assets/fonts/Ubuntu/Ubuntu-Italic-Fix.ttf");
-  fontConfig.Ubuntu_500Medium_Italic = require("./assets/fonts/Ubuntu/Ubuntu-MediumItalic-Fix.ttf");
-  fontConfig.Ubuntu_700Bold_Italic = require("./assets/fonts/Ubuntu/Ubuntu-BoldItalic-Fix.ttf");
-  fontConfig.Ubuntu_300Light_Italic = require("./assets/fonts/Ubuntu/Ubuntu-LightItalic-Fix.ttf");
-}
+const configureAndroidNavBar = async () => {
+  try {
+    await Promise.all([
+      NavigationBar.setPositionAsync("absolute"),
+      NavigationBar.setBackgroundColorAsync("#FFFFFF00"),
+      NavigationBar.setVisibilityAsync("hidden"),
+      NavigationBar.setBehaviorAsync("overlay-swipe"),
+    ]);
+    setStatusBarHidden(false, "none");
+  } catch (error) {
+    console.error('Error configuring navigation bar:', error);
+  }
+};
+
+const configurePushNotifications = () => {
+  const handleInitialNotification = async () => {
+    const remoteMessage = await messaging().getInitialNotification();
+    if (remoteMessage) {
+      console.log(
+          "Notification caused app to open from quit state:",
+          remoteMessage.notification
+      );
+    }
+  };
+
+  const notificationListeners = [
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+          "Notification caused app to open from background state:",
+          remoteMessage.notification
+      );
+    }),
+    messaging().onMessage(async remoteMessage => {
+      console.log("A new FCM message arrived!", remoteMessage);
+    }),
+  ];
+
+  messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log("Message handled in the background!", remoteMessage);
+  });
+
+  handleInitialNotification();
+
+  return () => notificationListeners.forEach(listener => listener());
+};
+
+const configureTextScaling = () => {
+  const components = [Text, TextInput, View];
+  components.forEach(Component => {
+    Component.defaultProps = {
+      ...(Component.defaultProps || {}),
+      allowFontScaling: false,
+    };
+  });
+};
+
+const LoadingSpinner = memo(() => (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <ActivityIndicator color="black" />
+    </View>
+));
+
+const FlashMessageWithInsets = memo(() => {
+  const insets = useSafeAreaInsets();
+  return (
+      <FlashMessage
+          position="top"
+          hideStatusBar={true}
+          statusBarHeight={insets.top}
+      />
+  );
+});
 
 function App() {
-  const [loaded, error] = useFonts(fontConfig);
+  const [loaded, error] = useFonts(FONT_CONFIG);
   const [hasMigrated, setHasMigrated] = useState(hasMigratedFromAsyncStorage);
 
-
-
   useEffect(() => {
-    const configureNavBar = async () => {
-      try {
-        if (Platform.OS === "android") {
-          await NavigationBar.setPositionAsync("absolute");
-          await NavigationBar.setBackgroundColorAsync("#FFFFFF00");
-          await NavigationBar.setVisibilityAsync("hidden");
-          await NavigationBar.setBehaviorAsync("overlay-swipe");
-          setStatusBarHidden(false, "none");
-        }
-      } catch (error) {
-        console.error('Error configuring navigation bar:', error);
-      }
-    };
-
-    configureNavBar();
-
-    return () => {
-      if (Platform.OS === "android") {
+    if (Platform.OS === "android") {
+      configureAndroidNavBar();
+      return () => {
         NavigationBar.setVisibilityAsync("visible")
             .catch(error => console.error('Error restoring navigation bar:', error));
         setStatusBarHidden(false, "none");
-      }
-    };
+      };
+    }
   }, []);
+
   useEffect(() => {
     if (!hasMigratedFromAsyncStorage) {
       InteractionManager.runAfterInteractions(async () => {
         try {
           await migrateFromAsyncStorage();
           setHasMigrated(true);
-        } catch (e) {}
+        } catch (error) {
+          console.error('Migration error:', error);
+        }
       });
     }
   }, []);
 
   useEffect(() => {
-    messaging()
-      .getInitialNotification()
-      .then(async (remoteMessage) => {
-        if (remoteMessage) {
-          console.log(
-            "Notification caused app to open from quit state:",
-            remoteMessage.notification
-          );
-        }
-      });
-
-    messaging().onNotificationOpenedApp(async (remoteMessage) => {
-      console.log(
-        "Notification caused app to open from background state:",
-        remoteMessage.notification
-      );
-    });
-
-    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.log("Message handled in the background!", remoteMessage);
-    });
-
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.log("A new FCM message arrived!", remoteMessage);
-    });
+    const unsubscribe = configurePushNotifications();
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
-    Text.defaultProps = Text.defaultProps || {};
-    Text.defaultProps.allowFontScaling = false;
-    TextInput.defaultProps = TextInput.defaultProps || {};
-    TextInput.defaultProps.allowFontScaling = false;
-    View.defaultProps = View.defaultProps || {};
-    View.defaultProps.allowFontScaling = false;
+    configureTextScaling();
   }, []);
 
   if (!hasMigrated) {
-    return (
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator color={"black"} />
-      </View>
-    );
+    return <LoadingSpinner />;
   }
 
   if (!loaded && !error) {
@@ -145,31 +187,19 @@ function App() {
   }
 
   return (
-    <ThemeProvider>
-      <KeyboardProvider>
-      <SafeAreaProvider>
-        <NavigationContainer>
-          <SessionProvider>
-            <AuthStackSwitcher />
-            <FlashMessageWithInsets />
-          </SessionProvider>
-        </NavigationContainer>
-      </SafeAreaProvider>
+      <ThemeProvider>
+        <KeyboardProvider>
+          <SafeAreaProvider>
+            <NavigationContainer>
+              <SessionProvider>
+                <AuthStackSwitcher />
+                <FlashMessageWithInsets />
+              </SessionProvider>
+            </NavigationContainer>
+          </SafeAreaProvider>
         </KeyboardProvider>
-    </ThemeProvider>
+      </ThemeProvider>
   );
 }
 
-function FlashMessageWithInsets() {
-  const insets = useSafeAreaInsets();
-
-  return (
-    <FlashMessage
-      position="top"
-      hideStatusBar={true}
-      statusBarHeight={insets.top}
-    />
-  );
-}
-
-export default App;
+export default memo(App);
