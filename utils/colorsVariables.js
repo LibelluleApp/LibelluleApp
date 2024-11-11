@@ -315,7 +315,7 @@ export const orangeDarkModeColors = {
 // Hue : 130
 
 export const greenLightModeColors = {
-  background: "#f0f7f0", // Vert clair
+  background: "#F1FCF2", // Vert clair
   white_background: "#FFFFFF",
   grey: "#71b67c",
   white: "#FFFFFF",
