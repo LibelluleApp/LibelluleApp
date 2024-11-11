@@ -270,6 +270,8 @@ const Edit = ({ route }) => {
                       ? styles.buttonContentSelected
                       : styles.buttonContentUnselected,
                   ]}
+                  friction={6}
+                  activeScale={0.95}
                   onPress={() => updateType("devoir")}
                 >
                   <Text
@@ -289,6 +291,8 @@ const Edit = ({ route }) => {
                       ? styles.buttonContentSelected
                       : styles.buttonContentUnselected,
                   ]}
+                  friction={6}
+                  activeScale={0.95}
                   onPress={() => updateType("eval")}
                 >
                   <Text

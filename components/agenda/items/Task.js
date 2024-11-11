@@ -10,16 +10,16 @@ import { ThemeContext } from "./../../../utils/themeContext";
 import TouchableScale from "react-native-touchable-scale";
 
 function TaskHome({
-                    date,
-                    titre,
-                    agenda_id,
-                    matiere,
-                    checked,
-                    onTaskCheck,
-                    onTaskUncheck,
-                    component,
-                    bouncyBox,
-                  }) {
+  date,
+  titre,
+  agenda_id,
+  matiere,
+  checked,
+  onTaskCheck,
+  onTaskUncheck,
+  component,
+  bouncyBox,
+}) {
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
@@ -48,6 +48,7 @@ function TaskHome({
       alignItems: component === "little" ? "center" : "flex-start",
       gap: component === "little" ? 7 : 3,
       flex: component === "little" ? 1 : 0,
+      width: component === "little" ? "auto" : "100%",
     },
     taskTitle: {
       fontFamily: "Ubuntu_500Medium",
@@ -97,49 +98,49 @@ function TaskHome({
   };
 
   return (
-      <TouchableScale
-          friction={6}
-          activeScale={0.97}
-          onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
-      >
-        <View style={styles.evalTask}>
-          <View style={styles.taskLeft}>
-            {bouncyBox && (
-                <BouncyCheckbox
-                    fillColor={colors.regular700}
-                    unfillColor={colors.white}
-                    isChecked={isChecked}
-                    onPress={handleCheckboxPress}
-                    disableText={true}
-                    hitSlop={{ top: 20, bottom: 20, right: 20, left: 20 }}
-                />
-            )}
-            <View style={styles.taskLeftContent}>
-              <Text style={[styles.taskTitle, isChecked && styles.strikethrough]}>
-                {matiere || "Matière indisponible"}
-              </Text>
-              <Text
-                  style={[
-                    styles.taskDescription,
-                    isChecked && styles.strikethrough,
-                  ]}
-                  numberOfLines={1}
-                  ellipsizeMode="tail"
-              >
-                {titre || "Titre indisponible"}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.taskRight}>
-            <ChevronRight
-                stroke={colors.regular700}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
+    <TouchableScale
+      friction={6}
+      activeScale={0.97}
+      onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
+    >
+      <View style={styles.evalTask}>
+        <View style={styles.taskLeft}>
+          {bouncyBox && (
+            <BouncyCheckbox
+              fillColor={colors.regular700}
+              unfillColor={colors.white}
+              isChecked={isChecked}
+              onPress={handleCheckboxPress}
+              disableText={true}
+              hitSlop={{ top: 20, bottom: 20, right: 20, left: 20 }}
             />
+          )}
+          <View style={styles.taskLeftContent}>
+            <Text style={[styles.taskTitle, isChecked && styles.strikethrough]}>
+              {matiere || "Matière indisponible"}
+            </Text>
+            <Text
+              style={[
+                styles.taskDescription,
+                isChecked && styles.strikethrough,
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {titre || "Titre indisponible"}
+            </Text>
           </View>
         </View>
-      </TouchableScale>
+        <View style={styles.taskRight}>
+          <ChevronRight
+            stroke={colors.regular700}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
+        </View>
+      </View>
+    </TouchableScale>
   );
 }
 

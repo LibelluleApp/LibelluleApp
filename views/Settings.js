@@ -19,6 +19,7 @@ import {
   Bell,
   Link,
   Envelope,
+  Wrench,
 } from "../assets/icons/Icons";
 import Constants from "expo-constants";
 import { useSession } from "../context/AuthContext";
@@ -317,9 +318,9 @@ function Settings() {
           onPress: () => navigation.navigate("liensExterne"),
         },
         {
-          icon: Link,
+          icon: Wrench,
           title: "Gestion des services",
-          onPress: () => navigation.navigate('Services')
+          onPress: () => navigation.navigate("Services"),
         },
         {
           icon: NotepadText,

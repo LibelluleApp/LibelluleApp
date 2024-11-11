@@ -24,7 +24,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "../../../utils/themeContext";
 import { getUserData } from "../../../utils/storage";
-
+import TouchableScale from "react-native-touchable-scale";
 
 const ViewTask = ({ route }) => {
   const { colors } = useContext(ThemeContext);
@@ -105,7 +105,7 @@ const ViewTask = ({ route }) => {
       justifyContent: "center",
       alignItems: "center",
     },
-    taskCTADelete: { padding: 8 },
+    taskCTADelete: { padding: 8, alignSelf: "center" },
     taskCTAEdit: {
       backgroundColor: colors.regular700,
       paddingHorizontal: 20,
@@ -309,17 +309,28 @@ const ViewTask = ({ route }) => {
       </Text> */}
         {task.utilisateur_id == userData.utilisateur_id && (
           <View style={styles.taskCTA}>
-            <TouchableOpacity style={styles.taskCTAEdit} onPress={handlePress}>
-              <Text style={styles.taskCTAText}>Modifier</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.taskCTADelete}
+            <TouchableScale
+              friction={6}
+              activeScale={0.97}
+              onPress={handlePress}
+              style={{ width: "100%" }}
+            >
+              <View style={styles.taskCTAEdit}>
+                <Text style={styles.taskCTAText}>Modifier</Text>
+              </View>
+            </TouchableScale>
+            <TouchableScale
+              friction={6}
+              activeScale={0.97}
+              style={{ width: "100%" }}
               onPress={handleConfirmDelete}
             >
-              <Text style={[styles.taskCTAText, styles.taskCTATextDelete]}>
-                Supprimer
-              </Text>
-            </TouchableOpacity>
+              <View style={styles.taskCTADelete}>
+                <Text style={[styles.taskCTAText, styles.taskCTATextDelete]}>
+                  Supprimer
+                </Text>
+              </View>
+            </TouchableScale>
           </View>
         )}
       </View>

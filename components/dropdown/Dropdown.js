@@ -8,6 +8,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { ThemeContext } from "../../utils/themeContext";
 import { ChevronDown } from "../../assets/icons/Icons";
+import TouchableScale from "react-native-touchable-scale";
 
 const Dropdown = ({ options, onSelect, value, number }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,6 +110,7 @@ const Dropdown = ({ options, onSelect, value, number }) => {
     dropdownItem: {
       paddingVertical: 10,
       paddingHorizontal: number >= 3 ? 5 : 15,
+      backgroundColor: colors.background,
     },
     dropdownText: {
       fontSize: 14,
@@ -126,34 +128,39 @@ const Dropdown = ({ options, onSelect, value, number }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={toggleDropdown} style={styles.button}>
-        <Text style={styles.buttonText}>{selectedLabel}</Text>
-        <Animated.View style={chevronStyle}>
-          <ChevronDown
-            stroke={colors.regular700}
-            width={14}
-            height={14}
-            strokeWidth={1.75}
-          />
-        </Animated.View>
-      </TouchableOpacity>
+      <TouchableScale friction={6} activeScale={0.95} onPress={toggleDropdown}>
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>{selectedLabel}</Text>
+          <Animated.View style={chevronStyle}>
+            <ChevronDown
+              stroke={colors.regular700}
+              width={14}
+              height={14}
+              strokeWidth={1.75}
+            />
+          </Animated.View>
+        </View>
+      </TouchableScale>
 
       <Animated.View style={[styles.dropdown, animatedStyle]}>
         {options.map((option) => (
-          <TouchableOpacity
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
             key={option.value}
-            style={styles.dropdownItem}
             onPress={() => handleSelect(option.label, option.value)}
           >
-            <Text
-              style={[
-                styles.dropdownText,
-                selectedLabel === option.label && styles.selectedText,
-              ]}
-            >
-              {option.label}
-            </Text>
-          </TouchableOpacity>
+            <View style={styles.dropdownItem}>
+              <Text
+                style={[
+                  styles.dropdownText,
+                  selectedLabel === option.label && styles.selectedText,
+                ]}
+              >
+                {option.label}
+              </Text>
+            </View>
+          </TouchableScale>
         ))}
       </Animated.View>
     </View>
