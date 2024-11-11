@@ -207,7 +207,7 @@ function Colors() {
                     />
                   )}
                 </View>
-                <Text style={styles.pageTitle}>Mode sombre</Text>
+                <Text style={styles.pageTitle}>Thème sombre</Text>
               </View>
               <Switch
                 trackColor={{ false: colors.grey, true: colors.regular700 }}

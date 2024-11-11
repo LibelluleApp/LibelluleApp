@@ -43,10 +43,12 @@ const Add = ({ route }) => {
   const [dates, setDates] = useState(moment.tz(date, "Europe/Paris"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const [matiere, setMatiere] = useState("");
   const [type, setType] = useState("devoir");
   const [titre, setTitre] = useState("");
   const [description, setDescription] = useState("");
+
   const [error, setError] = useState(null);
 
   const handleDescriptionFocus = () => {
@@ -180,6 +182,8 @@ const Add = ({ route }) => {
     }
 
     setLoading(true);
+    setError(null);
+
     try {
       const result = await saveAgenda(
         titre,
@@ -190,13 +194,14 @@ const Add = ({ route }) => {
       );
       if (result.status === "success") {
         showMessage({
-          message: "Tâche ajouté avec succès.",
+          message: "Tâche ajoutée avec succès.",
           type: "success",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
         });
         navigation.goBack();
       }
     } catch (error) {
+      setError(error.message);
       showMessage({
         message: error.message,
         type: "danger",
