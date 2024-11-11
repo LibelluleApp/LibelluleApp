@@ -22,11 +22,14 @@ export const blueLightModeColors = {
 
   // Red
   red50: "#FFF1F1",
+  red50_eval: "#FFF1F1",
   red100: "#FFDFDF",
   red200: "#FFC4C4",
   red300: "#FF9B9B",
+  red300_eval: "#FF9B9B",
   red400: "#FF6161",
   red500: "#FF3030",
+  red500_eval: "#FF3030",
   red600: "#E80D0D",
   red700: "#CC0909",
   red800: "#A80C0C",
