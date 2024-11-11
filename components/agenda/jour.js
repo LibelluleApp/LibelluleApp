@@ -50,6 +50,7 @@ const Jour = ({
   const styles = StyleSheet.create({
     swiperContainer: {
       flex: 1,
+      zIndex: -1
     },
     headerContainer: {
       flexDirection: "row",

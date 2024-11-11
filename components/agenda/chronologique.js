@@ -22,6 +22,7 @@ const Chronologie = ({
       backgroundColor: colors.background,
       width: "90%",
       marginHorizontal: "auto",
+      zIndex: -1
     },
     headerText: {
       fontSize: 24,

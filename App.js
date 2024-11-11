@@ -29,6 +29,18 @@ import {
 } from "./utils/storage";
 import { useFonts } from "expo-font";
 
+
+import {
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from 'react-native-reanimated';
+
+
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false,
+});
+
 // Set French locale
 moment.locale("fr");
 
