@@ -1,48 +1,31 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, {useContext, useEffect, useState} from "react";
+import {Alert, Image, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View,} from "react-native";
+import * as ImagePicker from "expo-image-picker";
 import {
-  View,
-  ScrollView,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Linking,
-  Alert,
-  Platform,
-  Switch,
-} from "react-native";
-import {
-  ChevronRight,
-  Palette,
-  Lock,
-  IdCard,
-  RectangleEllipsis,
   BriefcaseBusiness,
-  UsersRound,
+  ChevronRight,
+  IdCard,
+  Lock,
+  RectangleEllipsis,
   UserRoundPen,
-  Pencil,
+  UsersRound,
   UserX,
 } from "../../../assets/icons/Icons";
-import { useNavigation, useIsFocused } from "@react-navigation/native";
-import { ThemeContext } from "../../../utils/themeContext";
-import {
-  getAlternant,
-  getUserData,
-  setAlternant,
-} from "../../../utils/storage";
+import {useIsFocused, useNavigation} from "@react-navigation/native";
+import {ThemeContext} from "../../../utils/themeContext";
+import {getAlternant, getUserData, setAlternant, setUserData} from "../../../utils/storage";
+import handleUpload from "../../../api/User/profilePicture";
 
 async function getProfileData() {
   try {
-    const userData = getUserData();
-    return userData;
+    return getUserData();
   } catch (e) {
     console.error(e);
   }
 }
 async function getIsAlternant() {
   try {
-    const isAlternant = getAlternant();
-    return isAlternant;
+    return getAlternant();
   } catch (e) {
     console.error(e);
   }
@@ -50,17 +33,92 @@ async function getIsAlternant() {
 
 function Profile() {
   const { colors } = useContext(ThemeContext);
-
   const [isAlternant, setIsAlternant] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
   const isFocused = useIsFocused();
 
+  const handleProfilePhotoUpdate = async () => {
+    const options = ['Prendre une photo', 'Choisir depuis la galerie', 'Annuler'];
+
+    Alert.alert(
+        'Modifier la photo de profil',
+        'Choisissez une option',
+        options.map((option, index) => ({
+          text: option,
+          onPress: async () => {
+            if (index === 2) return;
+
+            let result;
+            let permissionResult;
+
+            try {
+              if (index === 0) {
+                permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+                if (permissionResult.granted === false) {
+                  Alert.alert("Permission refusée", "L'accès à la caméra est nécessaire pour cette fonctionnalité.");
+                  return;
+                }
+                result = await ImagePicker.launchCameraAsync({
+                  allowsEditing: true,
+                  aspect: [1, 1],
+                  quality: 0.8,
+                });
+              } else {
+                permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                if (permissionResult.granted === false) {
+                  Alert.alert("Permission refusée", "L'accès à la galerie est nécessaire pour cette fonctionnalité.");
+                  return;
+                }
+                result = await ImagePicker.launchImageLibraryAsync({
+                  mediaTypes: 'images',
+                  allowsEditing: true,
+                  aspect: [1, 1],
+                  quality: 0.8,
+                });
+              }
+
+              if (!result.canceled) {
+                setIsLoading(true);
+                const photoUri = result.assets[0].uri;
+
+                const uploadResult = await handleUpload(photoUri);
+
+                if (typeof uploadResult === 'string' && uploadResult.includes('Erreur')) {
+                  throw new Error(uploadResult);
+                }
+
+                const updatedUserData = {
+                  ...userData,
+                  lien_photo_profil: uploadResult.photo_url || photoUri
+                };
+
+                setUser(updatedUserData);
+
+                setUserData(JSON.stringify(updatedUserData));
+
+                Alert.alert("Succès", "Photo de profil mise à jour avec succès!");
+              }
+            } catch (error) {
+              console.error('Erreur lors de la mise à jour de la photo:', error);
+              Alert.alert(
+                  "Erreur",
+                  typeof error === 'string' ? error : "Impossible de mettre à jour la photo de profil. Veuillez réessayer."
+              );
+            } finally {
+              setIsLoading(false);
+            }
+          },
+          style: index === 2 ? 'cancel' : 'default',
+        }))
+    );
+  };
+
   useEffect(() => {
     getProfileData().then((data) => {
-      setUserData(data);
+      setUser(data);
 
-      setIsLoading(false);
     });
     getIsAlternant().then((data) => {
       setIsAlternant(data === "true");
@@ -70,7 +128,7 @@ function Profile() {
   useEffect(() => {
     if (isFocused) {
       getProfileData().then((data) => {
-        setUserData(data);
+        setUser(data);
       });
       getIsAlternant().then((data) => {
         setIsAlternant(data === "true");
@@ -193,33 +251,35 @@ function Profile() {
   });
 
   return (
-    <ScrollView style={styles.container} bounces={false}>
-      <View style={styles.sectionPageContainer}>
-        <View style={styles.sectionPageItem}>
-          <Text style={styles.sectionTitle}>Photo de profil</Text>
-          <View style={styles.pageContainer}>
-            <TouchableOpacity
-              style={styles.pageItem}
-              // onPress={() => navigation.navigate("Colors")}
-            >
-              <View style={styles.pageContent}>
-                <Image
-                  source={{ uri: userData.lien_photo_profil }}
-                  style={styles.profilPicture}
+      <ScrollView style={styles.container} bounces={false}>
+        <View style={styles.sectionPageContainer}>
+          <View style={styles.sectionPageItem}>
+            <Text style={styles.sectionTitle}>Photo de profil</Text>
+            <View style={styles.pageContainer}>
+              <TouchableOpacity
+                  style={styles.pageItem}
+                  onPress={handleProfilePhotoUpdate}
+              >
+                <View style={styles.pageContent}>
+                  <Image
+                      source={{
+                        uri: userData.lien_photo_profil || 'https://via.placeholder.com/150'
+                      }}
+                      style={styles.profilPicture}
+                  />
+                  <Text style={styles.pageTitle}>
+                    Modifier la photo de profil
+                  </Text>
+                </View>
+                <ChevronRight
+                    stroke={colors.regular700}
+                    strokeWidth={1.75}
+                    width={18}
+                    height={18}
                 />
-                <Text style={styles.pageTitle}>
-                  Modifier la photo de profil
-                </Text>
-              </View>
-              <ChevronRight
-                stroke={colors.regular700}
-                strokeWidth={1.75}
-                width={18}
-                height={18}
-              />
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
         <View style={styles.sectionPageItem}>
           <Text style={styles.sectionTitle}>Informations</Text>
           <View style={styles.pageContainer}>

@@ -1,7 +1,6 @@
 import React, { useContext, useMemo } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Feather } from "@expo/vector-icons";
 import { ThemeContext } from "./../utils/themeContext";
 
 // Views import optimization
@@ -26,15 +25,11 @@ const VIEWS_CONFIG = {
   Colors: require("../views/Settings/Customization/Colors").default,
   TimetableSettings: require("../views/Settings/Settings/Timetable").default,
   Settings: require("../views/Settings").default,
+  Services: require("../views/Settings/Others/Services").default,
 };
 
 const Stack = createNativeStackNavigator();
 
-const NotificationBell = React.memo(({ onPress, iconColor }) => (
-    <TouchableOpacity onPress={onPress} style={{ paddingRight: 10 }}>
-      <Feather name="bell" size={24} color={iconColor} />
-    </TouchableOpacity>
-));
 
 const COMMON_HEADER_STYLES = {
   fontFamily: "Ubuntu_400Regular",
@@ -178,6 +173,11 @@ const AppStack = () => {
       name: "Settings",
       component: VIEWS_CONFIG.Settings,
       options: { title: "Paramètres", headerShadowVisible: false }
+    },
+    {
+      name: "Services",
+      component: VIEWS_CONFIG.Services,
+      options: { title: "Services externe", headerShadowVisible: false }
     }
   ], [colors]);
 

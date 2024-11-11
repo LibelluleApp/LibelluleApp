@@ -20,9 +20,7 @@ export default {
         config: {
             usesNonExemptEncryption: false
         },
-        googleServicesFile: IS_DEV
-            ? "./GoogleService-Info-Dev.plist"
-            : "./GoogleService-Info.plist",
+        googleServicesFile: "./GoogleService-Info.plist",
         bundleIdentifier: IS_DEV
             ? "com.libellule.libelluledev"
             : "com.libellule.libellule",
@@ -48,7 +46,7 @@ export default {
     web: {
         favicon: "./assets/favicon.png"
     },
-    newArchEnabled: true,
+    newArchEnabled: false,
     plugins: [
         "expo-font",
         "expo-secure-store",
@@ -64,8 +62,15 @@ export default {
         [
             "expo-location",
             {
-                locationAlwaysAndWhenInUsePermission: "Allow $(PRODUCT_NAME) to use your location.",
+                locationAlwaysAndWhenInUsePermission: "Autoriser $(PRODUCT_NAME) à voir votre localisation",
                 isAndroidBackgroundLocationEnabled: true
+            }
+        ],
+        [
+            "expo-image-picker",
+            {
+                photosPermission: "Autorise à piocher la meilleure photo dans ta galerie",
+                cameraPermission: "Autorise à prendre la meilleure photo de toi"
             }
         ]
     ],

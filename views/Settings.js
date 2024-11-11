@@ -281,6 +281,11 @@ function Settings() {
           onPress: () => navigation.navigate("liensExterne")
         },
         {
+          icon: Link,
+          title: "Gestion des services",
+          onPress: () => navigation.navigate('Services')
+        },
+        {
           icon: NotepadText,
           title: "Journal des mises à jour",
           onPress: () => Linking.openURL("https://libellule.app/patchnotes")

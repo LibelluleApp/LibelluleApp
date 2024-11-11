@@ -181,17 +181,16 @@ const Add = ({ route }) => {
 
     setLoading(true);
     try {
-      const result = await saveEditAgenda(
+      const result = await saveAgenda(
         titre,
         description,
         dates.format("yyyy-MM-DD"),
         matiere,
         type,
-        agenda_id
       );
       if (result.status === "success") {
         showMessage({
-          message: "Tâche modifiée avec succès.",
+          message: "Tâche ajouté avec succès.",
           type: "success",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
         });

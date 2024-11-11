@@ -26,6 +26,7 @@ async function saveAgenda(titre, description, date, ressource_name, type) {
       throw new Error(response.data.message);
     }
   } catch (error) {
+    console.log(error.reponse);
     throw new Error("Impossible d'ajouter la tâche. Veuillez réessayer.");
   }
 }
