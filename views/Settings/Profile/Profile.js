@@ -121,7 +121,7 @@ function Profile() {
 
     });
     getIsAlternant().then((data) => {
-      setIsAlternant(data === "true");
+      setIsAlternant(data);
     });
   }, []);
 
@@ -131,7 +131,7 @@ function Profile() {
         setUser(data);
       });
       getIsAlternant().then((data) => {
-        setIsAlternant(data === "true");
+        setIsAlternant(data);
       });
     }
   }, [isFocused]);
