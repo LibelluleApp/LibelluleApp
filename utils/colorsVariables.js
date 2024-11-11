@@ -119,7 +119,7 @@ export const pinkDarkModeColors = {
   // Pink Shades
   regular50: "#3E232A",
   regular100: "#3E232A",
-  regular200: "#2B1216",
+  regular200: "#5c0f29",
   regular200_2: "#F4B7C3", // Same as original for harmony
   regular300: "#D75C71",
   regular400: "#D1697B",
@@ -271,7 +271,7 @@ export const orangeDarkModeColors = {
   // Blue Ribbon
   regular50: "#3C2D1D",
   regular100: "#3C2D1D",
-  regular200: "#7B5A2A",
+  regular200: "#663605",
   regular200_2: "#F5E1B7",
   regular300: "#F4C233",
   regular400: "#F1A300",
@@ -347,7 +347,7 @@ export const greenDarkModeColors = {
   // Blue Ribbon
   regular50: "#1D3B2A",
   regular100: "#1D3B2A",
-  regular200: "#0E2B20",
+  regular200: "#01510e",
   regular200_2: "#B8E2B1",
   regular300: "#8ADBA3",
   regular400: "#5ABF66",
