@@ -8,6 +8,7 @@ node_modules/
 .expo/
 dist/
 web-build/
+build/
 
 
 # Native
@@ -44,6 +45,9 @@ yarn-error.*
 
 *.ipa
 *.tar.gz
+*.sh
+
+updates/
 
 yarn.lock
 package-lock.json

@@ -10,9 +10,11 @@ import {
 
 import { ChevronRight, Envelope, Lock } from "../../../assets/icons/Icons";
 import { ThemeContext } from "../../../utils/themeContext";
+import { useNavigation } from "@react-navigation/native";
 
 function Services() {
   const { colors } = useContext(ThemeContext);
+  const navigation = useNavigation();
 
   const styles = StyleSheet.create({
     container: {
@@ -87,33 +89,44 @@ function Services() {
     },
   });
 
-  const MenuItem = memo(({ icon: Icon, title, subtitle, onPress, colors }) => (
-    <TouchableOpacity style={styles.menuItem} onPress={onPress}>
-      <View style={styles.menuItemContent}>
-        <View style={styles.menuItemLeft}>
-          <View style={[styles.iconContainer]}>
-            <Icon
-              stroke={colors.regular100}
-              strokeWidth={1.75}
-              width={18}
-              height={18}
-            />
-          </View>
-          <View style={styles.textContainer}>
-            <Text style={[styles.menuItemTitle, { color: colors.regular900 }]}>
-              {title}
-            </Text>
-            {subtitle && (
-              <Text style={[styles.menuItemSubtitle, { color: colors.grey }]}>
-                {subtitle}
+  const MenuItem = memo(
+    ({
+      icon: Icon,
+      title,
+      subtitle,
+      onPress,
+      colors,
+      iconColor = colors.regular100,
+    }) => (
+      <TouchableOpacity style={styles.menuItem} onPress={onPress}>
+        <View style={styles.menuItemContent}>
+          <View style={styles.menuItemLeft}>
+            <View style={[styles.iconContainer]}>
+              <Icon
+                stroke={colors.regular100}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+              />
+            </View>
+            <View style={styles.textContainer}>
+              <Text
+                style={[styles.menuItemTitle, { color: colors.regular900 }]}
+              >
+                {title}
               </Text>
-            )}
+              {subtitle && (
+                <Text style={[styles.menuItemSubtitle, { color: colors.grey }]}>
+                  {subtitle}
+                </Text>
+              )}
+            </View>
           </View>
+          <ChevronRight stroke={colors.regular700} width={20} height={20} />
         </View>
-        <ChevronRight stroke={colors.regular700} width={20} height={20} />
-      </View>
-    </TouchableOpacity>
-  ));
+      </TouchableOpacity>
+    )
+  );
 
   const menuItems = [
     {
@@ -121,17 +134,10 @@ function Services() {
       items: [
         {
           icon: Envelope,
+          icon: Envelope,
           title: "Zimbra",
           subtitle: "Accédez à votre messagerie universitaire",
-          onPress: () => Linking.openURL("https://webmail.univ-poitiers.fr/"),
-        },
-        {
-          icon: Lock,
-          title: "Authentification",
-          subtitle: "Gérez vos identifiants universitaires",
-          onPress: () => {
-            /* Action */
-          },
+          onPress: () => navigation.navigate("ZimbraConnect"),
         },
       ],
     },

@@ -26,6 +26,7 @@ const VIEWS_CONFIG = {
   TimetableSettings: require("../views/Settings/Settings/Timetable").default,
   Settings: require("../views/Settings").default,
   Services: require("../views/Settings/Others/Services").default,
+  ZimbraConnect: require("../views/Settings/Others/Zimbra/Connect").default,
 };
 
 const Stack = createNativeStackNavigator();
@@ -185,6 +186,11 @@ const AppStack = () => {
         component: VIEWS_CONFIG.Services,
         options: { title: "Gestion des services", headerShadowVisible: false },
       },
+        {
+            name: "ZimbraConnect",
+            component: VIEWS_CONFIG.ZimbraConnect,
+            options: { title: "Connection à Zimbra", headerShadowVisible: false },
+        },
     ],
     [colors]
   );

@@ -14,7 +14,7 @@ import FlashMessage from "react-native-flash-message";
 import * as NavigationBar from "expo-navigation-bar";
 import { setStatusBarHidden } from "expo-status-bar";
 import { ThemeProvider } from "./utils/themeContext";
-import messaging from "@react-native-firebase/messaging";
+import configurePushNotifications from "./utils/notifications/firebase"
 import { SessionProvider } from "./context/AuthContext";
 import {
   SafeAreaProvider,
@@ -94,37 +94,7 @@ const configureAndroidNavBar = async () => {
   }
 };
 
-const configurePushNotifications = () => {
-  const handleInitialNotification = async () => {
-    const remoteMessage = await messaging().getInitialNotification();
-    if (remoteMessage) {
-      console.log(
-          "Notification caused app to open from quit state:",
-          remoteMessage.notification
-      );
-    }
-  };
 
-  const notificationListeners = [
-    messaging().onNotificationOpenedApp(remoteMessage => {
-      console.log(
-          "Notification caused app to open from background state:",
-          remoteMessage.notification
-      );
-    }),
-    messaging().onMessage(async remoteMessage => {
-      console.log("A new FCM message arrived!", remoteMessage);
-    }),
-  ];
-
-  messaging().setBackgroundMessageHandler(async remoteMessage => {
-    console.log("Message handled in the background!", remoteMessage);
-  });
-
-  handleInitialNotification();
-
-  return () => notificationListeners.forEach(listener => listener());
-};
 
 const configureTextScaling = () => {
   const components = [Text, TextInput, View];
@@ -183,7 +153,7 @@ function App() {
 
   useEffect(() => {
     const unsubscribe = configurePushNotifications();
-    return () => unsubscribe();
+    return () => unsubscribe.then(cleanup => cleanup());
   }, []);
 
   useEffect(() => {

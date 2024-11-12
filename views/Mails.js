@@ -16,9 +16,9 @@ import {
   RefreshControl,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { useNavigation } from "@react-navigation/native";
-import { ThemeContext } from "./../utils/themeContext";
-import { MailSearch, Settings, Wrench } from "./../assets/icons/Icons";
+import {useIsFocused, useNavigation} from "@react-navigation/native";
+import { ThemeContext } from "../utils/themeContext";
+import { MailSearch, Settings, Wrench } from "../assets/icons/Icons";
 import TouchableScale from "react-native-touchable-scale";
 
 // Components
@@ -35,6 +35,7 @@ const MemoizedMail = memo(Mail);
 
 function Mails() {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const { colors } = useContext(ThemeContext);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -179,12 +180,6 @@ function Mails() {
           <Text style={styles.btnOutlineText}>Activer le service</Text>
         </View>
       </TouchableScale>
-      {/* <TouchableOpacity
-        style={[styles.settingsButton, { backgroundColor: colors.primary }]}
-        onPress={onNavigateToSettings}
-      >
-        <Text style={styles.settingsButtonText}>Aller aux paramètres</Text>
-      </TouchableOpacity> */}
     </View>
   ));
 
@@ -214,17 +209,21 @@ function Mails() {
         if (token) {
           setIsAuthenticated(true);
           fetchEmails();
+        } else {
+          setIsAuthenticated(false);
         }
       } catch (error) {
         console.error("Authentication check failed:", error);
       }
     };
 
-    checkAuthentication();
-  }, [fetchEmails]);
-
+    // Vérifie l'authentification seulement quand l'écran est focus
+    if (isFocused) {
+      checkAuthentication();
+    }
+  }, [isFocused, fetchEmails]);
   const handleNavigateToSettings = useCallback(() => {
-    navigation.navigate("Settings", { screen: "Services" });
+    navigation.navigate("Services");
   }, [navigation]);
 
   const renderItem = useCallback(
