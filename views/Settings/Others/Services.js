@@ -53,14 +53,14 @@ function Services() {
       flexDirection: "row",
       alignItems: "center",
       flex: 1,
+      gap: 12,
     },
     iconContainer: {
-      width: 40,
-      height: 40,
-      borderRadius: 12,
+      backgroundColor: colors.regular900,
+      borderRadius: 8,
+      padding: 8,
       justifyContent: "center",
       alignItems: "center",
-      marginRight: 12,
     },
     textContainer: {
       flex: 1,
@@ -82,8 +82,8 @@ function Services() {
       marginHorizontal: 16,
     },
     icon: {
-      width: 100,
-      height: 100,
+      width: 30,
+      height: 30,
     },
   });
 
@@ -91,13 +91,13 @@ function Services() {
     <TouchableOpacity style={styles.menuItem} onPress={onPress}>
       <View style={styles.menuItemContent}>
         <View style={styles.menuItemLeft}>
-          <View
-            style={[
-              styles.iconContainer,
-              { backgroundColor: colors.secondary },
-            ]}
-          >
-            <Image source={Icon} style={styles.icon} />
+          <View style={[styles.iconContainer]}>
+            <Icon
+              stroke={colors.regular100}
+              strokeWidth={1.75}
+              width={18}
+              height={18}
+            />
           </View>
           <View style={styles.textContainer}>
             <Text style={[styles.menuItemTitle, { color: colors.regular900 }]}>
@@ -120,7 +120,7 @@ function Services() {
       section: "Services universitaires",
       items: [
         {
-          icon: "https://www.utbm.fr/wp-content/uploads/2016/09/zimbra-logo.png",
+          icon: Envelope,
           title: "Zimbra",
           subtitle: "Accédez à votre messagerie universitaire",
           onPress: () => Linking.openURL("https://webmail.univ-poitiers.fr/"),

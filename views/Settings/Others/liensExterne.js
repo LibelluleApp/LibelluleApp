@@ -43,7 +43,7 @@ function LiensExterne() {
       letterSpacing: -0.4,
       alignSelf: "center",
       width: "90%",
-      marginTop: 22,
+      marginTop: 12,
       marginBottom: 15,
       letterSpacing: -0.4,
     },
@@ -71,21 +71,19 @@ function LiensExterne() {
       justifyContent: "space-between",
     },
     titleText: {
-      fontFamily: "Ubuntu_500Medium",
+      fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.regular950,
-      letterSpacing: -0.4,
+      color: colors.regular900,
     },
     descriptionText: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 13,
-      color: colors.regular800,
-      letterSpacing: -0.4,
+      color: colors.grey,
     },
     content: {
-      gap: 5,
+      gap: 3,
     },
   });
 
