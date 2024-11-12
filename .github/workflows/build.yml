@@ -125,21 +125,6 @@ jobs:
       - name: Install dependencies with npm
         run: yarn install
 
-      - name: Cache Expo CLI
-        uses: actions/cache@v3
-        with:
-          path: ~/.expo
-          key: expo-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            expo-${{ runner.os }}-
-
-      - name: Cache EAS CLI
-        uses: actions/cache@v3
-        with:
-          path: ~/.eas
-          key: eas-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            eas-${{ runner.os }}-
 
       - name: Log in to EAS
         uses: expo/expo-github-action@v8
@@ -148,7 +133,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build iOS
-        run: eas build --platform ios --profile preview --local --non-interactive
+        run: eas build --platform ios --profile development --local --non-interactive
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
