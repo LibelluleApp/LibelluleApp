@@ -214,7 +214,9 @@ const MenuItem = memo(
           ]}
         >
           <Icon
-            stroke={colors.regular100}
+            stroke={
+              title === "Se déconnecter" ? colors.red100 : colors.regular100
+            }
             strokeWidth={1.75}
             width={18}
             height={18}

@@ -123,7 +123,7 @@ const ViewTask = ({ route }) => {
       color: colors.white,
     },
     taskCTATextDelete: {
-      color: colors.red600,
+      color: colors.red600_2,
       fontSize: 15,
     },
   });

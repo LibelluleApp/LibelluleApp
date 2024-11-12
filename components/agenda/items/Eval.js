@@ -21,17 +21,17 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
       flexDirection: "row",
       justifyContent: "space-between",
       alignContent: "center",
-      backgroundColor: colors.red50_eval,
+      backgroundColor: colors.red50_2,
       gap: 10,
       borderRadius: 10,
       paddingVertical: 12,
       paddingHorizontal: 17,
       borderWidth: 0.5,
-      borderColor: colors.red300_eval,
+      borderColor: colors.red300_2,
       marginTop: 10,
     },
     evalText: {
-      color: colors.red500_eval,
+      color: colors.red500_2,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       fontSize: 14,
@@ -53,7 +53,7 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
       <View style={styles.containerEval}>
         <View style={styles.leftContainer}>
           <CircleAlert
-            stroke={colors.red500}
+            stroke={colors.red500_2}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -61,7 +61,6 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
           <Text style={styles.evalText}>
             <Text
               style={{
-                color: colors.red500,
                 fontFamily: "Ubuntu_500Medium",
                 letterSpacing: -0.4,
                 fontSize: 14,
@@ -74,7 +73,7 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
         </View>
         <View style={styles.rightContainer}>
           <ChevronRight
-            stroke={colors.red500}
+            stroke={colors.red500_2}
             strokeWidth={1.75}
             width={18}
             height={18}
