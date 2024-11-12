@@ -10,9 +10,11 @@ import {
 
 import { ChevronRight, Envelope, Lock } from "../../../assets/icons/Icons";
 import { ThemeContext } from "../../../utils/themeContext";
+import {useNavigation} from "@react-navigation/native";
 
 function Services() {
   const { colors } = useContext(ThemeContext);
+  const navigation = useNavigation();
 
   const styles = StyleSheet.create({
     container: {
@@ -55,9 +57,10 @@ function Services() {
       flex: 1,
     },
     iconContainer: {
+      backgroundColor: colors.regular900,
       width: 40,
       height: 40,
-      borderRadius: 12,
+      borderRadius: 8,
       justifyContent: "center",
       alignItems: "center",
       marginRight: 12,
@@ -84,20 +87,25 @@ function Services() {
     icon: {
       width: 100,
       height: 100,
-    },
+    }
   });
 
-  const MenuItem = memo(({ icon: Icon, title, subtitle, onPress, colors }) => (
+  const MenuItem = memo(({ icon: Icon, title, subtitle, onPress, colors, iconColor = colors.regular100, }) => (
     <TouchableOpacity style={styles.menuItem} onPress={onPress}>
       <View style={styles.menuItemContent}>
         <View style={styles.menuItemLeft}>
           <View
-            style={[
-              styles.iconContainer,
-              { backgroundColor: colors.secondary },
-            ]}
+              style={[
+                styles.iconContainer,
+                iconColor !== colors.regular100 && { backgroundColor: iconColor },
+              ]}
           >
-            <Image source={Icon} style={styles.icon} />
+            <Icon
+                stroke={colors.regular100}
+                strokeWidth={1.75}
+                width={18}
+                height={18}
+            />
           </View>
           <View style={styles.textContainer}>
             <Text style={[styles.menuItemTitle, { color: colors.regular900 }]}>
@@ -120,18 +128,10 @@ function Services() {
       section: "Services universitaires",
       items: [
         {
-          icon: "https://www.utbm.fr/wp-content/uploads/2016/09/zimbra-logo.png",
+          icon: Envelope,
           title: "Zimbra",
           subtitle: "Accédez à votre messagerie universitaire",
-          onPress: () => Linking.openURL("https://webmail.univ-poitiers.fr/"),
-        },
-        {
-          icon: Lock,
-          title: "Authentification",
-          subtitle: "Gérez vos identifiants universitaires",
-          onPress: () => {
-            /* Action */
-          },
+          onPress: () => navigation.navigate("ZimbraConnect"),
         },
       ],
     },
