@@ -72,17 +72,7 @@
                 "projectId": "142931be-af91-443d-9e7d-57ecd13da335"
             }
         },
-        "runtimeVersion": "1.0.11",
-        "updates": {
-            "url": "https://easapi.libellule.app/api/manifest?project=libellule&channel=staging",
-            "enabled": true,
-            "checkAutomatically": "ON_ERROR_RECOVERY",
-            "fallbackToCacheTimeout": 0,
-            "codeSigningCertificate": "./updates/certificate.pem",
-            "codeSigningMetadata": {
-                "keyid": "main",
-                "alg": "rsa-v1_5-sha256"
-            }
-        }
+        "runtimeVersion": "1.0.11"
+
     }
 }
