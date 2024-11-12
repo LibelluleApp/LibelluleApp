@@ -8,6 +8,7 @@ import updatePassword from "../../api/User/updatePassword";
 import { useNavigation } from "@react-navigation/native";
 import { Lock } from "./../../assets/icons/Icons";
 import { lostPasswordConnected } from "../../api/User/lostPassword";
+import TouchableScale from "react-native-touchable-scale";
 
 const ChangePassword = () => {
   const { colors } = useContext(ThemeContext);
@@ -240,17 +241,27 @@ const ChangePassword = () => {
           />
         </View>
         <View style={styles.editBtnContainer}>
-          <TouchableOpacity style={styles.editBtn} onPress={handleValidated}>
-            <Text style={styles.editBtnText}>Modifier</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.forgotPassword}
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
+            onPress={handleValidated}
+            style={{ width: "100%" }}
+          >
+            <View style={styles.editBtn}>
+              <Text style={styles.editBtnText}>Modifier</Text>
+            </View>
+          </TouchableScale>
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
             onPress={handleLostPassword}
           >
-            <Text style={styles.forgotPasswordText}>
-              J'ai oublié mon mot de passe
-            </Text>
-          </TouchableOpacity>
+            <View style={styles.forgotPassword}>
+              <Text style={styles.forgotPasswordText}>
+                J'ai oublié mon mot de passe
+              </Text>
+            </View>
+          </TouchableScale>
         </View>
       </View>
     </View>

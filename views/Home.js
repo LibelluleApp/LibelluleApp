@@ -397,21 +397,28 @@ function Home() {
           <View style={styles.leftContainer}>
             <View style={styles.weatherContainer}>
               {weather ? (
-                <TouchableOpacity
+                <TouchableScale
+                  friction={6}
+                  activeScale={0.78}
                   onPress={() => {
                     Linking.openURL(
                       "https://meteofrance.com/previsions-meteo-france/angouleme/16000"
                     );
                   }}
-                  style={styles.weatherContent}
                 >
-                  <WeatherIcon iconName={weather.conditionCode} />
-                  <Text style={styles.weatherTitle}>
-                    {Math.round(weather.temperature)}°C
-                  </Text>
-                </TouchableOpacity>
+                  <View style={styles.weatherContent}>
+                    <WeatherIcon iconName={weather.conditionCode} />
+                    <Text style={styles.weatherTitle}>
+                      {Math.round(weather.temperature)}°C
+                    </Text>
+                  </View>
+                </TouchableScale>
               ) : (
-                <TouchableOpacity onPress={() => navigation.navigate("Profil")}>
+                <TouchableScale
+                  friction={6}
+                  activeScale={0.95}
+                  onPress={() => navigation.navigate("Profil")}
+                >
                   <ShimmerPlaceHolder
                     width={50}
                     height={50}
@@ -423,7 +430,7 @@ function Home() {
                       style={styles.image}
                     />
                   </ShimmerPlaceHolder>
-                </TouchableOpacity>
+                </TouchableScale>
               )}
             </View>
 

@@ -12,6 +12,7 @@ import {
   ChevronRight,
 } from "../../../assets/icons/Icons";
 import { ThemeContext } from "./../../../utils/themeContext";
+import TouchableScale from "react-native-touchable-scale";
 
 function Eval({ data }) {
   const { colors } = useContext(ThemeContext);
@@ -49,7 +50,12 @@ function Eval({ data }) {
     return (
       <View>
         {data.map((item) => (
-          <TouchableOpacity key={item.agenda_id} style={styles.container}>
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
+            key={item.agenda_id}
+            style={styles.container}
+          >
             <View style={styles.containerEval}>
               <View style={styles.leftContainer}>
                 <CircleAlert
@@ -72,7 +78,7 @@ function Eval({ data }) {
                 ></ChevronRight>
               </View>
             </View>
-          </TouchableOpacity>
+          </TouchableScale>
         ))}
       </View>
     );

@@ -7,6 +7,7 @@ import fetchTp from "../../api/Groupe/fetchTp";
 import { showMessage } from "react-native-flash-message";
 import transferRole from "../../api/Groupe/transferRole";
 import { useAuth } from "../../context/AuthContext";
+import TouchableScale from "react-native-touchable-scale";
 
 const TransferRole = () => {
   const [value, setValue] = React.useState();
@@ -194,9 +195,15 @@ const TransferRole = () => {
           </View>
         </View>
         <View>
-          <TouchableOpacity style={styles.editBtn} onPress={handleChange}>
-            <Text style={styles.editBtnText}>Transmettre</Text>
-          </TouchableOpacity>
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
+            onPress={handleChange}
+          >
+            <View style={styles.editBtn}>
+              <Text style={styles.editBtnText}>Transmettre</Text>
+            </View>
+          </TouchableScale>
           <Text style={styles.textDisclaimer}>
             En cliquant sur ce bouton, l’accord de l’étudiant pour assumer ce
             rôle est confirmé.

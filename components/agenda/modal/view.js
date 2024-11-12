@@ -321,7 +321,7 @@ const ViewTask = ({ route }) => {
             </TouchableScale>
             <TouchableScale
               friction={6}
-              activeScale={0.97}
+              activeScale={0.86}
               style={{ width: "100%" }}
               onPress={handleConfirmDelete}
             >

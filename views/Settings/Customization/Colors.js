@@ -13,6 +13,7 @@ import {
   LightbulbOff,
   Palette,
 } from "./../../../assets/icons/Icons";
+import TouchableScale from "react-native-touchable-scale";
 
 function Colors() {
   const { isDarkMode, toggleTheme, changeTheme, colors, themes } =
@@ -230,7 +231,9 @@ function Colors() {
             </View>
             <View style={[styles.pageItem, { paddingTop: 5 }]}>
               {themeKeys.map((theme) => (
-                <TouchableOpacity
+                <TouchableScale
+                  friction={6}
+                  activeScale={0.9}
                   key={theme}
                   style={styles.colorContainer}
                   onPress={() => handleColorSelect(theme)}
@@ -260,7 +263,7 @@ function Colors() {
                   >
                     {theme.charAt(0).toUpperCase() + theme.slice(1)}
                   </Text>
-                </TouchableOpacity>
+                </TouchableScale>
               ))}
             </View>
           </View>

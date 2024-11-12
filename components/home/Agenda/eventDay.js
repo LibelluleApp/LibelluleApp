@@ -38,7 +38,6 @@ function EventDay({ date, onAgendaContentChange }) {
     },
     containerAgenda: {
       flexDirection: "column",
-      gap: 10,
     },
     loadingContainer: {
       marginTop: 15,
