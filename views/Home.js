@@ -122,34 +122,68 @@ function Home() {
   };
 
   const formattedDate = capitalizeFirstLetter(today.format("ddd D MMM"));
-
-  const generateWeatherMessage = (temp, conditionsType) => {
+  const generateWeatherMessage = (temp, conditionsType, currentTime) => {
     // Messages pour les étudiants
-    const studentMessages = [
+    const generalStudentMessages = [
       "N'oubliez pas de faire des pauses !",
       "Bonne révision, ça va le faire !",
       "Restez motivés, vous y êtes presque !",
-      "Petit café et ça repart 🚀",
       "Vous êtes sur la bonne voie !",
       "N'oubliez pas de vous hydrater !",
-      "Un peu de sport pour se défouler ?",
-      "En vrai, petit BK ce midi ?",
-      "Ça dit quoi l'équipe ?",
       "Mentalité Kaizen, petit pas par petit pas 🏔️",
       "Chaque effort compte, continuez comme ça !",
       "Prenez soin de vous la team 😊",
-      "Chaque erreur est une opportunité d'apprendre !",
+      "Là, on est biieennngggg 👀",
+      "Allez, on lâche pas les cours la team 😎",
+      "C'est quoi ces CDs ? 🤔",
+    ];
+
+    const startdayStudentMessages = [
+      "Oui je sais, le réveil est difficile 😭",
+      "Café et petit-déjeuner, c'est parti pour une bonne journée !",
+      "Allez la team, on part pour une journée productive 🚀",
+      "Petit-déjeuner, motivation et c'est partiiiiii 🫣",
+    ];
+
+    const morningStudentMessages = [
+      "La vibe du matin, quel plaisir ! 😊",
+      "Votre motivation du matin va vous porter loin aujourd'hui !",
+      "Frais et dispo pour travailler 👀",
+    ];
+
+    const middayStudentMessages = [
+      "Petite pause déjeuner, rechargez les batteries !",
+      "Bon appétit, profitez de votre pause !",
+      "Encore de la queue au Crousty... BK ?",
+      "Un peu de repos, vous avez bien travaillé ce matin.",
+    ];
+
+    const afternoonStudentMessages = [
+      "N'oubliez pas de faire des pauses et de vous détendre !",
+      "Restez motivés, vous êtes sur la bonne voie !",
+      "Petit café et ça repart 🚀",
+      "Vous gérez, continuez comme ça !",
+      "N'oubliez pas de vous hydrater régulièrement.",
+      "Un peu de sport pour se défouler ?",
+    ];
+
+    const eveningStudentMessages = [
+      "Bravo, vous avez bien travaillé aujourd'hui !",
+      "Profitez de la soirée pour vous détendre un peu.",
+      "Vous avez mérité une bonne nuit de sommeil !",
+      "Bonne fin de journée la team !",
+      "La journée de maallaaadeeee est finie !",
     ];
 
     // Messages météorologiques drôles et courts
-    let weatherMessage = "";
+    let weatherMessage = "Passez une excellente journée ! 🎉";
 
     switch (conditionsType) {
       case "Clear":
         weatherMessage =
           temp > 25
             ? "Trop chaud pour travailler, profitez ! ☀️"
-            : "Parfait pour un barbecue ! 🍖";
+            : "Ouais pas mal le temps ! ☀️";
         break;
       case "MostlyClear":
       case "PartlyCloudy":
@@ -205,6 +239,28 @@ function Home() {
     }
 
     // Choisir aléatoirement entre message étudiant et message météo
+    const hourOfDay = currentTime.getHours();
+    let studentMessages = [];
+    // Réveil
+    if (hourOfDay < 8 && hourOfDay > 5) {
+      studentMessages = [...generalStudentMessages, ...startdayStudentMessages];
+    }
+    // Matinée
+    else if (hourOfDay > 8 && hourOfDay < 12) {
+      studentMessages = [...generalStudentMessages, ...morningStudentMessages];
+    } else if (hourOfDay >= 12 && hourOfDay <= 14) {
+      studentMessages = [...generalStudentMessages, ...middayStudentMessages];
+    } else if (hourOfDay < 18 && hourOfDay > 14) {
+      studentMessages = [
+        ...generalStudentMessages,
+        ...afternoonStudentMessages,
+      ];
+    } else if (hourOfDay >= 18 && hourOfDay <= 0) {
+      studentMessages = [...generalStudentMessages, ...eveningStudentMessages];
+    } else {
+      studentMessages = [...generalStudentMessages];
+    }
+
     const showStudentMessage = Math.random() < 0.5; // 50% de chance
 
     return showStudentMessage
@@ -216,9 +272,11 @@ function Home() {
     try {
       const response = await fetchWeather();
       setWeather(response.currentWeather);
+      const currentTime = new Date();
       const message = generateWeatherMessage(
         response.currentWeather.temperature,
-        response.currentWeather.conditionCode
+        response.currentWeather.conditionCode,
+        currentTime
       );
       setWeatherMessage(message);
     } catch (error) {
