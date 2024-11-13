@@ -151,10 +151,10 @@ const Semaine = forwardRef((props, ref) => {
   );
 
   useEffect(() => {
-    if (isFocused && events.length === 0) {
+    if (isFocused) {
       fetchData();
     }
-  }, [isFocused, fetchData, events.length]);
+  }, [isFocused, fetchData]);
 
   const calendarTheme = useMemo(
     () => ({
