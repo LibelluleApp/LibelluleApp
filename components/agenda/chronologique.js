@@ -82,7 +82,7 @@ const Chronologie = ({
         <Text
           style={[
             styles.dateText,
-            { opacity: isSameDate ? 0 : 1 }, // Opacité à 0 pour les dates répétées
+            // { opacity: isSameDate ? 0 : 1 }, // Opacité à 0 pour les dates répétées
           ]}
         >
           {itemDate}
