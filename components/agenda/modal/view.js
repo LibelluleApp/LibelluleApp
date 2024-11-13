@@ -97,7 +97,7 @@ const ViewTask = ({ route }) => {
       textAlign: "center",
     },
     taskCTA: {
-      paddingBottom: Platform.OS === "ios" ? 75 : 25,
+      paddingBottom: 25,
       alignSelf: "center",
       flexDirection: "column",
       width: "100%",

@@ -52,20 +52,34 @@ const Semaine = forwardRef((props, ref) => {
     [handleGoToToday]
   );
 
-  const fetchData = useCallback(async () => {
-    if (isLoadingData) return;
+    const fetchData = useCallback(() => {
+        let isMounted = true;
+        const getData = async () => {
+            if (isLoadingData) return;
+            try {
+                setIsLoadingData(true);
+                const data = await fetchTimetable();
+                if (isMounted) {
+                    setEvents(data);
+                }
+            } catch (error) {
+                console.error("Error fetching timetable:", error);
+                if (isMounted) {
+                    setEvents([]);
+                }
+            } finally {
+                if (isMounted) {
+                    setIsLoadingData(false);
+                }
+            }
+        };
 
-    try {
-      setIsLoadingData(true);
-      const data = await fetchTimetable();
-      setEvents(data);
-    } catch (error) {
-      console.error("Error fetching timetable:", error);
-      setEvents([]);
-    } finally {
-      setIsLoadingData(false);
-    }
-  }, [isLoadingData]);
+        getData();
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
   const styles = useMemo(
     () =>
@@ -145,11 +159,11 @@ const Semaine = forwardRef((props, ref) => {
     [EventComponent]
   );
 
-  useEffect(() => {
-    if (isFocused) {
-      fetchData();
-    }
-  }, [isFocused, fetchData]);
+    useEffect(() => {
+        if (isFocused) {
+            fetchData();
+        }
+    }, [isFocused]);
 
   const calendarTheme = useMemo(
     () => ({

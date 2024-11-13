@@ -1,8 +1,8 @@
 {
     "expo" :{
-        "name": "LibelluleDev",
+        "name": "Libellule",
         "slug": "libellule",
-        "version": "1.0.11",
+        "version": "1.1.0",
         "orientation": "portrait",
         "icon": "./assets/ios/logo@3x.png",
         "userInterfaceStyle": "automatic",
@@ -20,11 +20,11 @@
                 "usesNonExemptEncryption": false
             },
             "googleServicesFile": "./GoogleService-Info.plist",
-            "bundleIdentifier": "com.libellule.libelluledev",
+            "bundleIdentifier": "com.libellule.libellule",
             "entitlements": {
                 "aps-environment": "production"
             },
-            "buildNumber": "1.24"
+            "buildNumber": "1.25"
         },
         "android": {
             "adaptiveIcon": {
@@ -34,7 +34,7 @@
             },
             "googleServicesFile": "./google-services.json",
             "package": "com.libellule.libellule",
-            "versionCode": 21
+            "versionCode": 22
         },
         "web": {
             "favicon": "./assets/favicon.png"
@@ -72,7 +72,17 @@
                 "projectId": "142931be-af91-443d-9e7d-57ecd13da335"
             }
         },
-        "runtimeVersion": "1.0.11"
-
+        "runtimeVersion": "1.1.0",
+        "updates": {
+            "url": "https://easapi.libellule.app/api/manifest?project=libellule&channel=staging",
+            "enabled": true,
+            "checkAutomatically": "ON_ERROR_RECOVERY",
+            "fallbackToCacheTimeout": 0,
+            "codeSigningCertificate": "./updates/certificate.pem",
+            "codeSigningMetadata": {
+                "keyid": "main",
+                "alg": "rsa-v1_5-sha256"
+            }
+        }
     }
 }

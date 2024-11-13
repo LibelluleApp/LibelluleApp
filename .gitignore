@@ -47,7 +47,6 @@ yarn-error.*
 *.tar.gz
 *.sh
 
-updates/
 
 yarn.lock
 package-lock.json
