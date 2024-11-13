@@ -58,12 +58,7 @@ const Semaine = forwardRef((props, ref) => {
     try {
       setIsLoadingData(true);
       const data = await fetchTimetable();
-      const sortedData =
-        data?.sort(
-          (a, b) => new Date(a.start.dateTime) - new Date(b.start.dateTime)
-        ) || [];
-
-      setEvents(sortedData);
+      setEvents(data);
     } catch (error) {
       console.error("Error fetching timetable:", error);
       setEvents([]);
