@@ -22,7 +22,7 @@ const Chronologie = ({
       backgroundColor: colors.background,
       width: "90%",
       marginHorizontal: "auto",
-      zIndex: -1
+      zIndex: -1,
     },
     headerText: {
       fontSize: 24,
@@ -62,7 +62,7 @@ const Chronologie = ({
   const today = moment().startOf("day");
 
   const upcomingTasks = tasks
-    .filter((task) => moment(task.date_fin).isAfter(today))
+    .filter((task) => moment(task.date_fin).isSameOrAfter(today)) // Utiliser isSameOrAfter au lieu de isAfter
     .sort((a, b) => moment(a.date_fin).diff(moment(b.date_fin)));
 
   const formatDate = (date) => {
