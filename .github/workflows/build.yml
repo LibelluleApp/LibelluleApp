@@ -78,7 +78,7 @@ jobs:
           token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build Android
-        run: eas build --platform android --profile development --local
+        run: eas build --platform android --profile production --local
 
       - name: Upload Android artifact
         uses: actions/upload-artifact@v3
