@@ -71,11 +71,12 @@ function Home() {
   const [weatherMessage, setWeatherMessage] = useState("");
 
   const styles = StyleSheet.create({
-    container: {
+    background: {
       backgroundColor: colors.background,
-      fontFamily: "Ubuntu_400Regular",
-      letterSpacing: -0.4,
       flex: 1,
+    },
+    container: {
+      gap: 25,
     },
     containerContent: {
       flexDirection: "row",
@@ -83,7 +84,7 @@ function Home() {
       width: "90%",
       alignSelf: "center",
       alignItems: "center",
-      marginVertical: 20,
+      marginTop: 20,
     },
     leftContainer: {
       flexDirection: "row",
@@ -449,116 +450,118 @@ function Home() {
   const navigation = useNavigation();
 
   return (
-    <GestureHandlerRootView style={styles.container}>
+    <GestureHandlerRootView style={styles.background}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.containerContent}>
-          <View style={styles.leftContainer}>
-            <View style={styles.weatherContainer}>
-              {weather ? (
-                <TouchableScale
-                  friction={6}
-                  activeScale={0.78}
-                  onPress={() => {
-                    Linking.openURL(
-                      "https://meteofrance.com/previsions-meteo-france/angouleme/16000"
-                    );
-                  }}
-                >
-                  <View style={styles.weatherContent}>
-                    <WeatherIcon iconName={weather.conditionCode} />
-                    <Text style={styles.weatherTitle}>
-                      {Math.round(weather.temperature)}°C
-                    </Text>
-                  </View>
-                </TouchableScale>
-              ) : (
-                <TouchableScale
-                  friction={6}
-                  activeScale={0.95}
-                  onPress={() => navigation.navigate("Profil")}
-                >
-                  <ShimmerPlaceHolder
-                    width={50}
-                    height={50}
-                    shimmerStyle={{ borderRadius: 100 }}
-                    visible={isLoading ? false : true}
+        <View style={styles.container}>
+          <View style={styles.containerContent}>
+            <View style={styles.leftContainer}>
+              <View style={styles.weatherContainer}>
+                {weather ? (
+                  <TouchableScale
+                    friction={6}
+                    activeScale={0.78}
+                    onPress={() => {
+                      Linking.openURL(
+                        "https://meteofrance.com/previsions-meteo-france/angouleme/16000"
+                      );
+                    }}
                   >
-                    <Image
-                      source={{ uri: user.lien_photo_profil }}
-                      style={styles.image}
-                    />
-                  </ShimmerPlaceHolder>
-                </TouchableScale>
-              )}
-            </View>
+                    <View style={styles.weatherContent}>
+                      <WeatherIcon iconName={weather.conditionCode} />
+                      <Text style={styles.weatherTitle}>
+                        {Math.round(weather.temperature)}°C
+                      </Text>
+                    </View>
+                  </TouchableScale>
+                ) : (
+                  <TouchableScale
+                    friction={6}
+                    activeScale={0.95}
+                    onPress={() => navigation.navigate("Profil")}
+                  >
+                    <ShimmerPlaceHolder
+                      width={50}
+                      height={50}
+                      shimmerStyle={{ borderRadius: 100 }}
+                      visible={isLoading ? false : true}
+                    >
+                      <Image
+                        source={{ uri: user.lien_photo_profil }}
+                        style={styles.image}
+                      />
+                    </ShimmerPlaceHolder>
+                  </TouchableScale>
+                )}
+              </View>
 
-            <View style={styles.welcomeContainer}>
-              <ShimmerPlaceHolder
-                width={100}
-                visible={isLoading ? false : true}
-              >
-                <Text
-                  style={{
-                    fontFamily: "Ubuntu_500Medium",
-                    letterSpacing: -0.4,
-                    fontSize: 15,
-                    color: colors.regular950,
-                  }}
+              <View style={styles.welcomeContainer}>
+                <ShimmerPlaceHolder
+                  width={100}
+                  visible={isLoading ? false : true}
                 >
-                  Bonjour{" "}
                   <Text
                     style={{
                       fontFamily: "Ubuntu_500Medium",
                       letterSpacing: -0.4,
-                      color: colors.regular800,
+                      fontSize: 15,
+                      color: colors.regular950,
                     }}
                   >
-                    {user.prenom}
+                    Bonjour{" "}
+                    <Text
+                      style={{
+                        fontFamily: "Ubuntu_500Medium",
+                        letterSpacing: -0.4,
+                        color: colors.regular800,
+                      }}
+                    >
+                      {user.prenom}
+                    </Text>
+                    ,
                   </Text>
-                  ,
-                </Text>
-              </ShimmerPlaceHolder>
-              <ShimmerPlaceHolder
-                width={150}
-                height={20}
-                visible={isLoading ? false : true}
-              >
-                <Text
-                  style={{
-                    fontFamily: "Ubuntu_400Regular",
-                    letterSpacing: -0.4,
-                    fontSize: 13,
-                    color: colors.regular950,
-                  }}
+                </ShimmerPlaceHolder>
+                <ShimmerPlaceHolder
+                  width={150}
+                  height={20}
+                  visible={isLoading ? false : true}
                 >
-                  {isLoading ? "Chargement..." : weatherMessage}
-                </Text>
+                  <Text
+                    style={{
+                      fontFamily: "Ubuntu_400Regular",
+                      letterSpacing: -0.4,
+                      fontSize: 13,
+                      color: colors.regular950,
+                    }}
+                  >
+                    {isLoading ? "Chargement..." : weatherMessage}
+                  </Text>
+                </ShimmerPlaceHolder>
+              </View>
+            </View>
+            <View style={styles.rightContainer}>
+              <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
+                <TouchableScale
+                  friction={6}
+                  activeScale={0.95}
+                  onPress={() => navigation.navigate("Emploi du temps")}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "Ubuntu_500Medium",
+                      letterSpacing: -0.4,
+                      color: colors.regular700,
+                      fontSize: 15,
+                    }}
+                  >{`${formattedDate}`}</Text>
+                </TouchableScale>
               </ShimmerPlaceHolder>
             </View>
           </View>
-          <View style={styles.rightContainer}>
-            <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
-              <TouchableScale
-                friction={6}
-                activeScale={0.95}
-                onPress={() => navigation.navigate("Emploi du temps")}
-              >
-                <Text
-                  style={{
-                    fontFamily: "Ubuntu_500Medium",
-                    letterSpacing: -0.4,
-                    color: colors.regular700,
-                    fontSize: 15,
-                  }}
-                >{`${formattedDate}`}</Text>
-              </TouchableScale>
-            </ShimmerPlaceHolder>
-          </View>
-        </View>
 
-        <NextCourse />
-        <AgendaHome />
-        <Restauration />
+          <NextCourse />
+          <AgendaHome />
+          <Restauration />
+        </View>
       </ScrollView>
     </GestureHandlerRootView>
   );

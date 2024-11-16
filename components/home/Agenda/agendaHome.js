@@ -43,7 +43,6 @@ function AgendaHome() {
   const styles = StyleSheet.create({
     agendaContainer: {
       gap: 5,
-      marginTop: 20,
     },
     nextTasksContainer: {
       flexDirection: "row",

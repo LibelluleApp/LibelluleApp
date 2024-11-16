@@ -107,7 +107,6 @@ function Restauration() {
       letterSpacing: -0.4,
       alignSelf: "center",
       width: "90%",
-      marginTop: 30,
       marginBottom: 20,
       gap: 15,
     },

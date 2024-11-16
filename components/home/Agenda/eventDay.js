@@ -54,6 +54,7 @@ function EventDay({ date, onAgendaContentChange }) {
       color: colors.regular800,
     },
     noItemContainer: {
+      marginVertical: 25,
       justifyContent: "center",
       alignItems: "center",
       gap: 15,
