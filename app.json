@@ -55,8 +55,7 @@
             [
                 "expo-location",
                 {
-                    "locationAlwaysAndWhenInUsePermission": "Autoriser $(PRODUCT_NAME) à voir votre localisation",
-                    "isAndroidBackgroundLocationEnabled": true
+                    "locationAlwaysAndWhenInUsePermission": "Autoriser $(PRODUCT_NAME) à voir votre localisation"
                 }
             ],
             [
