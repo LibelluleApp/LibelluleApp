@@ -133,7 +133,7 @@ const Jour = forwardRef((props, ref) => {
           borderRadius: 10,
           gap: 7,
           justifyContent: "center",
-          backgroundColor: colors.regular200,
+          backgroundColor: colors.regular600,
           position: "relative",
           overflow: "hidden",
         },
@@ -156,28 +156,28 @@ const Jour = forwardRef((props, ref) => {
           fontFamily: "Ubuntu_400Regular",
           letterSpacing: -0.4,
           fontSize: 13,
-          color: colors.regular800,
+          color: colors.regular100,
           gap: 10,
         },
         eventTitle: {
           fontFamily: "Ubuntu_500Medium",
           letterSpacing: -0.4,
           fontSize: 15,
-          color: colors.regular950,
+          color: colors.regular50,
           maxWidth: "100%",
         },
         eventTitleLittle: {
           fontFamily: "Ubuntu_500Medium",
           letterSpacing: -0.4,
           fontSize: 12,
-          color: colors.regular950,
+          color: colors.regular50,
           maxWidth: "100%",
         },
         eventTitleAlternance: {
           fontFamily: "Ubuntu_500Medium",
           letterSpacing: -0.4,
           fontSize: 20,
-          color: colors.regular950,
+          color: colors.regular100,
           maxWidth: "100%",
           alignItems: "center",
           justifyContent: "center",
@@ -190,7 +190,7 @@ const Jour = forwardRef((props, ref) => {
           borderRadius: 10,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: colors.regular200,
+          backgroundColor: colors.regular600,
         },
         loadingOverlay: {
           position: "absolute",
@@ -236,7 +236,7 @@ const Jour = forwardRef((props, ref) => {
       },
       colors: {
         background: colors.background,
-        border: colors.gray_clear,
+        border: colors.grey,
         text: colors.regular950,
       },
       textStyle: {
@@ -333,7 +333,7 @@ const Jour = forwardRef((props, ref) => {
             <View style={styles.eventBottom}>
               <View style={styles.eventContent}>
                 <MapPin
-                  stroke={colors.regular800}
+                  stroke={colors.regular100}
                   width={14}
                   height={14}
                   strokeWidth={1.75}
@@ -344,7 +344,7 @@ const Jour = forwardRef((props, ref) => {
               </View>
               <View style={styles.eventContent}>
                 <UserRound
-                  stroke={colors.regular800}
+                  stroke={colors.regular100}
                   width={14}
                   height={14}
                   strokeWidth={1.75}
@@ -358,7 +358,7 @@ const Jour = forwardRef((props, ref) => {
         </View>
       );
     },
-    [styles, colors.regular800]
+    [styles, colors.regular100]
   );
 
   const calendarProps = useMemo(

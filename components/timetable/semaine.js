@@ -26,6 +26,7 @@ const Semaine = forwardRef((props, ref) => {
   const [events, setEvents] = useState([]);
   const [isLoadingData, setIsLoadingData] = useState(false);
   const navigation = useNavigation();
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   const INITIAL_DATE = useMemo(() => {
     const now = new Date();
@@ -52,34 +53,34 @@ const Semaine = forwardRef((props, ref) => {
     [handleGoToToday]
   );
 
-    const fetchData = useCallback(() => {
-        let isMounted = true;
-        const getData = async () => {
-            if (isLoadingData) return;
-            try {
-                setIsLoadingData(true);
-                const data = await fetchTimetable();
-                if (isMounted) {
-                    setEvents(data);
-                }
-            } catch (error) {
-                console.error("Error fetching timetable:", error);
-                if (isMounted) {
-                    setEvents([]);
-                }
-            } finally {
-                if (isMounted) {
-                    setIsLoadingData(false);
-                }
-            }
-        };
+  const fetchData = useCallback(() => {
+    let isMounted = true;
+    const getData = async () => {
+      if (isLoadingData) return;
+      try {
+        setIsLoadingData(true);
+        const data = await fetchTimetable();
+        if (isMounted) {
+          setEvents(data);
+        }
+      } catch (error) {
+        console.error("Error fetching timetable:", error);
+        if (isMounted) {
+          setEvents([]);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoadingData(false);
+        }
+      }
+    };
 
-        getData();
+    getData();
 
-        return () => {
-            isMounted = false;
-        };
-    }, []);
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const styles = useMemo(
     () =>
@@ -100,27 +101,56 @@ const Semaine = forwardRef((props, ref) => {
           borderRadius: 10,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: colors.regular200,
+          backgroundColor: colors.regular600,
         },
         eventContainerShort: {
           height: "100%",
           paddingVertical: 10,
           paddingHorizontal: 10,
           borderRadius: 10,
-          backgroundColor: colors.regular200,
+          backgroundColor: colors.regular600,
         },
         eventTitleLong: {
           fontFamily: "Ubuntu_500Medium",
           fontSize: 15,
-          color: colors.regular950,
+          color: colors.regular50,
           transform: [{ rotate: "-90deg" }],
           width: 85,
         },
         eventTitleShort: {
           fontFamily: "Ubuntu_500Medium",
           fontSize: 11,
-          color: colors.regular950,
+          color: colors.regular50,
           maxWidth: "100%",
+        },
+
+        weekNumberWrapper: {
+          position: "absolute",
+          left: 0,
+          top: 0,
+          bottom: 0,
+          width: 60,
+          zIndex: 1,
+          pointerEvents: "none",
+        },
+        weekNumberItem: {
+          height: 60,
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        monthText: {
+          fontSize: 12,
+          fontFamily: "Ubuntu_400Regular",
+          letterSpacing: -0.4,
+          color: colors.regular800,
+          textTransform: "capitalize",
+        },
+        weekNumberText: {
+          fontSize: 12,
+          fontFamily: "Ubuntu_500Medium",
+          letterSpacing: -0.4,
+          color: colors.regular800,
+          textTransform: "capitalize",
         },
       }),
     [colors]
@@ -159,11 +189,11 @@ const Semaine = forwardRef((props, ref) => {
     [EventComponent]
   );
 
-    useEffect(() => {
-        if (isFocused) {
-            fetchData();
-        }
-    }, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      fetchData();
+    }
+  }, [isFocused]);
 
   const calendarTheme = useMemo(
     () => ({
@@ -173,7 +203,7 @@ const Semaine = forwardRef((props, ref) => {
       },
       colors: {
         background: colors.background,
-        border: colors.gray_clear,
+        border: colors.grey,
         text: colors.regular950,
       },
       textStyle: {
@@ -190,12 +220,12 @@ const Semaine = forwardRef((props, ref) => {
         color: colors.regular700,
       },
       dayName: {
-        color: colors.grey,
+        color: colors.regular900,
         fontFamily: "Ubuntu_400Regular",
         letterSpacing: -0.4,
       },
       dayNumber: {
-        color: colors.grey,
+        color: colors.regular900,
         fontFamily: "Ubuntu_400Regular",
         letterSpacing: -0.4,
       },
@@ -213,17 +243,27 @@ const Semaine = forwardRef((props, ref) => {
         color: colors.grey,
       },
       weekNumber: {
-        color: colors.regular950,
+        color: colors.regular900,
         fontFamily: "Ubuntu_500Medium",
         letterSpacing: -0.4,
       },
       weekNumberContainer: {
-        backgroundColor: colors.regular100,
+        backgroundColor: "transparent",
       },
       headerContainer: {
         borderBottomWidth: 0,
       },
       nowIndicatorColor: colors.regular700,
+      weekNumber: {
+        color: colors.regular900,
+        fontFamily: "Ubuntu_500Medium",
+        letterSpacing: -0.4,
+      },
+      weekNumberContainer: {
+        backgroundColor: "transparent",
+        height: 45, // Assurez-vous d'avoir assez d'espace pour le mois
+        paddingVertical: 4,
+      },
     }),
     [colors]
   );
@@ -266,11 +306,53 @@ const Semaine = forwardRef((props, ref) => {
     [navigation]
   );
 
+  // Fonction pour calculer le numéro de semaine
+  const getWeekNumber = useCallback((date) => {
+    const d = new Date(
+      Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    );
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+  }, []);
+
+  const WeekNumberColumn = useCallback(() => {
+    const monthNames = [
+      "Jan",
+      "Fév",
+      "Mar",
+      "Avr",
+      "Mai",
+      "Juin",
+      "Juil",
+      "Août",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Déc",
+    ];
+    const weekNumber = getWeekNumber(currentDate);
+    const month = monthNames[currentDate.getMonth()];
+
+    return (
+      <View style={styles.weekNumberWrapper}>
+        <View style={styles.weekNumberItem}>
+          <Text style={styles.monthText}>{month}.</Text>
+          <Text style={styles.weekNumberText}>Sem {weekNumber}</Text>
+        </View>
+      </View>
+    );
+  }, [currentDate, styles, getWeekNumber]);
+
+  const handleDateChanged = useCallback((date) => {
+    setCurrentDate(new Date(date));
+  }, []);
+
   const calendarProps = useMemo(
     () => ({
       viewMode: "week",
       minDate: "2024-09-02",
-      showWeekNumber: true,
       numberOfDays: 5,
       start: 8 * 60,
       end: 18.5 * 60,
@@ -292,12 +374,14 @@ const Semaine = forwardRef((props, ref) => {
         Dimensions.get("screen").height / 17.7 +
         (Platform.OS === "android" ? 1 : 0),
       theme: calendarTheme,
+      onDateChanged: handleDateChanged,
     }),
-    [events, INITIAL_DATE, calendarTheme]
+    [events, INITIAL_DATE, calendarTheme, handleDateChanged]
   );
 
   return (
     <View style={styles.container}>
+      <WeekNumberColumn />
       <CalendarContainer
         {...calendarProps}
         isLoading={isLoadingData}
