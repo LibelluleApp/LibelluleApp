@@ -34,7 +34,7 @@
             },
             "googleServicesFile": "./google-services.json",
             "package": "com.libellule.libellule",
-            "versionCode": 22
+            "versionCode": 23
         },
         "web": {
             "favicon": "./assets/favicon.png"
