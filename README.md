@@ -33,14 +33,10 @@
 ## ✨ Fonctionnalités
 
 ### Accueil
+- Affichage de la météo et de la température de la localisation actuelle
+- Message personnalisé selon la météo et le moment de la journée
 - Affichage du prochain cours
-- Vue semaine (5 jours)
-  - Nombre d'heures de cours
-  - Météo
-  - Présence d'une évaluation
-  - Devoirs à faire avec taux d'accomplissement
-- Navigation
-  - Accès rapide aux autres fonctionnalités
+- Devoirs à faire pour le jour suivant
 
 ### Emploi du temps
 - Vues
