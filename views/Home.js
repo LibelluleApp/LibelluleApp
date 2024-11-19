@@ -50,6 +50,7 @@ const getData = () => {
 
 function Home() {
   const { colors } = useContext(ThemeContext);
+  const [weatherError, setWeatherError] = useState(false);
   const [user, setUser] = useState({});
   const isFocused = useIsFocused();
   const today = moment();
@@ -272,6 +273,14 @@ function Home() {
   const fetchWeatherData = async () => {
     try {
       const response = await fetchWeather();
+      
+      if (response.error) {
+        setWeatherError(true);
+        setWeatherMessage(response.message || "Données météo indisponibles");
+        setWeather(null);
+        return;
+      }
+      
       setWeather(response.currentWeather);
       const currentTime = new Date();
       const message = generateWeatherMessage(
@@ -280,10 +289,60 @@ function Home() {
         currentTime
       );
       setWeatherMessage(message);
+      setWeatherError(false);
     } catch (error) {
       console.error("Failed to fetch weather data:", error);
-      setWeatherMessage("Impossible de charger les données météo.");
+      setWeatherError(true);
+      setWeatherMessage("Données météo indisponibles");
+      setWeather(null);
     }
+  };
+
+  const renderWeatherOrProfile = () => {
+    if (isLoading) {
+      return (
+        <ShimmerPlaceHolder
+          width={50}
+          height={50}
+          shimmerStyle={{ borderRadius: 100 }}
+          visible={false}
+        />
+      );
+    }
+
+    if (weather && !weatherError) {
+      return (
+        <TouchableScale
+          friction={6}
+          activeScale={0.78}
+          onPress={() => {
+            Linking.openURL(
+              "https://meteofrance.com/previsions-meteo-france/angouleme/16000"
+            );
+          }}
+        >
+          <View style={styles.weatherContent}>
+            <WeatherIcon iconName={weather.conditionCode} />
+            <Text style={styles.weatherTitle}>
+              {Math.round(weather.temperature)}°C
+            </Text>
+          </View>
+        </TouchableScale>
+      );
+    }
+
+    return (
+      <TouchableScale
+        friction={6}
+        activeScale={0.95}
+        onPress={() => navigation.navigate("Profil")}
+      >
+        <Image
+          source={{ uri: user.lien_photo_profil }}
+          style={styles.image}
+        />
+      </TouchableScale>
+    );
   };
 
   const WeatherIcon = ({ iconName }) => {
@@ -456,48 +515,14 @@ function Home() {
           <View style={styles.containerContent}>
             <View style={styles.leftContainer}>
               <View style={styles.weatherContainer}>
-                {weather ? (
-                  <TouchableScale
-                    friction={6}
-                    activeScale={0.78}
-                    onPress={() => {
-                      Linking.openURL(
-                        "https://meteofrance.com/previsions-meteo-france/angouleme/16000"
-                      );
-                    }}
-                  >
-                    <View style={styles.weatherContent}>
-                      <WeatherIcon iconName={weather.conditionCode} />
-                      <Text style={styles.weatherTitle}>
-                        {Math.round(weather.temperature)}°C
-                      </Text>
-                    </View>
-                  </TouchableScale>
-                ) : (
-                  <TouchableScale
-                    friction={6}
-                    activeScale={0.95}
-                    onPress={() => navigation.navigate("Profil")}
-                  >
-                    <ShimmerPlaceHolder
-                      width={50}
-                      height={50}
-                      shimmerStyle={{ borderRadius: 100 }}
-                      visible={isLoading ? false : true}
-                    >
-                      <Image
-                        source={{ uri: user.lien_photo_profil }}
-                        style={styles.image}
-                      />
-                    </ShimmerPlaceHolder>
-                  </TouchableScale>
-                )}
+              <View style={styles.weatherContainer}>
+                {renderWeatherOrProfile()}
               </View>
 
               <View style={styles.welcomeContainer}>
                 <ShimmerPlaceHolder
                   width={100}
-                  visible={isLoading ? false : true}
+                  visible={!isLoading}
                 >
                   <Text
                     style={{
@@ -523,7 +548,7 @@ function Home() {
                 <ShimmerPlaceHolder
                   width={150}
                   height={20}
-                  visible={isLoading ? false : true}
+                  visible={!isLoading}
                 >
                   <Text
                     style={{
@@ -539,7 +564,7 @@ function Home() {
               </View>
             </View>
             <View style={styles.rightContainer}>
-              <ShimmerPlaceHolder width={70} visible={isLoading ? false : true}>
+              <ShimmerPlaceHolder width={70} visible={!isLoading}>
                 <TouchableScale
                   friction={6}
                   activeScale={0.95}
