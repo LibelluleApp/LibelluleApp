@@ -1515,6 +1515,26 @@ function Waves(props) {
   );
 }
 
+function WindyIcon(props) {
+  return (
+      <Svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={24}
+          height={24}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-wind"
+          {...props}
+      >
+        <Path d="M12.8 19.6A2 2 0 1014 16H2M17.5 8a2.5 2.5 0 112 4H2M9.8 4.4A2 2 0 1111 8H2"/>
+      </Svg>)
+}
+
+
 // --- Shapes ---
 
 function CircleHome(props) {
@@ -1656,4 +1676,5 @@ export {
   // Shapes
   CircleHome,
   SquareHome,
+    WindyIcon,
 };

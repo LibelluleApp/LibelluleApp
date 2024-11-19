@@ -20,6 +20,7 @@ import {
   CloudLightning,
   SnowFlake,
   Waves,
+    WindyIcon
 } from "./../assets/icons/Icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
