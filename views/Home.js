@@ -515,10 +515,8 @@ function Home() {
           <View style={styles.containerContent}>
             <View style={styles.leftContainer}>
               <View style={styles.weatherContainer}>
-              <View style={styles.weatherContainer}>
                 {renderWeatherOrProfile()}
               </View>
-
               <View style={styles.welcomeContainer}>
                 <ShimmerPlaceHolder
                   width={100}
