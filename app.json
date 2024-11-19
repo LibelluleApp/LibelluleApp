@@ -2,7 +2,7 @@
     "expo" :{
         "name": "Libellule",
         "slug": "libellule",
-        "version": "1.1.0",
+        "version": "1.1.1",
         "orientation": "portrait",
         "icon": "./assets/ios/logo@3x.png",
         "userInterfaceStyle": "automatic",
@@ -24,7 +24,7 @@
             "entitlements": {
                 "aps-environment": "production"
             },
-            "buildNumber": "1.25"
+            "buildNumber": "1.26"
         },
         "android": {
             "adaptiveIcon": {
@@ -34,7 +34,7 @@
             },
             "googleServicesFile": "./google-services.json",
             "package": "com.libellule.libellule",
-            "versionCode": 23
+            "versionCode": 24
         },
         "web": {
             "favicon": "./assets/favicon.png"
@@ -71,7 +71,7 @@
                 "projectId": "142931be-af91-443d-9e7d-57ecd13da335"
             }
         },
-        "runtimeVersion": "1.1.0",
+        "runtimeVersion": "1.1.1",
         "updates": {
             "url": "https://easapi.libellule.app/api/manifest?project=libellule&channel=staging",
             "enabled": true,
