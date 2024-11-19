@@ -24,7 +24,7 @@
             "entitlements": {
                 "aps-environment": "production"
             },
-            "buildNumber": "1.26"
+            "buildNumber": "1.27"
         },
         "android": {
             "adaptiveIcon": {
@@ -34,7 +34,7 @@
             },
             "googleServicesFile": "./google-services.json",
             "package": "com.libellule.libellule",
-            "versionCode": 24
+            "versionCode": 25
         },
         "web": {
             "favicon": "./assets/favicon.png"
@@ -69,18 +69,6 @@
         "extra": {
             "eas": {
                 "projectId": "142931be-af91-443d-9e7d-57ecd13da335"
-            }
-        },
-        "runtimeVersion": "1.1.1",
-        "updates": {
-            "url": "https://easapi.libellule.app/api/manifest?project=libellule&channel=staging",
-            "enabled": true,
-            "checkAutomatically": "ON_ERROR_RECOVERY",
-            "fallbackToCacheTimeout": 0,
-            "codeSigningCertificate": "./updates/certificate.pem",
-            "codeSigningMetadata": {
-                "keyid": "main",
-                "alg": "rsa-v1_5-sha256"
             }
         }
     }
