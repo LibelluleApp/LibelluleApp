@@ -1,13 +1,14 @@
 import ApiManager from "../ApiManager";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import {getAlternant, getUserData} from "../../utils/storage";
 
 async function fetchNextCourse() {
   try {
-    const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
+    const user_data = getUserData();
     if (!user_data.groupe_id) {
       throw new Error("Le groupe_id n'est pas défini dans AsyncStorage.");
     }
-    let isAlternant = await AsyncStorage.getItem("isAlternant");
+    let isAlternant = getAlternant();
 
     if (isAlternant === "true") {
       user_data.groupe_id = user_data.groupe_id + "A";

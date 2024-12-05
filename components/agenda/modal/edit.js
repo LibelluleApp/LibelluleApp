@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import {
   View,
   Text,
@@ -7,82 +7,160 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  ScrollView,
+  Platform,
 } from "react-native";
-import { Calendar } from "./../../../assets/icons/Icons";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { KeyboardAvoidingView } from "react-native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
+import {
+  Calendar,
+  TextIcon,
+  Baseline,
+  GraduationCap,
+} from "./../../../assets/icons/Icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import SelectComponent from "./select";
 import ButtonAuth from "../../auth/buttonAuth";
 import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment-timezone";
 import { ThemeContext } from "./../../../utils/themeContext";
 import saveEditAgenda from "../../../api/Agenda/edit";
+import TouchableScale from "react-native-touchable-scale";
 
 const Edit = ({ route }) => {
   const { colors } = useContext(ThemeContext);
   const navigation = useNavigation();
   const { task } = route.params;
+  const scrollViewRef = useRef(null);
+  const descriptionInputRef = useRef(null);
 
   const [dates, setDates] = useState(moment.tz(task.date_fin, "Europe/Paris"));
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const [selectedButton, setSelectedButton] = useState("task");
   const [matiere, setMatiere] = useState(task.Ressource.nom_ressource);
   const [type, setType] = useState(task.type);
   const [titre, setTitre] = useState(task.titre);
   const [description, setDescription] = useState(task.contenu);
   const agenda_id = task.agenda_id;
 
-  const [error, setError] = useState(null);
+  const handleDescriptionFocus = () => {
+    // Attendre que le clavier soit complètement ouvert
+    setTimeout(() => {
+      descriptionInputRef.current?.measureInWindow((x, y, width, height) => {
+        scrollViewRef.current?.scrollTo({
+          y: y - 100, // 100px au-dessus du champ pour une meilleure visibilité
+          animated: true,
+        });
+      });
+    }, 100);
+  };
+
   const styles = StyleSheet.create({
-    background: {
+    container: {
+      flex: 1,
       backgroundColor: colors.background,
+    },
+    contentContainer: {
       flex: 1,
     },
-    container: {
+    scrollViewContainer: {
+      flexGrow: 1,
       width: "90%",
       alignSelf: "center",
       paddingTop: 20,
+      paddingBottom: 20,
     },
-    title: {
-      fontSize: 15,
-      fontFamily: "Ubuntu_500Medium",
-      color: colors.black,
-      marginBottom: 10,
-    },
-    input: {
-      borderRadius: 10,
-      borderColor: colors.input_border,
-      paddingHorizontal: 20,
-      height: 58,
-      color: colors.black,
-      borderWidth: 0.5,
-      marginBottom: 20,
-      justifyContent: "center",
-      backgroundColor: colors.white_background,
-      fontFamily: "Ubuntu_400Regular",
-    },
-    date: {
+    buttonContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
+      zIndex: 5,
+    },
+    buttonContent: {
+      width: "48%",
+      height: 40,
+      borderRadius: 50,
+      justifyContent: "center",
       alignItems: "center",
+      zIndex: 5,
+    },
+    buttonContentSelected: {
+      backgroundColor: colors.regular200,
+      zIndex: 5,
+    },
+    buttonContentUnselected: {
+      backgroundColor: colors.background,
+      borderColor: colors.regular200,
+      borderWidth: 1,
+      zIndex: 5,
+    },
+    buttonTitleSelected: {
+      color: colors.regular900,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      zIndex: 5,
+    },
+    buttonTitleUnselected: {
+      color: colors.regular400,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 15,
+      zIndex: 5,
+    },
+    inputContainer: {
+      marginTop: 20,
+      gap: 15,
+      zIndex: 4,
+    },
+    inputContent: {
+      flexDirection: "row",
+      alignItems: "center",
+      width: "100%",
+      gap: 15,
+      zIndex: 4,
+    },
+    input: {
+      flex: 1,
+      borderRadius: 10,
+      paddingHorizontal: 20,
+      height: 58,
+      fontSize: 14,
+      color: colors.regular900,
+      fontFamily: "Ubuntu_400Regular",
+      backgroundColor: colors.white_background,
+      zIndex: 4,
     },
     description: {
       height: 135,
-      paddingHorizontal: 20,
       padding: 15,
       textAlignVertical: "top",
-      paddingVertical: 10,
     },
     textDate: {
-      color: colors.black,
+      color: colors.regular900,
       fontFamily: "Ubuntu_400Regular",
-      fontSize: 15,
+      fontSize: 14,
       textTransform: "capitalize",
     },
+    btnContainerBottom: {
+      padding: 20,
+      paddingBottom: Platform.OS === "ios" ? 40 : 20,
+      backgroundColor: colors.background,
+      width: "100%",
+    },
+    btnContainerBottomText: {
+      color: colors.grey,
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 13,
+      textAlign: "center",
+      letterSpacing: -0.5,
+      marginTop: 10,
+    },
   });
-
   const handleSaveTask = async () => {
     if (type !== "eval") {
       if (!dates || !matiere || !type || !titre) {
@@ -93,19 +171,16 @@ const Edit = ({ route }) => {
         });
         return;
       }
-    } else {
-      if (!dates || !matiere || !type) {
-        showMessage({
-          message: "Veuillez remplir tous les champs obligatoires.",
-          type: "danger",
-          titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        });
-        return;
-      }
+    } else if (!dates || !matiere || !type) {
+      showMessage({
+        message: "Veuillez remplir tous les champs obligatoires.",
+        type: "danger",
+        titleStyle: { fontFamily: "Ubuntu_400Regular" },
+      });
+      return;
     }
 
     setLoading(true);
-    setError(null);
     try {
       const result = await saveEditAgenda(
         titre,
@@ -113,7 +188,7 @@ const Edit = ({ route }) => {
         dates.format("yyyy-MM-DD"),
         matiere,
         type,
-        agenda_id // Include ID to update the existing agenda item
+        agenda_id
       );
       if (result.status === "success") {
         showMessage({
@@ -121,10 +196,9 @@ const Edit = ({ route }) => {
           type: "success",
           titleStyle: { fontFamily: "Ubuntu_400Regular" },
         });
-        navigation.navigate("Agenda");
+        navigation.goBack();
       }
     } catch (error) {
-      setError(error.message);
       showMessage({
         message: error.message,
         type: "danger",
@@ -135,115 +209,213 @@ const Edit = ({ route }) => {
     }
   };
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-  };
+  const showDatePicker = () => setDatePickerVisibility(true);
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
+  const hideDatePicker = () => setDatePickerVisibility(false);
 
   const handleConfirm = (date) => {
     setDates(moment.tz(date, "Europe/Paris"));
     hideDatePicker();
   };
 
-  const data = [{ label: "Anglais", value: "1" }];
+  const titleHeight = useSharedValue(type === "eval" ? 0 : 58);
+  const marginValue = useSharedValue(20);
 
-  const data2 = [
-    { label: "Tâche à faire", value: "devoir" },
-    { label: "Évaluation", value: "eval" },
-  ];
+  const animatedTitleStyle = useAnimatedStyle(() => ({
+    height: withTiming(titleHeight.value, {
+      duration: 250,
+      easing: Easing.inOut(Easing.circle),
+    }),
+    opacity: withTiming(titleHeight.value > 0 ? 1 : 0, {
+      duration: 250,
+      easing: Easing.inOut(Easing.circle),
+    }),
+  }));
 
-  const [value2, setValue2] = useState(type);
+  const animatedInputContainerStyle = useAnimatedStyle(() => ({
+    marginTop: withTiming(marginValue.value, {
+      duration: 250,
+      easing: Easing.inOut(Easing.circle),
+    }),
+  }));
+
+  const updateType = (newType) => {
+    setType(newType);
+    setSelectedButton(newType === "eval" ? "eval" : "task");
+    titleHeight.value = newType === "eval" ? 0 : 58;
+    marginValue.value = newType === "eval" ? 5 : 20;
+  };
 
   return (
-    <KeyboardAwareScrollView
-      style={styles.background}
-      extraScrollHeight={40}
-      keyboardOpeningTime={10}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <View style={styles.container}>
-          <View style={styles.inputContainer}>
-            <Text style={styles.title}>Date*</Text>
-            <TouchableOpacity
-              onPress={showDatePicker}
-              style={[styles.input, styles.date]}
-            >
-              <Text style={styles.textDate}>
-                {dates.format("dddd DD MMMM")}
-              </Text>
-              <Calendar
-                stroke={colors.black}
-                strokeWidth={1.75}
-                width={16}
-                height={16}
-              />
-            </TouchableOpacity>
-            <DateTimePickerModal
-              isVisible={isDatePickerVisible}
-              mode="date"
-              date={moment.tz(dates, "Europe/Paris").toDate()}
-              minimumDate={new Date()}
-              locale="fr-FR"
-              onConfirm={handleConfirm}
-              onCancel={hideDatePicker}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.title}>Matière*</Text>
-            <TextInput
-              style={styles.input}
-              placeholderTextColor={colors.text_placeholder}
-              placeholder="Nom de la matière"
-              value={matiere}
-              onChangeText={(text) => setMatiere(text)}
-            />
-          </View>
-          <View style={styles.inputContainer}>
-            <Text style={styles.title}>Type de tâche*</Text>
-            <SelectComponent
-              onChange={(item) => {
-                setValue2(item.value);
-                setType(item.value);
-              }}
-              data={data2}
-              value={value2}
-            />
-          </View>
-          {type !== "eval" && (
-            <View style={styles.inputContainer}>
-              <Text style={styles.title}>Titre*</Text>
-              <TextInput
-                style={styles.input}
-                placeholderTextColor={colors.text_placeholder}
-                placeholder="Titre de la tâche"
-                value={titre}
-                onChangeText={(text) => setTitre(text)}
-              />
-            </View>
-          )}
-          <View style={styles.inputContainer}>
-            <Text style={styles.title}>Description</Text>
-            <TextInput
-              style={[styles.input, styles.description]}
-              placeholderTextColor={colors.text_placeholder}
-              placeholder="Description de la tâche"
-              multiline={true}
-              value={description}
-              onChangeText={(text) => setDescription(text)}
-            />
-          </View>
+      <View style={styles.container}>
+        <ScrollView
+          ref={scrollViewRef}
+          contentContainerStyle={styles.scrollViewContainer}
+          keyboardDismissMode="interactive"
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View>
+              <View style={styles.buttonContainer}>
+                <TouchableScale
+                  style={[
+                    styles.buttonContent,
+                    type === "devoir"
+                      ? styles.buttonContentSelected
+                      : styles.buttonContentUnselected,
+                  ]}
+                  friction={6}
+                  activeScale={0.95}
+                  onPress={() => updateType("devoir")}
+                >
+                  <Text
+                    style={
+                      type === "devoir"
+                        ? styles.buttonTitleSelected
+                        : styles.buttonTitleUnselected
+                    }
+                  >
+                    Tâche
+                  </Text>
+                </TouchableScale>
+                <TouchableScale
+                  style={[
+                    styles.buttonContent,
+                    type === "eval"
+                      ? styles.buttonContentSelected
+                      : styles.buttonContentUnselected,
+                  ]}
+                  friction={6}
+                  activeScale={0.95}
+                  onPress={() => updateType("eval")}
+                >
+                  <Text
+                    style={
+                      type === "eval"
+                        ? styles.buttonTitleSelected
+                        : styles.buttonTitleUnselected
+                    }
+                  >
+                    Évaluation
+                  </Text>
+                </TouchableScale>
+              </View>
 
-          <ButtonAuth
-            title="Sauvegarder"
-            onPress={handleSaveTask}
-            loading={loading}
-          />
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAwareScrollView>
+              <Animated.View
+                style={[styles.inputContainer, animatedInputContainerStyle]}
+              >
+                <Animated.View
+                  style={[styles.inputContent, animatedTitleStyle]}
+                >
+                  <Baseline width={20} height={20} stroke={colors.regular900} />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Ajouter un titre"
+                    placeholderTextColor={colors.text_placeholder}
+                    onChangeText={(text) => setTitre(text)}
+                    value={titre}
+                    editable={type !== "eval"}
+                    pointerEvents={type === "eval" ? "none" : "auto"}
+                  />
+                </Animated.View>
+
+                <View style={styles.inputContent}>
+                  <Calendar stroke={colors.regular900} width={20} height={20} />
+                  <TouchableOpacity
+                    onPress={showDatePicker}
+                    style={[
+                      styles.input,
+                      {
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      },
+                    ]}
+                  >
+                    <Text style={styles.textDate}>
+                      {dates.format("dddd DD MMMM")}
+                    </Text>
+                  </TouchableOpacity>
+                  <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    date={moment.tz(dates, "Europe/Paris").toDate()}
+                    minimumDate={new Date()}
+                    locale="fr-FR"
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
+                  />
+                </View>
+
+                <View style={styles.inputContent}>
+                  <GraduationCap
+                    width={20}
+                    height={20}
+                    stroke={colors.regular900}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Ajouter une matière"
+                    placeholderTextColor={colors.text_placeholder}
+                    onChangeText={(text) => setMatiere(text)}
+                    value={matiere}
+                  />
+                </View>
+
+                <View style={styles.inputContent}>
+                  <TextIcon width={20} height={20} stroke={colors.regular900} />
+                  <TextInput
+                    ref={descriptionInputRef}
+                    style={[styles.input, styles.description]}
+                    placeholder="Ajouter une description"
+                    placeholderTextColor={colors.text_placeholder}
+                    onChangeText={(text) => setDescription(text)}
+                    value={description}
+                    multiline={true}
+                    numberOfLines={4}
+                    onFocus={handleDescriptionFocus}
+                  />
+                </View>
+              </Animated.View>
+            </View>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+
+        {Platform.OS === "android" ? (
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.btnContainerBottom}>
+              <ButtonAuth
+                title="Modifier"
+                bgColor={colors.regular900}
+                loading={loading}
+                onPress={handleSaveTask}
+              />
+              <Text style={styles.btnContainerBottomText}>
+                Cette modification sera visible pour tous les étudiants du TP.
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        ) : (
+          <View style={styles.btnContainerBottom}>
+            <ButtonAuth
+              title="Modifier"
+              bgColor={colors.regular900}
+              loading={loading}
+              onPress={handleSaveTask}
+            />
+            <Text style={styles.btnContainerBottomText}>
+              Cette modification sera visible pour tous les étudiants du TP.
+            </Text>
+          </View>
+        )}
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 

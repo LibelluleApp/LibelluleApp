@@ -89,14 +89,16 @@ const DeleteAccount = () => {
     },
     text: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.black,
+      color: colors.regular900,
       marginBottom: 20,
     },
     textAdvertising: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.black,
+      color: colors.regular950,
       marginBottom: 20,
     },
     editBtn: {
@@ -113,9 +115,10 @@ const DeleteAccount = () => {
     },
     editBtnText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.white,
-      letterSpacing: -0.5,
+      letterSpacing: -0.4,
     },
   });
 
@@ -137,9 +140,9 @@ const DeleteAccount = () => {
           </Text>
           <Input
             label="Mot de passe"
-            placeholder="Votre mot de passe"
+            placeholder="Entrer votre mot de passe"
             icon={Lock}
-            placeholderTextColor="#A3A3A3"
+            placeholderTextColor={colors.text_placeholder}
             autoComplete="password"
             secureTextEntry={true}
             onChangeText={setMotDePasse}

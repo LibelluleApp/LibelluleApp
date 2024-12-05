@@ -24,6 +24,7 @@ function Notes() {
     containerContent: {
       marginTop: 25,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       borderRadius: 10,
       width: "90%",
       alignSelf: "center",
@@ -38,25 +39,29 @@ function Notes() {
     },
     absTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
-      color: colors.black,
+      color: colors.regular950,
       marginBottom: 7,
     },
     absContent: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      letterSpacing: -0.4,
+      color: colors.regular950,
       marginBottom: 2,
     },
     content: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      letterSpacing: -0.4,
+      color: colors.regular950,
     },
     altText: {
-      fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
-      fontSize: 13,
-      alignSelf: "center",
       marginTop: 40,
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      color: colors.regular950,
+      fontSize: 14,
+      alignSelf: "center",
     },
     textContent: {
       flexDirection: "row",
@@ -78,18 +83,21 @@ function Notes() {
     },
     gridTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
-      color: colors.black,
+      color: colors.regular950,
     },
     gridMoyenne: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
-      color: colors.black,
+      color: colors.regular950,
       marginTop: 10,
       marginBottom: 2,
     },
     gridPromo: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
     },
@@ -105,15 +113,10 @@ function Notes() {
       justifyContent: "center",
       marginBottom: 20,
     },
-    altText: {
-      fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
-      fontSize: 14,
-      alignSelf: "center",
-    },
     altTextLink: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      letterSpacing: -0.4,
+      color: colors.regular950,
       fontSize: 14,
       alignSelf: "center",
       lineHeight: 20,
@@ -199,7 +202,7 @@ function Notes() {
         </View>
         <View style={styles.textContent}>
           <Info
-            stroke={colors.black}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={18}
             height={18}

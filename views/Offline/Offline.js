@@ -12,17 +12,19 @@ const Offline = () => {
     },
     text: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 20,
       color: "#000",
     },
     button: {
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       padding: 10,
       borderRadius: 5,
       marginTop: 20,
     },
     buttonText: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: "#fff",
     },

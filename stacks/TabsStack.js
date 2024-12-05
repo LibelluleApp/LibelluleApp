@@ -1,165 +1,145 @@
-import React, { useContext } from "react";
-import { View, TouchableOpacity, Platform } from "react-native";
+import React, { useContext, useState, useMemo, useCallback } from "react";
+import { Platform, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
-
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LogoTitle from "../components/logo";
-import Notifications from "../views/NotificationsViews";
-import {
-  Home,
-  Check,
-  Calendar,
-  Envelope,
-  User,
-  Bell,
-} from "../assets/icons/Icons";
-import { ThemeContext } from "./../utils/themeContext";
+import HeaderBar from "./HeaderBar";
+import { Home, Check, Calendar, Envelope } from "../assets/icons/Icons";
+import { ThemeContext } from "../utils/themeContext";
+
+// Views import optimization
+const VIEWS_CONFIG = {
+  Home: require("../views/Home").default,
+  Timetable: require("../views/Timetable").default,
+  Agenda: require("../views/Agenda").default,
+  Mails: require("../views/Mails").default,
+};
 
 const Tab = createBottomTabNavigator();
 
-function NotificationBell() {
+const ICON_CONFIG = {
+  "Vue d'ensemble": Home,
+  "Emploi du temps": Calendar,
+  "Agenda": Check,
+  "Mails": Envelope,
+};
+
+const TAB_LABELS = {
+  "Vue d'ensemble": "Accueil",
+  "Emploi du temps": "EDT",
+  "Agenda": "Devoirs",
+  "Mails": "Mails",
+};
+
+const TabIcon = React.memo(({ Icon, color, focused, strokeWidth = 1.75 }) => {
   const { colors } = useContext(ThemeContext);
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("Notifications")}
-      style={{ paddingRight: 10 }}
-    >
-      <Bell stroke={colors.grey} strokeWidth={1.75} width={22} height={22} />
-    </TouchableOpacity>
-  );
-}
+  const fillColor = focused ? colors.regular700 : color;
+  return <Icon stroke={fillColor} strokeWidth={strokeWidth} />;
+});
 
 const TabsStack = () => {
   const { colors } = useContext(ThemeContext);
   const insets = useSafeAreaInsets();
+  const [headerTitle, setHeaderTitle] = useState("Vue d'ensemble");
 
-  const getIcon = (Icon, color, size, focused) => {
-    const fillColor = focused ? colors.blue_variable : color; // Change icon color to blue when focused
-
-    return <Icon stroke={fillColor} />;
-  };
-
-  const baseHeaderOptions = {
+  const screenOptions = useMemo(() => ({
+    animation: "shift",
+    lazy: false,
+    headerShown: false,
     tabBarShowLabel: true,
-    headerShown: true,
-    tabBarStyle: [
-      {
-        paddingHorizontal: 8,
-        backgroundColor: colors.white_background,
-        borderTopWidth: 0,
-      },
-      insets.bottom > 30 ? { height: 90 } : { height: 75 },
-    ],
-    headerStyle: {
-      backgroundColor: colors.background,
-      elevation: 0,
-      shadowColor: colors.background,
+    tabBarStyle: {
+      paddingTop: 8,
+      paddingHorizontal: 15,
+      backgroundColor: colors.white_background,
+      borderTopWidth: 0,
+      height: Platform.OS === "ios" ? 85 : 80,
+      paddingBottom: insets.bottom,
     },
-    headerTitleStyle: {
+    tabBarActiveTintColor: colors.regular700,
+    tabBarInactiveTintColor: colors.grey,
+    tabBarLabelStyle: {
+      marginTop: 1,
       fontFamily: "Ubuntu_500Medium",
-      fontSize: 18,
-      color: colors.black,
-      allowFontScaling: false,
+      letterSpacing: -0.4,
+      fontSize: 12,
     },
-    headerTitleAlign: "center",
-    headerLeftContainerStyle: {
-      paddingLeft: 17,
-    },
-    headerRightContainerStyle: {
-      paddingRight: 17,
-    },
-    headerRight: () => <NotificationBell />,
-  };
+    headerLeft: () => <LogoTitle />,
+  }), [colors, insets.bottom]);
 
-  const views = [
+  const getTabIcon = useCallback(({ color, focused }, routeName) => (
+      <TabIcon
+          Icon={ICON_CONFIG[routeName]}
+          color={color}
+          focused={focused}
+      />
+  ), []);
+
+  const views = useMemo(() => [
     {
       name: "Vue d'ensemble",
-      component: require("../views/Home").default,
+      component: VIEWS_CONFIG.Home,
       options: {
-        tabBarLabel: "Accueil",
-        tabBarIcon: ({ color, size, focused }) =>
-          getIcon(Home, color, size, focused),
-        headerLeft: () => <LogoTitle />,
-        ...baseHeaderOptions,
+        headerShown: false,
+        tabBarLabel: TAB_LABELS["Vue d'ensemble"],
+        tabBarIcon: (props) => getTabIcon(props, "Vue d'ensemble"),
       },
     },
     {
       name: "Emploi du temps",
-      component: require("../views/Timetable").default,
+      component: VIEWS_CONFIG.Timetable,
       options: {
-        tabBarLabel: "Cours",
-        tabBarIcon: ({ color, size, focused }) =>
-          getIcon(Calendar, color, size, focused),
-        headerLeft: () => <LogoTitle />,
-        ...baseHeaderOptions,
+        headerShown: false,
+        tabBarLabel: TAB_LABELS["Emploi du temps"],
+        tabBarIcon: (props) => getTabIcon(props, "Emploi du temps"),
       },
     },
     {
       name: "Agenda",
-      component: require("../views/Agenda").default,
+      component: VIEWS_CONFIG.Agenda,
       options: {
-        tabBarLabel: "Agenda",
-        tabBarIcon: ({ color, size, focused }) =>
-          getIcon(Check, color, size, focused),
-        headerLeft: () => <LogoTitle />,
-        ...baseHeaderOptions,
+        headerShown: false,
+        tabBarLabel: TAB_LABELS["Agenda"],
+        tabBarIcon: (props) => getTabIcon(props, "Agenda"),
       },
     },
     {
       name: "Mails",
-      component: require("../views/Mails").default,
+      component: VIEWS_CONFIG.Mails,
       options: {
-        tabBarLabel: "Mails",
-        tabBarIcon: ({ color, size, focused }) =>
-          getIcon(Envelope, color, size, focused),
-        headerLeft: () => <LogoTitle />,
-        ...baseHeaderOptions,
+        headerShown: false,
+        tabBarLabel: TAB_LABELS["Mails"],
+        tabBarIcon: (props) => getTabIcon(props, "Mails"),
       },
     },
-    {
-      name: "Profil",
-      component: require("../views/Profile").default,
-      options: {
-        tabBarLabel: "Profil",
-        tabBarIcon: ({ color, size, focused }) =>
-          getIcon(User, color, size, focused),
-        headerLeft: () => <LogoTitle />,
-        ...baseHeaderOptions,
-      },
-    },
-  ];
+  ], [getTabIcon]);
+
+  const changeHeaderTitle = useCallback((name) => {
+    setHeaderTitle(name);
+  }, []);
+
+  const containerStyle = useMemo(() => ({
+    flex: 1,
+    backgroundColor: colors.background
+  }), [colors.background]);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          lazy: false,
-          tabBarActiveTintColor: colors.blue_variable, // Active text color
-          tabBarInactiveTintColor: colors.grey, // Inactive text color
-          tabBarLabelStyle: {
-            bottom: 12,
-            fontFamily: "Ubuntu_500Medium",
-            fontSize: 11,
-          },
-        }}
-      >
-        {views.map((view) => (
-          <Tab.Screen
-            key={view.name}
-            name={view.name}
-            component={view.component}
-            options={view.options}
-          />
-        ))}
-      </Tab.Navigator>
-    </View>
+      <View style={containerStyle}>
+        <HeaderBar title={headerTitle} />
+        <Tab.Navigator screenOptions={screenOptions} id={"tab"}>
+          {views.map((view) => (
+              <Tab.Screen
+                  key={view.name}
+                  name={view.name}
+                  component={view.component}
+                  options={view.options}
+                  listeners={{
+                    tabPress: () => changeHeaderTitle(view.name),
+                  }}
+              />
+          ))}
+        </Tab.Navigator>
+      </View>
   );
 };
 
-export default TabsStack;
+export default React.memo(TabsStack);

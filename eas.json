@@ -11,6 +11,9 @@
         "enterpriseProvisioning": "adhoc",
         "image": "latest"
       },
+      "android": {
+        "buildType": "apk"
+      },
       "env": {
         "APP_VARIANT": "development"
       }
@@ -23,7 +26,6 @@
       }
     },
     "preview": {
-      "distribution": "internal",
       "ios": {
         "enterpriseProvisioning": "adhoc",
         "image": "latest"
@@ -34,7 +36,6 @@
       }
     },
     "production": {
-      "autoIncrement": true,
       "ios": {
         "credentialsSource": "remote"
       }

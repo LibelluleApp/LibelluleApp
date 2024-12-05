@@ -8,6 +8,7 @@ import updatePassword from "../../api/User/updatePassword";
 import { useNavigation } from "@react-navigation/native";
 import { Lock } from "./../../assets/icons/Icons";
 import { lostPasswordConnected } from "../../api/User/lostPassword";
+import TouchableScale from "react-native-touchable-scale";
 
 const ChangePassword = () => {
   const { colors } = useContext(ThemeContext);
@@ -43,7 +44,7 @@ const ChangePassword = () => {
       width: "100%",
     },
     editBtn: {
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       paddingHorizontal: 20,
       paddingVertical: 11,
       borderRadius: 10,
@@ -55,15 +56,17 @@ const ChangePassword = () => {
     },
     editBtnText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.white,
-      letterSpacing: -0.5,
+      letterSpacing: -0.4,
     },
     forgotPasswordText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
       color: colors.grey,
-      padding: 15,
+      padding: 10,
       paddingBottom: 30,
     },
   });
@@ -224,29 +227,41 @@ const ChangePassword = () => {
             labelStyle={{
               Success: {
                 fontFamily: "Ubuntu_400Regular",
+                letterSpacing: -0.4,
                 fontSize: 12,
                 color: colors.green700,
               },
               Error: {
                 fontFamily: "Ubuntu_400Regular",
+                letterSpacing: -0.4,
                 fontSize: 12,
-                color: colors.black,
+                color: colors.regular950,
               },
             }}
           />
         </View>
         <View style={styles.editBtnContainer}>
-          <TouchableOpacity style={styles.editBtn} onPress={handleValidated}>
-            <Text style={styles.editBtnText}>Modifier</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.forgotPassword}
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
+            onPress={handleValidated}
+            style={{ width: "100%" }}
+          >
+            <View style={styles.editBtn}>
+              <Text style={styles.editBtnText}>Modifier</Text>
+            </View>
+          </TouchableScale>
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
             onPress={handleLostPassword}
           >
-            <Text style={styles.forgotPasswordText}>
-              J'ai oublié mon mot de passe
-            </Text>
-          </TouchableOpacity>
+            <View style={styles.forgotPassword}>
+              <Text style={styles.forgotPasswordText}>
+                J'ai oublié mon mot de passe
+              </Text>
+            </View>
+          </TouchableScale>
         </View>
       </View>
     </View>

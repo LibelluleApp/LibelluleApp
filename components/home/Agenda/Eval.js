@@ -1,89 +1,85 @@
 import React, { useContext } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { CircleAlert, ThumbsUp } from "../../../assets/icons/Icons";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Touchable,
+} from "react-native";
+import {
+  CircleAlert,
+  ThumbsUp,
+  ChevronRight,
+} from "../../../assets/icons/Icons";
 import { ThemeContext } from "./../../../utils/themeContext";
+import TouchableScale from "react-native-touchable-scale";
 
 function Eval({ data }) {
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
-    containerTask: {
-      alignItems: "center",
-      flexDirection: "row",
-      backgroundColor: colors.green_variable,
-      gap: 10,
-      borderRadius: 10,
-      height: 50,
-      paddingHorizontal: 24,
-    },
     containerEval: {
       alignItems: "center",
       flexDirection: "row",
-      backgroundColor: colors.red700,
+      justifyContent: "space-between",
+      alignContent: "center",
+      backgroundColor: colors.red50,
       gap: 10,
       borderRadius: 10,
       paddingVertical: 15,
       paddingHorizontal: 20,
+      borderWidth: 0.5,
+      borderColor: colors.red300,
     },
     evalText: {
-      color: colors.white,
-      fontFamily: "Ubuntu_500Medium",
+      color: colors.red500,
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
     },
-    rightContainer: {
-      flexDirection: "column",
-      gap: 8,
-      width: "85%",
+    leftContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 7,
     },
+    rightContainer: {},
   });
 
-  const stylesNothing = StyleSheet.create({
-    container: {
-      backgroundColor: colors.green_variable,
-    },
-    evalText: {
-      color: colors.green900,
-    },
-  });
-
+  // if (data && (Array.isArray(data) && data.length > 0)) {
   if (!data || (Array.isArray(data) && data.length === 0)) {
     return (
-      <View style={[styles.containerTask, stylesNothing.container]}>
-        <View style={styles.leftContainer}>
-          <ThumbsUp
-            stroke={colors.green900}
-            strokeWidth={1.75}
-            width={20}
-            height={20}
-          />
-        </View>
-        <View style={styles.rightContainer}>
-          <Text style={[styles.evalText, stylesNothing.evalText]}>
-            Aucune évaluation de prévue
-          </Text>
-        </View>
-      </View>
-    );
-  } else {
-    return (
-      <View style={styles.containerEval}>
-        <View style={styles.leftContainer}>
-          <CircleAlert
-            stroke={colors.white}
-            strokeWidth={1.75}
-            width={20}
-            height={20}
-          />
-        </View>
-        <View style={styles.rightContainer}>
-          {data.map((item) => (
-            <View key={item.agenda_id} style={styles.rightContainer}>
-              <Text style={styles.evalText}>
-                [Évaluation] {item.Ressource.nom_ressource}
-              </Text>
+      <View>
+        {data.map((item) => (
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
+            key={item.agenda_id}
+            style={styles.container}
+          >
+            <View style={styles.containerEval}>
+              <View style={styles.leftContainer}>
+                <CircleAlert
+                  stroke={colors.red500}
+                  strokeWidth={1.75}
+                  width={20}
+                  height={20}
+                />
+                <Text style={styles.evalText}>
+                  <Text style={{ fontWeight: "bold" }}>[Évaluation]</Text>{" "}
+                  {item.Ressource.nom_ressource}
+                </Text>
+              </View>
+              <View style={styles.rightContainer}>
+                <ChevronRight
+                  stroke={colors.red500}
+                  strokeWidth={1.75}
+                  width={18}
+                  height={18}
+                ></ChevronRight>
+              </View>
             </View>
-          ))}
-        </View>
+          </TouchableScale>
+        ))}
       </View>
     );
   }

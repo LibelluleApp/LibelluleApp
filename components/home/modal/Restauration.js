@@ -23,6 +23,7 @@ function Restauration() {
     },
     container: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       alignSelf: "center",
       width: "90%",
       marginTop: 22,
@@ -41,11 +42,12 @@ function Restauration() {
     },
     hour: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 20,
-      color: colors.black,
+      color: colors.regular950,
     },
     stick: {
-      backgroundColor: colors.black,
+      backgroundColor: colors.regular950,
       height: "90%",
       width: 1,
       marginHorizontal: 15,
@@ -56,8 +58,9 @@ function Restauration() {
     },
     title: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 20,
-      color: colors.black,
+      color: colors.regular950,
     },
     content: {
       flexDirection: "row",
@@ -66,31 +69,34 @@ function Restauration() {
     },
     description: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.black,
+      color: colors.regular950,
     },
     button: {
-      paddingHorizontal: 15,
+      paddingHorizontal: 20,
       paddingVertical: 10,
-      borderRadius: 10,
+      borderRadius: 50,
       backgroundColor: colors.background,
-      borderColor: colors.blue_variable,
+      borderColor: colors.regular700,
       borderWidth: 0.5,
     },
     buttonToday: {
-      backgroundColor: colors.blue_variable,
+      backgroundColor: colors.regular700,
       borderWidth: 0,
     },
     buttonText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue_variable,
+      color: colors.regular700,
     },
     buttonTextToday: {
       color: colors.white,
     },
     titleContent: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.grey,
       marginTop: 30,
@@ -104,19 +110,31 @@ function Restauration() {
       paddingHorizontal: 26,
       paddingVertical: 15,
     },
+    noneDescriptionPlat: {
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      fontSize: 15,
+      color: colors.regular800,
+    },
     descriptionMeal: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.black,
+      color: colors.regular950,
     },
     descriptionPlat: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.black,
+      color: colors.regular950,
       marginLeft: 10,
       textTransform: "capitalize",
     },
   });
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   // Fonction pour récupérer les dates tout en sautant les week-ends
   const getValidDate = (daysToAdd) => {
@@ -202,15 +220,17 @@ function Restauration() {
     const validDate = getValidDate(dayOffset);
     fetchMenu(validDate).then((data) => {
       setMenu(data);
-      console.log(data);
     });
   }, [selectedDay]);
 
   // Calcul des jours à afficher
   const daysToDisplay = [
-    { key: "today", label: getFormattedDate(0) },
-    { key: "tomorrow", label: getFormattedDate(1) },
-    { key: "dayAfterTomorrow", label: getFormattedDate(2) },
+    { key: "today", label: capitalizeFirstLetter(getFormattedDate(0)) },
+    { key: "tomorrow", label: capitalizeFirstLetter(getFormattedDate(1)) },
+    {
+      key: "dayAfterTomorrow",
+      label: capitalizeFirstLetter(getFormattedDate(2)),
+    },
   ];
 
   return (
@@ -226,7 +246,7 @@ function Restauration() {
             <Text style={styles.title}>RU Le Crousty</Text>
             <View style={styles.content}>
               <Phone
-                stroke={colors.black}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={16}
                 height={16}
@@ -235,7 +255,7 @@ function Restauration() {
             </View>
             <View style={styles.content}>
               <Calendar
-                stroke={colors.black}
+                stroke={colors.regular950}
                 strokeWidth={1.75}
                 width={16}
                 height={16}
@@ -251,7 +271,7 @@ function Restauration() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
             flexDirection: "row",
-            gap: 15,
+            gap: 10,
             marginVertical: 15,
           }}
         >
@@ -276,14 +296,21 @@ function Restauration() {
         {/* Affichage du menu */}
         <View style={styles.contentMeal}>
           <Text style={styles.descriptionMeal}>Menu</Text>
-          {menu.map((meal, index) => (
-            <View key={index} style={styles.descriptionMeal}>
-              <Text style={styles.descriptionPlat}>
-                {"\u2022 "}
-                {meal}
-              </Text>
-            </View>
-          ))}
+
+          {menu.length === 0 ? (
+            <Text style={styles.noneDescriptionPlat}>
+              Aucun menu n'est disponible pour le moment
+            </Text>
+          ) : (
+            menu.map((meal, index) => (
+              <View key={index} style={styles.descriptionMeal}>
+                <Text style={styles.descriptionPlat}>
+                  {"\u2022 "}
+                  {meal}
+                </Text>
+              </View>
+            ))
+          )}
         </View>
       </View>
     </View>

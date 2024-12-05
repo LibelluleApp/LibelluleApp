@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  ScrollView,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { ThemeContext } from "../../utils/themeContext";
 import { Dropdown } from "react-native-element-dropdown";
 import { Info } from "../../assets/icons/Icons";
@@ -14,6 +7,7 @@ import fetchTp from "../../api/Groupe/fetchTp";
 import { showMessage } from "react-native-flash-message";
 import transferRole from "../../api/Groupe/transferRole";
 import { useAuth } from "../../context/AuthContext";
+import TouchableScale from "react-native-touchable-scale";
 
 const TransferRole = () => {
   const [value, setValue] = React.useState();
@@ -38,7 +32,7 @@ const TransferRole = () => {
       justifyContent: "space-between",
     },
     editBtn: {
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       paddingHorizontal: 20,
       paddingVertical: 11,
       borderRadius: 10,
@@ -51,33 +45,33 @@ const TransferRole = () => {
     },
     editBtnText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 17,
       color: colors.white,
-      letterSpacing: -0.5,
+      letterSpacing: -0.4,
     },
     dropdown: {
-      borderWidth: 1,
-      borderColor: colors.grey,
       borderRadius: 10,
       padding: 15,
       marginBottom: 10,
-      borderColor: colors.input_border,
       backgroundColor: colors.white_background,
     },
     placeholderStyle: {
-      color: colors.grey_variable,
+      color: colors.grey,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      fontSize: 15,
     },
     selectedTextStyle: {
-      color: colors.black,
+      color: colors.regular950,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
     },
     dropdownContainer: {
       // borderRadius: 10,
       // marginBottom: 10,
       backgroundColor: colors.white_background,
-      borderColor: colors.input_border,
     },
     topInformations: {
       marginBottom: 20,
@@ -87,20 +81,24 @@ const TransferRole = () => {
     },
     textInformations: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.black,
+      color: colors.regular950,
     },
     bold: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
     },
     labelDropdown: {
-      fontFamily: "Ubuntu_500Medium",
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.black,
+      color: colors.regular900,
       marginBottom: 10,
     },
     textDisclaimer: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
       textAlign: "center",
@@ -160,9 +158,9 @@ const TransferRole = () => {
       <View style={styles.container}>
         <View>
           <View style={styles.topInformations}>
-            <Info width={16} heigh={16} stroke={colors.black} />
+            <Info width={16} heigh={16} stroke={colors.regular950} />
             <Text style={styles.textInformations}>
-              Vous êtes <Text style={styles.bold}>responsable de l’agenda</Text>{" "}
+              Vous êtes <Text style={styles.bold}>responsable des devoirs</Text>{" "}
               de votre groupe de classe. Avec l’accord d’un autre étudiant, le
               rôle peut lui être transmis.
             </Text>
@@ -176,7 +174,7 @@ const TransferRole = () => {
               mode="default"
               style={[
                 styles.dropdown,
-                isFocus && { borderColor: colors.black },
+                isFocus && { borderColor: colors.regular950 },
               ]}
               activeColor={colors.white_background}
               placeholderStyle={styles.placeholderStyle}
@@ -197,9 +195,15 @@ const TransferRole = () => {
           </View>
         </View>
         <View>
-          <TouchableOpacity style={styles.editBtn} onPress={handleChange}>
-            <Text style={styles.editBtnText}>Transmettre</Text>
-          </TouchableOpacity>
+          <TouchableScale
+            friction={6}
+            activeScale={0.95}
+            onPress={handleChange}
+          >
+            <View style={styles.editBtn}>
+              <Text style={styles.editBtnText}>Transmettre</Text>
+            </View>
+          </TouchableScale>
           <Text style={styles.textDisclaimer}>
             En cliquant sur ce bouton, l’accord de l’étudiant pour assumer ce
             rôle est confirmé.

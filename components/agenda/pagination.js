@@ -10,9 +10,11 @@ import {
 import { ThemeContext } from "./../../utils/themeContext";
 import * as Progress from "react-native-progress";
 import whoIsChief from "../../api/Agenda/chef";
+import Dropdown from "./../dropdown/Dropdown";
+import TouchableScale from "react-native-touchable-scale";
 
 const PaginationHeader = ({
-  currentDay,
+  currentDate,
   onPrev,
   onNext,
   index,
@@ -22,6 +24,10 @@ const PaginationHeader = ({
   evalCount,
   taskCount,
   totalTaskCount,
+  onSelect,
+  value,
+  options,
+  setReturnToday,
 }) => {
   const [chef, setChef] = React.useState({});
   const { colors } = useContext(ThemeContext);
@@ -40,7 +46,6 @@ const PaginationHeader = ({
     container: {
       flexDirection: "column",
       width: "100%",
-      marginBottom: 15,
     },
     responsableContainer: {
       flexDirection: "row",
@@ -54,14 +59,25 @@ const PaginationHeader = ({
     },
     textResponsable: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.grey,
+      color: colors.regular800,
     },
     textResponsableName: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.grey,
+      color: colors.regular800,
       width: "49%",
+    },
+    modalDropdown: {
+      flexDirection: "row",
+      gap: 10,
+      alignItems: "center",
+      width: "90%",
+      alignSelf: "center",
+      paddingVertical: 10,
+      zIndex: 999,
     },
     content: {
       marginTop: 15,
@@ -78,11 +94,13 @@ const PaginationHeader = ({
     day: {
       fontSize: 16,
       fontFamily: "Ubuntu_500Medium",
-      color: colors.black,
+      letterSpacing: -0.4,
+      color: colors.regular950,
     },
     week: {
       fontSize: 14,
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.grey,
     },
     arrowRightContainer: {
@@ -112,13 +130,15 @@ const PaginationHeader = ({
       gap: 5,
     },
     progressTextTask: {
-      color: colors.blue_variable,
+      color: colors.regular700,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
     },
     progressTextPourcent: {
-      color: colors.grey_variable,
+      color: colors.grey,
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
     },
     progression: {
@@ -133,10 +153,20 @@ const PaginationHeader = ({
     });
   }, []);
 
+  // Fonction pour gérer le retour à aujourd'hui
+  const handleReturnToday = () => {
+    setReturnToday(true);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.responsableContainer}>
-        <Check stroke={colors.grey} strokeWidth={1.75} width={17} height={17} />
+        <Check
+          stroke={colors.regular800}
+          strokeWidth={1.75}
+          width={17}
+          height={17}
+        />
         <View style={styles.textResponsableContent}>
           <Text style={styles.textResponsable}>Responsable de l'agenda : </Text>
           <Text
@@ -148,78 +178,22 @@ const PaginationHeader = ({
           </Text>
         </View>
       </View>
-      <View style={styles.content}>
-        {index > 0 && (
-          <TouchableOpacity
-            onPress={onPrev}
-            style={styles.aroundLeft}
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
-            <ArrowLeft
-              stroke={colors.black}
-              strokeWidth={1.75}
-              width={20}
-              height={20}
-            />
-          </TouchableOpacity>
-        )}
-        {index === 0 && (
-          <TouchableOpacity
-            disabled={true}
-            style={styles.aroundLeft}
-            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-          >
-            <ArrowLeft
-              stroke={colors.black}
-              strokeWidth={1.75}
-              width={20}
-              height={20}
-            />
-          </TouchableOpacity>
-        )}
-        <View style={styles.dayWeekContainer}>
-          <Text style={styles.day}>{currentDay}</Text>
-          <Text style={styles.week}>Semaine {currentWeekNumber}</Text>
-        </View>
-        <View style={styles.arrowRightContainer}>
-          {index !== defaultIndex && (
-            <TouchableOpacity onPress={returnToday} style={styles.resetIcon}>
-              <ResetList stroke={colors.grey_variable} strokeWidth={1.75} />
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity
-            onPress={onNext}
-            style={styles.aroundRight}
-            hitSlop={{ top: 20, bottom: 20, right: 20 }}
-          >
-            <ArrowRight
-              stroke={colors.black}
-              strokeWidth={1.75}
-              width={20}
-              height={20}
-            />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={styles.counts}>
-        <View style={styles.progression}>
-          {totalTaskCount >= 0 && (
-            <Text style={styles.progressTextTask}>
-              {taskCount}/{totalTaskCount}{" "}
-              {totalTaskCount <= 1 ? "tâche" : "tâches"}
-            </Text>
-          )}
-          <Text style={styles.progressTextPourcent}>{percentProgression}%</Text>
-        </View>
-        <Progress.Bar
-          progress={progression}
-          width={null}
-          height={4}
-          animated={true}
-          unfilledColor={colors.grey}
-          borderWidth={0}
-          color={colors.blue_variable}
+      <View style={styles.modalDropdown}>
+        <Dropdown
+          options={options}
+          onSelect={onSelect}
+          value={value}
+          number={3}
         />
+        {index !== defaultIndex && (
+          <TouchableScale
+            friction={6}
+            activeScale={0.7}
+            onPress={handleReturnToday}
+          >
+            <ResetList stroke={colors.regular800} />
+          </TouchableScale>
+        )}
       </View>
     </View>
   );

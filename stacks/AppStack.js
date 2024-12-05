@@ -1,224 +1,209 @@
-import React, { useEffect, useContext } from "react";
-import { View, Platform, TouchableOpacity } from "react-native";
-
+import React, { useContext, useMemo } from "react";
+import { View, TouchableOpacity } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Feather } from "@expo/vector-icons";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import LogoTitle from "../components/logo";
-
 import { ThemeContext } from "./../utils/themeContext";
+
+// Views import optimization
+const VIEWS_CONFIG = {
+  TabsStack: require("./TabsStack").default,
+  liensExterne: require("../views/Settings/Others/liensExterne").default,
+  Restauration: require("../components/home/modal/Restauration").default,
+  Scolarite: require("../views/Scolarite").default,
+  Notifications: require("../views/NotificationsViews").default,
+  MailDetail: require("../components/mails/MailDetail").default,
+  addAgenda: require("../components/agenda/modal/add").default,
+  viewAgenda: require("../components/agenda/modal/view").default,
+  CustomColor: require("../views/Settings/CustomColor").default,
+  ChangePassword: require("../views/Settings/ChangePassword").default,
+  TutorialAgenda: require("../views/Tutorial/Agenda").default,
+  DetailEvent: require("../views/Timetable/DetailEvent").default,
+  editAgenda: require("../components/agenda/modal/edit").default,
+  DeleteAccount: require("../views/Settings/DeleteAccount").default,
+  TransferRole: require("../views/Settings/TransferRole").default,
+  Offline: require("../views/Offline/Offline").default,
+  Profile: require("../views/Settings/Profile/Profile").default,
+  Colors: require("../views/Settings/Customization/Colors").default,
+  TimetableSettings: require("../views/Settings/Settings/Timetable").default,
+  Settings: require("../views/Settings").default,
+  Services: require("../views/Settings/Others/Services").default,
+  ZimbraConnect: require("../views/Settings/Others/Zimbra/Connect").default,
+};
 
 const Stack = createNativeStackNavigator();
 
-const AppStack = ({ navigation }) => {
+const COMMON_HEADER_STYLES = {
+  fontFamily: "Ubuntu_400Regular",
+  letterSpacing: -0.4,
+  fontSize: 16,
+};
+
+const COMMON_MODAL_OPTIONS = {
+  presentation: "modal",
+  headerShadowVisible: false,
+};
+
+const AppStack = () => {
   const { colors } = useContext(ThemeContext);
 
-  function NotificationBell({ onPress }) {
-    return (
-      <TouchableOpacity onPress={onPress} style={{ paddingRight: 10 }}>
-        <Feather name="bell" size={24} color={colors.black} />
-      </TouchableOpacity>
-    );
-  }
+  const screenOptions = useMemo(
+    () => ({
+      headerStyle: {
+        backgroundColor: colors.background,
+        shadowColor: "transparent",
+        elevation: 0,
+        shadowOffset: { width: 0, height: 0 },
+      },
+      headerTintColor: colors.regular950,
+      headerTitleStyle: {
+        ...COMMON_HEADER_STYLES,
+        fontFamily: "Ubuntu_500Medium",
+        fontSize: 18,
+        color: colors.regular950,
+      },
+      headerBackTitle: "Retour",
+      headerBackTitleStyle: COMMON_HEADER_STYLES,
+    }),
+    [colors]
+  );
 
-  const views = [
-    {
-      name: "TabsStack",
-      component: require("./TabsStack").default,
-      options: {
-        headerShown: false,
+  const views = useMemo(
+    () => [
+      {
+        name: "TabsStack",
+        component: VIEWS_CONFIG.TabsStack,
+        options: { headerShown: false },
       },
-    },
-    {
-      name: "liensExterne",
-      component: require("../components/home/modal/liensExterne").default,
-      options: {
-        title: "Liens Externes",
-        presentation: "modal",
-        background: "transparent",
+      {
+        name: "liensExterne",
+        component: VIEWS_CONFIG.liensExterne,
+        options: { ...COMMON_MODAL_OPTIONS, title: "Liens Externes" },
       },
-    },
-    {
-      name: "Restauration",
-      component: require("../components/home/modal/Restauration").default,
-      options: {
-        title: "Restauration",
-        presentation: "modal",
+      {
+        name: "Restauration",
+        component: VIEWS_CONFIG.Restauration,
+        options: { ...COMMON_MODAL_OPTIONS, title: "Restauration" },
       },
-    },
-    {
-      name: "Scolarite",
-      component: require("../views/Scolarite").default,
-      options: {
-        title: "Scolarité",
-        headerBackTitle: "Retour",
-        headerShadowVisible: false,
-        headerBackTitleStyle: {
-          fontFamily: "Ubuntu_400Regular",
-          fontSize: 16,
-        },
-        headerStyle: {
-          backgroundColor: colors.background,
-          shadowColor: "transparent",
-          elevation: 0,
+      {
+        name: "Scolarite",
+        component: VIEWS_CONFIG.Scolarite,
+        options: {
+          title: "Scolarité",
+          headerBackTitle: "Retour",
+          headerShadowVisible: false,
+          headerBackTitleStyle: COMMON_HEADER_STYLES,
+          headerStyle: {
+            backgroundColor: colors.background,
+            shadowColor: "transparent",
+            elevation: 0,
+          },
         },
       },
-    },
-    {
-      name: "Notifications",
-      component: require("../views/NotificationsViews").default,
-      options: {
-        title: "Notifications",
-        headerShadowVisible: false,
+      {
+        name: "Notifications",
+        component: VIEWS_CONFIG.Notifications,
+        options: { title: "Notifications", headerShadowVisible: false },
       },
-    },
-    {
-      name: "MailDetail",
-      component: require("../components/mails/MailDetail").default,
-      options: {
-        title: "Détails du mail",
-        headerShadowVisible: false,
+      {
+        name: "MailDetail",
+        component: VIEWS_CONFIG.MailDetail,
+        options: { title: "Détails du mail", headerShadowVisible: false },
       },
-    },
-    {
-      name: "addAgenda",
-      component: require("../components/agenda/modal/add").default,
-      options: {
-        title: "Ajouter une tâche",
-        headerShadowVisible: false,
+      {
+        name: "addAgenda",
+        component: VIEWS_CONFIG.addAgenda,
+        options: { title: "Ajouter une tâche", headerShadowVisible: false },
       },
-    },
-    {
-      name: "viewAgenda",
-      component: require("../components/agenda/modal/view").default,
-      options: {
-        title: "Détails d'une tâche",
-        headerShadowVisible: false,
-        presentation: "modal",
+      {
+        name: "viewAgenda",
+        component: VIEWS_CONFIG.viewAgenda,
+        options: { ...COMMON_MODAL_OPTIONS, title: "Détails d'une tâche" },
       },
-    },
-    {
-      name: "CustomColor",
-      component: require("../views/Profile/CustomColor").default,
-      options: {
-        title: "Modifiers les couleurs",
-        headerShadowVisible: false,
-        presentation: "modal",
+      {
+        name: "CustomColor",
+        component: VIEWS_CONFIG.CustomColor,
+        options: { ...COMMON_MODAL_OPTIONS, title: "Modifiers les couleurs" },
       },
-    },
-    {
-      name: "ChangePassword",
-      component: require("../views/Profile/ChangePassword").default,
-      options: {
-        title: "Changer de mot de passe",
-        headerShadowVisible: false,
+      {
+        name: "ChangePassword",
+        component: VIEWS_CONFIG.ChangePassword,
+        options: {
+          title: "Changer de mot de passe",
+          headerShadowVisible: false,
+        },
       },
-    },
-    {
-      name: "TutorialAgenda",
-      component: require("../views/Tutorial/Agenda").default,
-      options: {
-        headerShown: false,
+      {
+        name: "TutorialAgenda",
+        component: VIEWS_CONFIG.TutorialAgenda,
+        options: { headerShown: false },
       },
-    },
-    {
-      name: "DetailEvent",
-      component: require("../views/Timetable/DetailEvent").default,
-      options: {
-        title: "Détails de l'événement",
-        headerShadowVisible: false,
-        presentation: "modal",
+      {
+        name: "DetailEvent",
+        component: VIEWS_CONFIG.DetailEvent,
+        options: { ...COMMON_MODAL_OPTIONS, title: "Détails de l'événement" },
       },
-    },
-    {
-      name: "editAgenda",
-      component: require("../components/agenda/modal/edit").default,
-      options: {
-        title: "Modifier une tâche",
-        headerShadowVisible: false,
+      {
+        name: "editAgenda",
+        component: VIEWS_CONFIG.editAgenda,
+        options: { title: "Modifier une tâche", headerShadowVisible: false },
       },
-    },
-    {
-      name: "DeleteAccount",
-      component: require("../views/Profile/DeleteAccount").default,
-      options: {
-        title: "Supprimer le compte",
-        headerShadowVisible: false,
+      {
+        name: "DeleteAccount",
+        component: VIEWS_CONFIG.DeleteAccount,
+        options: { title: "Supprimer le compte", headerShadowVisible: false },
       },
-    },
-    {
-      name: "TransferRole",
-      component: require("../views/Profile/TransferRole").default,
-      options: {
-        title: "Transférer mon rôle",
-        headerShadowVisible: false,
+      {
+        name: "TransferRole",
+        component: VIEWS_CONFIG.TransferRole,
+        options: { title: "Transférer mon rôle", headerShadowVisible: false },
       },
-    },
-    {
-      name: "Offline",
-      component: require("../views/Offline/Offline").default,
-      options: {
-        title: "Hors ligne",
-        headerShadowVisible: false,
-        headerShown: false,
+      {
+        name: "Offline",
+        component: VIEWS_CONFIG.Offline,
+        options: { title: "Hors ligne", headerShown: false },
       },
-    },
-    {
-      name: "Settings",
-      component: require("../views/Profile/Settings").default,
-      options: {
-        title: "Paramètres",
-        headerShadowVisible: false,
+      {
+        name: "Profile",
+        component: VIEWS_CONFIG.Profile,
+        options: { title: "Profil", headerShadowVisible: false },
       },
-    },
-    {
-      name: "TimetableSettings",
-      component: require("../views/Profile/Settings/Timetable").default,
-      options: {
-        title: "Paramètres",
-        headerShadowVisible: false,
+      {
+        name: "Colors",
+        component: VIEWS_CONFIG.Colors,
+        options: { title: "Couleurs", headerShadowVisible: false },
       },
-    },
-  ];
+      {
+        name: "TimetableSettings",
+        component: VIEWS_CONFIG.TimetableSettings,
+        options: { title: "Paramètres", headerShadowVisible: false },
+      },
+      {
+        name: "Settings",
+        component: VIEWS_CONFIG.Settings,
+        options: { title: "Paramètres", headerShadowVisible: false },
+      },
+      {
+        name: "Services",
+        component: VIEWS_CONFIG.Services,
+        options: { title: "Gestion des services", headerShadowVisible: false },
+      },
+        {
+            name: "ZimbraConnect",
+            component: VIEWS_CONFIG.ZimbraConnect,
+            options: { title: "Connection à Zimbra", headerShadowVisible: false },
+        },
+    ],
+    [colors]
+  );
 
   return (
     <View style={{ flex: 1 }}>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: colors.background,
-            shadowColor: "transparent",
-            elevation: 0,
-            shadowOffset: {
-              width: 0,
-              height: 0,
-            },
-          },
-          headerTintColor: colors.black,
-          headerTitleStyle: {
-            fontFamily: "Ubuntu_500Medium",
-            fontSize: 18,
-            color: colors.black,
-          },
-          headerBackTitle: "Retour",
-          headerBackTitleStyle: {
-            fontFamily: "Ubuntu_400Regular",
-            fontSize: 16,
-          },
-          headerStyle: {
-            backgroundColor: colors.background,
-            shadowColor: "transparent",
-            elevation: 0,
-          },
-        }}
-      >
-        {views.map((view) => (
+      <Stack.Navigator screenOptions={screenOptions} id="app">
+        {views.map(({ name, component, options }) => (
           <Stack.Screen
-            key={view.name}
-            name={view.name}
-            component={view.component}
-            options={view.options}
+            key={name}
+            name={name}
+            component={component}
+            options={options}
           />
         ))}
       </Stack.Navigator>
@@ -226,4 +211,4 @@ const AppStack = ({ navigation }) => {
   );
 };
 
-export default AppStack;
+export default React.memo(AppStack);

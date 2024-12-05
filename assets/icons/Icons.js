@@ -66,7 +66,7 @@ function Home(props) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.5}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       className="lucide lucide-house"
@@ -86,7 +86,7 @@ function Calendar(props) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.5}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       className="lucide lucide-calendar"
@@ -107,7 +107,7 @@ function Check(props) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.5}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       className="lucide lucide-circle-check"
@@ -115,6 +115,26 @@ function Check(props) {
     >
       <Circle cx={12} cy={12} r={10} />
       <Path d="M9 12l2 2 4-4" />
+    </Svg>
+  );
+}
+function SettingsWheel(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-settings"
+      {...props}
+    >
+      <Path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z" />
+      <Circle cx={12} cy={12} r={3} />
     </Svg>
   );
 }
@@ -128,7 +148,7 @@ function Envelope(props) {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.5}
+      strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
       className="lucide lucide-mail"
@@ -161,6 +181,27 @@ function User(props) {
 }
 
 // -----
+
+// CircleCheckBig - Lucide
+function CircleCheckBig(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-circle-check-big"
+      {...props}
+    >
+      <Path d="M21.801 10A10 10 0 1117 3.335M9 11l3 3L22 4" />
+    </Svg>
+  );
+}
 
 // Bell - Lucide
 function Bell(props) {
@@ -247,6 +288,28 @@ function UsersRound(props) {
       <Path d="M18 21a8 8 0 00-16 0" />
       <Circle cx={10} cy={8} r={5} />
       <Path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 00-.45-8.3" />
+    </Svg>
+  );
+}
+
+// Pencil - Lucide
+
+function Pencil(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-pencil"
+      {...props}
+    >
+      <Path d="M21.174 6.812a1 1 0 00-3.986-3.987L3.842 16.174a2 2 0 00-.5.83l-1.321 4.352a.5.5 0 00.623.622l4.353-1.32a2 2 0 00.83-.497zM15 5l4 4" />
     </Svg>
   );
 }
@@ -402,34 +465,24 @@ function BookOpen(props) {
   );
 }
 
-// Mortarboard01 - HugeIcon
-function Student(props) {
+// GraduationCap - Lucide
+function GraduationCap(props) {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
       width={24}
       height={24}
-      color="#000"
+      viewBox="0 0 24 24"
       fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-graduation-cap"
       {...props}
     >
-      <Path
-        d="M1.998 8c0 1.341 8.096 5 9.988 5 1.891 0 9.987-3.659 9.987-5 0-1.343-8.096-5.001-9.987-5.001-1.892 0-9.988 3.658-9.988 5z"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        {...props}
-      />
-      <Path
-        d="M5.992 11l1.251 5.8c.086.398.284.769.614 1.005 2.222 1.595 6.034 1.595 8.256 0 .33-.236.527-.607.613-1.005l1.251-5.8M20.477 9.5v7m0 0c-.79 1.447-1.14 2.222-1.496 3.501-.077.455-.016.684.298.888.127.083.28.112.431.112h1.519a.798.798 0 00.457-.125c.291-.201.366-.422.287-.875-.311-1.188-.708-2-1.496-3.5z"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        {...props}
-      />
+      <Path d="M21.42 10.922a1 1 0 00-.019-1.838L12.83 5.18a2 2 0 00-1.66 0L2.6 9.08a1 1 0 000 1.832l8.57 3.908a2 2 0 001.66 0zM22 10v6" />
+      <Path d="M6 12.5V16a6 3 0 0012 0v-3.5" />
     </Svg>
   );
 }
@@ -451,6 +504,28 @@ function RedirectTo(props) {
       {...props}
     >
       <Path d="M21 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h6M21 3l-9 9M15 3h6v6" />
+    </Svg>
+  );
+}
+
+// LoaderCircle - Lucide
+
+function LoaderCircle(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-loader-circle"
+      {...props}
+    >
+      <Path d="M21 12a9 9 0 11-6.219-8.56" />
     </Svg>
   );
 }
@@ -578,6 +653,26 @@ function ChevronDown(props) {
       {...props}
     >
       <Path d="M6 9l6 6 6-6" />
+    </Svg>
+  );
+}
+// ChevronUp - Lucide
+function ChevronUp(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-chevron-up"
+      {...props}
+    >
+      <Path d="M18 15l-6-6-6 6" />
     </Svg>
   );
 }
@@ -827,6 +922,32 @@ function Settings(props) {
   );
 }
 
+// Palette - Lucide
+
+function Palette(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-palette"
+      {...props}
+    >
+      <Circle cx={13.5} cy={6.5} r={0.5} fill="currentColor" />
+      <Circle cx={17.5} cy={10.5} r={0.5} fill="currentColor" />
+      <Circle cx={8.5} cy={7.5} r={0.5} fill="currentColor" />
+      <Circle cx={6.5} cy={12.5} r={0.5} fill="currentColor" />
+      <Path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 011.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+    </Svg>
+  );
+}
+
 // NotepadText - Lucide
 function NotepadText(props) {
   return (
@@ -876,6 +997,52 @@ function Landmark(props) {
   );
 }
 
+// RectangleEllipsis - Lucide
+
+function RectangleEllipsis(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-rectangle-ellipsis"
+      {...props}
+    >
+      <Rect width={20} height={12} x={2} y={6} rx={2} />
+      <Path d="M12 12h.01M17 12h.01M7 12h.01" />
+    </Svg>
+  );
+}
+
+// BriefcaseBusiness - Lucide
+
+function BriefcaseBusiness(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-briefcase-business"
+      {...props}
+    >
+      <Path d="M12 12h.01M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M22 13a18.15 18.15 0 01-20 0" />
+      <Rect width={20} height={14} x={2} y={6} rx={2} />
+    </Svg>
+  );
+}
+
 // Plus - Lucide
 function Plus(props) {
   return (
@@ -893,6 +1060,27 @@ function Plus(props) {
       {...props}
     >
       <Path d="M5 12h14M12 5v14" />
+    </Svg>
+  );
+}
+
+// Minus - Lucide
+function Minus(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-minus"
+      {...props}
+    >
+      <Path d="M5 12h14" />
     </Svg>
   );
 }
@@ -962,6 +1150,140 @@ function UserX(props) {
       <Circle cx={9} cy={7} r={4} />
       <Path d="M17 8L22 13" />
       <Path d="M22 8L17 13" />
+    </Svg>
+  );
+}
+
+// MailSearch - Lucide
+function MailSearch(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-mail-search"
+      {...props}
+    >
+      <Path d="M22 12.5V6a2 2 0 00-2-2H4a2 2 0 00-2 2v12c0 1.1.9 2 2 2h7.5" />
+      <Path d="M22 7l-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7M18 21a3 3 0 100-6 3 3 0 000 6z" />
+      <Circle cx={18} cy={18} r={3} />
+      <Path d="M22 22l-1.5-1.5" />
+    </Svg>
+  );
+}
+
+// Lightbulb - Lucide
+
+function Lightbulb(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-lightbulb"
+      {...props}
+    >
+      <Path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 006 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5M9 18h6M10 22h4" />
+    </Svg>
+  );
+}
+
+// LightbulbOff - Lucide
+
+function LightbulbOff(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-lightbulb-off"
+      {...props}
+    >
+      <Path d="M16.8 11.2c.8-.9 1.2-2 1.2-3.2a6 6 0 00-9.3-5M2 2l20 20M6.3 6.3a4.67 4.67 0 001.2 5.2c.7.7 1.3 1.5 1.5 2.5M9 18h6M10 22h4" />
+    </Svg>
+  );
+}
+
+// Baseline - Lucide
+
+function Baseline(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-baseline"
+      {...props}
+    >
+      <Path d="M4 20h16M6 16l6-12 6 12M8 12h8" />
+    </Svg>
+  );
+}
+
+// TextIcon - Lucide
+
+function TextIcon(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-text"
+      {...props}
+    >
+      <Path d="M17 6.1H3M21 12.1H3M15.1 18H3" />
+    </Svg>
+  );
+}
+
+// Wrench - Lucide
+
+function Wrench(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-wrench"
+      {...props}
+    >
+      <Path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
     </Svg>
   );
 }
@@ -1193,6 +1515,26 @@ function Waves(props) {
   );
 }
 
+function WindyIcon(props) {
+  return (
+      <Svg
+          xmlns="http://www.w3.org/2000/svg"
+          width={24}
+          height={24}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="lucide lucide-wind"
+          {...props}
+      >
+        <Path d="M12.8 19.6A2 2 0 1014 16H2M17.5 8a2.5 2.5 0 112 4H2M9.8 4.4A2 2 0 1111 8H2"/>
+      </Svg>)
+}
+
+
 // --- Shapes ---
 
 function CircleHome(props) {
@@ -1232,6 +1574,27 @@ function SquareHome(props) {
     </Svg>
   );
 }
+
+function Paperclip(props) {
+  return (
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="lucide lucide-paperclip"
+      {...props}
+    >
+      <Path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l8.57-8.57A4 4 0 1118 8.84l-8.59 8.57a2 2 0 01-2.83-2.83l8.49-8.48" />
+    </Svg>
+  );
+}
+
 export {
   // Login / Register
   Eye,
@@ -1241,27 +1604,32 @@ export {
   Home,
   Calendar,
   Check,
+  SettingsWheel,
   Envelope,
   User,
 
   // ----
+  CircleCheckBig,
   Bell,
   MapPin,
   UserRound,
   UsersRound,
+  Pencil,
   Clock,
   CircleAlert,
   ChevronRight,
   Link,
   Utensils,
   BookOpen,
-  Student,
+  GraduationCap,
   RedirectTo,
+  LoaderCircle,
   Phone,
   Info,
   ArrowRight,
   ArrowLeft,
   ChevronUpDown,
+  ChevronUp,
   ChevronDown,
   ThumbsUp,
   LayoutList,
@@ -1275,12 +1643,23 @@ export {
   UserRoundPen,
   InstaIcon,
   Settings,
+  Palette,
   NotepadText,
   Landmark,
+  RectangleEllipsis,
+  BriefcaseBusiness,
   Plus,
+  Minus,
   ResetList,
   LogOut,
   UserX,
+  MailSearch,
+  Baseline,
+  TextIcon,
+  Lightbulb,
+  LightbulbOff,
+  Paperclip,
+  Wrench,
 
   // Weather
   Thermometer,
@@ -1297,4 +1676,5 @@ export {
   // Shapes
   CircleHome,
   SquareHome,
+    WindyIcon,
 };

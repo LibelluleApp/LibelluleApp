@@ -1,5 +1,6 @@
 import ApiManager from "../ApiManager";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import {getUserData} from "../../utils/storage";
 
 async function lostPassword(email_edu) {
   try {
@@ -21,7 +22,7 @@ async function lostPassword(email_edu) {
 
 async function lostPasswordConnected() {
   try {
-    const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
+    const user_data = getUserData();
     if (!user_data.email_edu) {
       throw new Error("L'adresse mail n'est pas défini dans AsyncStorage.");
     }

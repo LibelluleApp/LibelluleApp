@@ -29,16 +29,17 @@ function Scolarite() {
             },
           },
 
-          tabBarActiveTintColor: colors.black,
+          tabBarActiveTintColor: colors.regular950,
           tabBarInactiveTintColor: colors.grey,
           tabBarLabelStyle: {
             fontFamily: "Ubuntu_400Regular",
+            letterSpacing: -0.4,
             fontSize: 17,
             textTransform: "none",
           },
 
           tabBarIndicatorStyle: {
-            backgroundColor: colors.black,
+            backgroundColor: colors.regular950,
           },
         }}
       >

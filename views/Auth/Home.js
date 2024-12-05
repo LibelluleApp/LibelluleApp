@@ -32,7 +32,7 @@ function AuthStack() {
       fontFamily: "Ubuntu_700Bold",
       fontSize: 30,
       letterSpacing: -1,
-      color: colors.blue_variable,
+      color: colors.regular700,
     },
     textContainer: {
       position: "absolute",
@@ -51,15 +51,17 @@ function AuthStack() {
     },
     textTitle: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 22,
-      letterSpacing: -0.5,
-      color: colors.black,
+      letterSpacing: -0.4,
+      color: colors.regular950,
     },
     textDescription: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 16,
-      letterSpacing: -0.5,
-      color: colors.grey,
+      letterSpacing: -0.4,
+      color: colors.regular800,
     },
     tagContainer: {
       marginTop: 10,
@@ -71,6 +73,7 @@ function AuthStack() {
     },
     cguText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
     },
@@ -119,11 +122,11 @@ function AuthStack() {
             Créée par des étudiants de l’IUT d’Angoulême.
           </Text>
           <View style={styles.tagContainer}>
-            <Tag title="GMP" color="#BB8700" />
-            <Tag title="MMI" color="#AC00BB" />
-            <Tag title="QLIO" color="#BB0000" />
-            <Tag title="GEII" color="#1ABB00" />
-            <Tag title="TC" color="#00B0BB" />
+            <Tag title="TC" color="#A4272F" />
+            <Tag title="MMI" color="#993FDD" />
+            <Tag title="GEII" color="#2ABC3E" />
+            <Tag title="GMP" color="#404BFF" />
+            <Tag title="QLIO" color="#FE6A19" />
           </View>
         </View>
         <View style={styles.buttonContainer}>
