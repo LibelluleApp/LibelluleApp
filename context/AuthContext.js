@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {createContext, useContext, useEffect, useMemo, useState} from 'react';
 import * as SecureStore from 'expo-secure-store';
 import login from "../api/User/login";
 import {setupInterceptor} from "../api/ApiManager";
@@ -23,74 +23,91 @@ export const SessionProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const showNotification = (message, type = "danger") => {
+    showMessage({
+      message,
+      type,
+      titleStyle: { fontFamily: "Ubuntu_400Regular" },
+    });
+  };
+
   const signIn = async (username, password) => {
     try {
       const data = await login(username, password);
-      if (data.status === "error") {
-        showMessage({
-          message: data.message,
-          type: "danger",
-          titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        });
-      } else if(data.status === "warning"){
-        showMessage({
-          message: data.message,
-          type: "warning",
-          titleStyle: { fontFamily: "Ubuntu_400Regular" },
-        })}
+
+      if (data.status === "error" || data.status === "warning") {
+        showNotification(data.message, data.status);
+        return false;
+      }
+
       setupInterceptor(() => data.token);
       await SecureStore.setItemAsync('secure_user_token', data.token);
       setSession(data.token);
+      return true;
     } catch (error) {
-      showMessage({
-        message: error.message,
-        type: "danger",
-        titleStyle: { fontFamily: "Ubuntu_400Regular" },
-      });
+      showNotification(error.message);
+      setError(error.message);
+      return false;
     }
   };
 
   const signOut = async () => {
-    await SecureStore.deleteItemAsync('secure_user_token');
-    setSession(null);
-
+    try {
+      await SecureStore.deleteItemAsync('secure_user_token');
+      setSession(null);
+      setError(null);
+    } catch (error) {
+      console.error('Error during sign out:', error);
+      showNotification('Failed to sign out properly');
+    }
   };
-
 
   const checkToken = async () => {
-    setLoading(true); // Commencer le chargement
-    const user_data = getUserData();
+    try {
+      setLoading(true);
+      const userData = getUserData();
 
-    if (!user_data) {
-      SecureStore.deleteItemAsync('secure_user_token')
-          .then(() => {
-            setSession(null);
-          })
-          .catch((error) => console.error('Error deleting secure token:', error))
-          .finally(() => setLoading(false));
+      if (!userData) {
+        await signOut();
+        return;
+      }
+
+      const token = await SecureStore.getItemAsync('secure_user_token');
+
+      if (token) {
+        setupInterceptor(() => token);
+        setSession(token);
+        await refreshData();
+      } else {
+        await signOut();
+      }
+    } catch (error) {
+      console.error('Error checking token:', error);
+      setError(error.message);
+      await signOut();
+    } finally {
+      setLoading(false);
     }
-
-    SecureStore.getItemAsync('secure_user_token')
-        .then((token) => {
-          if (token) {
-            setupInterceptor(() => token);
-            setSession(token);
-          } else {
-            setSession(null); // Si pas de token, assurez-vous de mettre à jour l'état
-          }
-        })
-        .catch((error) => console.error('Error getting secure token:', error))
-        .finally(() => setLoading(false)); // Mettre fin au chargement
   };
-
 
   useEffect(() => {
     checkToken();
-
+    // Consider adding a cleanup function if needed
+    return () => {
+      // Cleanup logic here if necessary
+    };
   }, []);
 
+  const contextValue = useMemo(() => ({
+    session,
+    signIn,
+    signOut,
+    loading,
+    error
+  }), [session, loading, error]);
+
   return (
-      <AuthContext.Provider value={{ session, signIn, signOut, loading, error }}>
+      <AuthContext.Provider value={contextValue}>
         {children}
       </AuthContext.Provider>
   );
