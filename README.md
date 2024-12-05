@@ -33,50 +33,49 @@
 ## ✨ Fonctionnalités
 
 ### Accueil
+- Affichage de la météo et de la température de la localisation actuelle
+- Message personnalisé selon la météo et le moment de la journée
 - Affichage du prochain cours
-- Vue semaine (5 jours)
-  - Nombre d'heures de cours
-  - Météo
-  - Présence d'une évaluation
-  - Devoirs à faire avec taux d'accomplissement
-- Navigation
-  - Accès rapide aux autres fonctionnalités
+- Devoirs à faire pour le jour suivant
 
 ### Emploi du temps
 - Vues
   - Journée
   - Semaine (5 jours)
-  - Nombre d'heures de cours affichées
+  - Nombre d'heures de cours affichées (Soon)
 - Détail des cours
   - Un clic sur un cours ouvre une interface avec des informations détaillées
 
-### Agenda
+### Devoirs
 - Tutoriel expliquant le fonctionnement
+- Vues
+  - Journée
+  - Semaine
+  - Chronologique
 - Informations
   - Numéro de la semaine
   - Nombre d'évaluations et de tâches
-  - Événements affichés par jour
 - Fonctionnalités
   - Cochez un événement une fois réalisé
   - Un clic sur un évènement ouvre une interface avec des informations détaillées
-  - Gestion des événements (pour le responsable de groupe)
+  - Gestion des événements (pour le responsable des devoirs)
     - Ajout d'événements via un bouton en bas de l'interface
       - Date, Matière, Type, Nom, Description
-    - Édition/Suppression des événements existants
+    - Édition/Suppression des devoirs existants
 
 ### Mails
 - Liste des mails de l'étudiant
   - Lecture uniquement, pas de réponse ni de suppression
 
 ### Menu du restaurant universitaire (Le Crousty)
-- Accessible depuis l'accueil
+- Visible sur la page d'accueil
 - Informations pratiques sur le restaurant universitaire
 - Menu par jour
   - Le menu est récupéré sur le site du Crousty ([lien ici](https://www.crous-poitiers.fr/restaurant/r-u-crousty/))
   - Peut ne pas être à jour si le site ne l'est pas
 
 ### Liens externes
-- Accessibles depuis l'accueil
+- Accessibles depuis les paramètres
   - Messagerie universitaire
   - ENT
   - UPDago
@@ -94,7 +93,7 @@
   - Lien vers MMI Dashboard
 -->
 
-### Profil
+### Paramètres
 - Informations personnelles (en cours de développement)
   - Affichage/Modification de la photo de profil
   - Prénom, nom, adresse mail universitaire
@@ -103,12 +102,13 @@
   - Modification du mot de passe
   - Transmission du rôle de responsable de l'agenda
   - Activation/Désactivation du mode sombre
+  - Possibilité de changer la couleur de l'application
   - Déconnexion
   - Supression de son compte
 - Informations Libellule
-  - Réseaux sociaux (Instagram, LinkedIn)
   - Journal des mises à jour (patchnotes)
   - Conditions générales d'utilisation
+  - Contact
 
 
 ## 📱 Captures d'écran

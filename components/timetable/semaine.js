@@ -247,21 +247,13 @@ const Semaine = forwardRef((props, ref) => {
         fontFamily: "Ubuntu_500Medium",
         letterSpacing: -0.4,
       },
-      weekNumberContainer: {
-        backgroundColor: "transparent",
-      },
       headerContainer: {
         borderBottomWidth: 0,
       },
       nowIndicatorColor: colors.regular700,
-      weekNumber: {
-        color: colors.regular900,
-        fontFamily: "Ubuntu_500Medium",
-        letterSpacing: -0.4,
-      },
       weekNumberContainer: {
         backgroundColor: "transparent",
-        height: 45, // Assurez-vous d'avoir assez d'espace pour le mois
+        height: 45,
         paddingVertical: 4,
       },
     }),
