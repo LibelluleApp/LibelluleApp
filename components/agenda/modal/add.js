@@ -22,14 +22,14 @@ import {
   TextIcon,
   Baseline,
   GraduationCap,
-} from "./../../../assets/icons/Icons";
+} from "../../../assets/icons/Icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import ButtonAuth from "../../auth/buttonAuth";
 import saveAgenda from "../../../api/Agenda/save";
 import { showMessage } from "react-native-flash-message";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment-timezone";
-import { ThemeContext } from "./../../../utils/themeContext";
+import { ThemeContext } from "../../../utils/themeContext";
 import TouchableScale from "react-native-touchable-scale";
 
 const Add = ({ route }) => {
