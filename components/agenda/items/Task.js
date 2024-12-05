@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { Calendar, ChevronRight } from "../../../assets/icons/Icons";
@@ -7,6 +7,7 @@ import { checkAgenda, uncheckAgenda } from "../../../api/Agenda/check";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import { ThemeContext } from "./../../../utils/themeContext";
+import TouchableScale from "react-native-touchable-scale";
 
 function TaskHome({
   date,
@@ -16,6 +17,8 @@ function TaskHome({
   checked,
   onTaskCheck,
   onTaskUncheck,
+  component,
+  bouncyBox,
 }) {
   const { colors } = useContext(ThemeContext);
 
@@ -26,99 +29,118 @@ function TaskHome({
       alignItems: "center",
       backgroundColor: colors.white_background,
       borderRadius: 10,
-      marginBottom: 15,
       paddingHorizontal: 17,
       paddingVertical: 12,
+      marginTop: 10,
     },
     taskRight: {
-      width: "15%",
       alignItems: "flex-end",
+      width: "15%",
     },
     taskLeft: {
       flexDirection: "row",
       alignItems: "center",
-      marginBottom: 5,
       width: "85%",
+      gap: 15,
     },
     taskLeftContent: {
-      gap: 3,
+      flexDirection: component === "little" ? "row" : "column",
+      alignItems: component === "little" ? "center" : "flex-start",
+      gap: component === "little" ? 7 : 3,
+      flex: component === "little" ? 1 : 0,
+      width: component === "little" ? "auto" : "100%",
     },
     taskTitle: {
       fontFamily: "Ubuntu_500Medium",
-      fontSize: 16,
-      color: colors.black,
-    },
-    taskContentDate: {
-      fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
-      fontSize: 13,
-    },
-    taskContentMore: {
-      fontFamily: "Ubuntu_500Medium",
-      color: colors.black,
-      fontSize: 13,
+      letterSpacing: -0.4,
+      fontSize: component === "little" ? 13 : 16,
+      color: colors.regular950,
+      maxWidth: component === "little" ? 100 : "90%",
     },
     taskDescription: {
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      letterSpacing: -0.4,
+      color: colors.regular800,
+      maxWidth: component === "little" ? "auto" : "100%",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      flex: component === "little" ? 1 : 0,
     },
     strikethrough: {
       textDecorationLine: "line-through",
-      color: colors.grey, // Optional: change color when striked through
+      color: colors.grey,
     },
   });
 
   const navigation = useNavigation();
   const [isChecked, setIsChecked] = useState(checked);
-  const dates = moment(date).format("ddd D MMMM");
+
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
+
   const handleCheckboxPress = () => {
-    setIsChecked(!isChecked);
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    if (isChecked) {
-      uncheckAgenda(agenda_id);
-      if (typeof onTaskUncheck === "function") {
-        onTaskUncheck(agenda_id);
-      }
-    } else {
+    if (newCheckedState) {
       checkAgenda(agenda_id);
       if (typeof onTaskCheck === "function") {
         onTaskCheck(agenda_id);
+      }
+    } else {
+      uncheckAgenda(agenda_id);
+      if (typeof onTaskUncheck === "function") {
+        onTaskUncheck(agenda_id);
       }
     }
   };
 
   return (
-    <TouchableOpacity
-      style={styles.evalTask}
+    <TouchableScale
+      friction={6}
+      activeScale={0.97}
       onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
     >
-      <View style={styles.taskLeft}>
-        <BouncyCheckbox
-          fillColor={colors.blue_variable}
-          unfillColor={colors.white}
-          isChecked={isChecked}
-          onPress={handleCheckboxPress}
-        />
-        <View style={styles.taskLeftContent}>
-          <Text style={[styles.taskTitle, isChecked && styles.strikethrough]}>
-            {matiere || "Matière indisponible"}
-          </Text>
-          <Text
-            style={[styles.taskDescription, isChecked && styles.strikethrough]}
-          >
-            {titre || "Titre indisponible"}
-          </Text>
+      <View style={styles.evalTask}>
+        <View style={styles.taskLeft}>
+          {bouncyBox && (
+            <BouncyCheckbox
+              fillColor={colors.regular700}
+              unfillColor={colors.white}
+              isChecked={isChecked}
+              onPress={handleCheckboxPress}
+              disableText={true}
+              hitSlop={{ top: 20, bottom: 20, right: 20, left: 20 }}
+            />
+          )}
+          <View style={styles.taskLeftContent}>
+            <Text style={[styles.taskTitle, isChecked && styles.strikethrough]}>
+              {matiere || "Matière indisponible"}
+            </Text>
+            <Text
+              style={[
+                styles.taskDescription,
+                isChecked && styles.strikethrough,
+              ]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {titre || "Titre indisponible"}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.taskRight}>
+          <ChevronRight
+            stroke={colors.regular700}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
         </View>
       </View>
-      <View style={styles.taskRight}>
-        <ChevronRight
-          stroke={colors.black}
-          strokeWidth={1.75}
-          width={18}
-          height={18}
-        />
-      </View>
-    </TouchableOpacity>
+    </TouchableScale>
   );
 }
 

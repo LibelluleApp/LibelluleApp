@@ -8,6 +8,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment";
 import { ThemeContext } from "./../../../utils/themeContext";
+import TouchableScale from "react-native-touchable-scale";
 
 function EvalHome({ date, titre, agenda_id, matiere }) {
   const navigation = useNavigation();
@@ -15,59 +16,71 @@ function EvalHome({ date, titre, agenda_id, matiere }) {
   const { colors } = useContext(ThemeContext);
 
   const styles = StyleSheet.create({
-    evalTask: {
+    containerEval: {
+      alignItems: "center",
       flexDirection: "row",
       justifyContent: "space-between",
-      alignItems: "center",
-      backgroundColor: colors.red700,
+      alignContent: "center",
+      backgroundColor: colors.red50_2,
+      gap: 10,
       borderRadius: 10,
-      marginBottom: 15,
-      paddingHorizontal: 17,
       paddingVertical: 12,
+      paddingHorizontal: 17,
+      borderWidth: 0.5,
+      borderColor: colors.red300_2,
+      marginTop: 10,
     },
-    evalRight: {
-      width: "15%",
-      alignItems: "flex-end",
+    evalText: {
+      color: colors.red500_2,
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      fontSize: 14,
     },
-    evalLeft: {
+    leftContainer: {
       flexDirection: "row",
       alignItems: "center",
       gap: 7,
-      width: "85%",
     },
-    evalTitle: {
-      fontFamily: "Ubuntu_500Medium",
-      fontSize: 16,
-      color: colors.white,
-    },
+    rightContainer: {},
   });
 
-  const [dates, setDates] = useState(moment(date).format("ddd D MMMM"));
   return (
-    <TouchableOpacity
-      style={styles.evalTask}
+    <TouchableScale
+      friction={6}
+      activeScale={0.97}
       onPress={() => navigation.navigate("viewAgenda", { agenda_id })}
     >
-      <View style={styles.evalLeft}>
-        <CircleAlert
-          stroke={colors.white}
-          width={20}
-          height={20}
-          strokeWidth={1.75}
-        />
-        <Text style={styles.evalTitle}>
-          [Évaluation] {matiere || "Titre non disponible"}
-        </Text>
+      <View style={styles.containerEval}>
+        <View style={styles.leftContainer}>
+          <CircleAlert
+            stroke={colors.red500_2}
+            width={20}
+            height={20}
+            strokeWidth={1.75}
+          />
+          <Text style={styles.evalText}>
+            <Text
+              style={{
+                fontFamily: "Ubuntu_500Medium",
+                letterSpacing: -0.4,
+                fontSize: 14,
+              }}
+            >
+              [Évaluation]
+            </Text>{" "}
+            {matiere || "Titre non disponible"}
+          </Text>
+        </View>
+        <View style={styles.rightContainer}>
+          <ChevronRight
+            stroke={colors.red500_2}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          ></ChevronRight>
+        </View>
       </View>
-      <View style={styles.evalRight}>
-        <ChevronRight
-          stroke={colors.white}
-          strokeWidth={1.75}
-          width={18}
-          height={18}
-        />
-      </View>
-    </TouchableOpacity>
+    </TouchableScale>
   );
 }
 

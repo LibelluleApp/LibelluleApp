@@ -57,10 +57,11 @@ function LostPassword({ navigation }) {
       alignSelf: "flex-start",
       fontSize: 27,
       letterSpacing: -1,
-      color: colors.black,
+      color: colors.regular950,
     },
     forgotpass: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.grey,
       textDecorationLine: "underline",
@@ -81,13 +82,15 @@ function LostPassword({ navigation }) {
     },
     accountText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
       color: colors.grey,
     },
     accountButton: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.blue700,
+      color: colors.regular700,
     },
   });
 

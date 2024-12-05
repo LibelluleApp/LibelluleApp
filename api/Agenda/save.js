@@ -1,9 +1,10 @@
 import ApiManager from "../ApiManager";
 import * as SecureStore from "expo-secure-store";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import {getUserData} from "../../utils/storage";
 
 async function saveAgenda(titre, description, date, ressource_name, type) {
-  const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
+  const user_data = getUserData();
 
   if (!user_data.groupe_id) {
     throw new Error("Le groupe_id n'est pas défini dans AsyncStorage.");
@@ -25,6 +26,7 @@ async function saveAgenda(titre, description, date, ressource_name, type) {
       throw new Error(response.data.message);
     }
   } catch (error) {
+    console.log(error.reponse);
     throw new Error("Impossible d'ajouter la tâche. Veuillez réessayer.");
   }
 }

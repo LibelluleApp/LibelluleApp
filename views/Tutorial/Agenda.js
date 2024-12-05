@@ -8,11 +8,11 @@ import {
   Button,
 } from "react-native";
 import { Student, Agenda, Check } from "./../../assets/icons/Icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "./../../utils/themeContext";
 import ButtonAuth from "./../../components/auth/buttonAuth";
 import whoIsChief from "../../api/Agenda/chef";
+import { setAlternant, setIsFirstVisitAgenda } from "../../utils/storage";
 
 const TutorialAgenda = () => {
   const [chef, setChef] = useState(null);
@@ -27,7 +27,7 @@ const TutorialAgenda = () => {
     fetchChef();
   }, []);
 
-  styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     background: {
       flex: 1,
       justifyContent: "center",
@@ -59,8 +59,9 @@ const TutorialAgenda = () => {
     },
     titleText: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 17,
-      color: colors.black,
+      color: colors.regular950,
     },
     textContentContainer: {
       flexDirection: "column",
@@ -68,8 +69,9 @@ const TutorialAgenda = () => {
     },
     itemTextContentContainer: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.black50,
+      color: colors.regular950,
     },
     responsableContainer: {
       flexDirection: "row",
@@ -85,23 +87,25 @@ const TutorialAgenda = () => {
     },
     textResponsable: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.black,
+      color: colors.regular950,
     },
     textResponsableName: {
       fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.blue_variable,
+      color: colors.regular700,
     },
   });
 
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const handleFirstVisit = async () => {
+  const handleFirstVisit = () => {
     setLoading(true);
     try {
-      await AsyncStorage.setItem("isFirstVisitAgenda", "false");
-      navigation.navigate("Agenda");
+      setIsFirstVisitAgenda(false);
+      navigation.goBack();
     } catch (e) {
       console.log(e);
     }
@@ -120,7 +124,7 @@ const TutorialAgenda = () => {
         <View style={styles.containerContent}>
           <View style={styles.textContainer}>
             <View style={styles.titleContainer}>
-              <Check stroke={colors.black} width={20} height={20} />
+              <Check stroke={colors.regular950} width={20} height={20} />
               <Text style={styles.titleText}>
                 Comment fonctionne l’agenda ?
               </Text>
@@ -149,7 +153,7 @@ const TutorialAgenda = () => {
           </View>
           <View style={styles.responsableContainer}>
             <Check
-              stroke={colors.black}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}

@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {getColors, setColors} from "../storage";
 
 const colors = [
   "#FFD1DC",
@@ -106,13 +106,7 @@ async function associateRessourceColor(student_year) {
     return {};
   }
 
-  let savedColors = await AsyncStorage.getItem("savedColors");
-
-  if (savedColors) {
-    savedColors = JSON.parse(savedColors);
-  } else {
-    savedColors = {};
-  }
+  let savedColors = getColors();
 
   for (let i = 1; i <= totalCodes; i++) {
     const codeSuffix = i.toString().padStart(2, "0");
@@ -136,17 +130,12 @@ async function associateRessourceColor(student_year) {
     savedColors[code2] = color;
   }
 
-  await AsyncStorage.setItem("savedColors", JSON.stringify(savedColors));
+  setColors(savedColors);
   return resourceColors;
 }
 
 async function getRessourceColor(ressource) {
-  let savedColors = await AsyncStorage.getItem("savedColors");
-  if (savedColors) {
-    savedColors = JSON.parse(savedColors);
-  } else {
-    savedColors = {};
-  }
+  let savedColors = getColors();
 
   if (savedColors[ressource]) {
     return savedColors[ressource];

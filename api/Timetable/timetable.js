@@ -1,33 +1,31 @@
 import ApiManager from "../ApiManager";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import {getAlternant, getUserData} from "../../utils/storage";
 
 async function fetchTimetable() {
   try {
-    const user_data = JSON.parse(await AsyncStorage.getItem("user_data"));
+    const user_data = getUserData();
 
     if (!user_data.groupe_id) {
       throw new Error("Le groupe_id n'est pas défini dans AsyncStorage.");
     }
-    let isAlternant = await AsyncStorage.getItem("isAlternant");
-    if (isAlternant === "true") {
+
+    let isAlternant = getAlternant();
+    if (isAlternant) {
       user_data.groupe_id = user_data.groupe_id + "A";
     }
-    const response = await ApiManager.post(
-        "/timetable/timetable",
-        {
-          groupe_id: user_data.groupe_id,
-        },
-        {
-          headers: {
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-          },
-        }
-    );
 
-
+    const response = await ApiManager.post("/timetable/gettimetable", {
+      groupe_id: user_data.groupe_id,
+    });
 
     if (response.data.status === "success") {
-      return response.data.events;
+      const transformedEvents = response.data.events.map(event => ({
+        ...event,
+        start: { dateTime: new Date(event.start) },
+        end: { dateTime: new Date(event.end) }
+      }));
+      return transformedEvents;
     } else {
       throw new Error(response.data.message);
     }

@@ -1,28 +1,31 @@
 import React, { useContext, useEffect } from "react";
 import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { BookOpen, Student, Utensils, Link } from "../../assets/icons/Icons";
+import {
+  BookOpen,
+  GraduationCap,
+  Utensils,
+  Link,
+} from "../../assets/icons/Icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { ThemeContext } from "./../../utils/themeContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getUserData } from "../../utils/storage";
 
 function ParcourirHome() {
   const { colors } = useContext(ThemeContext);
   const [user, setUser] = React.useState({});
 
   useEffect(() => {
-    const getData = async () => {
+    const getData = () => {
       try {
-        const value = await AsyncStorage.getItem("user_data");
-        return value ? JSON.parse(value) : null;
+        const value = getUserData();
+        setUser(value);
       } catch (error) {
         console.error("Error fetching user data:", error);
         return null;
       }
     };
-    getData().then((data) => {
-      setUser(data);
-    });
+    getData();
   }, []);
 
   const styles = StyleSheet.create({
@@ -37,7 +40,7 @@ function ParcourirHome() {
     title: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 15,
-      color: colors.grey,
+      color: colors.regular950,
       marginBottom: 14,
     },
     tile: {
@@ -45,7 +48,8 @@ function ParcourirHome() {
       width: "47%",
       borderRadius: 10,
       paddingHorizontal: 17,
-      paddingVertical: 10,
+      paddingVertical: 13,
+      flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
       gap: 10,
@@ -53,7 +57,7 @@ function ParcourirHome() {
     tileText: {
       fontFamily: "Ubuntu_500Medium",
       fontSize: 13,
-      color: colors.black,
+      color: colors.regular800,
     },
     disabled: {
       opacity: 0.4,
@@ -74,7 +78,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Link
-            stroke={colors.black}
+            stroke={colors.regular950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -86,7 +90,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Utensils
-            stroke={colors.black}
+            stroke={colors.regular950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -100,7 +104,7 @@ function ParcourirHome() {
             disabled={true}
           >
             <BookOpen
-              stroke={colors.black}
+              stroke={colors.regular950}
               width={20}
               height={20}
               strokeWidth={1.75}
@@ -113,8 +117,8 @@ function ParcourirHome() {
           style={[styles.tile, styles.disabled]}
           disabled={true}
         >
-          <Student
-            color={colors.black}
+          <GraduationCap
+            color={colors.regular950}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -135,7 +139,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Link
-            stroke={colors.black}
+            stroke={colors.regular800}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -147,7 +151,7 @@ function ParcourirHome() {
           style={styles.tile}
         >
           <Utensils
-            stroke={colors.black}
+            stroke={colors.regular800}
             width={20}
             height={20}
             strokeWidth={1.75}
@@ -161,7 +165,7 @@ function ParcourirHome() {
             disabled={true}
           >
             <BookOpen
-              stroke={colors.black}
+              stroke={colors.regular950}
               width={20}
               height={20}
               strokeWidth={1.75}
@@ -174,8 +178,8 @@ function ParcourirHome() {
           style={[styles.tile, styles.disabled]}
           disabled={true}
         >
-          <Student
-            color={colors.black}
+          <GraduationCap
+            color={colors.regular950}
             width={20}
             height={20}
             strokeWidth={1.75}

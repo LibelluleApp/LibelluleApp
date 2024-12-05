@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -8,15 +8,14 @@ import {
   Switch,
 } from "react-native";
 import { ThemeContext } from "./../../utils/themeContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { Calendar, ChevronRight } from "./../../assets/icons/Icons";
+import { getAlternant, getUserData, setAlternant } from "../../utils/storage";
 
 function Settings() {
-  const { isDarkMode, toggleTheme, colors } = React.useContext(ThemeContext);
-  const [isEnabled, setIsEnabled] = React.useState(false);
-  const [isAlternant, setIsAlternant] = React.useState(false);
-  const [userDatas, setUserDatas] = React.useState({});
+  const { isDarkMode, toggleTheme, colors } = useContext(ThemeContext);
+  const [isAlternant, setIsAlternant] = useState(false);
+  const [userDatas, setUserDatas] = useState({});
 
   const navigation = useNavigation();
 
@@ -48,8 +47,9 @@ function Settings() {
     },
     profileBtnSwitch: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 16,
-      color: colors.black,
+      color: colors.regular950,
     },
     profileButton: {
       backgroundColor: colors.white_background,
@@ -63,11 +63,13 @@ function Settings() {
     },
     profileBtnText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 15,
-      color: colors.black,
+      color: colors.regular950,
     },
     profileBtnUnderText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 13,
       color: colors.grey,
     },
@@ -78,38 +80,35 @@ function Settings() {
     },
   });
 
-  React.useEffect(() => {
-    const getData = async () => {
+  useEffect(() => {
+    const getData = () => {
       try {
-        const value = await AsyncStorage.getItem("user_data");
-        return value ? JSON.parse(value) : {};
+        const value = getUserData();
+        setUserDatas(value);
       } catch (error) {
         console.error("Error fetching user data:", error);
         return {};
       }
     };
 
-    const getIsAlternant = async () => {
+    const getIsAlternant = () => {
       try {
-        const value = await AsyncStorage.getItem("isAlternant");
-        setIsAlternant(value === "true");
+        const value = getAlternant();
+        setIsAlternant(value);
       } catch (error) {
         console.error("Error fetching alternant status:", error);
       }
     };
 
-    getData().then((data) => setUserDatas(data));
+    getData();
     getIsAlternant();
   }, []);
 
-  const handleAlternant = async () => {
+  const handleAlternant = () => {
     const newAlternantStatus = !isAlternant;
     setIsAlternant(newAlternantStatus);
     try {
-      await AsyncStorage.setItem(
-        "isAlternant",
-        JSON.stringify(newAlternantStatus)
-      );
+      setAlternant(newAlternantStatus);
     } catch (error) {
       console.error("Error setting alternant mode:", error);
     }
@@ -123,7 +122,7 @@ function Settings() {
           <Switch
             trackColor={{
               false: colors.grey,
-              true: colors.blue_variable,
+              true: colors.regular700,
             }}
             thumbColor={isDarkMode ? colors.white : colors.white}
             onValueChange={toggleTheme}
@@ -136,7 +135,7 @@ function Settings() {
             <Switch
               trackColor={{
                 false: colors.grey,
-                true: colors.blue_variable,
+                true: colors.regular700,
               }}
               thumbColor={isAlternant ? colors.white : colors.white}
               onValueChange={handleAlternant}
@@ -150,7 +149,7 @@ function Settings() {
         >
           <View style={styles.CTAContent}>
             <Calendar
-              stroke={colors.black}
+              stroke={colors.regular950}
               strokeWidth={1.75}
               width={18}
               height={18}
@@ -158,7 +157,7 @@ function Settings() {
             <Text style={styles.profileBtnText}>Emploi du temps</Text>
           </View>
           <ChevronRight
-            stroke={colors.black}
+            stroke={colors.regular950}
             strokeWidth={1.75}
             width={18}
             height={18}

@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   },
   textHour: {
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
     includeFontPadding: false,
     fontSize: 17,
     color: "#252525",
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
   },
   textSubject: {
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
     fontSize: 15,
     color: "#FFF",
   },
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
   },
   textTeacher: {
     fontFamily: "Ubuntu_400Regular",
+    letterSpacing: -0.4,
     fontSize: 13,
     color: "#FFF",
   },
@@ -106,6 +109,7 @@ const styles = StyleSheet.create({
   },
   textBreak: {
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
     fontSize: 15,
     color: "#7A797C",
   },

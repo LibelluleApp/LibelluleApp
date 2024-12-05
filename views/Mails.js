@@ -1,193 +1,97 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+  memo,
+} from "react";
 import {
   View,
-  ScrollView,
   Text,
-  TextInput,
-  Button,
   StyleSheet,
   FlatList,
   ActivityIndicator,
-  Alert,
   TouchableOpacity,
   Linking,
   RefreshControl,
-  Platform,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import fetchMailFromZimbra from "../api/Mail/fetchMail";
+import {useIsFocused, useNavigation} from "@react-navigation/native";
+import { ThemeContext } from "../utils/themeContext";
+import { MailSearch, Settings, Wrench } from "../assets/icons/Icons";
+import TouchableScale from "react-native-touchable-scale";
+
+// Components
 import Mail from "../components/mails/Mail";
-import ButtonAuth from "../components/auth/buttonAuth";
-import Input from "./../components/auth/input";
-import { Envelope, Lock } from "./../assets/icons/Icons";
-import { ThemeContext } from "./../utils/themeContext";
-import connectZimbra from "../api/Mail/connect";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { set } from "date-fns";
-// import * as Device from "expo-device";
+
+// API
+import fetchMailFromZimbra from "../api/Mail/fetchMail";
+
+// Constants
+const ZIMBRA_URL = "https://webmail.univ-poitiers.fr/";
+
+// Memoized components
+const MemoizedMail = memo(Mail);
 
 function Mails() {
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const { colors } = useContext(ThemeContext);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [emails, setEmails] = useState([]);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [messages, setMessages] = useState("");
-  // const [rooted, setRooted] = useState(false);
-
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      const token = await SecureStore.getItemAsync("authToken");
-      if (token) {
-        setIsAuthenticated(true);
-        await fetchEmails();
-      }
-    };
-    // const checkIfIsRooted = async () => {
-    //   const isRooted = await Device.isRootedExperimentalAsync();
-    //   setRooted(isRooted);
-    // };
-    // checkIfIsRooted();
-
-    checkAuthentication();
-  }, []);
-
-  const handleLogin = async () => {
-    setLoading(true);
-    try {
-      const token = await SecureStore.getItemAsync("authToken");
-      if (token) {
-        setIsAuthenticated(true);
-        await fetchEmails();
-      } else {
-        const response = await connectZimbra(email, password);
-        if (response) {
-          setIsAuthenticated(true);
-          await fetchEmails();
-        } else {
-          Alert.alert(
-            "Erreur de connexion",
-            "Veuillez vérifier vos identifiants."
-          );
-        }
-        // Alert.alert(
-        //   "Erreur de connexion",
-        //   "Veuillez vérifier vos identifiants."
-        // );
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-    }
-    setLoading(false);
-  };
-
-  const fetchEmails = async () => {
-    setLoading(true);
-    try {
-      const data = await fetchMailFromZimbra();
-      if (data && data.m) {
-        setEmails(data.m);
-        setMessages("");
-      } else {
-        setEmails([]);
-        setMessages("Aucun mail à afficher.");
-      }
-    } catch (error) {
-      console.error("Error fetching emails:", error);
-    }
-    setLoading(false);
-  };
-
-  const handleOpenLink = () => {
-    if (Platform.OS === "android") {
-      Linking.openURL(
-        "https://developer.android.com/privacy-and-security/keystore?hl=fr"
-      );
-    } else {
-      Linking.openURL(
-        "https://developer.apple.com/documentation/security/keychain-services"
-      );
-    }
-  };
 
   const styles = StyleSheet.create({
-    background: {
-      position: "relative",
-      justifyContent: "center",
-      flex: 1,
-      backgroundColor: colors.background,
-    },
-    containerLogin: {
+    notAuthContainer: {
       flex: 1,
       justifyContent: "center",
+      alignItems: "start",
+      padding: 20,
+      gap: 25,
       backgroundColor: colors.background,
     },
-    containerContentLogin: {
+    noAuthServiceTextContent: {
       flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      gap: 30,
-      width: "90%",
-      alignSelf: "center",
-    },
-    titleContentLogin: {
-      alignItems: "center",
-      alignSelf: "center",
-      width: "100%",
       gap: 5,
     },
-    textLogin: {
-      width: "100%",
-      alignSelf: "center",
-      gap: 20,
+    noAuthServiceTitleContent: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "start",
+      gap: 10,
     },
-    titleLogin: {
+    noAuthServiceTitle: {
       fontFamily: "Ubuntu_700Bold",
       alignSelf: "flex-start",
       fontSize: 27,
       letterSpacing: -1,
-      color: colors.black,
+      color: colors.regular950,
     },
-    titleDescriptionLogin: {
+    notAuthDescription: {
       fontFamily: "Ubuntu_400Regular",
+      fontSize: 16,
+      letterSpacing: -0.4,
+    },
+    btnOutline: {
+      color: colors.regular700,
+      fontSize: 16,
+      paddingHorizontal: 20,
+      paddingVertical: 7,
+      borderRadius: 50,
+      borderWidth: 0.5,
+      borderColor: colors.regular700,
+      textAlign: "center",
+      width: 200,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    btnOutlineText: {
+      color: colors.regular700,
       fontSize: 15,
-      color: colors.grey,
-      alignSelf: "flex-start",
+      fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
     },
-    titleWarningLogin: {
-      fontFamily: "Ubuntu_400Regular",
-      fontSize: 13,
-      color: colors.grey,
-      alignSelf: "flex-start",
-    },
-    buttonLogin: {
-      width: "100%",
-      alignSelf: "center",
-    },
-    // ----
-    // container: {
-    //   flex: 1,
-    //   backgroundColor: colors.background,
-    //   justifyContent: "center",
-    //   alignItems: "center",
-    //   paddingTop: 20,
-    // },
-    // input: {
-    //   width: "80%",
-    //   paddingHorizontal: 20,
-    //   marginVertical: 10,
-    //   height: 58,
-    //   backgroundColor: colors.white_background,
-    //   borderRadius: 10,
-    //   borderWidth: 0.5,
-    //   borderColor: colors.input_border,
-    //   color: colors.black,
-    //   fontFamily: "Ubuntu_400Regular",
-    // },
-    // button: {
-    //   width: "80%",
-    // },
     containerMails: {
       flex: 1,
       backgroundColor: colors.background,
@@ -205,146 +109,179 @@ function Mails() {
     },
     textDescriptionMails: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.grey,
     },
     linkDescriptionMails: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       fontSize: 14,
-      color: colors.grey,
       textDecorationLine: "underline",
     },
-    emailItem: {
-      padding: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.grey,
-    },
-    subject: {
-      fontWeight: "bold",
-    },
-    from: {
-      color: colors.grey,
-    },
-    date: {
-      fontSize: 12,
-      color: colors.grey,
-    },
-    body: {
-      marginTop: 5,
-    },
     listMails: {
+      alignItems: "center",
+      justifyContent: "center",
       paddingBottom: 65,
+    },
+    noMessageContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 5,
+    },
+    noMailText: {
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      fontSize: 15,
+      textAlign: "center",
     },
   });
 
+  const NoMessages = memo(({ message, colors }) => (
+    <View style={styles.noMessageContainer}>
+      <MailSearch
+        stroke={colors.regular950}
+        strokeWidth={1.75}
+        width={18}
+        height={18}
+      />
+      <Text style={[styles.noMailText, { color: colors.regular950 }]}>
+        {message}
+      </Text>
+    </View>
+  ));
+
+  const NotAuthenticated = memo(({ colors, onNavigateToSettings }) => (
+    <View style={styles.notAuthContainer}>
+      <View style={styles.noAuthServiceTextContent}>
+        <View style={styles.noAuthServiceTitleContent}>
+          <Wrench
+            stroke={colors.regular950}
+            strokeWidth={1.75}
+            width={24}
+            height={24}
+          />
+          <Text
+            style={[styles.noAuthServiceTitle, { color: colors.regular950 }]}
+          >
+            Service non activé
+          </Text>
+        </View>
+        <Text style={[styles.notAuthDescription, { color: colors.regular800 }]}>
+          Pour accéder à vos mails universitaires, vous devez d'abord activer le
+          service dans les paramètres.
+        </Text>
+      </View>
+      <TouchableScale
+        friction={6}
+        activeScale={0.95}
+        onPress={onNavigateToSettings}
+      >
+        <View style={styles.btnOutline}>
+          <Text style={styles.btnOutlineText}>Activer le service</Text>
+        </View>
+      </TouchableScale>
+    </View>
+  ));
+
+  const fetchEmails = useCallback(async () => {
+    setLoading(true);
+    try {
+      const data = await fetchMailFromZimbra();
+      if (data?.m) {
+        setEmails(data.m);
+        setMessages("");
+      } else {
+        setEmails([]);
+        setMessages("Aucun mail à afficher.");
+      }
+    } catch (error) {
+      console.error("Error fetching emails:", error);
+      setMessages("Erreur lors de la récupération des mails.");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        const token = await SecureStore.getItemAsync("authToken");
+        if (token) {
+          setIsAuthenticated(true);
+          fetchEmails();
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        console.error("Authentication check failed:", error);
+      }
+    };
+
+    // Vérifie l'authentification seulement quand l'écran est focus
+    if (isFocused) {
+      checkAuthentication();
+    }
+  }, [isFocused, fetchEmails]);
+  const handleNavigateToSettings = useCallback(() => {
+    navigation.navigate("Services");
+  }, [navigation]);
+
+  const renderItem = useCallback(
+    ({ item }) => <MemoizedMail email={item} />,
+    []
+  );
+
+  const keyExtractor = useCallback((item) => item.id, []);
+
   if (!isAuthenticated) {
     return (
-      // <View style={styles.container}>
-      //   <TextInput
-      //     style={styles.input}
-      //     placeholder="Email Universitaire"
-      //     placeholderTextColor={colors.grey}
-      //     value={email}
-      //     onChangeText={setEmail}
-      //     autoCapitalize="none"
-      //   />
-      // <TextInput
-      //   style={styles.input}
-      //   placeholder="Mot de passe"
-      //   placeholderTextColor={colors.grey}
-      //   value={password}
-      //   onChangeText={setPassword}
-      //   secureTextEntry
-      // />
-      //   <View style={styles.button}>
-      //     <ButtonAuth title="Se connecter" onPress={handleLogin} />
-      //   </View>
-      // </View>
-      <KeyboardAwareScrollView
-        enableAutomaticScroll={true}
-        // extraScrollHeight={40}
-        keyboardOpeningTime={10}
-        contentContainerStyle={styles.background} // Déplacer les styles ici
-      >
-        <View style={styles.containerLogin}>
-          <View style={styles.containerContentLogin}>
-            <View style={styles.titleContentLogin}>
-              <Text style={styles.titleLogin}>Se connecter</Text>
-              <Text style={styles.titleDescriptionLogin}>
-                Pour consulter les mails, il faut se connecter avec les
-                identifiants de l’ENT.
-              </Text>
-            </View>
-
-            <View style={styles.textLogin}>
-              <Input
-                label="Mail"
-                placeholder="Entrer l'adresse mail universitaire"
-                icon={Envelope}
-                placeholderTextColor={colors.text_placeholder}
-                autoComplete="email"
-                inputMode="email"
-                secureTextEntry={false}
-                keyboardType="email-address"
-                onChangeText={(text) => setEmail(text)}
-                autoCapitalize="none"
-              />
-              <Input
-                label="Mot de passe"
-                placeholder="Entrer le mot de passe de l'ENT"
-                icon={Lock}
-                placeholderTextColor={colors.text_placeholder}
-                autoComplete="password"
-                secureTextEntry={true}
-                onChangeText={(text) => setPassword(text)}
-              />
-            </View>
-
-            <View style={styles.buttonLogin}>
-              <ButtonAuth title="Se connecter" onPress={handleLogin} />
-            </View>
-            <View style={styles.titleContentLogin}>
-              <Text style={styles.titleWarningLogin}>
-                En vous connectant, vous autorisez la sauvegarde de vos
-                identifiants encrypté sur votre appareil. {"\n"}
-                {"\n"}Pour en savoir plus sur la sécurité des vos identifiants,
-                nous vous invitons à relire les CGU (Article 2.1).
-              </Text>
-            </View>
-          </View>
-        </View>
-      </KeyboardAwareScrollView>
+      <NotAuthenticated
+        colors={colors}
+        onNavigateToSettings={handleNavigateToSettings}
+      />
     );
   }
 
   return (
-    <View style={styles.containerMails}>
+    <View
+      style={[styles.containerMails, { backgroundColor: colors.background }]}
+    >
       <View style={styles.contentMails}>
         <View style={styles.descriptionMails}>
-          <Text style={styles.textDescriptionMails}>
+          <Text
+            style={[styles.textDescriptionMails, { color: colors.regular800 }]}
+          >
             Accès à toutes les fonctionnalités sur{" "}
           </Text>
-          <TouchableOpacity
-            onPress={() => {
-              Linking.openURL("https://webmail.univ-poitiers.fr/");
-            }}
-          >
-            <Text style={styles.linkDescriptionMails}>Zimbra</Text>
+          <TouchableOpacity onPress={() => Linking.openURL(ZIMBRA_URL)}>
+            <Text
+              style={[
+                styles.linkDescriptionMails,
+                { color: colors.regular800 },
+              ]}
+            >
+              Zimbra
+            </Text>
           </TouchableOpacity>
         </View>
+
         <View style={styles.listMails}>
-          <Text>{messages}</Text>
+          {messages && <NoMessages message={messages} colors={colors} />}
           {loading ? (
             <ActivityIndicator size="large" color={colors.primary} />
           ) : (
             <FlatList
               data={emails}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => <Mail email={item} />}
+              keyExtractor={keyExtractor}
+              renderItem={renderItem}
               showsVerticalScrollIndicator={false}
               refreshControl={
                 <RefreshControl refreshing={loading} onRefresh={fetchEmails} />
               }
+              removeClippedSubviews={true}
+              initialNumToRender={10}
+              maxToRenderPerBatch={10}
+              windowSize={5}
             />
           )}
         </View>
@@ -353,4 +290,4 @@ function Mails() {
   );
 }
 
-export default Mails;
+export default memo(Mails);

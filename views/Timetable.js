@@ -1,79 +1,76 @@
-import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Jour from "../components/timetable/jour";
 import Semaine from "../components/timetable/semaine";
 import { ThemeContext } from "../utils/themeContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
+import Dropdown from "../components/dropdown/Dropdown";
+import { ResetList } from "../assets/icons/Icons";
+import TouchableScale from "react-native-touchable-scale";
 
 const Tab = createMaterialTopTabNavigator();
 
 function Timetable() {
   const { colors } = useContext(ThemeContext);
   const [isWeekDefault, setIsWeekDefault] = useState(false);
+  const [selectedView, setSelectedView] = useState("week"); // Par défaut à "day"
   const isFocused = useIsFocused();
+  const semaineRef = useRef(null);
+  const jourRef = useRef(null);
+
+  const options = [
+    { label: "Vue journée", value: "day" },
+    { label: "Vue semaine", value: "week" },
+  ];
 
   const styles = StyleSheet.create({
     modalBackground: {
       flex: 1,
+      backgroundColor: colors.background,
+    },
+    modalDropdown: {
+      flexDirection: "row",
+      gap: 10,
+      alignItems: "center",
+      width: "90%",
+      alignSelf: "center",
+      paddingVertical: 10,
+      zIndex: 999,
     },
   });
 
-  useEffect(() => {
-    const getWeekDefault = async () => {
-      try {
-        const value = await AsyncStorage.getItem("week_default");
-        return value ? JSON.parse(value) : false;
-      } catch (error) {
-        console.error(
-          "Impossible de récupérer la vue semaine par défaut",
-          error
-        );
-        return false;
-      }
-    };
+  const handleSelect = (value) => {
+    setSelectedView(value); // Met à jour la vue sélectionnée
+  };
 
-    if (isFocused) {
-      getWeekDefault().then(setIsWeekDefault);
+  const handleGoToToday = () => {
+    if (semaineRef.current && selectedView === "week") {
+      semaineRef.current.goToToday();
     }
-  }, [isFocused]);
+    if (jourRef.current && selectedView === "day") {
+      jourRef.current.goToToday();
+    }
+  };
 
   return (
     <View style={styles.modalBackground}>
-      <Tab.Navigator
-        key={isWeekDefault ? "week-first" : "day-first"}
-        screenOptions={{
-          tabBarStyle: {
-            backgroundColor: colors.background,
-            elevation: 0,
-            shadowOffset: { width: 0, height: 0 },
-          },
-          swipeEnabled: false,
-          tabBarActiveTintColor: colors.black,
-          tabBarInactiveTintColor: colors.grey,
-          tabBarLabelStyle: {
-            fontFamily: "Ubuntu_400Regular",
-            fontSize: 17,
-            textTransform: "none",
-          },
-          tabBarIndicatorStyle: {
-            backgroundColor: colors.black,
-          },
-        }}
-      >
-        {!isWeekDefault ? (
-          <>
-            <Tab.Screen name="Jour" component={Jour} />
-            <Tab.Screen name="Semaine" component={Semaine} />
-          </>
-        ) : (
-          <>
-            <Tab.Screen name="Semaine" component={Semaine} />
-            <Tab.Screen name="Jour" component={Jour} />
-          </>
-        )}
-      </Tab.Navigator>
+      <View style={styles.modalDropdown}>
+        <Dropdown
+          options={options}
+          onSelect={handleSelect}
+          value={selectedView}
+        />
+        <TouchableScale
+          friction={6}
+          activeScale={0.7}
+          onPress={handleGoToToday}
+        >
+          <ResetList stroke={colors.regular800} />
+        </TouchableScale>
+      </View>
+      {selectedView === "day" && <Jour ref={jourRef} />}
+      {selectedView === "week" && <Semaine ref={semaineRef} />}
     </View>
   );
 }

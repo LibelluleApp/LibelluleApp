@@ -1,17 +1,40 @@
-import React, { useState, useContext } from "react";
-import { StyleSheet } from "react-native";
+import React, { useState, useContext, useRef, useEffect } from "react";
+import { StyleSheet, Animated, Easing } from "react-native";
 import { Dropdown } from "react-native-searchable-dropdown-kj";
 import { ChevronDown } from "./../../../assets/icons/Icons";
 import { ThemeContext } from "./../../../utils/themeContext";
 
 const SelectComponent = ({ onChange, data, value }) => {
   const { colors } = useContext(ThemeContext);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // Valeur animée pour la rotation
+  const rotateValue = useRef(new Animated.Value(0)).current;
+
+  // Déclencher l'animation de rotation
+  const rotateChevron = (open) => {
+    Animated.timing(rotateValue, {
+      toValue: open ? 1 : 0, // 1 pour ouvert (180 degrés), 0 pour fermé (0 degré)
+      duration: 250,
+      easing: Easing.ease,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  // Rotation interpolée en fonction de l'état du menu déroulant
+  const chevronRotation = rotateValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "180deg"], // rotation de 0 à 180 degrés
+  });
+
+  // Gestion de l'ouverture/fermeture du dropdown
+  useEffect(() => {
+    rotateChevron(isDropdownOpen);
+  }, [isDropdownOpen]);
 
   const styles = StyleSheet.create({
     dropdown: {
       backgroundColor: colors.white_background,
-      borderWidth: 0.5,
-      borderColor: colors.input_border,
       borderRadius: 10,
       height: 58,
       paddingHorizontal: 20,
@@ -23,12 +46,14 @@ const SelectComponent = ({ onChange, data, value }) => {
     placeholderStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      letterSpacing: -0.4,
+      color: colors.regular950,
     },
     selectedTextStyle: {
       fontSize: 15,
       fontFamily: "Ubuntu_400Regular",
-      color: colors.black,
+      letterSpacing: -0.4,
+      color: colors.regular950,
     },
     iconStyle: {
       width: 20,
@@ -62,13 +87,17 @@ const SelectComponent = ({ onChange, data, value }) => {
       placeholder="Choisir le type de tâche"
       value={value}
       onChange={onChange}
+      onFocus={() => setIsDropdownOpen(true)} // Activer quand le dropdown s'ouvre
+      onBlur={() => setIsDropdownOpen(false)} // Désactiver quand le dropdown se ferme
       renderRightIcon={() => (
-        <ChevronDown
-          stroke={colors.black}
-          strokeWidth={1.75}
-          width={18}
-          height={18}
-        />
+        <Animated.View style={{ transform: [{ rotate: chevronRotation }] }}>
+          <ChevronDown
+            stroke={colors.regular950}
+            strokeWidth={1.75}
+            width={18}
+            height={18}
+          />
+        </Animated.View>
       )}
     />
   );

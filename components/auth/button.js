@@ -9,7 +9,7 @@ function Button({ title, onPress }) {
   const styles = StyleSheet.create({
     button: {
       flexDirection: "row",
-      backgroundColor: colors.blue700,
+      backgroundColor: colors.regular700,
       paddingHorizontal: 20,
       paddingVertical: 11,
       borderRadius: 10,
@@ -21,9 +21,10 @@ function Button({ title, onPress }) {
     },
     buttonText: {
       fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
       color: colors.white,
       fontSize: 17,
-      letterSpacing: -0.5,
+      letterSpacing: -0.4,
     },
   });
 

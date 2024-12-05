@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   Modal,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import ColorPicker, {
   Panel1,
   Swatches,
@@ -17,6 +16,7 @@ import ColorPicker, {
   OpacitySlider,
   HueSlider,
 } from "reanimated-color-picker";
+import { getColors, setColors as setColor } from "../../utils/storage";
 
 const CustomColor = () => {
   const [showModal, setShowModal] = useState(false);
@@ -26,11 +26,11 @@ const CustomColor = () => {
   const [selectedColor, setSelectedColor] = useState({ value: "#000000" });
 
   useEffect(() => {
-    const loadColors = async () => {
+    const loadColors = () => {
       try {
-        const storedColors = await AsyncStorage.getItem("savedColors");
+        const storedColors = getColors();
         if (storedColors) {
-          setColors(JSON.parse(storedColors));
+          setColors(storedColors);
         }
       } catch (error) {
         console.error("Failed to load colors", error);
@@ -40,9 +40,9 @@ const CustomColor = () => {
     loadColors();
   }, []);
 
-  const saveColors = async (updatedColors) => {
+  const saveColors = (updatedColors) => {
     try {
-      await AsyncStorage.setItem("savedColors", JSON.stringify(updatedColors));
+      setColor(updatedColors);
       setColors(updatedColors);
     } catch (error) {
       console.error("Failed to save colors", error);
@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 15,
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
     marginBottom: 8,
     color: "#7A797C",
   },
@@ -182,11 +183,13 @@ const styles = StyleSheet.create({
   colorName: {
     fontSize: 17,
     fontFamily: "Ubuntu_500Medium",
+    letterSpacing: -0.4,
   },
   colorValue: {
     fontSize: 15,
     color: "#7A797C",
     fontFamily: "Ubuntu_400Regular",
+    letterSpacing: -0.4,
   },
   menuButton: {
     padding: 5,
