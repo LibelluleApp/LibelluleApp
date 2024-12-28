@@ -131,57 +131,81 @@ const Jour = ({
 
   // Fonction d'initialisation des jours
   const initializeDays = () => {
-    const startDate = moment("2024-07-10"); // Date de début que tu veux, par exemple 10 juillet 2024
-    const endDate = moment("2024-12-31"); // Date de fin
+    const startDate = moment("2024-09-01"); // Date de début : 1er septembre 2024
+    const endDate = moment("2025-07-31"); // Date de fin : 31 juillet 2025
     const days = [];
     let currentDateClone = todayMoment.clone();
 
+    // Si la date actuelle est avant le début de l'année scolaire, commencer au début
+    if (currentDateClone.isBefore(startDate)) {
+      currentDateClone = startDate.clone();
+    }
+    // Si la date actuelle est après la fin de l'année scolaire, commencer à la dernière date
+    else if (currentDateClone.isAfter(endDate)) {
+      currentDateClone = endDate.clone();
+    }
+
+    let iterationDate = startDate.clone();
+
     // Remplir les jours de semaine entre startDate et endDate
-    while (currentDateClone <= endDate) {
-      if (currentDateClone.day() !== 0 && currentDateClone.day() !== 6) {
+    while (iterationDate <= endDate) {
+      if (iterationDate.day() !== 0 && iterationDate.day() !== 6) {
         const dayData = tasks.filter((item) =>
-          moment(item.date_fin).isSame(currentDateClone, "day")
+            moment(item.date_fin).isSame(iterationDate, "day")
         );
 
-        days.push({ date: currentDateClone.clone(), data: dayData });
+        days.push({ date: iterationDate.clone(), data: dayData });
       }
-      currentDateClone.add(1, "day");
+      iterationDate.add(1, "day");
     }
 
     // Trouver l'index du jour actuel dans la liste weekdays
     let todayIndex = days.findIndex((day) =>
-      day.date.isSame(todayMoment, "day")
+        day.date.isSame(currentDateClone, "day")
     );
 
-    // Gérer le cas où on est un week-end et sauter au jour ouvré suivant
+    // Gérer le cas où on est un week-end ou hors des dates valides
     if (todayIndex === -1) {
-      if (todayMoment.day() === 6)
-        todayMoment.add(2, "days"); // Si on est samedi
-      else if (todayMoment.day() === 0) todayMoment.add(1, "days"); // Si on est dimanche
-      todayIndex = days.findIndex((day) => day.date.isSame(todayMoment, "day"));
+      // Si on est un weekend, trouver le prochain jour ouvré
+      if (currentDateClone.day() === 6) { // Samedi
+        currentDateClone.add(2, "days");
+      } else if (currentDateClone.day() === 0) { // Dimanche
+        currentDateClone.add(1, "days");
+      }
+
+      // Rechercher à nouveau l'index
+      todayIndex = days.findIndex((day) =>
+          day.date.isSame(currentDateClone, "day")
+      );
+
+      // Si toujours pas trouvé, prendre le premier jour disponible
+      if (todayIndex === -1) {
+        todayIndex = 0;
+      }
     }
 
-    // Sauvegarde de l'état du jour actuel pour éviter de revenir au startDate à chaque rafraîchissement
+    // Sauvegarde de l'état du jour actuel
     setDaysOfWeek(days);
     setCurrentIndex(todayIndex);
     setDefaultIndex(todayIndex);
-    setCurrentWeekNumber(days[todayIndex]?.date.week()); // Semaine courante
+    setCurrentWeekNumber(days[todayIndex]?.date.week());
     setCurrentDate(
-      days[todayIndex].date
-        .format("dddd D MMMM")
-        .split(" ")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ")
+        days[todayIndex].date
+            .format("dddd D MMMM")
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")
     );
 
-    calculateCounts(days[todayIndex]?.data || []); // Calculer les tâches pour le jour actuel
+    calculateCounts(days[todayIndex]?.data || []);
   };
 
-  // Fonction de calcul des compteurs (évaluations, devoirs)
+// Fonction de calcul des compteurs (évaluations, devoirs)
   const calculateCounts = (dayData) => {
     let evalCounter = 0;
     let taskCounter = 0;
     let totalTaskCounter = 0;
+
     dayData.forEach((item) => {
       if (item.type === "eval") {
         evalCounter++;
@@ -189,6 +213,7 @@ const Jour = ({
         taskCounter++;
       }
     });
+
     dayData.forEach((item) => {
       if (item.type === "devoir") {
         totalTaskCounter++;
@@ -201,7 +226,6 @@ const Jour = ({
   };
 
   useEffect(() => {
-    // Initialiser les jours au premier rendu ou lorsque les tâches changent
     initializeDays();
   }, [tasks]);
 
