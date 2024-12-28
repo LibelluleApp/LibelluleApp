@@ -9,8 +9,6 @@ import Dropdown from "../components/dropdown/Dropdown";
 import { ResetList } from "../assets/icons/Icons";
 import TouchableScale from "react-native-touchable-scale";
 
-const Tab = createMaterialTopTabNavigator();
-
 function Timetable() {
   const { colors } = useContext(ThemeContext);
   const [isWeekDefault, setIsWeekDefault] = useState(false);

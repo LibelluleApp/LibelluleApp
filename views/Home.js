@@ -585,6 +585,11 @@ function Home() {
           <NextCourse />
           <AgendaHome />
           <Restauration />
+          <View style={styles.rightContainer}>
+            <TouchableScale onPress={() => navigation.navigate('Scolarite')}>
+              <Text>Scolarité</Text>
+            </TouchableScale>
+          </View>
         </View>
       </ScrollView>
     </GestureHandlerRootView>
