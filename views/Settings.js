@@ -164,7 +164,7 @@ const ProfileSection = memo(({ userData, colors, navigation, styles }) => (
         <View style={styles.pageItem}>
           <View style={styles.pageProfilContainer}>
             <Image
-              source={{ uri: userData.lien_photo_profil }}
+              source={{ uri: "https://api.libellule.app/user/profile-photo/" + userData.lien_photo_profil }}
               style={styles.profilPicture}
             />
             <View style={styles.pageProfilContent}>
