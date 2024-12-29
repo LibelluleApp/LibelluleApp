@@ -263,7 +263,7 @@ function Profile() {
                 <View style={styles.pageContent}>
                   <Image
                       source={{
-                        uri: userData.lien_photo_profil || 'https://via.placeholder.com/150'
+                        uri: "https://api.libellule.app/user/profile-photo/" + userData.lien_photo_profil || 'https://via.placeholder.com/150'
                       }}
                       style={styles.profilPicture}
                   />

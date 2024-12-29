@@ -13,6 +13,7 @@ async function fetchNextCourse() {
     if (isAlternant === "true") {
       user_data.groupe_id = user_data.groupe_id + "A";
     }
+
     const response = await ApiManager.post("/timetable/nextcours", {
       groupe_id: user_data.groupe_id,
     });
