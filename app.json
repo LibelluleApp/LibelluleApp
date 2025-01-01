@@ -55,7 +55,7 @@
             [
                 "expo-location",
                 {
-                    "locationAlwaysAndWhenInUsePermission": "Autorisez $(PRODUCT_NAME) à accéder à votre localisation pour afficher la météo locale sur la page d\’accueil.”
+                    "locationAlwaysAndWhenInUsePermission": "Autorisez $(PRODUCT_NAME) à accéder à votre localisation pour afficher la météo locale sur la page d'accueil.”
                 }
             ],
             [
