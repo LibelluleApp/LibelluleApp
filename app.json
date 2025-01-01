@@ -24,7 +24,7 @@
             "entitlements": {
                 "aps-environment": "production"
             },
-            "buildNumber": "1.30"
+            "buildNumber": "1.31"
         },
         "android": {
             "adaptiveIcon": {
@@ -55,7 +55,7 @@
             [
                 "expo-location",
                 {
-                    "locationAlwaysAndWhenInUsePermission": "Autoriser $(PRODUCT_NAME) à voir votre localisation"
+                    "locationAlwaysAndWhenInUsePermission": Autorisez $(PRODUCT_NAME) à accéder à votre localisation pour afficher la météo locale sur la page d’accueil.”
                 }
             ],
             [
