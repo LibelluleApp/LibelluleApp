@@ -58,10 +58,10 @@ function Restauration() {
   // Détermine si aujourd'hui est dans une période de vacances
   const estEnVacances = () => {
     const vacances = [
-      { start: "2023-10-21", end: "2023-10-27" },
-      { start: "2023-12-23", end: "2024-01-05" },
-      { start: "2024-02-24", end: "2024-03-02" },
-      { start: "2024-04-21", end: "2024-05-04" },
+      { start: "2024-10-21", end: "2024-10-27" },
+      { start: "2024-12-23", end: "2025-01-05" },
+      { start: "2025-02-24", end: "2025-03-02" },
+      { start: "2025-04-21", end: "2025-05-04" },
     ];
     const today = new Date();
     return vacances.some(({ start, end }) => {
