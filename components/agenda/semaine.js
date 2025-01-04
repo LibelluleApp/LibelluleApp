@@ -50,7 +50,7 @@ const Semaine = ({
   const styles = StyleSheet.create({
     swiperContainer: {
       flex: 1,
-      zIndex: -1
+      zIndex: -1,
     },
     headerContainer: {
       flexDirection: "row",
@@ -158,39 +158,26 @@ const Semaine = ({
 
   // Fonction d'initialisation des semaines
   const initializeWeeks = () => {
-    const startDate = moment("2024-09-01");
-    const endDate = moment("2025-07-31");
+    const endDate = moment("2025-08-31");
     const weeks = [];
 
     // Vérifier si aujourd'hui est un samedi (6) ou un dimanche (0) et basculer à la semaine suivante
     let currentDateClone = todayMoment.clone();
 
-    // Si la date actuelle est avant le début de l'année scolaire, commencer au début
-    if (currentDateClone.isBefore(startDate)) {
-      currentDateClone = startDate.clone();
-    }
-    // Si la date actuelle est après la fin de l'année scolaire, commencer à la dernière semaine
-    else if (currentDateClone.isAfter(endDate)) {
-      currentDateClone = endDate.clone();
-    }
-
     // Si c'est samedi ou dimanche, passer à lundi prochain
     if (
-        currentDateClone.isoWeekday() === 6 ||
-        currentDateClone.isoWeekday() === 7
+      currentDateClone.isoWeekday() === 6 ||
+      currentDateClone.isoWeekday() === 7
     ) {
       currentDateClone.add(1, "week").startOf("isoWeek");
     } else {
       currentDateClone.startOf("isoWeek"); // Sinon, commencer la semaine normalement
     }
 
-    // Commencer à la date de début de l'année scolaire
-    let weekStart = startDate.clone().startOf("isoWeek");
-
-    while (weekStart <= endDate) {
-      const weekNumber = weekStart.isoWeek();
+    while (currentDateClone <= endDate) {
+      const weekNumber = currentDateClone.isoWeek(); // Numéro de semaine ISO
       let weekTasks = tasks.filter(
-          (item) => moment(item.date_fin).isoWeek() === weekNumber
+        (item) => moment(item.date_fin).isoWeek() === weekNumber
       );
 
       // Regroupement des tâches par date
@@ -204,32 +191,27 @@ const Semaine = ({
       }, {});
 
       weeks.push({ week: weekNumber, data: tasksByDate });
-      weekStart.add(1, "week");
+      currentDateClone.add(1, "week"); // Passer à la semaine suivante
     }
 
     // Calculer l'index de la semaine actuelle
     const currentWeek = todayMoment
-        .clone()
-        .add(
-            todayMoment.isoWeekday() === 6 || todayMoment.isoWeekday() === 7
-                ? 1
-                : 0,
-            "week"
-        )
-        .isoWeek();
+      .clone()
+      .add(
+        todayMoment.isoWeekday() === 6 || todayMoment.isoWeekday() === 7
+          ? 1
+          : 0,
+        "week"
+      )
+      .isoWeek(); // Toujours calculer à partir du lundi
 
-    let weekIndex = weeks.findIndex((week) => week.week === currentWeek);
-
-    // Si l'index n'est pas trouvé ou hors limites, utiliser le premier index
-    if (weekIndex === -1) {
-      weekIndex = 0;
-    }
+    const weekIndex = weeks.findIndex((week) => week.week === currentWeek);
 
     setDaysOfWeek(weeks);
     setCurrentIndex(weekIndex);
-    setDefaultIndex(weekIndex);
+    setDefaultIndex(weekIndex); // Même chose pour l'index par défaut
     setCurrentWeekNumber(weeks[weekIndex].week);
-    calculateCounts(weeks[weekIndex]?.data || []);
+    calculateCounts(weeks[weekIndex]?.data || []); // Calculer les compteurs pour la semaine actuelle
   };
 
   useEffect(() => {
