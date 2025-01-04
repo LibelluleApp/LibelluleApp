@@ -20,7 +20,7 @@ import {
   CloudLightning,
   SnowFlake,
   Waves,
-    WindyIcon
+  WindyIcon,
 } from "./../assets/icons/Icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
@@ -126,162 +126,185 @@ function Home() {
 
   const formattedDate = capitalizeFirstLetter(today.format("ddd D MMM"));
   const generateWeatherMessage = (temp, conditionsType, currentTime) => {
-    // Messages pour les étudiants
-    const generalStudentMessages = [
-      "N'oubliez pas de faire des pauses !",
-      "Bonne révision, ça va le faire !",
-      "Restez motivés, vous y êtes presque !",
-      "Vous êtes sur la bonne voie !",
-      "N'oubliez pas de vous hydrater !",
-      "Mentalité Kaizen, petit pas par petit pas 🏔️",
-      "Chaque effort compte, continuez comme ça !",
-      "Prenez soin de vous la team 😊",
-      "Là, on est biieennngggg 👀",
-      "Allez, on lâche pas les cours la team 😎",
-      "C'est quoi ces CDs ? 🤔",
-    ];
+    const priorityMessage = "Une excellente année 2025 🎉";
 
-    const startdayStudentMessages = [
-      "Oui je sais, le réveil est difficile 😭",
-      "Café et petit-déjeuner, c'est parti pour une bonne journée !",
-      "Allez la team, on part pour une journée productive 🚀",
-      "Petit-déjeuner, motivation et c'est partiiiiii 🫣",
-    ];
+    // Vérification de la période prioritaire
+    const currentDate = moment(currentTime);
+    const startPriorityDate = moment("2025-01-04");
+    const endPriorityDate = moment("2025-01-10");
 
-    const morningStudentMessages = [
-      "La vibe du matin, quel plaisir ! 😊",
-      "Votre motivation du matin va vous porter loin aujourd'hui !",
-      "Frais et dispo pour travailler 👀",
-    ];
-
-    const middayStudentMessages = [
-      "Petite pause déjeuner, rechargez les batteries !",
-      "Bon appétit, profitez de votre pause !",
-      "Encore de la queue au Crousty... BK ?",
-      "Un peu de repos, vous avez bien travaillé ce matin.",
-    ];
-
-    const afternoonStudentMessages = [
-      "N'oubliez pas de faire des pauses et de vous détendre !",
-      "Restez motivés, vous êtes sur la bonne voie !",
-      "Petit café et ça repart 🚀",
-      "Vous gérez, continuez comme ça !",
-      "N'oubliez pas de vous hydrater régulièrement.",
-      "Un peu de sport pour se défouler ?",
-    ];
-
-    const eveningStudentMessages = [
-      "Bravo, vous avez bien travaillé aujourd'hui !",
-      "Profitez de la soirée pour vous détendre un peu.",
-      "Vous avez mérité une bonne nuit de sommeil !",
-      "Bonne fin de journée la team !",
-      "La journée de maallaaadeeee est finie !",
-    ];
-
-    // Messages météorologiques drôles et courts
-    let weatherMessage = "Passez une excellente journée ! 🎉";
-
-    switch (conditionsType) {
-      case "Clear":
-        weatherMessage =
-          temp > 25
-            ? "Trop chaud pour travailler, profitez ! ☀️"
-            : "Ouais pas mal le temps ! ☀️";
-        break;
-      case "MostlyClear":
-      case "PartlyCloudy":
-        weatherMessage = "Pas mal, mais pas parfait ! ☁️";
-        break;
-      case "Cloudy":
-        weatherMessage = "Un peu nuageux aujourd'hui !";
-        break;
-      case "ScatteredThunderstorms":
-      case "Thunderstorm":
-        weatherMessage = "Oulaaa temps orageux ! Faites attention⚡";
-        break;
-      case "HeavyRain":
-      case "Rain":
-      case "Showers":
-        weatherMessage = "Trop relou la pluie 🌧️";
-        break;
-      case "Drizzle":
-        weatherMessage = "Juste une petite pluie, pas de panique ! 🌧️";
-        break;
-      case "Snow":
-      case "Flurries":
-        weatherMessage =
-          temp < 0
-            ? "Il neige, le bonhomme de neige arrive ! ⛄️"
-            : "Il fait frais, faites un bon chocolat chaud ! ☕️";
-        break;
-      case "Fog":
-      case "Haze":
-        weatherMessage = "Brouillard, jouons à cache-cache ! 👻";
-        break;
-      case "Dust":
-      case "Smoke":
-        weatherMessage = "Respirez à fond... ou pas ! 🌫️";
-        break;
-      case "Breezy":
-        weatherMessage = "C'est une journée pour le cerf-volant ! 🪁";
-        break;
-      case "Windy":
-        weatherMessage = "On dirait que le vent veut s'amuser ! 💨";
-        break;
-      case "Hurricane":
-      case "Tornado":
-      case "SevereThunderstorm":
-        weatherMessage = "C'est l'heure de rester au chaud ! 🏠";
-        break;
-      case "Blizzard":
-        weatherMessage = "Oula, c'est l'heure du chocolat chaud ! ☕️";
-        break;
-      default:
-        weatherMessage = "Passez une excellente journée ! 🎉";
-        break;
-    }
-
-    // Choisir aléatoirement entre message étudiant et message météo
-    const hourOfDay = currentTime.getHours();
-    let studentMessages = [];
-    // Réveil
-    if (hourOfDay < 8 && hourOfDay > 5) {
-      studentMessages = [...generalStudentMessages, ...startdayStudentMessages];
-    }
-    // Matinée
-    else if (hourOfDay > 8 && hourOfDay < 12) {
-      studentMessages = [...generalStudentMessages, ...morningStudentMessages];
-    } else if (hourOfDay >= 12 && hourOfDay <= 14) {
-      studentMessages = [...generalStudentMessages, ...middayStudentMessages];
-    } else if (hourOfDay < 18 && hourOfDay > 14) {
-      studentMessages = [
-        ...generalStudentMessages,
-        ...afternoonStudentMessages,
-      ];
-    } else if (hourOfDay >= 18 && hourOfDay <= 0) {
-      studentMessages = [...generalStudentMessages, ...eveningStudentMessages];
+    if (currentDate.isBetween(startPriorityDate, endPriorityDate, null, "[]")) {
+      return priorityMessage; // Toujours afficher ce message durant la période
     } else {
-      studentMessages = [...generalStudentMessages];
+      // Messages pour les étudiants
+      const generalStudentMessages = [
+        "N'oubliez pas de faire des pauses !",
+        "Bonne révision, ça va le faire !",
+        "Restez motivés, vous y êtes presque !",
+        "Vous êtes sur la bonne voie !",
+        "N'oubliez pas de vous hydrater !",
+        "Mentalité Kaizen, petit pas par petit pas 🏔️",
+        "Chaque effort compte, continuez comme ça !",
+        "Prenez soin de vous la team 😊",
+        "Là, on est biieennngggg 👀",
+        "Allez, on lâche pas les cours la team 😎",
+        "C'est quoi ces CDs ? 🤔",
+        "Comment ils vont la TEAAAMMM !",
+        "Et votre frère, il en pense quoi ?",
+        "Et votre soeur, elle en pense quoi ?",
+      ];
+
+      const startdayStudentMessages = [
+        "Oui je sais, le réveil est difficile 😭",
+        "Café et petit-déjeuner, c'est parti pour une bonne journée !",
+        "Allez la team, on part pour une journée productive 🚀",
+        "Petit-déjeuner, motivation et c'est partiiiiii 🫣",
+      ];
+
+      const morningStudentMessages = [
+        "La vibe du matin, quel plaisir ! 😊",
+        "Votre motivation du matin va vous porter loin aujourd'hui !",
+        "Frais et dispo pour travailler 👀",
+      ];
+
+      const middayStudentMessages = [
+        "Petite pause déjeuner, rechargez les batteries !",
+        "Bon appétit, profitez de votre pause !",
+        "Encore de la queue au Crousty... BK ?",
+        "Un peu de repos, vous avez bien travaillé ce matin.",
+      ];
+
+      const afternoonStudentMessages = [
+        "N'oubliez pas de faire des pauses et de vous détendre !",
+        "Restez motivés, vous êtes sur la bonne voie !",
+        "Petit café et ça repart 🚀",
+        "Vous gérez, continuez comme ça !",
+        "N'oubliez pas de vous hydrater régulièrement.",
+        "Un peu de sport pour se défouler ?",
+      ];
+
+      const eveningStudentMessages = [
+        "Bravo, vous avez bien travaillé aujourd'hui !",
+        "Profitez de la soirée pour vous détendre un peu.",
+        "Vous avez mérité une bonne nuit de sommeil !",
+        "Bonne fin de journée la team !",
+        "La journée de maallaaadeeee est finie !",
+      ];
+
+      // Messages météorologiques drôles et courts
+      let weatherMessage = "Passez une excellente journée ! 🎉";
+
+      switch (conditionsType) {
+        case "Clear":
+          weatherMessage =
+            temp > 25
+              ? "Trop chaud pour travailler, profitez ! ☀️"
+              : "Ouais pas mal le temps ! ☀️";
+          break;
+        case "MostlyClear":
+        case "PartlyCloudy":
+          weatherMessage = "Pas mal, mais pas parfait ! ☁️";
+          break;
+        case "Cloudy":
+          weatherMessage = "Un peu nuageux aujourd'hui !";
+          break;
+        case "ScatteredThunderstorms":
+        case "Thunderstorm":
+          weatherMessage = "Oulaaa temps orageux ! Faites attention⚡";
+          break;
+        case "HeavyRain":
+        case "Rain":
+        case "Showers":
+          weatherMessage = "Trop relou la pluie 🌧️";
+          break;
+        case "Drizzle":
+          weatherMessage = "Juste une petite pluie, pas de panique ! 🌧️";
+          break;
+        case "Snow":
+        case "Flurries":
+          weatherMessage =
+            temp < 0
+              ? "Il neige, le bonhomme de neige arrive ! ⛄️"
+              : "Il fait frais, faites un bon chocolat chaud ! ☕️";
+          break;
+        case "Fog":
+        case "Haze":
+          weatherMessage = "Brouillard, jouons à cache-cache ! 👻";
+          break;
+        case "Dust":
+        case "Smoke":
+          weatherMessage = "Respirez à fond... ou pas ! 🌫️";
+          break;
+        case "Breezy":
+          weatherMessage = "C'est une journée pour le cerf-volant ! 🪁";
+          break;
+        case "Windy":
+          weatherMessage = "On dirait que le vent veut s'amuser ! 💨";
+          break;
+        case "Hurricane":
+        case "Tornado":
+        case "SevereThunderstorm":
+          weatherMessage = "C'est l'heure de rester au chaud ! 🏠";
+          break;
+        case "Blizzard":
+          weatherMessage = "Oula, c'est l'heure du chocolat chaud ! ☕️";
+          break;
+        default:
+          weatherMessage = "Passez une excellente journée ! 🎉";
+          break;
+      }
+
+      // Choisir aléatoirement entre message étudiant et message météo
+      const hourOfDay = currentTime.getHours();
+      let studentMessages = [];
+      // Réveil
+      if (hourOfDay < 8 && hourOfDay > 5) {
+        studentMessages = [
+          ...generalStudentMessages,
+          ...startdayStudentMessages,
+        ];
+      }
+      // Matinée
+      else if (hourOfDay > 8 && hourOfDay < 12) {
+        studentMessages = [
+          ...generalStudentMessages,
+          ...morningStudentMessages,
+        ];
+      } else if (hourOfDay >= 12 && hourOfDay <= 14) {
+        studentMessages = [...generalStudentMessages, ...middayStudentMessages];
+      } else if (hourOfDay < 18 && hourOfDay > 14) {
+        studentMessages = [
+          ...generalStudentMessages,
+          ...afternoonStudentMessages,
+        ];
+      } else if (hourOfDay >= 18 && hourOfDay <= 0) {
+        studentMessages = [
+          ...generalStudentMessages,
+          ...eveningStudentMessages,
+        ];
+      } else {
+        studentMessages = [...generalStudentMessages];
+      }
+
+      const showStudentMessage = Math.random() < 0.7; // 50% de chance
+
+      return showStudentMessage
+        ? studentMessages[Math.floor(Math.random() * studentMessages.length)]
+        : weatherMessage; // Retourne soit un message étudiant soit un message météo
     }
-
-    const showStudentMessage = Math.random() < 0.5; // 50% de chance
-
-    return showStudentMessage
-      ? studentMessages[Math.floor(Math.random() * studentMessages.length)]
-      : weatherMessage; // Retourne soit un message étudiant soit un message météo
   };
 
   const fetchWeatherData = async () => {
     try {
       const response = await fetchWeather();
-      
+
       if (response.error) {
         setWeatherError(true);
         setWeatherMessage(response.message || "Données météo indisponibles");
         setWeather(null);
         return;
       }
-      
+
       setWeather(response.currentWeather);
       const currentTime = new Date();
       const message = generateWeatherMessage(
@@ -338,10 +361,7 @@ function Home() {
         activeScale={0.95}
         onPress={() => navigation.navigate("Profil")}
       >
-        <Image
-          source={{ uri: user.lien_photo_profil }}
-          style={styles.image}
-        />
+        <Image source={{ uri: user.lien_photo_profil }} style={styles.image} />
       </TouchableScale>
     );
   };
@@ -519,10 +539,7 @@ function Home() {
                 {renderWeatherOrProfile()}
               </View>
               <View style={styles.welcomeContainer}>
-                <ShimmerPlaceHolder
-                  width={100}
-                  visible={!isLoading}
-                >
+                <ShimmerPlaceHolder width={100} visible={!isLoading}>
                   <Text
                     style={{
                       fontFamily: "Ubuntu_500Medium",
