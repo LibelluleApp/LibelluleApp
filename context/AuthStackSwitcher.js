@@ -32,7 +32,7 @@ const AuthStackSwitcher = () => {
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
-      backgroundColor: "#0760FB",
+      backgroundColor: colors.regular700,
     },
     loadingContainer: {
       flexDirection: "row",
