@@ -131,7 +131,7 @@ function Home() {
     // Vérification de la période prioritaire
     const currentDate = moment(currentTime);
     const startPriorityDate = moment("2025-01-04");
-    const endPriorityDate = moment("2025-01-10");
+    const endPriorityDate = moment("2025-01-12");
 
     if (currentDate.isBetween(startPriorityDate, endPriorityDate, null, "[]")) {
       return priorityMessage; // Toujours afficher ce message durant la période
