@@ -190,7 +190,15 @@ const Semaine = ({
         return acc;
       }, {});
 
-      weeks.push({ week: weekNumber, data: tasksByDate });
+      // Trier les dates par ordre croissant
+      const sortedTasksByDate = Object.keys(tasksByDate)
+        .sort((a, b) => new Date(a) - new Date(b)) // Tri des dates en ordre croissant
+        .reduce((sortedAcc, key) => {
+          sortedAcc[key] = tasksByDate[key];
+          return sortedAcc;
+        }, {});
+
+      weeks.push({ week: weekNumber, data: sortedTasksByDate });
       currentDateClone.add(1, "week"); // Passer à la semaine suivante
     }
 
