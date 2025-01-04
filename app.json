@@ -2,7 +2,7 @@
     "expo" :{
         "name": "Libellule",
         "slug": "libellule",
-        "version": "1.1.2",
+        "version": "1.1.3",
         "orientation": "portrait",
         "icon": "./assets/ios/logo@3x.png",
         "userInterfaceStyle": "automatic",
@@ -24,7 +24,7 @@
             "entitlements": {
                 "aps-environment": "production"
             },
-            "buildNumber": "1.31"
+            "buildNumber": "1.32"
         },
         "android": {
             "adaptiveIcon": {
@@ -34,7 +34,7 @@
             },
             "googleServicesFile": "./google-services.json",
             "package": "com.libellule.libellule",
-            "versionCode": 26
+            "versionCode": 27
         },
         "web": {
             "favicon": "./assets/favicon.png"
