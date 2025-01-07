@@ -5,14 +5,33 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  Linking,
+  Linking, Pressable,
 } from "react-native";
 import { Info } from "../../assets/icons/Icons";
 import fetchAbsence from "../../api/Scolarite/fetchAbsence";
 import { ThemeContext } from "./../../utils/themeContext";
-
+import {getUserData} from "../../utils/storage";
+function getProfileData() {
+  try {
+    return getUserData();
+  } catch (e) {
+    console.error(e);
+  }
+}
 function Notes() {
   const { colors } = useContext(ThemeContext);
+  function findYear(){
+    const semesterYear = {
+      "Y1" : "s1-2024",
+      "Y2" : "s3-2024",
+      "Y3" : "s5-2024"
+    };
+
+    const user_data = getProfileData();
+    let year = user_data.groupe_id.split("UI");
+    return semesterYear[year[0]];
+  }
+
 
   const styles = StyleSheet.create({
     background: {
@@ -22,12 +41,20 @@ function Notes() {
       justifyContent: "space-between",
     },
     containerContent: {
-      marginTop: 25,
+      marginTop: 10,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       borderRadius: 10,
       width: "90%",
       alignSelf: "center",
+    },
+    title: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 18,
+      fontWeight: "bold",
+      color: colors.text,
+      marginBottom: 10,
+      textTransform: "uppercase",
     },
     absTop: {
       backgroundColor: colors.white_background,
@@ -113,6 +140,13 @@ function Notes() {
       justifyContent: "center",
       marginBottom: 20,
     },
+    altText: {
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      color: colors.regular950,
+      fontSize: 14,
+      alignSelf: "center",
+    },
     altTextLink: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
@@ -121,22 +155,21 @@ function Notes() {
       alignSelf: "center",
       lineHeight: 20,
       textDecorationLine: "underline",
-    },
+    }
   });
 
-  function GridTiles({ code, competence, moyenne, promo, rang }) {
+  function GridTiles({ note }) {
     return (
       <View style={styles.gridTiles}>
         <View>
-          <Text style={styles.gridTitle}>{code}</Text>
-          <Text style={styles.gridTitle}>{competence}</Text>
+          <Text style={styles.gridTitle}>{note[0]}</Text>
+          <Text style={styles.gridTitle}>{findUes(note[0].split('.'))[0].competence}</Text>
         </View>
         <View>
           <Text style={styles.gridMoyenne}>
-            Moyenne : {moyenne.toFixed(3)}/20
+            Moyenne : {note[1].moy.toFixed(3)}/20
           </Text>
-          <Text style={styles.gridPromo}>Promo : {promo.toFixed(2)}/20</Text>
-          <Text style={styles.gridPromo}>Rang : {rang}</Text>
+          <Text style={styles.gridPromo}>Rang : {note[1].rang}</Text>
         </View>
       </View>
     );
@@ -150,31 +183,58 @@ function Notes() {
     );
   }
 
-  function CalculMoyenne(notes) {
+  function findUes(code) {
+    const ues = [
+      {
+        code: "1",
+        competence: "Comprendre",
+      },
+      {
+        code: "2",
+        competence: "Concevoir",
+      },
+      {
+        code: "3",
+        competence: "Exprimer",
+      },
+      {
+        code: "4",
+        competence: "Développer",
+      },
+      {
+        code: "5",
+        competence: "Entreprendre"
+      }
+    ]
+    return ues.filter(u => u.code === code[1]);
+  }
+
+  function calculMoyenne(notes) {
     let total = 0;
     notes.forEach((note) => {
-      total += note.moy;
+      total += note[1].moy;
     });
     return total / notes.length;
   }
 
-  const [notes, setNotes] = React.useState([]);
-  const [moyenne, setMoyenne] = React.useState(0);
+  const [notes, setNotes] = React.useState(null);
+  const [moyenne, setMoyenne] = React.useState(null);
 
   React.useEffect(() => {
     try {
-      fetchAbsence().then((data) => {
-        const ues = data.notes.ues;
-        const notesArray = Object.values(ues);
-        setNotes(notesArray);
-        setMoyenne(CalculMoyenne(notesArray));
+      fetchAbsence(findYear()).then((data) => {
+        const ues = data.notes.ues
+        const listNotes = Object.keys(ues).map((key) => [key, ues[key]])
+        setNotes(listNotes);
+        setMoyenne(calculMoyenne(listNotes));
       });
+
     } catch (error) {
       console.error("Error fetching absence:", error);
     }
   }, []);
 
-  if (!notes) {
+  if (!notes || !moyenne) {
     return (
       <View style={styles.background}>
         <View style={styles.container}>
@@ -187,15 +247,12 @@ function Notes() {
   return (
     <View style={styles.background}>
       <View style={styles.containerContent}>
+        <Text style={styles.title}>{findYear()}</Text>
         <View style={styles.gridContainer}>
           {notes.map((note, index) => (
             <GridTiles
-              key={index} // Utiliser l'index comme clé si vous n'avez pas de propriété unique
-              code={note.code}
-              competence="Comprendre"
-              moyenne={note.moy}
-              promo={note.moy_promo}
-              rang={note.rang}
+              key={index}
+              note={note}
             />
           ))}
           <GridRecap number={notes.length} moyenne={moyenne.toFixed(2)} />
@@ -216,11 +273,11 @@ function Notes() {
       <View style={styles.containerAltText}>
         <Text style={styles.altText}>Données provenant de </Text>
         <TouchableOpacity
-          onPress={() => {
-            Linking.openURL(
-              "https://mmi-angouleme-dashboard.alwaysdata.net/login"
-            );
-          }}
+            onPress={() => {
+              Linking.openURL(
+                  "https://mmi-angouleme-dashboard.alwaysdata.net/login"
+              );
+            }}
         >
           <Text style={styles.altTextLink}>MMI Dashboard.</Text>
         </TouchableOpacity>
