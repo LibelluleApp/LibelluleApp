@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import {
   ArrowLeft,
@@ -108,9 +109,8 @@ const Jour = ({
       paddingHorizontal: 20,
     },
     itemContainer: {
-      paddingTop: 10,
+      paddingVertical: 10,
       flexDirection: "column",
-      gap: 10,
     },
     noItemContent: {
       justifyContent: "center",
@@ -362,7 +362,7 @@ const Jour = ({
         data={daysOfWeek}
         initialNumToRender={1}
         renderItem={({ item }) => (
-          <View style={styles.itemContent}>
+          <ScrollView style={styles.itemContent}>
             {item.data.length > 0 ? (
               <View style={styles.itemContainer}>
                 {item.data.map((agendaItem) => (
@@ -391,7 +391,7 @@ const Jour = ({
                 </Text>
               </View>
             )}
-          </View>
+          </ScrollView>
         )}
         onChangeIndex={handleChangeIndex}
         bounces={false}

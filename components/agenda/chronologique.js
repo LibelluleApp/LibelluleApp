@@ -41,7 +41,7 @@ const Chronologie = ({
       color: colors.regular950,
       marginVertical: 5,
     },
-    listContainer: {},
+    listContainer: { paddingBottom: 10 },
     noItemContent: {
       justifyContent: "center",
       alignItems: "center",
