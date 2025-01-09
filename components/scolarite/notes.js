@@ -5,12 +5,13 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  Linking, Pressable,
+  Linking,
+  Pressable,
 } from "react-native";
 import { Info } from "../../assets/icons/Icons";
 import fetchAbsence from "../../api/Scolarite/fetchAbsence";
 import { ThemeContext } from "./../../utils/themeContext";
-import {getUserData} from "../../utils/storage";
+import { getUserData } from "../../utils/storage";
 function getProfileData() {
   try {
     return getUserData();
@@ -18,20 +19,20 @@ function getProfileData() {
     console.error(e);
   }
 }
-function Notes() {
+function Notes({ setSemestre }) {
   const { colors } = useContext(ThemeContext);
-  function findYear(){
+  function findYear() {
     const semesterYear = {
-      "Y1" : "s1-2024",
-      "Y2" : "s3-2024",
-      "Y3" : "s5-2024"
+      Y1: "s1-2024",
+      Y2: "s3-2024",
+      Y3: "s5-2024",
     };
 
     const user_data = getProfileData();
     let year = user_data.groupe_id.split("UI");
+    setSemestre(semesterYear[year[0]]);
     return semesterYear[year[0]];
   }
-
 
   const styles = StyleSheet.create({
     background: {
@@ -41,12 +42,9 @@ function Notes() {
       justifyContent: "space-between",
     },
     containerContent: {
-      marginTop: 10,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       borderRadius: 10,
-      width: "90%",
-      alignSelf: "center",
     },
     title: {
       fontFamily: "Ubuntu_400Regular",
@@ -155,7 +153,7 @@ function Notes() {
       alignSelf: "center",
       lineHeight: 20,
       textDecorationLine: "underline",
-    }
+    },
   });
 
   function GridTiles({ note }) {
@@ -163,7 +161,9 @@ function Notes() {
       <View style={styles.gridTiles}>
         <View>
           <Text style={styles.gridTitle}>{note[0]}</Text>
-          <Text style={styles.gridTitle}>{findUes(note[0].split('.'))[0].competence}</Text>
+          <Text style={styles.gridTitle}>
+            {findUes(note[0].split("."))[0].competence}
+          </Text>
         </View>
         <View>
           <Text style={styles.gridMoyenne}>
@@ -203,10 +203,10 @@ function Notes() {
       },
       {
         code: "5",
-        competence: "Entreprendre"
-      }
-    ]
-    return ues.filter(u => u.code === code[1]);
+        competence: "Entreprendre",
+      },
+    ];
+    return ues.filter((u) => u.code === code[1]);
   }
 
   function calculMoyenne(notes) {
@@ -223,12 +223,11 @@ function Notes() {
   React.useEffect(() => {
     try {
       fetchAbsence(findYear()).then((data) => {
-        const ues = data.notes.ues
-        const listNotes = Object.keys(ues).map((key) => [key, ues[key]])
+        const ues = data.notes.ues;
+        const listNotes = Object.keys(ues).map((key) => [key, ues[key]]);
         setNotes(listNotes);
         setMoyenne(calculMoyenne(listNotes));
       });
-
     } catch (error) {
       console.error("Error fetching absence:", error);
     }
@@ -247,17 +246,13 @@ function Notes() {
   return (
     <View style={styles.background}>
       <View style={styles.containerContent}>
-        <Text style={styles.title}>{findYear()}</Text>
         <View style={styles.gridContainer}>
           {notes.map((note, index) => (
-            <GridTiles
-              key={index}
-              note={note}
-            />
+            <GridTiles key={index} note={note} />
           ))}
           <GridRecap number={notes.length} moyenne={moyenne.toFixed(2)} />
         </View>
-        <View style={styles.textContent}>
+        {/* <View style={styles.textContent}>
           <Info
             stroke={colors.regular950}
             strokeWidth={1.75}
@@ -268,20 +263,20 @@ function Notes() {
             Pour valider une compétence, il faut avoir une moyenne d’au moins{" "}
             <Text style={{ fontFamily: "Ubuntu_500Medium" }}>10/20.</Text>
           </Text>
-        </View>
+        </View> */}
       </View>
-      <View style={styles.containerAltText}>
+      {/* <View style={styles.containerAltText}>
         <Text style={styles.altText}>Données provenant de </Text>
         <TouchableOpacity
-            onPress={() => {
-              Linking.openURL(
-                  "https://mmi-angouleme-dashboard.alwaysdata.net/login"
-              );
-            }}
+          onPress={() => {
+            Linking.openURL(
+              "https://mmi-angouleme-dashboard.alwaysdata.net/login"
+            );
+          }}
         >
           <Text style={styles.altTextLink}>MMI Dashboard.</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 }

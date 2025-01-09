@@ -10,7 +10,7 @@ import {
 import { Info, Clock } from "../../assets/icons/Icons";
 import fetchAbsence from "../../api/Scolarite/fetchAbsence";
 import { ThemeContext } from "../../utils/themeContext";
-import {getUserData} from "../../utils/storage";
+import { getUserData } from "../../utils/storage";
 
 function getProfileData() {
   try {
@@ -20,18 +20,19 @@ function getProfileData() {
   }
 }
 
-function Absence() {
+function Absence({ setSemestre }) {
   const { colors } = useContext(ThemeContext);
 
-  function findYear(){
+  function findYear() {
     const semesterYear = {
-      "Y1" : "s1-2024",
-      "Y2" : "s3-2024",
-      "Y3" : "s5-2024"
+      Y1: "s1-2024",
+      Y2: "s3-2024",
+      Y3: "s5-2024",
     };
 
     const user_data = getProfileData();
     let year = user_data.groupe_id.split("UI");
+    setSemestre(semesterYear[year[0]]);
     return semesterYear[year[0]];
   }
 
@@ -43,20 +44,15 @@ function Absence() {
       justifyContent: "space-between",
     },
     containerContent: {
-      marginTop: 10,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       borderRadius: 10,
-      width: "90%",
-      alignSelf: "center",
     },
     absTop: {
       backgroundColor: colors.white_background,
-      flexDirection: "column",
       borderRadius: 10,
-      width: "100%",
-      paddingHorizontal: 17,
-      paddingVertical: 12,
+      paddingHorizontal: 26,
+      paddingVertical: 15,
     },
     absTitle: {
       fontFamily: "Ubuntu_500Medium",
@@ -68,9 +64,9 @@ function Absence() {
     absContent: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      fontSize: 14,
+      fontSize: 15,
       color: colors.regular950,
-      marginBottom: 2,
+      textTransform: "capitalize",
     },
     content: {
       fontFamily: "Ubuntu_400Regular",
@@ -133,7 +129,6 @@ function Absence() {
     <View style={styles.background}>
       <View style={styles.containerContent}>
         <View style={styles.absTop}>
-          <Text style={styles.absTitle}>{findYear()}</Text>
           {absence.J && absence.J > 1 ? (
             <Text style={styles.absContent}>
               {`\u2022`} {absence.J} absences justifées
@@ -153,7 +148,7 @@ function Absence() {
             </Text>
           )}
         </View>
-        <View style={styles.textContent}>
+        {/* <View style={styles.textContent}>
           <Clock
             stroke={colors.regular950}
             strokeWidth={1.75}
@@ -179,9 +174,9 @@ function Absence() {
             , chaque absence supplémentaire entraine un malus de 0.2 points sur
             chacune des compétences.
           </Text>
-        </View>
+        </View> */}
       </View>
-      <View style={styles.containerAltText}>
+      {/* <View style={styles.containerAltText}>
         <Text style={styles.altText}>Données provenant de </Text>
         <TouchableOpacity
           onPress={() => {
@@ -192,7 +187,7 @@ function Absence() {
         >
           <Text style={styles.altTextLink}>MMI Dashboard.</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 }

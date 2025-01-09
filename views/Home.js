@@ -36,6 +36,9 @@ import saveNotifications from "../api/Notifications/saveNotifications";
 import fetchWeather from "./../api/Weather/fetchWeather";
 import { getUserData } from "../utils/storage";
 import TouchableScale from "react-native-touchable-scale";
+import Dropdown from "../components/dropdown/Dropdown";
+import Absence from "../components/scolarite/absence";
+import Notes from "../components/scolarite/notes";
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
@@ -71,6 +74,19 @@ function Home() {
 
   const [weather, setWeather] = useState({});
   const [weatherMessage, setWeatherMessage] = useState("");
+
+  const [selectedView, setSelectedView] = useState("absences");
+
+  const options = [
+    { label: "Mes absences", value: "absences" },
+    { label: "Mes notes", value: "notes" },
+  ];
+
+  const handleSelect = (value) => {
+    setSelectedView(value);
+  };
+
+  const [semestre, setSemestre] = useState("s1-2024");
 
   const styles = StyleSheet.create({
     background: {
@@ -117,6 +133,44 @@ function Home() {
     welcomeContainer: {
       flexDirection: "column",
       width: "100%",
+    },
+    headerContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "100%",
+      zIndex: 999,
+    },
+    headerContent: {
+      flexDirection: "column",
+    },
+    headerTitle: {
+      fontSize: 16,
+      fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
+      color: colors.regular950,
+    },
+    headerSubtitle: {
+      fontSize: 14,
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      color: colors.regular800,
+    },
+    btnOutline: {
+      borderColor: colors.regular700,
+      borderWidth: 0.5,
+      borderRadius: 50,
+      paddingHorizontal: 20,
+      paddingVertical: 7,
+    },
+    btnOutlineText: {
+      color: colors.regular700,
+      fontSize: 13,
+      fontFamily: "Ubuntu_500Medium",
+      letterSpacing: -0.4,
+    },
+    modalDropdown: {
+      zIndex: 999,
     },
   });
 
@@ -602,10 +656,33 @@ function Home() {
           <NextCourse />
           <AgendaHome />
           <Restauration />
-          <View style={styles.rightContainer}>
-            <TouchableScale onPress={() => navigation.navigate('Scolarite')}>
-              <Text>Scolarité</Text>
-            </TouchableScale>
+          <View
+            style={{
+              width: "90%",
+              alignSelf: "center",
+              gap: 15,
+              marginBottom: 20,
+            }}
+          >
+            <View style={styles.headerContainer}>
+              <View style={styles.headerContent}>
+                <Text style={styles.headerTitle}>Scolarité</Text>
+                <Text style={styles.headerSubtitle}>{semestre}</Text>
+              </View>
+              <View style={styles.modalDropdown}>
+                <Dropdown
+                  options={options}
+                  onSelect={handleSelect}
+                  value={selectedView}
+                />
+              </View>
+            </View>
+            <View>
+              {selectedView === "absences" && (
+                <Absence setSemestre={setSemestre} />
+              )}
+              {selectedView === "notes" && <Notes setSemestre={setSemestre} />}
+            </View>
           </View>
         </View>
       </ScrollView>
