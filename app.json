@@ -24,7 +24,7 @@
             "entitlements": {
                 "aps-environment": "production"
             },
-            "buildNumber": "1.33"
+            "buildNumber": "1.34"
         },
         "android": {
             "adaptiveIcon": {
@@ -34,7 +34,7 @@
             },
             "googleServicesFile": "./google-services.json",
             "package": "com.libellule.libellule",
-            "versionCode": 28
+            "versionCode": 29
         },
         "web": {
             "favicon": "./assets/favicon.png"
