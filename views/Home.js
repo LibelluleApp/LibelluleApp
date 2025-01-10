@@ -656,6 +656,7 @@ function Home() {
           <NextCourse />
           <AgendaHome />
           <Restauration />
+          {user.groupe_id.includes('UI') && (
           <View
             style={{
               width: "90%",
@@ -684,6 +685,7 @@ function Home() {
               {selectedView === "notes" && <Notes setSemestre={setSemestre} />}
             </View>
           </View>
+          )}
         </View>
       </ScrollView>
     </GestureHandlerRootView>
