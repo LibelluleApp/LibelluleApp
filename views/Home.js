@@ -656,7 +656,7 @@ function Home() {
           <NextCourse />
           <AgendaHome />
           <Restauration />
-          {user.groupe_id.includes('UI') && (
+          {!isLoading && user.groupe_id.includes('UI') && (
           <View
             style={{
               width: "90%",
