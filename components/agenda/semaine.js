@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import {
   ArrowLeft,
@@ -112,7 +113,6 @@ const Semaine = ({
     },
     itemContainer: {
       flexDirection: "column",
-      gap: 20,
     },
     noItemContainer: {
       flex: 1,
@@ -424,9 +424,9 @@ const Semaine = ({
         renderItem={({ item }) => (
           <View style={styles.itemContent}>
             {Object.keys(item.data).length > 0 ? (
-              <View style={styles.itemContainer}>
+              <ScrollView style={styles.itemContainer}>
                 {Object.entries(item.data).map(([dateKey, dateTasks]) => (
-                  <View key={dateKey}>
+                  <View key={dateKey} style={{ marginBottom: 20 }}>
                     <Text style={styles.dateTaskTitle}>
                       {moment(dateKey)
                         .format("dddd D MMMM")
@@ -464,7 +464,7 @@ const Semaine = ({
                     )}
                   </View>
                 ))}
-              </View>
+              </ScrollView>
             ) : (
               <View style={styles.noItemContent}>
                 <CircleCheckBig

@@ -1,53 +1,52 @@
-import React, { useContext } from "react";
-import { Text, View, Image, TouchableOpacity, StyleSheet } from "react-native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import React, { useContext, useState } from "react";
+import { View, StyleSheet} from "react-native";
+import { ThemeContext } from "../utils/themeContext";
+import Dropdown from "../components/dropdown/Dropdown";
 import Absence from "../components/scolarite/absence";
 import Notes from "../components/scolarite/notes";
-import { ThemeContext } from "./../utils/themeContext";
-
-const Tab = createMaterialTopTabNavigator();
 
 function Scolarite() {
-  const { colors } = useContext(ThemeContext);
+    const { colors } = useContext(ThemeContext);
+    const [selectedView, setSelectedView] = useState("absences");
 
-  const styles = StyleSheet.create({
-    modalBackground: {
-      flex: 1,
-    },
-  });
+    const options = [
+        { label: "Mes absences", value: "absences" },
+        { label: "Mes notes", value: "notes" },
+    ];
 
-  return (
-    <View style={styles.modalBackground}>
-      <Tab.Navigator
-        screenOptions={{
-          tabBarStyle: {
+    const styles = StyleSheet.create({
+        modalBackground: {
+            flex: 1,
             backgroundColor: colors.background,
-            elevation: 0,
-            shadowOffset: {
-              width: 0,
-              height: 0,
-            },
-          },
+        },
+        modalDropdown: {
+            flexDirection: "row",
+            gap: 10,
+            alignItems: "center",
+            width: "90%",
+            alignSelf: "center",
+            paddingVertical: 10,
+            zIndex: 999,
+        },
+    });
 
-          tabBarActiveTintColor: colors.regular950,
-          tabBarInactiveTintColor: colors.grey,
-          tabBarLabelStyle: {
-            fontFamily: "Ubuntu_400Regular",
-            letterSpacing: -0.4,
-            fontSize: 17,
-            textTransform: "none",
-          },
+    const handleSelect = (value) => {
+        setSelectedView(value);
+    };
 
-          tabBarIndicatorStyle: {
-            backgroundColor: colors.regular950,
-          },
-        }}
-      >
-        <Tab.Screen name="Mes absences" component={Absence} />
-        <Tab.Screen name="Mes notes" component={Notes} />
-      </Tab.Navigator>
-    </View>
-  );
+    return (
+        <View style={styles.modalBackground}>
+            <View style={styles.modalDropdown}>
+                <Dropdown
+                    options={options}
+                    onSelect={handleSelect}
+                    value={selectedView}
+                />
+            </View>
+            {selectedView === "absences" && <Absence />}
+            {selectedView === "notes" && <Notes />}
+        </View>
+    );
 }
 
 export default Scolarite;

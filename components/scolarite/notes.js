@@ -6,13 +6,33 @@ import {
   TouchableOpacity,
   StyleSheet,
   Linking,
+  Pressable,
 } from "react-native";
 import { Info } from "../../assets/icons/Icons";
 import fetchAbsence from "../../api/Scolarite/fetchAbsence";
 import { ThemeContext } from "./../../utils/themeContext";
-
-function Notes() {
+import { getUserData } from "../../utils/storage";
+function getProfileData() {
+  try {
+    return getUserData();
+  } catch (e) {
+    console.error(e);
+  }
+}
+function Notes({ setSemestre }) {
   const { colors } = useContext(ThemeContext);
+  function findYear() {
+    const semesterYear = {
+      Y1: "s1-2024",
+      Y2: "s3-2024",
+      Y3: "s5-2024",
+    };
+
+    const user_data = getProfileData();
+    let year = user_data.groupe_id.split("UI");
+    setSemestre(semesterYear[year[0]]);
+    return semesterYear[year[0]];
+  }
 
   const styles = StyleSheet.create({
     background: {
@@ -22,12 +42,17 @@ function Notes() {
       justifyContent: "space-between",
     },
     containerContent: {
-      marginTop: 25,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       borderRadius: 10,
-      width: "90%",
-      alignSelf: "center",
+    },
+    title: {
+      fontFamily: "Ubuntu_400Regular",
+      fontSize: 18,
+      fontWeight: "bold",
+      color: colors.text,
+      marginBottom: 10,
+      textTransform: "uppercase",
     },
     absTop: {
       backgroundColor: colors.white_background,
@@ -113,6 +138,13 @@ function Notes() {
       justifyContent: "center",
       marginBottom: 20,
     },
+    altText: {
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      color: colors.regular950,
+      fontSize: 14,
+      alignSelf: "center",
+    },
     altTextLink: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
@@ -124,19 +156,20 @@ function Notes() {
     },
   });
 
-  function GridTiles({ code, competence, moyenne, promo, rang }) {
+  function GridTiles({ note }) {
     return (
       <View style={styles.gridTiles}>
         <View>
-          <Text style={styles.gridTitle}>{code}</Text>
-          <Text style={styles.gridTitle}>{competence}</Text>
+          <Text style={styles.gridTitle}>{note[0]}</Text>
+          <Text style={styles.gridTitle}>
+            {findUes(note[0].split("."))[0].competence}
+          </Text>
         </View>
         <View>
           <Text style={styles.gridMoyenne}>
-            Moyenne : {moyenne.toFixed(3)}/20
+            Moyenne : {note[1].moy.toFixed(3)}/20
           </Text>
-          <Text style={styles.gridPromo}>Promo : {promo.toFixed(2)}/20</Text>
-          <Text style={styles.gridPromo}>Rang : {rang}</Text>
+          <Text style={styles.gridPromo}>Rang : {note[1].rang}</Text>
         </View>
       </View>
     );
@@ -150,31 +183,57 @@ function Notes() {
     );
   }
 
-  function CalculMoyenne(notes) {
+  function findUes(code) {
+    const ues = [
+      {
+        code: "1",
+        competence: "Comprendre",
+      },
+      {
+        code: "2",
+        competence: "Concevoir",
+      },
+      {
+        code: "3",
+        competence: "Exprimer",
+      },
+      {
+        code: "4",
+        competence: "Développer",
+      },
+      {
+        code: "5",
+        competence: "Entreprendre",
+      },
+    ];
+    return ues.filter((u) => u.code === code[1]);
+  }
+
+  function calculMoyenne(notes) {
     let total = 0;
     notes.forEach((note) => {
-      total += note.moy;
+      total += note[1].moy;
     });
     return total / notes.length;
   }
 
-  const [notes, setNotes] = React.useState([]);
-  const [moyenne, setMoyenne] = React.useState(0);
+  const [notes, setNotes] = React.useState(null);
+  const [moyenne, setMoyenne] = React.useState(null);
 
   React.useEffect(() => {
     try {
-      fetchAbsence().then((data) => {
+      fetchAbsence(findYear()).then((data) => {
         const ues = data.notes.ues;
-        const notesArray = Object.values(ues);
-        setNotes(notesArray);
-        setMoyenne(CalculMoyenne(notesArray));
+        const listNotes = Object.keys(ues).map((key) => [key, ues[key]]);
+        setNotes(listNotes);
+        setMoyenne(calculMoyenne(listNotes));
       });
     } catch (error) {
       console.error("Error fetching absence:", error);
     }
   }, []);
 
-  if (!notes) {
+  if (!notes || !moyenne) {
     return (
       <View style={styles.background}>
         <View style={styles.container}>
@@ -189,18 +248,11 @@ function Notes() {
       <View style={styles.containerContent}>
         <View style={styles.gridContainer}>
           {notes.map((note, index) => (
-            <GridTiles
-              key={index} // Utiliser l'index comme clé si vous n'avez pas de propriété unique
-              code={note.code}
-              competence="Comprendre"
-              moyenne={note.moy}
-              promo={note.moy_promo}
-              rang={note.rang}
-            />
+            <GridTiles key={index} note={note} />
           ))}
           <GridRecap number={notes.length} moyenne={moyenne.toFixed(2)} />
         </View>
-        <View style={styles.textContent}>
+        {/* <View style={styles.textContent}>
           <Info
             stroke={colors.regular950}
             strokeWidth={1.75}
@@ -211,9 +263,9 @@ function Notes() {
             Pour valider une compétence, il faut avoir une moyenne d’au moins{" "}
             <Text style={{ fontFamily: "Ubuntu_500Medium" }}>10/20.</Text>
           </Text>
-        </View>
+        </View> */}
       </View>
-      <View style={styles.containerAltText}>
+      {/* <View style={styles.containerAltText}>
         <Text style={styles.altText}>Données provenant de </Text>
         <TouchableOpacity
           onPress={() => {
@@ -224,7 +276,7 @@ function Notes() {
         >
           <Text style={styles.altTextLink}>MMI Dashboard.</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 }

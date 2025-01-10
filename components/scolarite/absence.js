@@ -9,10 +9,32 @@ import {
 } from "react-native";
 import { Info, Clock } from "../../assets/icons/Icons";
 import fetchAbsence from "../../api/Scolarite/fetchAbsence";
-import { ThemeContext } from "./../../utils/themeContext";
+import { ThemeContext } from "../../utils/themeContext";
+import { getUserData } from "../../utils/storage";
 
-function Absence() {
+function getProfileData() {
+  try {
+    return getUserData();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function Absence({ setSemestre }) {
   const { colors } = useContext(ThemeContext);
+
+  function findYear() {
+    const semesterYear = {
+      Y1: "s1-2024",
+      Y2: "s3-2024",
+      Y3: "s5-2024",
+    };
+
+    const user_data = getProfileData();
+    let year = user_data.groupe_id.split("UI");
+    setSemestre(semesterYear[year[0]]);
+    return semesterYear[year[0]];
+  }
 
   const styles = StyleSheet.create({
     background: {
@@ -22,20 +44,15 @@ function Absence() {
       justifyContent: "space-between",
     },
     containerContent: {
-      marginTop: 25,
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
       borderRadius: 10,
-      width: "90%",
-      alignSelf: "center",
     },
     absTop: {
       backgroundColor: colors.white_background,
-      flexDirection: "column",
       borderRadius: 10,
-      width: "100%",
-      paddingHorizontal: 17,
-      paddingVertical: 12,
+      paddingHorizontal: 26,
+      paddingVertical: 15,
     },
     absTitle: {
       fontFamily: "Ubuntu_500Medium",
@@ -47,9 +64,9 @@ function Absence() {
     absContent: {
       fontFamily: "Ubuntu_400Regular",
       letterSpacing: -0.4,
-      fontSize: 14,
+      fontSize: 15,
       color: colors.regular950,
-      marginBottom: 2,
+      textTransform: "capitalize",
     },
     content: {
       fontFamily: "Ubuntu_400Regular",
@@ -90,7 +107,7 @@ function Absence() {
 
   React.useEffect(() => {
     try {
-      fetchAbsence().then((data) => {
+      fetchAbsence(findYear()).then((data) => {
         setAbsence(data.absences);
       });
     } catch (error) {
@@ -112,27 +129,26 @@ function Absence() {
     <View style={styles.background}>
       <View style={styles.containerContent}>
         <View style={styles.absTop}>
-          <Text style={styles.absTitle}>Semestre 4</Text>
-          {absence.total_abs && absence.total_abs > 1 ? (
+          {absence.J && absence.J > 1 ? (
             <Text style={styles.absContent}>
-              {`\u2022`} {absence.total_abs} absences justifées
+              {`\u2022`} {absence.J} absences justifées
             </Text>
           ) : (
             <Text style={styles.absContent}>
-              {`\u2022`} {absence.total_abs} absence justifée
+              {`\u2022`} {absence.J} absence justifée
             </Text>
           )}
-          {absence.total_absI && absence.total_absI > 1 ? (
+          {absence.I && absence.I > 1 ? (
             <Text style={styles.absContent}>
-              {`\u2022`} {absence.total_absI} absences injustifiées
+              {`\u2022`} {absence.I} absences injustifiées
             </Text>
           ) : (
             <Text style={styles.absContent}>
-              {`\u2022`} {absence.total_absI} absence injustifiée
+              {`\u2022`} {absence.I} absence injustifiée
             </Text>
           )}
         </View>
-        <View style={styles.textContent}>
+        {/* <View style={styles.textContent}>
           <Clock
             stroke={colors.regular950}
             strokeWidth={1.75}
@@ -158,9 +174,9 @@ function Absence() {
             , chaque absence supplémentaire entraine un malus de 0.2 points sur
             chacune des compétences.
           </Text>
-        </View>
+        </View> */}
       </View>
-      <View style={styles.containerAltText}>
+      {/* <View style={styles.containerAltText}>
         <Text style={styles.altText}>Données provenant de </Text>
         <TouchableOpacity
           onPress={() => {
@@ -171,7 +187,7 @@ function Absence() {
         >
           <Text style={styles.altTextLink}>MMI Dashboard.</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 }
