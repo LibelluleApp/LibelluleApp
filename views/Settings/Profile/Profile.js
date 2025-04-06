@@ -309,29 +309,29 @@ function Profile() {
               />
             </View>
             <View style={styles.pageSeparation} />
-            <View
-              style={styles.pageItem}
-              // onPress={() => navigation.navigate("Colors")}
+            <TouchableOpacity
+                style={styles.pageItem}
+                onPress={() => navigation.navigate("ChangeGroupe")}
             >
               <View style={styles.pageContent}>
                 <UsersRound
-                  stroke={colors.regular800}
-                  strokeWidth={1.75}
-                  width={22}
-                  height={22}
+                    stroke={colors.regular800}
+                    strokeWidth={1.75}
+                    width={22}
+                    height={22}
                 />
                 <View>
                   <Text style={styles.pageSubtitle}>Groupe de classe</Text>
                   <Text style={styles.pageTitle}>{userData.groupe_id}</Text>
                 </View>
               </View>
-              <Lock
-                stroke={colors.grey}
-                strokeWidth={1.75}
-                width={16}
-                height={16}
+              <ChevronRight
+                  stroke={colors.regular700}
+                  strokeWidth={1.75}
+                  width={18}
+                  height={18}
               />
-            </View>
+            </TouchableOpacity>
             <View style={styles.pageSeparation} />
             <TouchableOpacity
               style={styles.pageItem}

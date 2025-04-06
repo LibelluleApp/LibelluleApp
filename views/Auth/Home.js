@@ -70,6 +70,7 @@ function AuthStack() {
     },
     buttonContainer: {
       gap: 10,
+      width: "100%",
     },
     cguText: {
       fontFamily: "Ubuntu_400Regular",

@@ -109,3 +109,12 @@ export function getIsFirstVisitAgenda() {
     const data = storage.getBoolean('isFirstVisitAgenda');
     return data;
 }
+
+export function setLastChangeGroupeDate(value){
+    storage.set('lastChangeGroupeDate', value);
+}
+
+export function getLastChangeGroupeDate() {
+    const data = storage.getString('lastChangeGroupeDate');
+    return data;
+}

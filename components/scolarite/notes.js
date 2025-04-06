@@ -21,11 +21,12 @@ function getProfileData() {
 }
 function Notes({ setSemestre }) {
   const { colors } = useContext(ThemeContext);
+  const [ueError, setUeError] = React.useState(null);
   function findYear() {
     const semesterYear = {
-      Y1: "s1-2024",
-      Y2: "s3-2024",
-      Y3: "s5-2024",
+      Y1: "s2-2025",
+      Y2: "s4-2025",
+      Y3: "s6-2025",
     };
 
     const user_data = getProfileData();
@@ -154,6 +155,18 @@ function Notes({ setSemestre }) {
       lineHeight: 20,
       textDecorationLine: "underline",
     },
+    container: {
+      backgroundColor: colors.white_background,
+      borderRadius: 10,
+      paddingHorizontal: 26,
+      paddingVertical: 15,
+    },
+    errorMessage:{
+      fontFamily: "Ubuntu_400Regular",
+      letterSpacing: -0.4,
+      fontSize: 15,
+      color: colors.regular800,
+    }
   });
 
   function GridTiles({ note }) {
@@ -233,11 +246,12 @@ function Notes({ setSemestre }) {
     }
   }, []);
 
+
   if (!notes || !moyenne) {
     return (
       <View style={styles.background}>
         <View style={styles.container}>
-          <Text>Chargement...</Text>
+          <Text style={styles.errorMessage}>Maquette indisponible, elle arrivera prochainement :)</Text>
         </View>
       </View>
     );

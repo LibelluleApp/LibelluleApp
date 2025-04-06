@@ -25,9 +25,9 @@ function Absence({ setSemestre }) {
 
   function findYear() {
     const semesterYear = {
-      Y1: "s1-2024",
-      Y2: "s3-2024",
-      Y3: "s5-2024",
+      Y1: "s2-2025",
+      Y2: "s4-2025",
+      Y3: "s6-2025",
     };
 
     const user_data = getProfileData();

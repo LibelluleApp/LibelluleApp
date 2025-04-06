@@ -15,6 +15,7 @@ const VIEWS_CONFIG = {
   viewAgenda: require("../components/agenda/modal/view").default,
   CustomColor: require("../views/Settings/CustomColor").default,
   ChangePassword: require("../views/Settings/ChangePassword").default,
+  ChangeGroupe: require("../views/Settings/ChangeGroupe").default,
   TutorialAgenda: require("../views/Tutorial/Agenda").default,
   DetailEvent: require("../views/Timetable/DetailEvent").default,
   editAgenda: require("../components/agenda/modal/edit").default,
@@ -131,6 +132,14 @@ const AppStack = () => {
           headerShadowVisible: false,
         },
       },
+        {
+            name: "ChangeGroupe",
+            component: VIEWS_CONFIG.ChangeGroupe,
+            options: {
+                title: "Changer votre groupe",
+                headerShadowVisible: false,
+            },
+        },
       {
         name: "TutorialAgenda",
         component: VIEWS_CONFIG.TutorialAgenda,
