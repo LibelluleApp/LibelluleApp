@@ -81,7 +81,7 @@ jobs:
         run: eas build --platform android --profile production --local
 
       - name: Upload Android artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: android-app
           path: /home/runner/work/LibelluleApp/LibelluleApp/*.aab
@@ -139,7 +139,7 @@ jobs:
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
 
       - name: Upload iOS artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ios-app
           path: /Users/runner/work/LibelluleApp/LibelluleApp/*.ipa
