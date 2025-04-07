@@ -26,7 +26,7 @@ function Notes({ setSemestre }) {
     const semesterYear = {
       Y1: "s2-2025",
       Y2: "s4-2025",
-      Y3: "s6-2025",
+      Y3: "s5-2024",
     };
 
     const user_data = getProfileData();
@@ -180,7 +180,7 @@ function Notes({ setSemestre }) {
         </View>
         <View>
           <Text style={styles.gridMoyenne}>
-            Moyenne : {note[1].moy.toFixed(3)}/20
+            Moyenne : {note[1].moy ? note[1].moy.toFixed(3) : '...'}/20
           </Text>
           <Text style={styles.gridPromo}>Rang : {note[1].rang}</Text>
         </View>
@@ -224,10 +224,19 @@ function Notes({ setSemestre }) {
 
   function calculMoyenne(notes) {
     let total = 0;
+    let compteurNotesValides = 0;
+
     notes.forEach((note) => {
-      total += note[1].moy;
+      if (note[1] && note[1].moy != null && !isNaN(note[1].moy)) {
+        total += note[1].moy;
+        compteurNotesValides++;
+      }
     });
-    return total / notes.length;
+    if (compteurNotesValides === 0) {
+      return 0;
+    }
+
+    return total / compteurNotesValides;
   }
 
   const [notes, setNotes] = React.useState(null);
@@ -264,7 +273,7 @@ function Notes({ setSemestre }) {
           {notes.map((note, index) => (
             <GridTiles key={index} note={note} />
           ))}
-          <GridRecap number={notes.length} moyenne={moyenne.toFixed(2)} />
+          <GridRecap number={notes.length} moyenne={moyenne ? moyenne.toFixed(2) : "N/A"} />
         </View>
         {/* <View style={styles.textContent}>
           <Info
